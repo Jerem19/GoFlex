@@ -1,0 +1,12 @@
+{
+    "login": {
+        "title": "Login",
+
+        "username": "User ID",
+        "password": "Password",
+
+        "forgot_pwd": "Forgot Password?",
+        "sign_in" : "Sign in",
+        "sign_in_now" : "Sign in now"
+    }
+}
