@@ -1,3 +1,8 @@
+<?php
+$defaultLang = 'en';
+define('L10N', json_decode(file_get_contents(PUBLIC_FOLDER . 'l10n/' . $defaultLang . '.json'), true));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
