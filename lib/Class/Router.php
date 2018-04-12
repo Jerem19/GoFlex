@@ -260,7 +260,15 @@ class Router {
         // To Do (improve)
         $uri = $this->removeSlash($uri);
 
-        $isOk = $uri == $this->_url;
+        $url = $this->_url;
+
+        {
+            $pos = strpos($url, "?");
+            if ($pos !== false)
+                $url = substr($url, 0, $pos);
+        }
+
+        $isOk = $uri == $url;
 
         $matches = [];
         if (!$isOk && (strpos($uri, '*') !== false || strpos($uri, ':') !== false )) {
