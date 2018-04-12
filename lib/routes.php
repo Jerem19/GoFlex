@@ -1,30 +1,38 @@
 <?php
 
 require 'Class/Router.php';
-require 'Class/User.php';
+//require 'Class/User.php';
 
 $router = new Router();
 
 $router
-    ->byExt('css', PUBLIC_FOLDER . 'css', 'text/css')
-    ->byExt('js', PUBLIC_FOLDER . 'js', 'application/javascript')
-    ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp'], PUBLIC_FOLDER . 'images', 'image')
-    ->get('/', function() {
-        require_once PUBLIC_FOLDER . 'views/login.php';
+    ->enableSession(["lifetime" => 60*60*30])
+    ->setViewsPath(PUBLIC_FOLDER . 'views')
+    ->on('/*.css', function($req, $res) { // active less (if 2 same names => css has priority)
+        $file = PUBLIC_FOLDER . 'css-less/' . $req->params[0] . '.less';
+        if(file_exists($file)) {
+            require_once 'less.inc.php';
+            $css = (new lessc($file))->parse();
+            $res->send($css, false, "test/css");
+        }
     })
-    ->get('/lang/:lang', function($res, $req) {
 
-        echo 'Woa<pre>';
-        print_r($res->body);
-        echo '</pre>';
+    ->byExt('css', PUBLIC_FOLDER . 'css')
+    ->byExt('js', PUBLIC_FOLDER . 'js')
+    ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp'], PUBLIC_FOLDER . 'images')
 
+    ->get('/', function($req, $res) {
+        $res->render('login.php');
     })
-    ->post('/log', function() {
-        echo json_encode(["like" => "this"]);
+    ->on('/lang/:lang', function($req, $res) {
+        $res->send(($req->params)); // contain "lang"
     })
+    ->post('/log', function($req, $res) {
+        $res->send(["like" => "this"]);
+    })
+
     ->get('/admin', function($req, $res) {
-        //$res->redirect('http://google.com');
-        //$user = User::getUser(1);
+        //$res->redirect('http://google.com', false);
     })
     ->use('/admin', [
         "/login" => [
@@ -65,12 +73,8 @@ $router
             ]
         ]
     ])
-    ->on('/admin/*', function() {
-        header('HTTP/1.0 404 Not Found');
-        echo 403;
-    })
-    ->on('*', function() {
-        header('HTTP/1.0 404 Not Found');
-        echo 404;
+    ->on('*', function($req, $res) {
+        $res->setHeader('HTTP/1.0 404 Not Found');
+        $res->send(404, false);
     })
 ;
