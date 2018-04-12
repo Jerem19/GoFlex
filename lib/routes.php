@@ -22,7 +22,7 @@ $router
     ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp'], PUBLIC_FOLDER . 'images')
 
     ->get('/', function($req, $res) {
-        $res->render('login.php');
+        $res->render('login.php', ["some text" => "Yeah, I see"]);
     })
     ->on('/lang/:lang', function($req, $res) {
         $res->send(($req->params)); // contain "lang"

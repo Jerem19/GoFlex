@@ -53,11 +53,12 @@ class Response {
         exit();
     }
 
-    public function render($viewPath) {
+    public function render($viewPath, $params = null) {
         $file = $this->_viewsPath != null ? $this->_viewsPath."/".$viewPath : $viewPath;
         $this->setContentType("text/html");
+        define('PARAMS', $params);
         require_once $file; // if no file => error (intentional)
-        $this->stopExec(true);
+        $this->stopExec();
     }
 
     /**

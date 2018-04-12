@@ -34,6 +34,7 @@ define('L10N', json_decode(file_get_contents(PUBLIC_FOLDER . 'l10n/' . $defaultL
     </style>
     <body>
         <div id="login-page">
+            <?php //echo PARAMS["some text"]; ?>
             <div class="container">
                 <form class="form-login" action='' method='post'>
                     <h2 class="form-login-heading"><?= L10N['login']['sign_in_now'] ?></h2>
