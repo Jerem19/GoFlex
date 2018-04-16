@@ -19,7 +19,7 @@ class Request {
     public $params;
     public $session;
 
-    public function __construct($uri, $params = [], $sessionEnable = false) {
+    public function __construct($uri, $params = []) {
         $this->uri = $uri;
         $this->url = $params[0];
         if(!empty($params))
@@ -28,10 +28,7 @@ class Request {
         $this->body = $_REQUEST;
         $this->headers = apache_request_headers();
         $this->params = $params;
-        if($sessionEnable) {
-            session_start();
-            $this->session = new Session();
-        }
+        $this->session = new Session();
     }
 }
 
@@ -139,7 +136,6 @@ class Router {
     private $_method;
 
     private $_viewsPath = null;
-    private $_session = false;
 
     /**
      * Return the base URl of the server
@@ -194,14 +190,14 @@ class Router {
             $params["secure"] = false;
         if (!isset($params["httponly"]))
             $params["httponly"] = false;
-        $this->_session = true;
-        session_set_cookie_params($params["lifetime"], $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
 
+        session_set_cookie_params($params["lifetime"], $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+        session_start();
         return $this;
     }
 
     public function disableSession() {
-        $this->_session = false;
+        session_destroy();
         return $this;
     }
 
@@ -238,11 +234,11 @@ class Router {
     }
 
     private function doPattern($string) {
-        preg_match('/([\w\/]*)(\:[a-zA-Z]+|\*)([\w\/\:\.\*?]*)/', $string, $matches);
+        preg_match('/([\w\/]*)(\:[a-zA-Z]+|\*)([\w\/\:\.\*]*)/', $string, $matches);
 
         $wanted = $matches[2];
         $after = $matches[3];
-        $middle = '([/\w]+)';
+        $middle = '([/\w\.\-\_]*)'; // remplace * => + if :par
 
         if (strpos($after, '*') !== false || strpos($after, ':') !== false)
             $after = $this->doPattern($after);
@@ -273,12 +269,12 @@ class Router {
         $matches = [];
         if (!$isOk && (strpos($uri, '*') !== false || strpos($uri, ':') !== false )) {
             $pattern = str_replace('/', '\/', $this->doPattern($uri));
-            $isOk = preg_match('/^' . $pattern . '(?:\?[\w=&]*)?$/', $this->_url, $matches);
+            $isOk = preg_match('/^' . $pattern . '$/', $url, $matches);
         } else
             $matches = [$this->_url];
 
         if ($isOk)
-            $callback(new Request($uri, $matches, $this->_session), new Response($this->_baseUrl, $this->_viewsPath));
+            $callback(new Request($uri, $matches), new Response($this->_baseUrl, $this->_viewsPath));
     }
 
     /**

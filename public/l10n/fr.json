@@ -8,5 +8,12 @@
         "forgot_pwd": "Mot de passe oublié?",
         "sign_in" : "S'identifier",
         "sign_in_now" : "S'identifier Maintenant"
+    },
+    "dashboard": {
+        "administration": "Administration",
+        "dashboard": "Tableau de bord",
+
+        "user" : "Utilisateur",
+        "profil" : "Profile"
     }
 }
