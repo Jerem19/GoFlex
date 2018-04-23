@@ -1,12 +1,22 @@
 document.forms[0].onsubmit = function() {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.open("POST", "login", true);
 
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(JSON.parse(this.responseText));
+    var submitBtn = this["submit"];
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            var success = JSON.parse(this.responseText);
+            if (success)
+                location.reload();
+            else {
+                submitBtn.classList.add('wrong');
+                setTimeout(function() {
+                    submitBtn.classList.remove('wrong')
+                }, 501);
+            }
         }
     };
-    xhttp.open("POST", "log", true);
-    xhttp.send();
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send('username='+this["username"].value+'&password='+this["password"].value);
     return false;
 }

@@ -8,5 +8,19 @@
         "forgot_pwd": "Forgot Password?",
         "sign_in" : "Sign in",
         "sign_in_now" : "Sign in now"
+    },
+    "index": {
+
+        "sidebar": {
+            "administration": "Administration",
+            "dashboard": "Dashboard",
+
+            "user" : "User",
+            "profil" : "Profile"
+        },
+        "header": {
+            "logout": "Logout",
+            "nav-text": "Toggle Navigation"
+        }
     }
 }

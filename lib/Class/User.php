@@ -9,6 +9,10 @@ class Role {
         return Configuration::getDB()->query("SELECT * FROM tblRole;")->fetchAll();
     }
 
+    public function getId() {
+        return $this->_id;
+    }
+
     public function getName() {
         return $this->name;
     }
@@ -19,14 +23,15 @@ class Role {
 
     public function __construct($id) {
         $this->_id = $id;
-        $data = Configuration::getDB()->query("SELECT * FROM tblRole WHERE roleId = " . $id)->fetchAll();
+        $data = Configuration::getDB()->query("SELECT * FROM tblRole WHERE roleId = " . $id)->fetch();
         if(!empty($data)) {
-            $this->name = $data[0]["name"];
+            $this->name = $data["name"];
         }
     }
 }
 
 class User {
+
     static public function getUser($id) {
         // To do: parameters
         return new User($id);
@@ -40,6 +45,16 @@ class User {
         $stat->execute($jsonParam);
 
         return new User(Configuration::getDB()->lastInsertId());
+    }
+
+    /**
+     * @param string $user
+     * @param string $pass
+     * @return bool
+     */
+    static public function isExisting($user, $pass) {
+        $t = Configuration::getDB()->query(sprintf("SELECT userId FROM tblUser WHERE username = '%s' AND password = '%s';", $user, $pass))->fetch();
+        return $t ? $t["userId"] : false;
     }
 
     /**
@@ -58,6 +73,10 @@ class User {
     private $lastname = "";
     private $phone = "";
     private $email = "";
+
+    public function getId() {
+        return $this->_id;
+    }
 
     /**
      * Return the username
@@ -108,7 +127,8 @@ class User {
     }
 
     public function __toString() {
-        return $this->firstname . ' ' . $this->lastname;
+        $return = $this->firstname . ' ' . $this->lastname;
+        return $return === " " ? $this->username : $return;
     }
 
     /**
@@ -117,10 +137,9 @@ class User {
      */
     public function __construct($userId) {
         $this->_id = $userId;
-        $data = Configuration::getDB()->query("SELECT * FROM tblUser WHERE userId = " . $userId)->fetchAll();
+        $data = Configuration::getDB()->query("SELECT * FROM tblUser WHERE userId = " . $userId)->fetch();
 
         if(!empty($data)) {
-            $data = $data[0];
             $this->username = $data["username"];
             $this->password = $data["password"];
             $this->firstname = $data["firstname"];
@@ -129,5 +148,10 @@ class User {
             $this->email = $data["email"];
             $this->role = new Role($data['user_role']);
         }
+    }
+
+
+    public function isCorrect() {
+        return self::isExisting($this->username, $this->password) == $this->_id;
     }
 }

@@ -11,6 +11,14 @@ class DB {
         }
     }
 
+    /**
+     * Return the PDO object
+     * @return PDO
+     */
+    public function getDb() {
+        return $this->_db;
+    }
+
     public function query($query) {
         return $this->_db->query($query);
     }

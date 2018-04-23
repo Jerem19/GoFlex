@@ -44,7 +44,6 @@ class Response {
 
     /**
      * Stop the execution of the script
-     * @param boolean $stop
      */
     private function stopExec() {
         exit();
@@ -53,7 +52,6 @@ class Response {
     public function render($viewPath, $params = null) {
         $file = $this->_viewsPath != null ? $this->_viewsPath."/".$viewPath : $viewPath;
         $this->setContentType("text/html");
-        define('PARAMS', $params);
         require_once $file; // if no file => error (intentional)
         $this->stopExec();
     }
@@ -191,8 +189,9 @@ class Router {
         if (!isset($params["httponly"]))
             $params["httponly"] = false;
 
-        session_set_cookie_params($params["lifetime"], $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
         session_start();
+        session_set_cookie_params($params["lifetime"], $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+
         return $this;
     }
 
