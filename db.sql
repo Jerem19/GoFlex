@@ -44,6 +44,6 @@ INSERT INTO tblUser (user_role, username, password) VALUES
 (3, 'customer_care', 'password');
 INSERT INTO tblUser (username, password) VALUES
 ('luc.dufour', 'password'),
-('hugo.mendes', 'password'),
-('jeremie.etienne.norbert.vianin', 'password'),
+('hugo.etienne.norbert.mendes', 'password'),
+('jeremie.vianin', 'password'),
 ('matthieu.dayer', 'password');
