@@ -33,6 +33,16 @@ include "partials/header.php";
                 switch ($params["path"]) {
                     case "profile":
                         include 'partials/index/profile.php';
+                        break;
+                    case "boiler":
+                        include 'partials/index/chart/boiler.php';
+                        break;
+                    case "heater":
+                        include 'partials/index/chart/heater.php';
+                        break;
+                    case "summary":
+                        include 'partials/index/chart/summary.php';
+                        break;
                 }
             }?>
 
@@ -50,7 +60,8 @@ $scripts = [
     "//blacktie.co/demo/dashgum/assets/js/jquery.dcjqaccordion.2.7.js",
     "//cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js",
     "3rdparty/common-scripts.js",
-    "l10n.js"
+    "/l10n.js",
+    "/index.js"
 ];
 include 'partials/footer.php';
 ?>

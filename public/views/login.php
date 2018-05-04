@@ -7,9 +7,9 @@ $metas = [
     "keyword" => "Login"
 ];
 $styles = [
-    "//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
+    "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
     "3rdparty/style.css",
-    "login.css"
+    "/login.css"
 ];
 $title = L10N["login"]["title"];
 $scriptsIE = [];
@@ -19,7 +19,7 @@ include "partials/header.php";
     <div id="login-page">
         <?php include 'partials/sltLang.php';?>
         <div class="container">
-            <form class="form-login" action='' method='post'>
+            <form class="form-login" method="post">
                 <h2 class="form-login-heading"><?= L10N['login']['sign_in_now'] ?></h2>
                 <div class="login-wrap">
                     <input autofocus type="text" class="form-control" required placeholder="<?= L10N['login']['username'] ?>" name="username" autofocus>
@@ -38,5 +38,5 @@ include "partials/header.php";
     </div>
 <?php
 include 'partials/index/footer.php';
-$scripts = [ "l10n.js", "login.js" ];
+$scripts = [ "/l10n.js", "/login.js" ];
 include 'partials/footer.php';

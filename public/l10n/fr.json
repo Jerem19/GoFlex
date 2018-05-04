@@ -11,12 +11,18 @@
         "sign_in_now" : "S'identifier Maintenant"
     },
     "index": {
-
+        "chart" : {
+            "temperature" : "Température"
+        },
         "sidebar": {
             "administration": "Administration",
             "dashboard": "Tableau de bord",
 
+            "analyse" : "Analyses",
+            "boiler" : "Eau Chaude",
+            "heater" : "Chauffage",
             "user" : "Utilisateur",
+            "summary" : "Résumé",
             "profil" : "Profile"
         },
         "header": {

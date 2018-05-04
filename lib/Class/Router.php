@@ -1,37 +1,5 @@
 <?php
 
-class Session extends ArrayObject {
-    public function save() {
-        $_SESSION = $this->getArrayCopy();
-    }
-
-    public function __construct() {
-        parent::__construct($_SESSION);
-    }
-}
-
-class Request {
-    private $url;
-    private $uri;
-
-    public $body;
-    public $headers;
-    public $params;
-    public $session;
-
-    public function __construct($uri, $params = []) {
-        $this->uri = $uri;
-        $this->url = $params[0];
-        if(!empty($params))
-            array_splice($params, 0, 1);
-
-        $this->body = $_REQUEST;
-        $this->headers = apache_request_headers();
-        $this->params = $params;
-        $this->session = new Session();
-    }
-}
-
 class Response {
 
     private $_baseUrl;
@@ -89,7 +57,7 @@ class Response {
             $this->setContentType($contentType);
             require_once $file;
         } else
-            echo "Error: no file at " . $file;
+            echo json_encode("Error: no file at " . $file);
         $this->stopExec();
     }
 
@@ -177,36 +145,12 @@ class Router {
         return $this;
     }
 
-    public function enableSession($params) {
-        if (!isset($params["lifetime"]))
-            $params["lifetime"] = 0;
-        if (!isset($params["path"]))
-            $params["path"] = "/";
-        if (!isset($params["domain"]))
-            $params["domain"] = ".";
-        if (!isset($params["secure"]))
-            $params["secure"] = false;
-        if (!isset($params["httponly"]))
-            $params["httponly"] = false;
-
-        session_start();
-        session_set_cookie_params($params["lifetime"], $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
-
-        return $this;
-    }
-
-    public function disableSession() {
-        session_destroy();
-        return $this;
-    }
-
     /**
      * Create the router
      */
     public function __construct() {
         $this->_baseUrl = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
-        $this->_url = str_replace($this->_baseUrl, "" , $_SERVER["REQUEST_URI"]);
-        $this->_url = $this->removeSlash($this->_url);
+        $this->_url = $this->removeSlash(str_replace($this->_baseUrl, "" , $_SERVER["REQUEST_URI"]));        
         $this->_method = $_SERVER["REQUEST_METHOD"]; //GET || POST
     }
 
@@ -251,7 +195,7 @@ class Router {
      * @param string $uri
      * @param callable $callback
      */
-    private function testUrl($uri, $callback) {
+    private function testUrl($uri, callable $callback) {
         // To Do (improve)
         $uri = $this->removeSlash($uri);
 
@@ -272,8 +216,11 @@ class Router {
         } else
             $matches = [$this->_url];
 
-        if ($isOk)
-            $callback(new Request($uri, $matches), new Response($this->_baseUrl, $this->_viewsPath));
+        if ($isOk) {
+            if(!empty($matches))
+                array_splice($matches, 0, 1);
+            $callback(new Response($this->_baseUrl, $this->_viewsPath), $matches);
+        }
     }
 
     /**
@@ -281,10 +228,9 @@ class Router {
      * @param callable(Request, Response) $callback
      * @return Router $this
      */
-    public function get($uri, $callback) {
-        if($this->_method == self::GET) {
+    public function get($uri, callable $callback) {
+        if ($this->_method == self::GET)
             $this->testUrl($uri, $callback);
-        }
         return $this;
     }
 
@@ -293,10 +239,9 @@ class Router {
      * @param callable $callback
      * @return Router $this
      */
-    public function post($uri, $callback) {
-        if($this->_method == self::POST) {
+    public function post($uri, callable $callback) {
+        if ($this->_method == self::POST)
             $this->testUrl($uri, $callback);
-        }
         return $this;
     }
 
@@ -305,14 +250,14 @@ class Router {
      * @param callable $callback
      * @return Router $this
      */
-    public function on($uri, $callback) {
+    public function on($uri, callable $callback) {
         $this->testUrl($uri, $callback);
         return $this;
     }
 
     /**
      *
-     * @param string|string[] $url
+     * @param string $url
      * @param string[] $routes
      * @return Router $this
      */
@@ -324,15 +269,17 @@ class Router {
             if (array_key_exists('routes', $route)) {
                 $this->use($uri, $route['routes']);
             } else {
-                $callback = $route['callback'];
+                if (!isset($route["callback"]))
+                    $route["callback"] = function() {};
+                if (!isset($route["method"]))
+                    $route["method"] = "";
 
-                if($route['method'] === self::POST) {
+                $callback = $route['callback'];
+                if($route['method'] === self::POST)
                     $this->post($uri, $callback);
-                } else if($route['method'] === self::GET) {
+                else if($route['method'] === self::GET)
                     $this->get($uri, $callback);
-                } else {
-                    $this->on($uri, $callback);
-                }
+                else $this->on($uri, $callback);
             }
         }
         return $this;

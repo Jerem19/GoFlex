@@ -1,18 +1,39 @@
 <?php
 require_once 'Configuration.php';
+require_once 'Installation.php';
+require_once 'Gateway.php';
 
 class Role {
-    private $_id;
-    private $name;
-
-    public static function getRoles() {
-        return Configuration::getDB()->query("SELECT * FROM tblRole;")->fetchAll();
+    
+    private static $roles = null;
+    /**
+     * Return all status
+     * @return Role[]
+     */
+    public static function Roles() {
+        if (self::$roles == null) {
+            $sth = Configuration::DB()->query("SELECT roleId FROM tblRole;");
+            while ($d = $sth->fetch())
+                self::$roles[] = new Role($d["roleId"]);
+        }
+        return self::$roles;
     }
 
+    private $_id = -1;
+    private $name = "no_" . __CLASS__;
+
+    /**
+     * Return the id
+     * @return int
+     */
     public function getId() {
         return $this->_id;
     }
 
+    /**
+     * Return the name
+     * @return string
+     */
     public function getName() {
         return $this->name;
     }
@@ -21,59 +42,69 @@ class Role {
         return strval($this->name);
     }
 
+    /**
+     * Role constructor.
+     * @param int $id
+     */
     public function __construct($id) {
-        $this->_id = $id;
-        $data = Configuration::getDB()->query("SELECT * FROM tblRole WHERE roleId = " . $id)->fetch();
+        $data = Configuration::DB()->execute("SELECT * FROM tblRole WHERE roleId = :id", ["id" => $id]);
         if(!empty($data)) {
-            $this->name = $data["name"];
+            $this->name = $data[0]["name"];
+            $this->_id = intval($data[0]["roleId"]);
         }
     }
 }
 
 class User {
 
-    static public function getUser($id) {
-        // To do: parameters
-        return new User($id);
-    }
+    /**
+     * @param array $params
+     * @return string|false
+     * @throws Exception
+     */
+    static public function create($params) {
+        if (!isset($params["email"]) || !isset($params["username"]))
+            return false;
 
-    static public function createUser($jsonParam) {
-        $stat = Configuration::getDB()->prepare(
-            "INSERT INTO tblUser (username, password, firstname, lastname, phone, email, user_role) VALUES (
-                  :username, :password, :firstname, :lastname, :phone, :email, :user_role
-        );");
-        $stat->execute($jsonParam);
+        $user = $params["username"];
+        if (!isset($params["role"]))
+            $params["role"] = 4;
 
-        return new User(Configuration::getDB()->lastInsertId());
+        $params["password"] = md5("temp_" . $user); // temporar Password
+        $params["token"] = bin2hex(random_bytes(50 - strlen($user)) . $user);
+
+        Configuration::DB()->execute("INSERT INTO tblUser (username, password, email, token, user_role) VALUES (:username, :password, :email, :token, :role);", $params);
+
+        return Configuration::DB()->lastInsertId();
     }
 
     /**
      * @param string $user
      * @param string $pass
-     * @return bool
+     * @return int|false
      */
     static public function isExisting($user, $pass) {
-        $t = Configuration::getDB()->query(sprintf("SELECT userId FROM tblUser WHERE username = '%s' AND password = '%s';", $user, $pass))->fetch();
-        return $t ? $t["userId"] : false;
-    }
-
-    /**
-     * Delete an user in the database
-     * @param int $id
-     */
-    public static function deleteUser($id) {
-        Configuration::getDB()->delete('user', $id);
+        $t = Configuration::DB()->execute("SELECT userId FROM tblUser WHERE username = :user AND password = :password;",
+            [":user" => $user, ":password" => $pass]);
+        return isset($t[0]) ? $t[0]["userId"] : false;
     }
 
     private $_id = -1;
-    private $username = "";
+    private $username = "no_" . __CLASS__;
     private $password = "";
-    private $role;
+    private $role = -1;
     private $firstname = "";
     private $lastname = "";
     private $phone = "";
     private $email = "";
+    private $token = "";
+    private $active = false;
 
+    private $_installations = null;
+    /**
+     * Return the Id
+     * @return int
+     */
     public function getId() {
         return $this->_id;
     }
@@ -82,15 +113,23 @@ class User {
      * Return the username
      * @return string
      */
-    public function getUserName() {
+    public function getUsername() {
         return $this->username;
+    }
+
+    /**
+     * Return the token
+     * @return string
+     */
+    public function getToken() {
+        return $this->token;
     }
 
     /**
      * Return the firstname
      * @return string
      */
-    public function getFirstName() {
+    public function getFirstname() {
         return $this->firstname;
     }
 
@@ -98,7 +137,7 @@ class User {
      * Return the lastname
      * @return string
      */
-    public function getLastName() {
+    public function getLastname() {
         return $this->lastname;
     }
 
@@ -117,12 +156,22 @@ class User {
     public function getEMail() {
         return $this->email;
     }
+ 
+    /**
+     * Return if the user is Activate
+     * @return bool
+     */
+    public function isActive() {
+        return $this->active;
+    }
 
     /**
      * Return the role
      * @return Role
      */
     public function getRole() {
+        if (!$this->role instanceof Role)
+            $this->role = new Role($this->role);
         return $this->role;
     }
 
@@ -130,28 +179,41 @@ class User {
         $return = $this->firstname . ' ' . $this->lastname;
         return $return === " " ? $this->username : $return;
     }
+   
 
     /**
-     * User constructor.
+     * Return the installations of this user
+     * @return Installation[]
+     */
+    public function getInstallations() {
+        if ($this->_installations == null)
+            $this->_installations = Installation::getByUser($this);
+        return $this->_installations;
+    }
+
+    /**
+     * User constructor
      * @param int $userId
      */
-    public function __construct($userId) {
-        $this->_id = $userId;
-        $data = Configuration::getDB()->query("SELECT * FROM tblUser WHERE userId = " . $userId)->fetch();
+    public function __construct($id) {
+        $data = Configuration::DB()->execute("SELECT * FROM tblUser WHERE userId = :id", ["id" => $id]);
 
-        if(!empty($data)) {
+        if (!empty($data)) {
+            $data = $data[0];
+            $this->_id = intval($data["userId"]);
             $this->username = $data["username"];
+            $this->token = $data["token"];
             $this->password = $data["password"];
             $this->firstname = $data["firstname"];
             $this->lastname = $data["lastname"];
             $this->phone = $data["phone"];
             $this->email = $data["email"];
-            $this->role = new Role($data['user_role']);
+            $this->role = $data['user_role'];
+            $this->active = $data['active'];
         }
     }
 
-
     public function isCorrect() {
-        return self::isExisting($this->username, $this->password) == $this->_id;
+        return self::isExisting($this->username, $this->password) == $this->_id; // To improve
     }
 }

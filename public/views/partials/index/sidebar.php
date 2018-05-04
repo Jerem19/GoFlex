@@ -4,25 +4,25 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
 
-            <p class="centered"><a href="profile"><img src="userIco.jpg" class="img-circle" width="60"></a></p>
+            <p class="centered"><a href="<?= BASE_URL ?>profile"><img src="<?= BASE_URL ?>userIco.jpg" class="img-circle" width="60"></a></p>
             <h5 class="centered"><?= $params["User"] ?></h5>
 
             <?php
-            function doLink ($text, $attr, $isActive = false) {
+            function doLink ($href, $attr, $isActive = false) {
                 if (!isset($attr["_iClass"])) $attr["_iClass"] = ""; ?>
                 <li <?= $isActive ? 'class="active"': '' ?>>
-                    <a href="<?= $attr["href"] ?>">
-                        <i class="<?= $attr["_iClass"] ?>"></i><span><?= $text ?></span>
+                    <a href="<?= BASE_URL . $href ?>" >
+                        <i class="<?= $attr["_iClass"] ?>"></i><span><?= $attr["text"] ?></span>
                     </a>
                 </li> <?php
             }
 
-            function doSubMenu($text, $menu, $isActive = false) {
+            function doSubMenu($menu, $isActive = false) {
                 if (!isset($menu["_iClass"])) $menu["_iClass"] = ""; ?>
                 <li class="sub-menu">
-                    <a href="javascript:;" <?= $isActive ? 'class="active"': '' ?>>
-                        <i class="<?= $menu["_iClass"] ?>"></i><?php unset($menu["_iClass"]); ?>
-                        <span><?= $text ?></span>
+                    <a href="javascript:;" <?= $isActive ? 'class="active"': '' ?> >
+                        <i class="<?= $menu["_iClass"] ?>"></i>
+                        <span><?= $menu["text"] ?></span>
                     </a>
                     <ul class="sub">
                         <?php doMenu($menu); ?>
@@ -31,40 +31,66 @@
             }
 
             global $path;
-            $path = isset($params["path"]) ? $params["path"] : "/GoFlex";
+            $path = isset($params["path"]) ? $params["path"] : BASE_URL;
             function doMenu($menu = []) {
                 global $path;
-                foreach ($menu as $text => $attr) {
-                    if (array_key_exists('href', $attr))
-                        doLink($text, $attr, $path == $attr["href"]);
-                    else {
-                        $active = false;
-                        foreach ($attr as $item)
-                            if (isset($item["href"]) && $item["href"] == $path) {
-                                $active = true;
-                                break;
+                foreach ($menu as $href => $attr) {
+                    if (is_array($attr)) {
+                        $isSubMenu = false;
+                        $isActive = false;
+                        foreach ($attr as $k => $item) {
+                            if (is_array($item)) {
+                                $isSubMenu = true;
+                                if ($k == $path) {
+                                    $isActive = true;
+                                    break;
+                                }
                             }
-                        doSubMenu($text, $attr, $active);
+                        }
+                        if ($isSubMenu)
+                            doSubMenu($attr, $isActive);
+                        else
+                            doLink($href, $attr, $href == $path);
                     }
                 }
             }
 
 
-            doMenu([
-                $l10nNav["dashboard"] => [
-                    "href" => "/GoFlex",
+
+            $menu = [
+                "" => [
+                    "text" => $l10nNav["dashboard"],
                     "_iClass" => "fa fa-dashboard"
-                ],
-                $l10nNav["administration"] => [
-                    "_iClass" => "fa fa-book",
-                    $l10nNav["user"] => [
-                        "href" => "user"
-                    ],
-                    $l10nNav["profil"] => [
-                        "href" => "profile"
-                    ]
                 ]
-            ]); ?>
+            ];
+
+            if ($params["User"]->getRole()->getId() == 4) {
+                $menu[] = [
+                    "text" => $l10nNav["analyse"],
+                    "boiler" => [
+                        "text" => $l10nNav["boiler"]
+                    ],
+                    "heater" => [
+                        "text" => $l10nNav["heater"]
+                    ],
+                    "summary" => [
+                        "text" => $l10nNav["summary"]
+                    ],
+                ];
+            }
+
+            $menu[] = [
+                "_iClass" => "fa fa-book",
+                "text" => $l10nNav["administration"],
+                "profile" => [
+                    "text" => $l10nNav["profil"]
+                ],
+                "user" => [
+                    "text" => $l10nNav["user"]
+                ]
+            ];
+
+            doMenu($menu);?>
         </ul>
     </div>
 </aside>
