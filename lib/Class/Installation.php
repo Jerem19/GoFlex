@@ -68,7 +68,7 @@ class Installation {
      * Installation constructor.
      * @param int $id
      */
-    public function __construct($id) {
+    public function __construct(int $id) {
         $data = Configuration::DB()->execute("SELECT * FROM tblInstallation WHERE installationId = :id", ["id" => $id]);
 
         if (!empty($data)) {

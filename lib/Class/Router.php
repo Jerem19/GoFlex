@@ -5,7 +5,7 @@ class Response {
     private $_baseUrl;
     private $_viewsPath = null;
 
-    public function __construct($baseUrl, $viewsPath = null) {
+    public function __construct(string $baseUrl, string $viewsPath = null) {
         $this->_baseUrl = $baseUrl;
         $this->_viewsPath = $viewsPath;
     }
@@ -17,10 +17,10 @@ class Response {
         exit();
     }
 
-    public function render($viewPath, $params = null) {
-        $file = $this->_viewsPath != null ? $this->_viewsPath."/".$viewPath : $viewPath;
+    public function render(string $viewPath, $params = null) {
         $this->setContentType("text/html");
-        require_once $file; // if no file => error (intentional)
+        extract($params);
+        require_once $this->_viewsPath != null ? $this->_viewsPath."/".$viewPath : $viewPath; // if no file => error (intentional)
         $this->stopExec();
     }
 
@@ -31,7 +31,7 @@ class Response {
      * @param string $contentType
      * @param boolean $stopScript to send more data
      */
-    public function send($data, $jsonEncode = true, $contentType = null, $stopScript = true) {
+    public function send($data, bool $jsonEncode = true, $contentType = null, bool $stopScript = true) {
         if ($contentType == null)
             $contentType = is_array($data) ? "application/json" : (new finfo(FILEINFO_MIME))->buffer((string)$data);
         $this->setContentType($contentType);
@@ -47,7 +47,7 @@ class Response {
      * @param string $file
      * @param string|null $contentType if you want to force the MIME Type
      */
-    public function sendFile($file, $contentType = null) {
+    public function sendFile(string $file, $contentType = null) {
         if (file_exists($file)) {
             if ($contentType == null) {
                 $mimeType = json_decode(file_get_contents(PRIVATE_FOLDER . 'Class/MIME_TYPES.json'), true);
@@ -66,7 +66,7 @@ class Response {
      * @param string $url
      * @param bool $local
      */
-    public function redirect($url, $local = true) {
+    public function redirect(string $url, bool $local = true) {
         $this->setHeader("Location: " . ($local ? $this->_baseUrl : '') . $url);
         $this->stopExec();
     }
@@ -75,7 +75,7 @@ class Response {
      * Set a content type for the header
      * @param $contentType
      */
-    private function setContentType($contentType) {
+    private function setContentType(string $contentType) {
         $this->setHeader("Content-type: " . $contentType);
     }
 
@@ -84,8 +84,8 @@ class Response {
      * @param bool $replace
      * @param null|int $http_response_code
      */
-    public function setHeader($stringHeader, $replace = true, $http_response_code = null) {
-        header($stringHeader, $replace, $http_response_code);
+    public function setHeader(string $header, bool $replace = true, $http_response_code = null) {
+        header($header, $replace, $http_response_code);
     }
 }
 
@@ -140,7 +140,7 @@ class Router {
      * @param string $viewPath
      * @return Router
      */
-    public function setViewsPath($viewPath) {
+    public function setViewsPath(string $viewPath) {
         $this->_viewsPath = $viewPath;
         return $this;
     }
@@ -161,7 +161,7 @@ class Router {
      * @param string $contentType
      * @return Router $this
      */
-    public function byExt($extension, $folder, $contentType = null) {
+    public function byExt($extension, string $folder, $contentType = null) {
         $extension = is_array($extension) ? $extension : [$extension];
         if (in_array(pathinfo($this->_url, PATHINFO_EXTENSION), $extension)) {
             (new Response($this->_baseUrl, $this->_viewsPath))->sendFile($folder . $this->_url, $contentType);
@@ -169,14 +169,14 @@ class Router {
         return $this;
     }
 
-    private function removeSlash($string) {
+    private function removeSlash(string $string) {
         if(substr($string, -1) === '/') {
             return substr($string, 0, -1);
         }
         return $string;
     }
 
-    private function doPattern($string) {
+    private function doPattern(string $string) {
         preg_match('/([\w\/]*)(\:[a-zA-Z]+|\*)([\w\/\:\.\*]*)/', $string, $matches);
 
         $wanted = $matches[2];
@@ -195,7 +195,7 @@ class Router {
      * @param string $uri
      * @param callable $callback
      */
-    private function testUrl($uri, callable $callback) {
+    private function testUrl(string $uri, callable $callback) {
         // To Do (improve)
         $uri = $this->removeSlash($uri);
 
@@ -228,7 +228,7 @@ class Router {
      * @param callable(Request, Response) $callback
      * @return Router $this
      */
-    public function get($uri, callable $callback) {
+    public function get(string $uri, callable $callback) {
         if ($this->_method == self::GET)
             $this->testUrl($uri, $callback);
         return $this;
@@ -239,7 +239,7 @@ class Router {
      * @param callable $callback
      * @return Router $this
      */
-    public function post($uri, callable $callback) {
+    public function post(string $uri, callable $callback) {
         if ($this->_method == self::POST)
             $this->testUrl($uri, $callback);
         return $this;
@@ -250,7 +250,7 @@ class Router {
      * @param callable $callback
      * @return Router $this
      */
-    public function on($uri, callable $callback) {
+    public function on(string $uri, callable $callback) {
         $this->testUrl($uri, $callback);
         return $this;
     }
@@ -261,7 +261,7 @@ class Router {
      * @param string[] $routes
      * @return Router $this
      */
-    public function use($url, $routes) {
+    public function use(string $url, array $routes) {
         foreach ($routes as $key => $route) {
             if (substr($key, 0, 1) !== '/')
                 $key = '/' . $key;

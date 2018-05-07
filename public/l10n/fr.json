@@ -12,7 +12,10 @@
     },
     "index": {
         "chart" : {
-            "temperature" : "Température"
+            "temperature" : "Température",
+            "power": "Puissance",
+            "boiler_power": "Puissance du boiler",
+            "boiler_temp": "Température du boiler"
         },
         "sidebar": {
             "administration": "Administration",

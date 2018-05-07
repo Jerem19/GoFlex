@@ -12,9 +12,9 @@ class Role {
      */
     public static function Roles() {
         if (self::$roles == null) {
-            $sth = Configuration::DB()->query("SELECT roleId FROM tblRole;");
+            $sth = Configuration::DB()->query("SELECT roleId, name FROM tblRole;");
             while ($d = $sth->fetch())
-                self::$roles[] = new Role($d["roleId"]);
+                self::$roles[$d["name"]] = new Role($d["roleId"]);
         }
         return self::$roles;
     }
@@ -46,7 +46,7 @@ class Role {
      * Role constructor.
      * @param int $id
      */
-    public function __construct($id) {
+    public function __construct(int $id) {
         $data = Configuration::DB()->execute("SELECT * FROM tblRole WHERE roleId = :id", ["id" => $id]);
         if(!empty($data)) {
             $this->name = $data[0]["name"];
@@ -62,7 +62,7 @@ class User {
      * @return string|false
      * @throws Exception
      */
-    static public function create($params) {
+    static public function create(array $params) {
         if (!isset($params["email"]) || !isset($params["username"]))
             return false;
 
@@ -70,7 +70,7 @@ class User {
         if (!isset($params["role"]))
             $params["role"] = 4;
 
-        $params["password"] = md5("temp_" . $user); // temporar Password
+        $params["password"] = md5(random_bytes(25)); // temporar Password
         $params["token"] = bin2hex(random_bytes(50 - strlen($user)) . $user);
 
         Configuration::DB()->execute("INSERT INTO tblUser (username, password, email, token, user_role) VALUES (:username, :password, :email, :token, :role);", $params);
@@ -83,10 +83,9 @@ class User {
      * @param string $pass
      * @return int|false
      */
-    static public function isExisting($user, $pass) {
-        $t = Configuration::DB()->execute("SELECT userId FROM tblUser WHERE username = :user AND password = :password;",
-            [":user" => $user, ":password" => $pass]);
-        return isset($t[0]) ? $t[0]["userId"] : false;
+    static public function isExisting(string $user, string $pass) {
+        $u = Configuration::DB()->execute("SELECT userId, password FROM tblUser WHERE username = :user;", [":user" => $user]);
+        return password_verify("Go" . $pass . "Flex", $u[0]["password"]) ? $u[0]["userId"] : false; // Improve if user is disable (error msg?)
     }
 
     private $_id = -1;
@@ -101,6 +100,7 @@ class User {
     private $active = false;
 
     private $_installations = null;
+
     /**
      * Return the Id
      * @return int
@@ -179,7 +179,6 @@ class User {
         $return = $this->firstname . ' ' . $this->lastname;
         return $return === " " ? $this->username : $return;
     }
-   
 
     /**
      * Return the installations of this user
@@ -193,27 +192,28 @@ class User {
 
     /**
      * User constructor
-     * @param int $userId
+     * @param int $id
+     * @param string $password
      */
-    public function __construct($id) {
+    public function __construct(int $id, string $password = "") {
         $data = Configuration::DB()->execute("SELECT * FROM tblUser WHERE userId = :id", ["id" => $id]);
 
         if (!empty($data)) {
             $data = $data[0];
             $this->_id = intval($data["userId"]);
             $this->username = $data["username"];
+            $this->password = $password;
             $this->token = $data["token"];
-            $this->password = $data["password"];
             $this->firstname = $data["firstname"];
             $this->lastname = $data["lastname"];
             $this->phone = $data["phone"];
             $this->email = $data["email"];
             $this->role = $data['user_role'];
-            $this->active = $data['active'];
+            $this->active = (bool) $data['active'];
         }
     }
 
     public function isCorrect() {
-        return self::isExisting($this->username, $this->password) == $this->_id; // To improve
+        return self::isExisting($this->username, $this->password);
     }
 }

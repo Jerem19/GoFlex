@@ -45,7 +45,7 @@ class Status {
      * Status constructor.
      * @param int $id
      */
-    public function __construct($id) {
+    public function __construct(int $id) {
         $data = Configuration::DB()->execute("SELECT * FROM tblStatus WHERE statusId = :id", ["id" => $id]);
         if(!empty($data)) {
             $this->name = $data[0]["name"];
@@ -62,7 +62,7 @@ class Gateway {
      * @param array["mac", "name", ?"status"] $params
      * @return int|false
      */
-    public static function create($params) {
+    public static function create(array $params) {
         if (!isset($params["mac"]) || !isset($params["name"]))
             return false;
 
@@ -128,7 +128,7 @@ class Gateway {
      * Gateway constructor.
      * @param int $id
      */
-    public function __construct($id) {
+    public function __construct(int $id) {
         $data = Configuration::DB()->execute("SELECT * FROM tblGateway WHERE gatewayId = :id", ["id" => $id]);
         if (!empty($data)) {
             $data = $data[0];

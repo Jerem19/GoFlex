@@ -34,6 +34,7 @@
 
                             rangeSelector: {
                                 floating: true,
+                                selected : 2,
                                 buttons: [{
                                     type: 'hour',
                                     count: 1,
@@ -43,9 +44,16 @@
                                     count: 1,
                                     text: '1d'
                                 }, {
+                                    type: 'day',
+                                    count: 2,
+                                    text: '2d'
+                                }, {
                                     type: 'month',
                                     count: 1,
                                     text: '1m'
+                                }, {
+                                    type: 'all',
+                                    text: 'All'
                                 }]
                             }
                         }

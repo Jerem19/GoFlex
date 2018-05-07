@@ -5,7 +5,7 @@
         <ul class="sidebar-menu" id="nav-accordion">
 
             <p class="centered"><a href="<?= BASE_URL ?>profile"><img src="<?= BASE_URL ?>userIco.jpg" class="img-circle" width="60"></a></p>
-            <h5 class="centered"><?= $params["User"] ?></h5>
+            <h5 class="centered"><?= $user ?></h5>
 
             <?php
             function doLink ($href, $attr, $isActive = false) {
@@ -30,10 +30,9 @@
                 </li> <?php
             }
 
-            global $path;
-            $path = isset($params["path"]) ? $params["path"] : BASE_URL;
+            $pathMenu = isset($path) ? $path : BASE_URL;
             function doMenu($menu = []) {
-                global $path;
+                global $pathMenu;
                 foreach ($menu as $href => $attr) {
                     if (is_array($attr)) {
                         $isSubMenu = false;
@@ -41,7 +40,7 @@
                         foreach ($attr as $k => $item) {
                             if (is_array($item)) {
                                 $isSubMenu = true;
-                                if ($k == $path) {
+                                if ($k == $pathMenu) {
                                     $isActive = true;
                                     break;
                                 }
@@ -50,7 +49,7 @@
                         if ($isSubMenu)
                             doSubMenu($attr, $isActive);
                         else
-                            doLink($href, $attr, $href == $path);
+                            doLink($href, $attr, $href == $pathMenu);
                     }
                 }
             }
@@ -64,7 +63,7 @@
                 ]
             ];
 
-            if ($params["User"]->getRole()->getId() == 4) {
+            if ($user->getRole()->getId() == 4) {
                 $menu[] = [
                     "text" => $l10nNav["analyse"],
                     "boiler" => [

@@ -29,8 +29,8 @@ include "partials/header.php";
     <section id="main-content">
         <section class="wrapper">
 
-            <?php if (isset($params["path"])) {
-                switch ($params["path"]) {
+            <?php if (isset($path)) {
+                switch ($path) {
                     case "profile":
                         include 'partials/index/profile.php';
                         break;

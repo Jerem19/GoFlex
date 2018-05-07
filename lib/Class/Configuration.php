@@ -7,10 +7,10 @@ class DB extends PDO {
     }
     /**
      * Delete a row in a table
-     * @param string $field
+     * @param string $table
      * @param int $id
      */
-    public function delete($table, $id) {
+    public function delete(string $table, int $id) {
         $this->query(sprintf('DELETE FROM tbl%s WHERE %sId = %d', ucfirst($table), $table, $id));
     }
 
@@ -19,7 +19,7 @@ class DB extends PDO {
      * @param array $attributes
      * @return array|bool
      */
-    public function execute($query, $attributes = []){
+    public function execute(string $query, array $attributes = []){
         $stmt = $this->prepare($query);
         $stmt->execute($attributes);
         $code = $stmt->errorCode();
