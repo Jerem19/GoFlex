@@ -34,7 +34,7 @@ class Configuration {
     private static $db_host = "localhost";
     private static $db_port = "3306";
     private static $db_user = "root";
-    private static $db_pass = "password";
+    private static $db_pass = "";
 
     private static $DB = null;
 

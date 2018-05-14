@@ -20,13 +20,17 @@
         "sidebar": {
             "administration": "Administration",
             "dashboard": "Tableau de bord",
+            "creation": "Creation",
 
             "analyse" : "Analyses",
             "boiler" : "Eau Chaude",
             "heater" : "Chauffage",
             "user" : "Utilisateur",
             "summary" : "Résumé",
-            "profil" : "Profile"
+            "profil" : "Profil",
+            "addUser" : "Ajout utilisateur",
+            "addInstallation" : "Ajout installation",
+            "installation" : "Installation"
         },
         "header": {
             "logout": "Déconnexion",
@@ -34,9 +38,19 @@
         },
         "profile" : {
             "firstname" : "Prénom",
-            "lastname": "Nom de famille",
+            "lastname": "Nom",
             "phone": "N° de tél.",
-            "email": "email"
+            "email": "email",
+            "username": "Nom d'utilisateur",
+            "alertCreateUserFailed": "Une erreur a été détectée lors de l'ajout du nouvel utilisateur.",
+            "alertCreateUserSuccess": "Nouvel utilisateur ajouté correctement!",
+            "create": "Créer"
+        },
+        "addInstallation" : {
+            "name" : "Nom",
+            "macAddress": "Adresse MAC",
+            "alertCreateInstallationFailed": "Une erreur a été détectée lors de l'ajout d'une nouvelle installation.",
+            "alertCreateInstallationSuccess": "Nouvelle instllation ajoutée correctement!"
         }
     }
 }
