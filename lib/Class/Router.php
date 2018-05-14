@@ -17,7 +17,7 @@ class Response {
         exit();
     }
 
-    public function render(string $viewPath, $params = null) {
+    public function render(string $viewPath, array $params = []) {
         $this->setContentType("text/html");
         extract($params);
         require_once $this->_viewsPath != null ? $this->_viewsPath."/".$viewPath : $viewPath; // if no file => error (intentional)

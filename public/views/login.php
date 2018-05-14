@@ -7,7 +7,7 @@ $metas = [
     "keyword" => "Login"
 ];
 $styles = [
-    "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
+    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
     "3rdparty/style.css",
     "/login.css"
 ];
