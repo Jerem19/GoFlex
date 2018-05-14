@@ -10,7 +10,7 @@
             <li>
                 <?php include __DIR__ . '/../sltLang.php'; ?>
             </li>
-            <li><a class="logout" href="<?= BASE_URL ?>logout"><?= $l10n["header"]["logout"] ?></a></li>
+            <li><a class="logout" href="<?= BASE_URL ?>logout"><span class="fa fa-sign-out"></span></a></li>
         </ul>
     </div>
 </header>

@@ -138,5 +138,4 @@ class Gateway {
             $this->status = $data["gw_status"];
         }
     }
-
 }

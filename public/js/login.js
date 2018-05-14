@@ -20,3 +20,5 @@ document.forms[0].onsubmit = function() {
     xhttp.send('username='+this["username"].value+'&password='+this["password"].value);
     return false;
 }
+
+$.backstretch("/GoFlex/login-bg.jpg", {speed: 150});

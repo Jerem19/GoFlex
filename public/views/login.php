@@ -1,7 +1,7 @@
 <?php
 
 $metas = [
-    "viewport" => "",
+    "viewport" => "width=device-width, initial-scale=1.0",
     "description" => "",
     "author" => "",
     "keyword" => "Login"
@@ -9,6 +9,7 @@ $metas = [
 $styles = [
     "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
     "3rdparty/style.css",
+    "3rdparty/style-responsive.css",
     "/login.css"
 ];
 $title = L10N["login"]["title"];
@@ -36,7 +37,12 @@ include "partials/header.php";
             </form>
         </div>
     </div>
+    <div class="backstretch"><img /></div>
 <?php
 include 'partials/index/footer.php';
-$scripts = [ "/l10n.js", "/login.js" ];
+$scripts = [
+    "https://code.jquery.com/jquery-3.1.1.min.js",
+    "https://blacktie.co/demo/dashgum/assets/js/jquery.backstretch.min.js",
+    "/l10n.js", "/login.js"
+];
 include 'partials/footer.php';

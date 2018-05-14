@@ -1,4 +1,5 @@
 {
+    "contact" : "Contact",
     "login": {
         "title": "Login",
 
@@ -19,7 +20,6 @@
             "profil" : "Profile"
         },
         "header": {
-            "logout": "Logout",
             "nav-text": "Toggle Navigation"
         }
     }

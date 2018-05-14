@@ -29,7 +29,6 @@
             "profil" : "Profile"
         },
         "header": {
-            "logout": "Déconnexion",
             "nav-text": "Inverser la navigation"
         },
         "profile" : {
