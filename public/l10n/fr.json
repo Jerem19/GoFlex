@@ -44,7 +44,10 @@
             "username": "Nom d'utilisateur",
             "alertCreateUserFailed": "Une erreur a été détectée lors de l'ajout du nouvel utilisateur.",
             "alertCreateUserSuccess": "Nouvel utilisateur ajouté correctement!",
-            "create": "Créer"
+            "alertUpdateUserSuccess": "La mise à jour a réussi!",
+            "alertUpdateUserFailed": "La mise à jour a échouée!",
+            "create": "Créer",
+            "update": "Modifier"
         },
         "addInstallation" : {
             "name" : "Nom",

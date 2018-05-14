@@ -106,6 +106,11 @@ $router
         $res->send(Gateway::create($_POST));
     })
 
+    ->post('/updateProfile', function(Response $res) {
+
+        $res->send($_SESSION['User']->setPhone($_POST["phone"]));
+    })
+
     ->post('/login', function(Response $res) {
         $exist = User::isExisting($_POST["username"], $_POST["password"]);
         if ($exist != false)

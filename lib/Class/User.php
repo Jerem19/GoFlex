@@ -65,6 +65,8 @@ class User {
         Configuration::DB()->execute("INSERT INTO tblUser (firstname, lastname, phone, username, password, email, token, user_role) VALUES (:firstname, :lastname, :phone, :username, :password, :email, :token, :role);", $params);
         return Configuration::DB()->lastInsertId();
     }
+
+
     /**
      * @param string $user
      * @param string $pass
@@ -85,6 +87,13 @@ class User {
     private $token = "";
     private $active = false;
     private $_installations = null;
+
+
+    public function setPhone(string $phone) {
+
+        return is_array(Configuration::DB()->execute("UPDATE tblUser SET phone = :phone WHERE userId = :userId;)", [":phone" => $phone, ":userId"=>$this->getId()]));
+    }
+
     /**
      * Return the Id
      * @return int

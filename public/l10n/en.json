@@ -44,7 +44,10 @@
             "username": "Username",
             "alertCreateUserFailed": "The process 'add a new user' has failed!",
             "alertCreateUserSuccess": "New user correctly added!",
-            "create": "Create"
+            "alertUpdateUserSuccess": "User correctly updated!",
+            "alertUpdateUserFailed": "The update process has failed!",
+            "create": "Create",
+            "update": "Update"
         },
         "addInstallation" : {
             "name" : "Name",
