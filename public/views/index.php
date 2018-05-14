@@ -31,6 +31,16 @@ include "partials/header.php";
 
             <?php if (isset($path)) {
                 switch ($path) {
+                    case "installation":
+                        //TODO : Create installation.php and add the Luc's code
+                        include 'partials/index/installation.php';
+                        break;
+                    case "addUser":
+                        include 'partials/index/addUser.php';
+                        break;
+                    case "addInstallation":
+                        include 'partials/index/addInstallation.php';
+                        break;
                     case "profile":
                         include 'partials/index/profile.php';
                         break;

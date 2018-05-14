@@ -2,9 +2,8 @@
 require_once 'Configuration.php';
 require_once 'Installation.php';
 require_once 'Gateway.php';
-
 class Role {
-    
+
     private static $roles = null;
     /**
      * Return all status
@@ -18,10 +17,8 @@ class Role {
         }
         return self::$roles;
     }
-
     private $_id = -1;
     private $name = "no_" . __CLASS__;
-
     /**
      * Return the id
      * @return int
@@ -29,7 +26,6 @@ class Role {
     public function getId() {
         return $this->_id;
     }
-
     /**
      * Return the name
      * @return string
@@ -37,11 +33,9 @@ class Role {
     public function getName() {
         return $this->name;
     }
-
     public function __toString() {
         return strval($this->name);
     }
-
     /**
      * Role constructor.
      * @param int $id
@@ -54,9 +48,7 @@ class Role {
         }
     }
 }
-
 class User {
-
     /**
      * @param array $params
      * @return string|false
@@ -65,18 +57,15 @@ class User {
     static public function create(array $params) {
         if (!isset($params["email"]) || !isset($params["username"]))
             return false;
-
         $user = $params["username"];
         if (!isset($params["role"]))
             $params["role"] = 4;
-
         $params["password"] = md5(random_bytes(25)); // temporar Password
         $params["token"] = bin2hex(random_bytes(50 - strlen($user)) . $user);
-
-        Configuration::DB()->execute("INSERT INTO tblUser (username, password, email, token, user_role) VALUES (:username, :password, :email, :token, :role);", $params);
-
+        Configuration::DB()->execute("INSERT INTO tblUser (firstname, lastname, phone, username, password, email, token, user_role) VALUES (:firstname, :lastname, :phone, :username, :password, :email, :token, :role);", $params);
         return Configuration::DB()->lastInsertId();
     }
+
 
     /**
      * @param string $user
@@ -87,7 +76,6 @@ class User {
         $u = Configuration::DB()->execute("SELECT userId, password FROM tblUser WHERE username = :user;", [":user" => $user]);
         return password_verify("Go" . $pass . "Flex", $u[0]["password"]) ? $u[0]["userId"] : false; // Improve if user is disable (error msg?)
     }
-
     private $_id = -1;
     private $username = "no_" . __CLASS__;
     private $password = "";
@@ -98,8 +86,13 @@ class User {
     private $email = "";
     private $token = "";
     private $active = false;
-
     private $_installations = null;
+
+
+    public function setPhone(string $phone) {
+
+        return is_array(Configuration::DB()->execute("UPDATE tblUser SET phone = :phone WHERE userId = :userId;)", [":phone" => $phone, ":userId"=>$this->getId()]));
+    }
 
     /**
      * Return the Id
@@ -108,7 +101,6 @@ class User {
     public function getId() {
         return $this->_id;
     }
-
     /**
      * Return the username
      * @return string
@@ -116,7 +108,6 @@ class User {
     public function getUsername() {
         return $this->username;
     }
-
     /**
      * Return the token
      * @return string
@@ -124,7 +115,6 @@ class User {
     public function getToken() {
         return $this->token;
     }
-
     /**
      * Return the firstname
      * @return string
@@ -132,7 +122,6 @@ class User {
     public function getFirstname() {
         return $this->firstname;
     }
-
     /**
      * Return the lastname
      * @return string
@@ -140,7 +129,6 @@ class User {
     public function getLastname() {
         return $this->lastname;
     }
-
     /**
      * Return the phone
      * @return string
@@ -148,7 +136,6 @@ class User {
     public function getPhone() {
         return $this->phone;
     }
-
     /**
      * Return the email
      * @return string
@@ -156,7 +143,7 @@ class User {
     public function getEMail() {
         return $this->email;
     }
- 
+
     /**
      * Return if the user is Activate
      * @return bool
@@ -164,7 +151,6 @@ class User {
     public function isActive() {
         return $this->active;
     }
-
     /**
      * Return the role
      * @return Role
@@ -174,12 +160,10 @@ class User {
             $this->role = new Role($this->role);
         return $this->role;
     }
-
     public function __toString() {
         $return = $this->firstname . ' ' . $this->lastname;
         return $return === " " ? $this->username : $return;
     }
-
     /**
      * Return the installations of this user
      * @return Installation[]
@@ -189,7 +173,6 @@ class User {
             $this->_installations = Installation::getByUser($this);
         return $this->_installations;
     }
-
     /**
      * User constructor
      * @param int $id
@@ -197,7 +180,6 @@ class User {
      */
     public function __construct(int $id, string $password = "") {
         $data = Configuration::DB()->execute("SELECT * FROM tblUser WHERE userId = :id", ["id" => $id]);
-
         if (!empty($data)) {
             $data = $data[0];
             $this->_id = intval($data["userId"]);
@@ -212,7 +194,6 @@ class User {
             $this->active = (bool) $data['active'];
         }
     }
-
     public function isCorrect() {
         return self::isExisting($this->username, $this->password);
     }

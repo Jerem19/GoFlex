@@ -63,8 +63,29 @@
                 ]
             ];
 
+            if ($user->getRole()->getId() == 1) {
+                $menu[] = [
+                    "_iClass" => "fa fa-plus-circle",
+                    "text" => $l10nNav["creation"],
+                    "addUser" => [
+                        "text" => $l10nNav["addUser"]
+                    ],
+                    "addInstallation" => [
+                        "text" => $l10nNav["addInstallation"]
+                    ],
+                ];
+            }
+
+            if ($user->getRole()->getId() == 2) {
+                $menu[] = [
+                    "_iClass" => "fa fa-wrench",
+                    "text" => $l10nNav["installation"],
+                ];
+            }
+
             if ($user->getRole()->getId() == 4) {
                 $menu[] = [
+                    "_iClass" => "fa fa-desktop",
                     "text" => $l10nNav["analyse"],
                     "boiler" => [
                         "text" => $l10nNav["boiler"]

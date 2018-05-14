@@ -11,16 +11,48 @@
         "sign_in_now" : "Sign in now"
     },
     "index": {
-
+        "chart" : {
+            "temperature" : "Temperature",
+            "power": "Power",
+            "boiler_power": "Boiler power",
+            "boiler_temp": "Boiler temperature"
+        },
         "sidebar": {
             "administration": "Administration",
             "dashboard": "Dashboard",
+            "creation": "Add",
 
+            "analyse" : "analysis",
+            "boiler" : "Hot water",
+            "heater" : "Heating",
             "user" : "User",
-            "profil" : "Profile"
+            "summary" : "Summary",
+            "profil" : "Profile",
+            "addUser" : "Add User",
+            "addInstallation" : "Add Installation",
+            "installation" : "Installation"
         },
         "header": {
             "nav-text": "Toggle Navigation"
+        },
+        "profile" : {
+            "firstname" : "Firstname",
+            "lastname": "Lastname",
+            "phone": "Phone number",
+            "email": "Email",
+            "username": "Username",
+            "alertCreateUserFailed": "The process 'add a new user' has failed!",
+            "alertCreateUserSuccess": "New user correctly added!",
+            "alertUpdateUserSuccess": "User correctly updated!",
+            "alertUpdateUserFailed": "The update process has failed!",
+            "create": "Create",
+            "update": "Update"
+        },
+        "addInstallation" : {
+            "name" : "Name",
+            "macAddress": "MAC address",
+            "alertCreateUserFailed": "The process 'add a new installation' has failed!",
+            "alertCreateUserSuccess": "New installation correctly added!"
         }
     }
 }
