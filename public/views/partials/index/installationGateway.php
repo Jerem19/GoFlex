@@ -1,6 +1,6 @@
 <section id="main-content">
     <section class="wrapper site-min-height">
-        <h3><i class="fa fa-angle-right"></i>Gestion des installations</h3>
+        <h3><i class="fa fa-angle-right"></i>PAGE EN TRAVAUX</h3>
         <div class="row mt">
             <div class="col-lg-12">
                 <div class="row mt">
