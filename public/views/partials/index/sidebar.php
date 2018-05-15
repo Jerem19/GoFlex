@@ -77,9 +77,9 @@
             }
 
             if ($user->getRole()->getId() == 2) {
-                $menu[] = [
-                    "_iClass" => "fa fa-wrench",
-                    "text" => $l10nNav["installation"],
+                $menu["installationGateway"] = [
+                    "text" => $l10nNav["installationGateway"],
+                    "_iClass" => "fa fa-wrench"
                 ];
             }
 

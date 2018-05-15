@@ -30,7 +30,7 @@
             "profil" : "Profil",
             "addUser" : "Ajout utilisateur",
             "addInstallation" : "Ajout installation",
-            "installation" : "Installation"
+            "installationGateway" : "Installation"
         },
         "header": {
             "nav-text": "Inverser la navigation"
