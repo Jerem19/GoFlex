@@ -28,10 +28,10 @@
             "user" : "User",
             "summary" : "Summary",
             "profil" : "Profile",
-            "addUser" : "Add User",
-            "addInstallation" : "Add Installation",
+            "creationUser" : "Add User",
             "installationGateway" : "Installation",
-            "passwordModification" : "Password management"
+            "passwordModification" : "Password management",
+            "checkUserData" : "Access clients data"
         },
         "header": {
             "nav-text": "Toggle Navigation"
@@ -50,17 +50,12 @@
             "technical": "Technical",
             "hotline": "Hotline",
             "user": "User",
+            "gatewayName": "Gateway number",
             "role": "Role",
             "update": "Update"
         },
-        "addInstallation" : {
-            "name" : "Name",
-            "macAddress": "MAC address",
-            "alertCreateUserFailed": "The process 'add a new installation' has failed!",
-            "alertCreateUserSuccess": "New installation correctly added!"
-        },
         "installation" : {
-            "clientNumber" : "Client Number",
+            "clientName" : "Client",
             "boxNumber": "Box Number",
             "facturation": "Facturation",
             "businessSector": "Business sector",
@@ -70,6 +65,10 @@
             "electricity": "Electricity",
             "gaz": "Gaz",
             "wood": "Wood",
+            "consommationSensor": "Consommation sensor",
+            "insideTemperatureSensor": "Room temperature sensor",
+            "boilerTemperatureSensor": "boiler temperature sensor",
+            "productionSensor": "Production sensor",
             "technoHeat": "Technology Heating",
             "technoHotWater": "Technology hot water",
             "energyHotWater": "Energy hot water",
@@ -79,7 +78,10 @@
             "yes": "yes",
             "no": "no",
             "solarPanel": "Solar panel",
-            "equipmentEnergyDefinition": "Energy Equipment Definition",
+            "equipmentEnergyDefinitionSolarPanel": "Solar panels",
+            "equipmentEnergyDefinitionChargingBorne": "Charging borne",
+            "equipmentEnergyDefinitionHeat": "Heat",
+            "equipmentEnergyDefinitionHotwater": "Hot water",
             "systemDefinition": "System Definition",
             "chargingBorne": "Charging borne",
             "link": "Link",
@@ -93,9 +95,11 @@
             "generalInformation": "General information",
             "alertLinUserGatewaySuccess": "The link between the user and the gateway is a success!",
             "alertLinUserGatewayFailed": "The link between the user and the gateway has failed!",
-            "picture": "Picture",
+            "picture": "Pictures",
             "energyHeat": "Energy Heat"
-
+        },
+        "checkUserData" : {
+            "chooseUser" : "Choose a user"
         }
     }
 }

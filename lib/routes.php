@@ -102,10 +102,6 @@ $router->post('/boiler', function(Response $res) {
         $res->send(User::create($_POST));
     })
 
-    ->post('/createInstallation', function(Response $res) {
-        $res->send(Gateway::create($_POST));
-    })
-
     ->post('/updateProfile', function(Response $res) {
 
         $res->send($_SESSION['User']->setPhone($_POST["phone"]));

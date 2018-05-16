@@ -28,10 +28,10 @@
             "user" : "Utilisateur",
             "summary" : "Résumé",
             "profil" : "Profil",
-            "addUser" : "Ajout utilisateur",
-            "addInstallation" : "Ajout installation",
+            "creationUser" : "Ajout utilisateur",
             "installationGateway" : "Installation",
-            "passwordModification" : "Gestion du mot de passe"
+            "passwordModification" : "Gestion du mot de passe",
+            "checkUserData" : "Acces données clients"
         },
         "header": {
             "nav-text": "Inverser la navigation"
@@ -51,6 +51,7 @@
             "hotline": "Hotline",
             "user": "Utilisateur",
             "role": "Role",
+            "gatewayName": "Numero gateway",
             "update": "Modifier"
         },
         "addInstallation" : {
@@ -60,33 +61,40 @@
             "alertCreateInstallationSuccess": "Nouvelle instllation ajoutée correctement!"
         },
         "installation" : {
-            "clientNumber" : "Numero Client",
-            "boxNumber": "Numero Box",
+            "clientName" : "Client",
+            "boxNumber": "Numéro Box",
             "facturation": "Facturation",
-            "businessSector": "Secteur d'activite",
+            "businessSector": "Secteur d'activité",
             "residential": "Residentiel",
             "industrial": "Industriel",
             "tertiary": "Tertiaire",
-            "electricity": "Electricite",
+            "electricity": "Electricité",
             "gaz": "Gaz",
             "wood": "Bois",
+            "consommationSensor": "Capteur de consommation",
+            "insideTemperatureSensor": "Capteur de temperature ambiante",
+            "boilerTemperatureSensor": "Capteur temperature du boiler",
+            "productionSensor": "Capteur de production",
             "technoHeat": "Technologie chauffage",
             "technoHotWater": "Technologie eau chaude",
             "energyHotWater": "Energie eau chaude",
             "pac": "PAC",
             "boiler": "Boiler",
-            "wood-burner": "Poele",
+            "wood-burner": "Poêle",
             "yes": "yes",
             "no": "no",
             "solarPanel": "Panneaux solaire",
-            "equipmentEnergyDefinition": "Definition des equipements energetiques",
-            "systemDefinition": "Definition du systeme",
+            "equipmentEnergyDefinitionSolarPanel": "Panneaux solaires",
+            "equipmentEnergyDefinitionChargingBorne": "Borne de recharge",
+            "equipmentEnergyDefinitionHeat": "Chauffage",
+            "equipmentEnergyDefinitionHotwater": "Eau chaude",
+            "systemDefinition": "Définition du système",
             "link": "Lier",
             "higher": "Supérieur à 100.000 kWh",
             "lower": "Inférieur à 100.000 kWh",
             "generalNote": "Note General",
             "positionNote" : "Note sur la position de l'appareil",
-            "picture": "photo",
+            "picture": "photos",
             "city": "Ville",
             "npa": "NPA",
             "address": "Adresse",
@@ -95,6 +103,9 @@
             "alertLinUserGatewayFailed": "Le lien entre l'utilisateur et la gateway n'a pas fonctionné!",
             "chargingBorne": "Borne de recharge",
             "energyHeat": "Energie chauffage"
+        },
+        "checkUserData" : {
+            "chooseUser" : "Choisissez un utilisateur"
         }
     }
 }

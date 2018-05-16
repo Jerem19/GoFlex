@@ -9,14 +9,18 @@
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['email']?></label><input type="email" required="required" class="col-sm-8 form-control" name="email"/>
 
+        <!-- creer page ajout utilisateur special
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['role']?></label>
         <select name="role" class="col-sm-8 form-control">
             <option value="2"><?= L10N['index']['profile']['technical']?></option>
             <option value="3"><?= L10N['index']['profile']['hotline']?></option>
             <option value="4"><?= L10N['index']['profile']['user']?></option>
         </select>
+        -->
 
-        <label class="control-label col-sm-4"><?= L10N['index']['profile']['username']?></label><input required="required" type="text" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="username" />
+        <label class="control-label col-sm-4"><?= L10N['index']['profile']['username']?></label><input required="required" type="text" class="col-sm-8 form-control" name="username"/>
+
+        <label class="control-label col-sm-4"><?= L10N['index']['profile']['gatewayName']?></label><input required="required" type="text" style="margin-bottom: 20px;" class="col-sm-8 form-control" value="goflex-dc-" name="gatewayname"/>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['profile']['create']?></button>
 
@@ -28,7 +32,9 @@
 
         $("#formAddUser").submit(function (event) {
             att = $(this).serialize();
+
             $.post("createUser", att, function (data) {
+                console.log(data);
                 data = JSON.parse(data);
 
                 if (data) {

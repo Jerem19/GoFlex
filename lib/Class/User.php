@@ -62,7 +62,14 @@ class User {
             $params["role"] = 4;
         $params["password"] = md5(random_bytes(25)); // temporar Password
         $params["token"] = bin2hex(random_bytes(50 - strlen($user)) . $user);
+
+        $gatewayname = $params['gatewayname'];
+        unset($params['gatewayname']);
+
+
         Configuration::DB()->execute("INSERT INTO tblUser (firstname, lastname, phone, username, password, email, token, user_role) VALUES (:firstname, :lastname, :phone, :username, :password, :email, :token, :role);", $params);
+        Configuration::DB()->execute("INSERT INTO tblGateway (gw_status, name) VALUES (1, :gatewayname);", [":gatewayname"=> $gatewayname]);
+
         return Configuration::DB()->lastInsertId();
     }
 
@@ -106,9 +113,14 @@ class User {
     private $active = false;
     private $_installations = null;
 
-    public function getAllUser()
+    public function getAllInactiveUser()
     {
         return Configuration::DB()->execute("SELECT username, userid FROM tblUser WHERE user_role = 4 AND active = 0");
+    }
+
+    public function getAllUser()
+    {
+        return Configuration::DB()->execute("SELECT username, userid FROM tblUser WHERE user_role = 4");
     }
 
     //TODO : Voir avec hugo pour deplacer cette methode dans gateway.php

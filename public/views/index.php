@@ -34,11 +34,8 @@ include "partials/header.php";
             if (isset($path)) {
                 if ($user->getRole()->getId() == 1) {
                     switch ($path) {
-                        case "addUser":
+                        case "creationUser":
                             include 'partials/index/addUser.php';
-                            break;
-                        case "addInstallation":
-                            include 'partials/index/addInstallation.php';
                             break;
                     }
                 } elseif ($user->getRole()->getId() == 2) {
@@ -46,6 +43,9 @@ include "partials/header.php";
                         switch ($path) {
                             case "installationGateway":
                                 include 'partials/index/installationGateway.php';
+                                break;
+                            case "checkUserData":
+                                include 'partials/index/checkUserData.php';
                                 break;
                         }
                     }

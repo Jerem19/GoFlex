@@ -64,15 +64,9 @@
             ];
 
             if ($user->getRole()->getId() == 1) {
-                $menu[] = [
-                    "_iClass" => "fa fa-plus-circle",
-                    "text" => $l10nNav["creation"],
-                    "addUser" => [
-                        "text" => $l10nNav["addUser"]
-                    ],
-                    "addInstallation" => [
-                        "text" => $l10nNav["addInstallation"]
-                    ],
+                $menu["creationUser"] = [
+                    "text" => $l10nNav["creationUser"],
+                    "_iClass" => "fa fa-plus-circle"
                 ];
             }
 
@@ -80,6 +74,11 @@
                 $menu["installationGateway"] = [
                     "text" => $l10nNav["installationGateway"],
                     "_iClass" => "fa fa-wrench"
+                ];
+
+                $menu["checkUserData"] = [
+                    "text" => $l10nNav["checkUserData"],
+                    "_iClass" => "fa fa-odnoklassniki"
                 ];
             }
 
