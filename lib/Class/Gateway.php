@@ -73,6 +73,7 @@ class Gateway {
         return Configuration::DB()->lastInsertId();
     }
 
+
     private $_id = -1;
     private $name = "no_" . __CLASS__;
     private $mac = "";

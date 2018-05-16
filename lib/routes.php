@@ -60,35 +60,35 @@ $router
         $res->render("contact.php");
     });
 
-    // For Luc's Demo
-    function getInfluxDb() {
-        require 'influxdb/autoload.php';
-        $user = "jeremie_vianin";
-        $pass = "bae8Oozi";
-        $host = "10.4.255.11";
-        $port = 8086;
-        $dbname = "cloudio";
+// For Luc's Demo
+function getInfluxDb() {
+    require 'influxdb/autoload.php';
+    $user = "jeremie_vianin";
+    $pass = "bae8Oozi";
+    $host = "10.4.255.11";
+    $port = 8086;
+    $dbname = "cloudio";
 
-        $client = new InfluxDB\Client($host, $port, $user, $pass);
+    $client = new InfluxDB\Client($host, $port, $user, $pass);
 
-        return $client->selectDB($dbname);
-    }
+    return $client->selectDB($dbname);
+}
 
-    function getUser(User $user) {
-        return $user->getInstallations()[0]->getGateway()->getName();
-    }
+function getUser(User $user) {
+    return $user->getInstallations()[0]->getGateway()->getName();
+}
 
-    $router->post('/boiler', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.temperatureProbe_A.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
+$router->post('/boiler', function(Response $res) {
+    $database = getInfluxDb();
+    $dbName = getUser($_SESSION["User"]);
+    $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.temperatureProbe_A.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
 
-        $data[L10N["index"]["chart"]["boiler_temp"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["temperature"] ];
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.energyMeter_A.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
+    $data[L10N["index"]["chart"]["boiler_temp"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["temperature"] ];
+    $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.energyMeter_A.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
 
-        $data[L10N["index"]["chart"]["boiler_power"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["power"]];
-        $res->send($data);
-    })
+    $data[L10N["index"]["chart"]["boiler_power"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["power"]];
+    $res->send($data);
+})
     ->post('/heater', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
@@ -109,6 +109,10 @@ $router
     ->post('/updateProfile', function(Response $res) {
 
         $res->send($_SESSION['User']->setPhone($_POST["phone"]));
+    })
+
+    ->post('/linkUserGateway', function(Response $res) {
+        $res->send(User::linkUserGateway($_POST));
     })
 
     ->post('/login', function(Response $res) {

@@ -30,7 +30,8 @@
             "profil" : "Profile",
             "addUser" : "Add User",
             "addInstallation" : "Add Installation",
-            "installationGateway" : "Installation"
+            "installationGateway" : "Installation",
+            "passwordModification" : "Password management"
         },
         "header": {
             "nav-text": "Toggle Navigation"
@@ -46,6 +47,10 @@
             "alertUpdateUserSuccess": "User correctly updated!",
             "alertUpdateUserFailed": "The update process has failed!",
             "create": "Create",
+            "technical": "Technical",
+            "hotline": "Hotline",
+            "user": "User",
+            "role": "Role",
             "update": "Update"
         },
         "addInstallation" : {
@@ -53,6 +58,44 @@
             "macAddress": "MAC address",
             "alertCreateUserFailed": "The process 'add a new installation' has failed!",
             "alertCreateUserSuccess": "New installation correctly added!"
+        },
+        "installation" : {
+            "clientNumber" : "Client Number",
+            "boxNumber": "Box Number",
+            "facturation": "Facturation",
+            "businessSector": "Business sector",
+            "residential": "Residential",
+            "industrial": "Industrial",
+            "tertiary": "Tertiary",
+            "electricity": "Electricity",
+            "gaz": "Gaz",
+            "wood": "Wood",
+            "technoHeat": "Technology Heating",
+            "technoHotWater": "Technology hot water",
+            "energyHotWater": "Energy hot water",
+            "pac": "PAC",
+            "boiler": "Boiler",
+            "wood-burner": "Wood-burner",
+            "yes": "yes",
+            "no": "no",
+            "solarPanel": "Solar panel",
+            "equipmentEnergyDefinition": "Energy Equipment Definition",
+            "systemDefinition": "System Definition",
+            "chargingBorne": "Charging borne",
+            "link": "Link",
+            "higher": "Higher than 100.000 kWh",
+            "lower": "Lower than 100.000 kWh",
+            "generalNote": "General note",
+            "positionNote" : "Position of the device",
+            "city": "City",
+            "npa": "NPA",
+            "address": "Address",
+            "generalInformation": "General information",
+            "alertLinUserGatewaySuccess": "The link between the user and the gateway is a success!",
+            "alertLinUserGatewayFailed": "The link between the user and the gateway has failed!",
+            "picture": "Picture",
+            "energyHeat": "Energy Heat"
+
         }
     }
 }

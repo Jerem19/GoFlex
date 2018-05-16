@@ -105,9 +105,9 @@
                 "profile" => [
                     "text" => $l10nNav["profil"]
                 ],
-                "user" => [
-                    "text" => $l10nNav["user"]
-                ]
+                "password" => [
+                    "text" => $l10nNav["passwordModification"]
+                ],
             ];
 
             doMenu($menu);?>

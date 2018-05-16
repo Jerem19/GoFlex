@@ -66,6 +66,24 @@ class User {
         return Configuration::DB()->lastInsertId();
     }
 
+    static public function linkUserGateway(array $params)
+    {
+
+        //Active the client account
+        $userId = $params['clientNumber'];
+        Configuration::DB()->execute("UPDATE tblUser SET active = 1 WHERE userId = :userId;", [":userId"=>$userId]);
+
+        //Modify the gateway status
+        $gatewayId = $params['boxNumber'];
+        Configuration::DB()->execute("UPDATE tblGateway SET gw_status = 2 WHERE gatewayId = :gatewayId;", [":gatewayId"=>$gatewayId]);
+
+        $facturation = $params['facturation'];
+
+        Configuration::DB()->execute("INSERT INTO tblinstallation (inst_userId, inst_gwId, facturation, businessSector, energyHeat, technologyHeat, energyHotWater, technologyHotWater, chargingBorne, solarPanel, address, npa, ville, generalNote, positionNote, picture)
+                                      VALUES (:clientNumber, :boxNumber, :facturation, :businessSector, :energyHeat, :technoHeat, :energyHotWater, :technoHotWater, :chargingBorne, :solarPanel, :address, :npa, :city, :generalNote, :positionNote, :picture);", $params);
+        return Configuration::DB()->lastInsertId();
+    }
+
 
     /**
      * @param string $user
@@ -88,9 +106,20 @@ class User {
     private $active = false;
     private $_installations = null;
 
+    public function getAllUser()
+    {
+        return Configuration::DB()->execute("SELECT username, userid FROM tblUser WHERE user_role = 4 AND active = 0");
+    }
+
+    //TODO : Voir avec hugo pour deplacer cette methode dans gateway.php
+    public function getAllGateway()
+    {
+        //Status 1 = ready to install
+        return Configuration::DB()->execute("SELECT name, gatewayId FROM tblGateway WHERE gw_status = 1");
+    }
+
 
     public function setPhone(string $phone) {
-
         return is_array(Configuration::DB()->execute("UPDATE tblUser SET phone = :phone WHERE userId = :userId;)", [":phone" => $phone, ":userId"=>$this->getId()]));
     }
 
