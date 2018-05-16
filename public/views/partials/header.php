@@ -15,7 +15,6 @@
 
     <title><?= $title; ?></title>
 
-
     <!--[if lt IE 9]>
     <?php foreach ($scriptsIE as $script) {
     if (! (substr($script,0,2) == '//' || substr($script,0,4) == "http"))
@@ -23,5 +22,6 @@
         <script type="text/javascript" src="<?= $script ?>"></script>
     <?php } ?>
     <![endif]-->
+
 </head>
 <body>

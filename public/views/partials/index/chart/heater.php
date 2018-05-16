@@ -34,7 +34,7 @@
 
                             rangeSelector: {
                                 floating: true,
-                                selected : 2,
+                                selected : 1,
                                 buttons: [{
                                     type: 'hour',
                                     count: 1,
