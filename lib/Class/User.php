@@ -86,11 +86,25 @@ class User {
 
         $facturation = $params['facturation'];
 
-        Configuration::DB()->execute("INSERT INTO tblinstallation (inst_userId, inst_gwId, facturation, businessSector, energyHeat, technologyHeat, energyHotWater, technologyHotWater, chargingBorne, solarPanel, address, npa, ville, generalNote, positionNote, picture)
-                                      VALUES (:clientNumber, :boxNumber, :facturation, :businessSector, :energyHeat, :technoHeat, :energyHotWater, :technoHotWater, :chargingBorne, :solarPanel, :address, :npa, :city, :generalNote, :positionNote, :picture);", $params);
+        Configuration::DB()->execute("INSERT INTO tblinstallation(installationId, inst_userId, inst_gwId, facturation, businessSector, energyHeat, technologyHeat, consommationHeatSensor, insideTemperatureSensor, heatNotePosition, pictureHeat, energyHotWater, technologyHotWater, consommationHotwaterSensor, boilerTemperatureSensor, hotwaterNotePosition, pictureHotwater, solarPanel, productionSensor, solarPanelNotePosition, address, npa, ville, generalNote)
+                                      VALUES (:clientNumber, :boxNumber, :facturation, :businessSector, :energyHeat, :technoHeat, :consommationHeatSensor, :insideTemperatureSensor, :heatNotePosition, :pictureHeat, :energyHotWater, :technoHotWater, :consommationHotwaterSensor, :boilerTemperatureSensor, :hotwaterNotePosition, :pictureHotwater, :solarPanel, :productionSensor, :solarPanelNotePosition, :address, :npa, :city, :generalNote);", $params);
         return Configuration::DB()->lastInsertId();
     }
 
+/* DEBUT UPLOAD
+    public function upload($index, $destination, $maxsize=FALSE, $extensions=FALSE)
+    {
+        //Fichier correctement uploadé
+        if (!isset($_FILES[$index]) OR $_FILES[$index]['error'] > 0) return FALSE;
+        //Taille limite
+        if ($maxsize !== FALSE AND $_FILES[$index]['size'] > $maxsize) return FALSE;
+        //Rxtension
+        $ext = substr(strrchr($_FILES[$index]['name'],'.'),1);
+        if ($extensions !== FALSE AND !in_array($ext,$extensions)) return FALSE;
+
+        return move_uploaded_file($_FILES[$index]['tmp_name'],$destination);
+    }
+*/
 
     /**
      * @param string $user
@@ -129,6 +143,9 @@ class User {
         //Status 1 = ready to install
         return Configuration::DB()->execute("SELECT name, gatewayId FROM tblGateway WHERE gw_status = 1");
     }
+
+
+
 
 
     public function setPhone(string $phone) {

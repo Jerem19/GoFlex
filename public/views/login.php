@@ -8,6 +8,7 @@ $metas = [
 ];
 $styles = [
     "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css",
     "3rdparty/style.css",
     "3rdparty/style-responsive.css",
     "/login.css"

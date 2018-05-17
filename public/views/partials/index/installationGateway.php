@@ -82,22 +82,22 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['consommationSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="consommationSensorHeat" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="consommationHeatSensor" />
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['insideTemperatureSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="insideTemperratureSensorHeat" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="insideTemperatureSensor" />
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['positionNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" name="positionNoteSensorHeat"></textarea>
+                <textarea class="col-sm-8 form-control" name="heatNotePosition"></textarea>
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="picturesHeat" />
+                <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="pictureHeat[]" multiple="multiple" />
             </div>
         </div>
 
@@ -128,21 +128,24 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['consommationSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="ConsommationSensorHotwater" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="consommationHotwaterSensor" />
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['boilerTemperatureSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="boilterTemperatureSensorHotwater" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="boilerTemperatureSensor" />
             </div>
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['positionNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" name="positionNoteHotWater"></textarea>
+                <textarea class="col-sm-8 form-control" name="hotwaterNotePosition"></textarea>
             </div>
+
+            <!-- 25mo autorises -->
+            <input type="hidden" name="MAX_FILE_SIZE" value="26214400" />
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="picturesHotWater" />
+                <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="pictureHotwater" />
             </div>
         </div>
 
@@ -200,7 +203,7 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['positionNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea id="positionNoteSolarPanel" disabled="disabled" class="col-sm-8 form-control" name="positionNoteSolarPanel"></textarea>
+                <textarea id="positionNoteSolarPanel" disabled="disabled" class="col-sm-8 form-control" name="solarPanelNotePosition"></textarea>
             </div>
 
         </div>
@@ -225,12 +228,7 @@
             </div>
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['generalNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" name="generalNote"></textarea>
-            </div>
-
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['picture']?></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="picture" />
+                <textarea class="col-sm-8 form-control" style="margin-bottom: 10px;" name="generalNote"></textarea>
             </div>
         </div>
 
