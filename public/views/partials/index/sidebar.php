@@ -91,13 +91,10 @@
                     "_iClass" => "fa fa-desktop",
                     "text" => $l10nNav["analyse"],
                     "boiler" => [
-                        "text" => $l10nNav["boiler"]
+                        "text" => $l10nNav["consumption"]
                     ],
                     "heater" => [
-                        "text" => $l10nNav["heater"]
-                    ],
-                    "summary" => [
-                        "text" => $l10nNav["summary"]
+                        "text" => $l10nNav["heat_pump"]
                     ],
                 ];
             }

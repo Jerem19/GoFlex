@@ -19,9 +19,6 @@
             $.post("boiler", function (data) {
 
                 var id = 0;
-
-
-
                 $.each(data, function(i, val) {
                     dataTime = [];
                     for (var j in val["data"]) {

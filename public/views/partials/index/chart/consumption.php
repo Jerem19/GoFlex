@@ -1,10 +1,10 @@
 <div class="row mt col-lg-12 form-panel">
-    <div id="heater" class="synchronized-chart" style="width: calc(100% - 15px);">
+    <div id="consumption" class="synchronized-chart" style="width: calc(100% - 15px);">
     </div>
 
     <script>
         window.onload = function() {
-            $.post("heater", function (data) {
+            $.post("consumption", function (data) {
 
                 $.each(data, function(i, val) {
                     dataTime = [];
@@ -12,7 +12,7 @@
                     for (var j in val) {
                         dataTime.unshift([new Date(val[j]["time"]).getTime(), val[j]["value"]])
                     }
-                    Highcharts.StockChart('heater', {
+                    Highcharts.StockChart('consumption', {
                             title: {
                                 text: i
                             },
@@ -33,7 +33,7 @@
                                 adaptToUpdatedData: false,
                             },
                             scrollbar: {
-                            liveRedraw: false
+                                liveRedraw: false
                             },
                             rangeSelector: {
                                 floating: true,

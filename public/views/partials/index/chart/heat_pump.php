@@ -33,7 +33,7 @@
                                 adaptToUpdatedData: false,
                             },
                             scrollbar: {
-                            liveRedraw: false
+                                liveRedraw: false
                             },
                             rangeSelector: {
                                 floating: true,
