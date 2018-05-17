@@ -17,7 +17,7 @@ $router
     ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp'], PUBLIC_FOLDER . 'images');
 
 
-require_once 'Class/User.php';
+require_once 'Class/DB/User.php';
 session_start();
 session_set_cookie_params(30*30*60);
 define('BASE_URL', $router->getBaseURL() . '/');
@@ -56,9 +56,9 @@ $router
         ]
     ])
 
-    ->get("/contact", function(Response $res) {
+    /*->get("/contact", function(Response $res) {
         $res->render("contact.php");
-    });
+    })*/;
 
 // For Luc's Demo
 function getInfluxDb() {
@@ -78,17 +78,59 @@ function getUser(User $user) {
     return $user->getInstallations()[0]->getGateway()->getName();
 }
 
-$router->post('/boiler', function(Response $res) {
-    $database = getInfluxDb();
-    $dbName = getUser($_SESSION["User"]);
-    $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.temperatureProbe_A.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
+$router
+    ->get("/signup", function (Response $res) {
+        if (isset($_GET["id"])) {
 
-    $data[L10N["index"]["chart"]["boiler_temp"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["temperature"] ];
-    $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.energyMeter_A.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
+            $user = User::getByToken($_GET["id"]);
+            if ($user != false && !$user->isActive()) {
+                $_SESSION["_token"] = $_GET["id"];
+                $res->render("login.php", ["user" => User::getByToken($_GET["id"])]);
+            } else $res->redirect('/');
+        }
+    })
 
-    $data[L10N["index"]["chart"]["boiler_power"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["power"]];
-    $res->send($data);
-})
+    ->post('/login', function(Response $res) {
+        if (isset($_SESSION["_token"])) {
+            $user = User::getByToken($_SESSION["_token"]);
+            if ($user != false && $_POST["username"] == $user->getUsername() &&
+                    !$user->isActive() && $user->setPassword($_POST["password"]) &&
+                    $user->setActive())
+                $exist = $user->getId();
+
+            unset($_SESSION["_token"]);
+        } else
+            $exist = User::isExisting($_POST["username"], $_POST["password"]);
+
+        if ($exist != false)
+            $_SESSION["User"] = new User($exist, $_POST["password"]);
+
+        $res->send($exist != false);
+    })
+
+    ->get("*", function(Response $res) {
+        global $isConnected;
+        if (!$isConnected)
+            $res->render("login.php");
+    })
+    ->post("*", function(Response $res) {
+        global $isConnected;
+        if (!$isConnected) {
+            $res->setHeader('HTTP/1.1 403 Unauthorized');
+            $res->send(403, false);
+        }
+    })
+    ->post('/boiler', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.temperatureProbe_A.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
+
+        $data[L10N["index"]["chart"]["boiler_temp"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["temperature"] ];
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.energyMeter_A.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
+
+        $data[L10N["index"]["chart"]["boiler_power"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["power"]];
+        $res->send($data);
+    })
     ->post('/heater', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
@@ -99,7 +141,14 @@ $router->post('/boiler', function(Response $res) {
     })
 
     ->post('/createUser', function(Response $res) {
-        $res->send(User::create($_POST));
+        //$res->send(User::create($_POST));
+
+        //$userOk = User::create();
+
+        //$gwOk = Gateway::create();
+
+
+        // send email
     })
 
     ->post('/updateProfile', function(Response $res) {
@@ -111,36 +160,18 @@ $router->post('/boiler', function(Response $res) {
         $res->send(User::linkUserGateway($_POST));
     })
 
-    ->post('/login', function(Response $res) {
-        $exist = User::isExisting($_POST["username"], $_POST["password"]);
-        if ($exist != false)
-            $_SESSION["User"] = new User($exist, $_POST["password"]);
 
-        $res->send($exist != false);
-    })
     ->on('/logout', function($res) {
         unset($_SESSION["User"]);
         $res->redirect('/');
     })
 
-    ->get("*", function(Response $res) {
-        global $isConnected;
-        if (!$isConnected)
-            $res->render("login.php", ["lang" => $_SESSION["lang"]]);
-    })
-    ->post("*", function(Response $res) {
-        global $isConnected;
-        if (!$isConnected) {
-            $res->setHeader('HTTP/1.1 401 Unauthorized');
-            $res->send(403, false);
-        }
-    })
 
     ->get('/', function(Response $res) {
-        $res->render("index.php", ["user" => $_SESSION["User"], "lang" => $_SESSION["lang"]]);
+        $res->render("index.php", ["user" => $_SESSION["User"]]);
     })
     ->get('/*', function(Response $res, $uriParams) {
-        $res->render("index.php", ["user" => $_SESSION["User"], "lang" => $_SESSION["lang"], "path" => $uriParams[0]]);
+        $res->render("index.php", ["user" => $_SESSION["User"], "path" => $uriParams[0]]);
     })
 
     ->post('*', function(Response $res) {

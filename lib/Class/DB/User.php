@@ -1,53 +1,8 @@
-<?php
-require_once 'Configuration.php';
-require_once 'Installation.php';
-require_once 'Gateway.php';
-class Role {
+<?php require_once __DIR__ . '/../Configuration.php';
 
-    private static $roles = null;
-    /**
-     * Return all status
-     * @return Role[]
-     */
-    public static function Roles() {
-        if (self::$roles == null) {
-            $sth = Configuration::DB()->query("SELECT roleId, name FROM tblRole;");
-            while ($d = $sth->fetch())
-                self::$roles[$d["name"]] = new Role($d["roleId"]);
-        }
-        return self::$roles;
-    }
-    private $_id = -1;
-    private $name = "no_" . __CLASS__;
-    /**
-     * Return the id
-     * @return int
-     */
-    public function getId() {
-        return $this->_id;
-    }
-    /**
-     * Return the name
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
-    }
-    public function __toString() {
-        return strval($this->name);
-    }
-    /**
-     * Role constructor.
-     * @param int $id
-     */
-    public function __construct(int $id) {
-        $data = Configuration::DB()->execute("SELECT * FROM tblRole WHERE roleId = :id", ["id" => $id]);
-        if(!empty($data)) {
-            $this->name = $data[0]["name"];
-            $this->_id = intval($data[0]["roleId"]);
-        }
-    }
-}
+require_once 'Role.php';
+require_once 'Installation.php';
+
 class User {
     /**
      * @param array $params
@@ -63,22 +18,14 @@ class User {
         $params["password"] = md5(random_bytes(25)); // temporar Password
         $params["token"] = bin2hex(random_bytes(50 - strlen($user)) . $user);
 
-        $gatewayname = $params['gatewayname'];
-        unset($params['gatewayname']);
-
-
         Configuration::DB()->execute("INSERT INTO tblUser (firstname, lastname, phone, username, password, email, token, user_role) VALUES (:firstname, :lastname, :phone, :username, :password, :email, :token, :role);", $params);
-        Configuration::DB()->execute("INSERT INTO tblGateway (gw_status, name) VALUES (1, :gatewayname);", [":gatewayname"=> $gatewayname]);
 
         return Configuration::DB()->lastInsertId();
     }
 
+    /*
     static public function linkUserGateway(array $params)
     {
-
-        //Active the client account
-        $userId = $params['clientNumber'];
-        Configuration::DB()->execute("UPDATE tblUser SET active = 1 WHERE userId = :userId;", [":userId"=>$userId]);
 
         //Modify the gateway status
         $gatewayId = $params['boxNumber'];
@@ -89,7 +36,7 @@ class User {
         Configuration::DB()->execute("INSERT INTO tblinstallation(installationId, inst_userId, inst_gwId, facturation, businessSector, energyHeat, technologyHeat, consommationHeatSensor, insideTemperatureSensor, heatNotePosition, pictureHeat, energyHotWater, technologyHotWater, consommationHotwaterSensor, boilerTemperatureSensor, hotwaterNotePosition, pictureHotwater, solarPanel, productionSensor, solarPanelNotePosition, address, npa, ville, generalNote)
                                       VALUES (:clientNumber, :boxNumber, :facturation, :businessSector, :energyHeat, :technoHeat, :consommationHeatSensor, :insideTemperatureSensor, :heatNotePosition, :pictureHeat, :energyHotWater, :technoHotWater, :consommationHotwaterSensor, :boilerTemperatureSensor, :hotwaterNotePosition, :pictureHotwater, :solarPanel, :productionSensor, :solarPanelNotePosition, :address, :npa, :city, :generalNote);", $params);
         return Configuration::DB()->lastInsertId();
-    }
+    }*/
 
 /* DEBUT UPLOAD
     public function upload($index, $destination, $maxsize=FALSE, $extensions=FALSE)
@@ -112,9 +59,20 @@ class User {
      * @return int|false
      */
     static public function isExisting(string $user, string $pass) {
-        $u = Configuration::DB()->execute("SELECT userId, password FROM tblUser WHERE username = :user;", [":user" => $user]);
-        return password_verify("Go" . $pass . "Flex", $u[0]["password"]) ? $u[0]["userId"] : false; // Improve if user is disable (error msg?)
+        $u = Configuration::DB()->execute("SELECT _id, password FROM tblUser WHERE username = :user;", [":user" => $user]);
+        return password_verify("Go" . $pass . "Flex", $u[0]["password"]) ? $u[0]["_id"] : false; // Improve if user is disable (error msg?)
     }
+
+    /**
+     * @param string $token
+     * @return User|false
+     */
+    static public function getByToken(string $token) {
+        $u = Configuration::DB()->execute("SELECT _id FROM tblUser WHERE token = :token;", [":token" => $token]);
+        return isset($u[0]) ? new User($u[0]["_id"]) : false;
+    }
+
+
     private $_id = -1;
     private $username = "no_" . __CLASS__;
     private $password = "";
@@ -129,12 +87,12 @@ class User {
 
     public function getAllInactiveUser()
     {
-        return Configuration::DB()->execute("SELECT username, userid FROM tblUser WHERE user_role = 4 AND active = 0");
+        return Configuration::DB()->execute("SELECT username, _id FROM tblUser WHERE user_role = 4 AND active = 0");
     }
 
     public function getAllUser()
     {
-        return Configuration::DB()->execute("SELECT username, userid FROM tblUser WHERE user_role = 4");
+        return Configuration::DB()->execute("SELECT username, _id FROM tblUser WHERE user_role = 4");
     }
 
     //TODO : Voir avec hugo pour deplacer cette methode dans gateway.php
@@ -147,11 +105,6 @@ class User {
 
 
 
-
-    public function setPhone(string $phone) {
-        return is_array(Configuration::DB()->execute("UPDATE tblUser SET phone = :phone WHERE userId = :userId;)", [":phone" => $phone, ":userId"=>$this->getId()]));
-    }
-
     /**
      * Return the Id
      * @return int
@@ -159,6 +112,7 @@ class User {
     public function getId() {
         return $this->_id;
     }
+
     /**
      * Return the username
      * @return string
@@ -166,6 +120,14 @@ class User {
     public function getUsername() {
         return $this->username;
     }
+
+    public function setPassword(string $password) {
+        return is_array(Configuration::DB()->execute("UPDATE tblUser SET password = :password WHERE _id = :id", [
+            "password" => password_hash("Go" . $password . "Flex", PASSWORD_DEFAULT, [ "cost" => rand(8,15)]),
+            "id" => $this->_id
+        ]));
+    }
+
     /**
      * Return the token
      * @return string
@@ -173,6 +135,7 @@ class User {
     public function getToken() {
         return $this->token;
     }
+
     /**
      * Return the firstname
      * @return string
@@ -180,6 +143,7 @@ class User {
     public function getFirstname() {
         return $this->firstname;
     }
+
     /**
      * Return the lastname
      * @return string
@@ -187,6 +151,7 @@ class User {
     public function getLastname() {
         return $this->lastname;
     }
+
     /**
      * Return the phone
      * @return string
@@ -194,6 +159,17 @@ class User {
     public function getPhone() {
         return $this->phone;
     }
+
+    /**
+     * @param string $phone
+     * @return bool
+     */
+    public function setPhone(string $phone) {
+        $ok = is_array(Configuration::DB()->execute("UPDATE tblUser SET phone = :phone WHERE _id = :id;)", [":phone" => $phone, ":id" => $this->getId()]));
+        if ($ok) $this->phone = $phone;
+        return $ok;
+    }
+
     /**
      * Return the email
      * @return string
@@ -204,11 +180,32 @@ class User {
 
     /**
      * Return if the user is Activate
+     * @param null|bool active
      * @return bool
      */
-    public function isActive() {
-        return $this->active;
+    public function isActive($active = null) {
+        return $active != null ?
+            is_array(Configuration::DB()->execute("UPDATE tblUser SET active = :active WHERE _id = :id;)", [
+                ":active" => $active, ":id" => $this->getId()])) :
+            $this->active;
     }
+
+    /**
+     * Active the user
+     * @return bool
+     */
+    public function setActive() {
+        return $this->isActive(true);
+    }
+
+    /**
+     * Inactive the user
+     * @return bool
+     */
+    public function setInactive() {
+        return $this->isActive(false);
+    }
+
     /**
      * Return the role
      * @return Role
@@ -222,6 +219,7 @@ class User {
         $return = $this->firstname . ' ' . $this->lastname;
         return $return === " " ? $this->username : $return;
     }
+
     /**
      * Return the installations of this user
      * @return Installation[]
@@ -231,16 +229,17 @@ class User {
             $this->_installations = Installation::getByUser($this);
         return $this->_installations;
     }
+
     /**
      * User constructor
      * @param int $id
      * @param string $password
      */
     public function __construct(int $id, string $password = "") {
-        $data = Configuration::DB()->execute("SELECT * FROM tblUser WHERE userId = :id", ["id" => $id]);
+        $data = Configuration::DB()->execute("SELECT * FROM tblUser WHERE _id = :id", ["id" => $id]);
         if (!empty($data)) {
             $data = $data[0];
-            $this->_id = intval($data["userId"]);
+            $this->_id = intval($data["_id"]);
             $this->username = $data["username"];
             $this->password = $password;
             $this->token = $data["token"];
@@ -252,6 +251,7 @@ class User {
             $this->active = (bool) $data['active'];
         }
     }
+
     public function isCorrect() {
         return self::isExisting($this->username, $this->password);
     }

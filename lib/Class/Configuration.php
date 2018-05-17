@@ -10,9 +10,9 @@ class DB extends PDO {
      * @param string $table
      * @param int $id
      */
-    public function delete(string $table, int $id) {
-        $this->query(sprintf('DELETE FROM tbl%s WHERE %sId = %d', ucfirst($table), $table, $id));
-    }
+    /*public function delete(string $table, int $id) {
+        //$this->query(sprintf('DELETE FROM tbl%s WHERE _d = %d', ucfirst($table), $table, $id));
+    }*/
 
     /**
      * @param string $query
@@ -34,7 +34,7 @@ class Configuration {
     private static $db_host = "localhost";
     private static $db_port = "3306";
     private static $db_user = "root";
-    private static $db_pass = "";
+    private static $db_pass = "password";
 
     private static $DB = null;
 

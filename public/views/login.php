@@ -1,4 +1,5 @@
 <?php
+$isSignup = isset($user);
 
 $metas = [
     "viewport" => "width=device-width, initial-scale=1.0",
@@ -13,7 +14,9 @@ $styles = [
     "3rdparty/style-responsive.css",
     "/login.css"
 ];
-$title = L10N["login"]["title"];
+
+//$l10n = $isSignup ? L10N["signup"] : L10N["login"]; // for translate
+$title = $l10n["title"];
 $scriptsIE = [];
 
 include "partials/header.php";
@@ -24,7 +27,7 @@ include "partials/header.php";
             <form class="form-login" method="post">
                 <h2 class="form-login-heading"><?= L10N['login']['sign_in_now'] ?></h2>
                 <div class="login-wrap">
-                    <input autofocus type="text" class="form-control" required placeholder="<?= L10N['login']['username'] ?>" name="username" autofocus>
+                    <input autofocus type="text" class="form-control" required placeholder="<?= L10N['login']['username'] ?>" name="username" autofocus <?php if ($isSignup) echo 'disabled value="' . $user->getUsername() . '"'; ?>">
                     <br>
                     <input type="password" class="form-control" required name="password" placeholder="<?= L10N['login']['password'] ?>">
                     <label class="checkbox">
@@ -33,7 +36,6 @@ include "partials/header.php";
                             </span>
                     </label>
                     <button class="btn btn-theme btn-block" name="submit" type="submit"><?= L10N['login']['sign_in'] ?></button>
-
                 </div>
             </form>
         </div>

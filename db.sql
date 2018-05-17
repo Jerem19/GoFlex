@@ -4,12 +4,12 @@ CREATE DATABASE goFlexDb;
 USE goFlexDb;
 
 CREATE TABLE tblRole (
-	roleId INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL UNIQUE
 );
 
 CREATE TABLE tblUser (
-	userId INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_role INT NOT NULL DEFAULT 4,
     
 	username VARCHAR(50) NOT NULL UNIQUE,
@@ -26,42 +26,105 @@ CREATE TABLE tblUser (
     
     CONSTRAINT FK_UserRole
     FOREIGN KEY (user_role)
-    REFERENCES tblRole(roleId)   
+    REFERENCES tblRole(_id)   
 );
 
 CREATE TABLE tblStatus (
-	statusId INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(25) # name matches l10N
 );
 
 CREATE TABLE tblGateway (
-	gatewayId INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    gw_status INT NOT NULL DEFAULT 1,
-    name VARCHAR(45),
-	mac VARCHAR(22) NOT NULL UNIQUE,
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	gw_status INT NOT NULL DEFAULT 1,
+	name VARCHAR(45),
     
     CONSTRAINT FK_StatGWay
 	FOREIGN KEY (gw_status)
-	REFERENCES tblStatus(statusId)
+	REFERENCES tblStatus(_id)
+);
+
+CREATE TABLE tblBuisSector(
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45)
+);
+
+CREATE TABLE tblEnergy (
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45)
+);
+
+CREATE TABLE tblTechnology (
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45)
 );
 
 CREATE TABLE tblInstallation (
-	installationId INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	inst_userId INT,
     inst_gwId INT UNIQUE,
+    
+    facturation BOOLEAN NOT NULL DEFAULT TRUE, # true < 100MWh
+    buisSector INT DEFAULT 1,
+    
+    heatEner INT DEFAULT 1,
+    heatTech INT DEFAULT 1,
+    heatSensors INT(2) DEFAULT 0,
+    heatTempSensors INT(2) DEFAULT 0,
+    heatNote TEXT,
+    heatPictures VARCHAR(500),    
+    
+    hotwaterEner INT DEFAULT 1,
+    hotwaterTech INT DEFAULT 1,
+    hotwaterSensors INT(2) DEFAULT 0,
+    hotwaterTempSensors INT(2) DEFAULT 0,
+    hotwaterNote TEXT,
+    hotwaterPictures VARCHAR(500),    
+    
+    solarPanel BOOLEAN DEFAULT FALSE,
+    solarSensors INT(2) DEFAULT 0,
+    solarNote TEXT DEFAULT NULL,    
+    
+    city VARCHAR(100),
+    npa VARCHAR(10),
+    address VARCHAR(100),
+        
+    note TEXT DEFAULT NULL,
+    picture VARCHAR(100),        
 
 	CONSTRAINT FK_UserSet
 	FOREIGN KEY (inst_userId)
-	REFERENCES tblUser(userId),
+	REFERENCES tblUser(_id),
         
 	CONSTRAINT FK_GWaySet
 	FOREIGN KEY (inst_gwId)
-	REFERENCES tblGateway(gatewayId)
+	REFERENCES tblGateway(_id),
+    
+    CONSTRAINT FK_BuisSect
+	FOREIGN KEY (buisSector)
+	REFERENCES tblBuisSector(_id),
+    
+    CONSTRAINT FK_heatEner
+	FOREIGN KEY (heatEner)
+	REFERENCES tblEnergy(_id),
+    
+    CONSTRAINT FK_heatTech
+	FOREIGN KEY (heatTech)
+	REFERENCES tblTechnology(_id),
+    
+    CONSTRAINT FK_hotEner
+	FOREIGN KEY (hotwaterEner)
+	REFERENCES tblEnergy(_id),
+    
+    CONSTRAINT FK_hotTech
+	FOREIGN KEY (hotwaterTech)
+	REFERENCES tblTechnology(_id)
 );
 
 
 INSERT INTO tblRole VALUES (1, 'admin'), (2, 'technical'), (3, 'customer_care'), (4, 'client');
 INSERT INTO tblStatus VALUES (1, 'stock'), (2, 'ready'), (3, 'ok'), (4, 'busy');
+
 INSERT INTO tblUser (user_role, username, password, token, email, active) VALUES
 (1, 'admin', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '409d565186e0385eacd12d059d1c6007369b0ab1a78fcdbe4608b87b23b6f9daf7d1b39706f4ab8ba4d38f89ac61646d696e', 'admin@go.flex', true),
 (2, 'technical', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '1fe3e1dbea55b842ba8d29660df2bccedf8ce94066037b93e8d299def420c795b1f5ca15615ace896b746563686e6963616c', 'technical@go.flex', true),
@@ -69,16 +132,16 @@ INSERT INTO tblUser (user_role, username, password, token, email, active) VALUES
 (4, 'goFlex1', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '8b5e2b7fac8d84191f887852139e9864573f36b305e555e1ec205c8284ea73aeebf5db0604e749e57b2cd7676f466c657831', '1@go.flex', true),
 (4, 'goFlex2', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '5e7ce4fe8c1672a93687d2d6f1a6def5394ede477de57c0e0e83fb0b12c82a16e0c291e7d64171257d7e47676f466c657832', '2@go.flex', true),
 (4, 'goFlex3', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', 'aa53b69c2dd2a075ef00fe476fb4953ae1b70bc5d1dd9c86e3a9d6dcf86fd7c51d93a58ab1ce07712c03cb676f466c657833', '3@go.flex', true),
-(4, 'noactive', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '5e7ce4fe8c1672a93687d2d6f1a6def5394ede477de57c150e83fb0b12c8er16e0c291e7d64171257d7e47676f466c657832', '2@go.flex', false);
-/*('luc.dufour', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '52fded9d242d0eb6656e388fae8c27fccf8b23fe6068631bda073688d03c9737e2e9621a5a4392326c75632e6475666f7572', ''),
-('hugo.mendes', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', 'b8412836102fd2d6bded57828e8a0e9aae613df15358de51bc6719d28e99f061f7a8b9668a181c6875676f2e6d656e646573', ''),
-('jeremie.etienne.norbert.vianin', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '3358c2a5e2354e2dec1c8aa1e373a30294468fa26a6572656d69652e657469656e6e652e6e6f72626572742e7669616e696e', ''),
-('matthieu.dayer', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', 'f54ad3ac2fbc401d62fdb85106d92de107bb309fae66e6c6f3044d72f3ae8e75e7e1f0ef6d617474686965752e6461796572', ''),
-*/
+(4, 'noactive', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '5e7ce4fe8c1672a93687d2d6f1a6def5394ede477de57c150e83fb0b12c8er16e0c291e7d64171257d7e47676f466c657832', 'noactive@go.flex', false);
 
-INSERT INTO tblGateway (mac, name) VALUES 
-('00:00:00:00:01', 'goflex-dc-001'),
-('00:00:00:00:02', 'goflex-dc-002'),
-('00:00:00:00:03', 'goflex-dc-003'),
-('00:00:00:00:04', 'goflex-dc-003 2');
-INSERT INTO tblInstallation (inst_userId, inst_gwId) VALUES (4, 1), (5, 2), (6, 3), (6, 4);
+INSERT INTO tblGateway (name) VALUES
+('goflex-dc-001'),
+('goflex-dc-002'),
+('goflex-dc-003');
+
+INSERT INTO tblBuisSector (name) VALUES ('residential'), ('industriel'), ('tertiary');
+INSERT INTO tblEnergy (name) VALUES ('electricity'), ('wood'), ('gaz');
+INSERT INTO tblTechnology (name) VALUES ('heat_pump'), ('boiler'), ('wood_burner');
+
+INSERT INTO tblInstallation (inst_userId, inst_gwId) VALUES
+(4, 1), (5, 2), (6, 3);

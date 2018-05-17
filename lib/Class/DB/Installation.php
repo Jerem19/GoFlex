@@ -1,6 +1,5 @@
-<?php
+<?php require_once __DIR__ . '/../Configuration.php';
 
-require_once 'Configuration.php';
 require_once 'User.php';
 require_once 'Gateway.php';
 
@@ -12,12 +11,12 @@ class Installation {
      * @return Installation[]
      */
     public static function getByUser($userId) {
-        $sth = Configuration::DB()->prepare("SELECT installationId FROM tblInstallation WHERE inst_userId = :id");
+        $sth = Configuration::DB()->prepare("SELECT _id FROM tblInstallation WHERE inst_userId = :id");
         $sth->execute(["id" => $userId instanceof User ? $userId->getId() : $userId]);
 
         $i = [];
         while ($d = $sth->fetch())
-            $i[] = new Installation($d["installationId"]);
+            $i[] = new Installation($d["_id"]);
         return $i;
     }
 
@@ -27,9 +26,9 @@ class Installation {
      * @return Installation|false
      */
     public static function getByGateway($gwId) {
-        $data = Configuration::DB()->execute("SELECT installationId FROM tblInstallation WHERE inst_gwId = :id",
+        $data = Configuration::DB()->execute("SELECT _id FROM tblInstallation WHERE inst_gwId = :id",
             ["id" => $gwId instanceof Gateway ? $gwId->getId() : $gwId]);
-        return !empty($data) ? new Installation($data[0]["installationId"]) : false;
+        return !empty($data) ? new Installation($data[0]["_id"]) : false;
     }
 
     private $_id = -1;
@@ -69,10 +68,10 @@ class Installation {
      * @param int $id
      */
     public function __construct(int $id) {
-        $data = Configuration::DB()->execute("SELECT * FROM tblInstallation WHERE installationId = :id", ["id" => $id]);
+        $data = Configuration::DB()->execute("SELECT * FROM tblInstallation WHERE _id = :id", ["id" => $id]);
 
         if (!empty($data)) {
-            $this->_id = intval($data[0]["installationId"]);
+            $this->_id = intval($data[0]["_id"]);
             $this->_user = $data[0]["inst_userId"];
             $this->_gateway = $data[0]["inst_gwId"];
         }
