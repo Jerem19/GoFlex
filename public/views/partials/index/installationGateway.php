@@ -228,8 +228,13 @@
             </div>
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['generalNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" style="margin-bottom: 10px;" name="generalNote"></textarea>
+                <textarea class="col-sm-8 form-control" name="generalNote"></textarea>
             </div>
+        </div>
+
+        <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['pictureHouse']?></label>
+        <div class="col-sm-10" style="margin-bottom: 10px;">
+            <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="pictureHouse" />
         </div>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['installation']['link']?></button>

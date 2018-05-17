@@ -73,7 +73,8 @@
                                 }, {
                                     type: 'all',
                                     text: 'All'
-                                }]
+                                }],
+                                inputEnabled:false,
                             }
                         }
                     );
