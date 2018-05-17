@@ -23,9 +23,25 @@ class User {
         return Configuration::DB()->lastInsertId();
     }
 
+    static public function createSpecialUser(array $params) {
+        if (!isset($params["email"]) || !isset($params["username"]))
+            return false;
+        $user = $params["username"];
+        $params["token"] = bin2hex(random_bytes(50 - strlen($user)) . $user);
+        $params["password"] = md5(random_bytes(25)); // temporar Password
+        /*SEND creation password by EMAIL*/
+
+        Configuration::DB()->execute("INSERT INTO tblUser (firstname, lastname, phone, username, password, email, token, user_role) VALUES (:firstname, :lastname, :phone, :username, :password, :email, :token, :role);", $params);
+
+        return Configuration::DB()->lastInsertId();
+    }
+
     /*
     static public function linkUserGateway(array $params)
     {
+        //Active the client account
+        $userId = $params['clientNumber'];
+        Configuration::DB()->execute("UPDATE tblUser SET active = 1 WHERE userId = :userId;", [":userId"=>$userId]);
 
         //Modify the gateway status
         $gatewayId = $params['boxNumber'];

@@ -18,7 +18,7 @@
             "boiler_temp": "Boiler temperature"
         },
         "sidebar": {
-            "administration": "Administration",
+            "profile": "My profile",
             "dashboard": "Dashboard",
             "creation": "Add",
 
@@ -29,6 +29,7 @@
             "summary" : "Summary",
             "profil" : "Profile",
             "creationUser" : "Add User",
+            "creationSpecialUser" : "Add special user",
             "installationGateway" : "Installation",
             "passwordModification" : "Password management",
             "checkUserData" : "Access clients data"
@@ -96,6 +97,7 @@
             "alertLinUserGatewaySuccess": "The link between the user and the gateway is a success!",
             "alertLinUserGatewayFailed": "The link between the user and the gateway has failed!",
             "picture": "Pictures",
+            "pictureHouse": "House picture",
             "energyHeat": "Energy Heat"
         },
         "checkUserData" : {

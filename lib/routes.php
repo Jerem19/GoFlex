@@ -151,6 +151,11 @@ $router
         // send email
     })
 
+
+    ->post('/createSpecialUser', function(Response $res) {
+        $res->send(User::createSpecialUser($_POST));
+    })
+
     ->post('/updateProfile', function(Response $res) {
 
         $res->send($_SESSION['User']->setPhone($_POST["phone"]));

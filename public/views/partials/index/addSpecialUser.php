@@ -1,5 +1,5 @@
 <div class="row mt col-lg-12 form-panel">
-    <form class='form-horizontal style-form' id="formAddUser" method='post'>
+    <form class='form-horizontal style-form' id="formAddSpecialUser" method='post'>
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['firstname']?></label><input required="required" class="col-sm-8 form-control" name="firstname" />
 
@@ -9,9 +9,13 @@
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['email']?></label><input type="email" required="required" class="col-sm-8 form-control" name="email"/>
 
-        <label class="control-label col-sm-4"><?= L10N['index']['profile']['username']?></label><input required="required" type="text" class="col-sm-8 form-control" name="username"/>
+        <label class="control-label col-sm-4"><?= L10N['index']['profile']['role']?></label>
+        <select name="role" class="col-sm-8 form-control">
+            <option value="2"><?= L10N['index']['profile']['technical']?></option>
+            <option value="3"><?= L10N['index']['profile']['hotline']?></option>
+        </select>
 
-        <label class="control-label col-sm-4"><?= L10N['index']['profile']['gatewayName']?></label><input required="required" type="text" style="margin-bottom: 20px;" class="col-sm-8 form-control" value="goflex-dc-" name="gatewayname"/>
+        <label class="control-label col-sm-4"><?= L10N['index']['profile']['username']?></label><input style="margin-bottom: 20px;" required="required" type="text" class="col-sm-8 form-control" name="username"/>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['profile']['create']?></button>
 
@@ -21,10 +25,9 @@
 <script>
     window.onload = function() {
 
-        $("#formAddUser").submit(function (event) {
+        $("#formAddSpecialUser").submit(function (event) {
             att = $(this).serialize();
-
-            $.post("createUser", att, function (data) {
+                $.post("createSpecialUser", att, function (data) {
                 console.log(data);
                 data = JSON.parse(data);
 

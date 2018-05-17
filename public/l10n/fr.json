@@ -18,7 +18,7 @@
             "boiler_temp": "Température du boiler"
         },
         "sidebar": {
-            "administration": "Administration",
+            "profile": "Mon profile",
             "dashboard": "Tableau de bord",
             "creation": "Creation",
 
@@ -29,6 +29,7 @@
             "summary" : "Résumé",
             "profil" : "Profil",
             "creationUser" : "Ajout utilisateur",
+            "creationSpecialUser" : "Ajout special",
             "installationGateway" : "Installation",
             "passwordModification" : "Gestion du mot de passe",
             "checkUserData" : "Acces données clients"
@@ -95,6 +96,7 @@
             "generalNote": "Note General",
             "positionNote" : "Note sur la position de l'appareil",
             "picture": "photos",
+            "pictureHouse": "photo de la maison",
             "city": "Ville",
             "npa": "NPA",
             "address": "Adresse",

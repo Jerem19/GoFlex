@@ -37,6 +37,10 @@ include "partials/header.php";
                         case "creationUser":
                             include 'partials/index/addUser.php';
                             break;
+
+                        case "creationSpecialUser":
+                            include 'partials/index/addSpecialUser.php';
+                            break;
                     }
                 } elseif ($user->getRole()->getId() == 2) {
                     if (isset($path)) {
@@ -56,6 +60,9 @@ include "partials/header.php";
                 <?php
                 switch ($path) {
 
+                    case "dashboard":
+                        include 'partials/index/dashboard.php';
+                        break;
 
                     case "profile":
                         include 'partials/index/profile.php';

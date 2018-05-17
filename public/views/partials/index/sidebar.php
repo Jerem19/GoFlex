@@ -56,17 +56,21 @@
 
 
 
-            $menu = [
-                "" => [
-                    "text" => $l10nNav["dashboard"],
-                    "_iClass" => "fa fa-dashboard"
-                ]
+            $menu["dashboard"] = [
+                "text" => $l10nNav["dashboard"],
+                "_iClass" => "fa fa-dashboard"
             ];
+
 
             if ($user->getRole()->getId() == 1) {
                 $menu["creationUser"] = [
                     "text" => $l10nNav["creationUser"],
-                    "_iClass" => "fa fa-plus-circle"
+                    "_iClass" => "fa fa-user-plus"
+                ];
+
+                $menu["creationSpecialUser"] = [
+                    "text" => $l10nNav["creationSpecialUser"],
+                    "_iClass" => "fa fa-user-plus"
                 ];
             }
 
@@ -98,13 +102,11 @@
                 ];
             }
 
-            $menu[] = [
-                "_iClass" => "fa fa-book",
-                "text" => $l10nNav["administration"],
-                "profile" => [
-                    "text" => $l10nNav["profil"]
-                ],
+            $menu["profile"] = [
+                "text" => $l10nNav["profile"],
+                "_iClass" => "fa fa-book"
             ];
+
 
             doMenu($menu);?>
         </ul>
