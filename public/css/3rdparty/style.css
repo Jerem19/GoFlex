@@ -326,8 +326,8 @@ ul.sidebar-menu li ul.sub li a {
 }
 
 ul.sidebar-menu li ul.sub li a:hover {
-	color: white;
-	background: transparent;
+	color: #75b31e;
+	background: #FFFFFF;
 }
 
 ul.sidebar-menu li ul.sub li.active a {
@@ -846,6 +846,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 	text-align: center;
 	color: #989898;
 	border-bottom: 1px solid #989898;
+
 }
 
 .box1 span {
@@ -864,7 +865,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .box0 p {
 	text-align: center;
 	font-size: 12px;
-	color: #f2f2f2;
+	color: #FFFFFF;
 }
 
 .box0:hover p {

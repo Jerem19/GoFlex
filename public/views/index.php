@@ -63,18 +63,14 @@ include "partials/header.php";
                     case "dashboard":
                         include 'partials/index/dashboard.php';
                         break;
-
                     case "profile":
                         include 'partials/index/profile.php';
                         break;
                     case "boiler":
-                        include 'partials/index/chart/boiler.php';
+                        include 'partials/index/chart/consumption.php';
                         break;
                     case "heater":
-                        include 'partials/index/chart/heater.php';
-                        break;
-                    case "summary":
-                        include 'partials/index/chart/summary.php';
+                        include 'partials/index/chart/heat_pump.php';
                         break;
                 }
             }?>

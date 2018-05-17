@@ -21,7 +21,8 @@
             "profile": "Mon profile",
             "dashboard": "Tableau de bord",
             "creation": "Creation",
-
+            "consumption" : "Consommation",
+            "heat_pump" : "Pompe à chaleur",
             "analyse" : "Analyses",
             "boiler" : "Eau Chaude",
             "heater" : "Chauffage",
