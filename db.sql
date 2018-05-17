@@ -37,7 +37,7 @@ CREATE TABLE tblStatus (
 CREATE TABLE tblGateway (
 	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	gw_status INT NOT NULL DEFAULT 1,
-	name VARCHAR(45),
+	name VARCHAR(45) UNIQUE,
     
     CONSTRAINT FK_StatGWay
 	FOREIGN KEY (gw_status)

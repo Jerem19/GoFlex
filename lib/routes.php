@@ -91,21 +91,22 @@ $router
     })
 
     ->post('/login', function(Response $res) {
-        if (isset($_SESSION["_token"])) {
-            $user = User::getByToken($_SESSION["_token"]);
-            if ($user != false && $_POST["username"] == $user->getUsername() &&
-                    !$user->isActive() && $user->setPassword($_POST["password"]) &&
-                    $user->setActive())
-                $exist = $user->getId();
+        if (isset($_POST["username"]) and isset($_POST["password"])) {
+            if (isset($_SESSION["_token"])) {
+                $user = User::getByToken($_SESSION["_token"]);
+                if ($user != false && $_POST["username"] == $user->getUsername()
+                    && !$user->isActive() && $user->setPassword($_POST["password"])
+                    && $user->setActive())
+                    $user = new User($user->getUsername(), $_POST["password"]);
 
-            unset($_SESSION["_token"]);
-        } else
-            $exist = User::isExisting($_POST["username"], $_POST["password"]);
+                unset($_SESSION["_token"]);
+            } else $user = User::login($_POST["username"], $_POST["password"]);
 
-        if ($exist != false)
-            $_SESSION["User"] = new User($exist, $_POST["password"]);
+            if ($user != false)
+                $_SESSION["User"] = $user;
 
-        $res->send($exist != false);
+            $res->send($user != false);
+        } else $res->send(false);
     })
 
     ->get("*", function(Response $res) {
@@ -140,15 +141,19 @@ $router
         $res->send($data);
     })
 
-    ->post('/createUser', function(Response $res) {
-        //$res->send(User::create($_POST));
+    ->post('/create', function(Response $res) {
+        if (isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["gatewayname"])
+            && !(User::exists($_POST["username"]) || Gateway::exists($_POST["gatewayname"]))) {
 
-        //$userOk = User::create();
+            $gateway = $_POST["gatewayname"];
+            unset($_POST["gatewayname"]);
 
-        //$gwOk = Gateway::create();
+            $userId = User::create($_POST);
+            $gwId = Gateway::create(["name" => $gateway]);
 
-
-        // send email
+            $res->send(Installation::link($userId, $gwId) != false);
+        }
+        $res->send(false);
     })
 
 

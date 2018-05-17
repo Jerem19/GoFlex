@@ -5,28 +5,13 @@
 
 
         <div class="form-group">
-            <!-- USER -->
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['clientName']?></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="clientNumber" class="col-sm-8 form-control">
-                    <?php
-                    foreach($user->getAllInactiveUser() as $valueGateway)
-                    {
-                        echo "<option value=" . $valueGateway['userId'] .">" . $valueGateway['username'] . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
-
             <!-- INSTALLATION -->
             <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['boxNumber']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <select name="boxNumber" class="col-sm-8 form-control">
                     <?php
-                    foreach($user->getAllGateway() as $valueGateway)
-                    {
-                        echo "<option value=" . $valueGateway['gatewayId'] .">" . $valueGateway['name'] . "</option>";
+                    foreach(Gateway::getAll() as $valueGateway) {
+                        echo "<option value=" . $valueGateway->getId() .">" . $valueGateway->getName() . "</option>";
                     }
                     ?>
                 </select>

@@ -15,7 +15,7 @@ $styles = [
     "/login.css"
 ];
 
-//$l10n = $isSignup ? L10N["signup"] : L10N["login"]; // for translate
+$l10n = L10N["login"];//$isSignup ? L10N["signup"] : L10N["login"]; // for translate
 $title = $l10n["title"];
 $scriptsIE = [];
 

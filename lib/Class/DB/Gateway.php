@@ -6,6 +6,11 @@ require_once 'Status.php';
 class Gateway {
 
     private static $gateways = null;
+
+    /**
+     * Return all the gateways
+     * @return Gateway[]
+     */
     public static function getAll() {
         if (self::$gateways == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblGateway;");
@@ -13,6 +18,18 @@ class Gateway {
                 self::$gateways[] = new Gateway($g["_id"]);
         }
         return self::$gateways;
+    }
+
+    /**
+     * Return if a gateway exists
+     * @param string $name
+     * @return bool
+     */
+    public static function exists(string $name) {
+        foreach (self::getAll() as $gw)
+            if ($gw->getName() == $name)
+                return true;
+        return false;
     }
 
     /**
@@ -26,14 +43,13 @@ class Gateway {
         if (!isset($params["status"]))
             $params["status"] = 1;
 
-        Configuration::DB()->execute("INSERT INTO tblGateway (name, gw_status) VALUES (:name, :status);", $params);
-        return Configuration::DB()->lastInsertId();
+        $ok = is_array(Configuration::DB()->execute("INSERT INTO tblGateway (name, gw_status) VALUES (:name, :status);", $params));
+        return $ok ? Configuration::DB()->lastInsertId() : false;
     }
 
 
     private $_id = -1;
     private $name = "no_" . __CLASS__;
-    private $mac = "";
     private $status = -1;
 
     /**
@@ -50,14 +66,6 @@ class Gateway {
      */
     public function getName() {
         return $this->name;
-    }
-
-    /**
-     * Return the mac address
-     * @return string
-     */
-    public function getMac() {
-        return $this->mac;
     }
 
     /**
@@ -92,7 +100,6 @@ class Gateway {
             $data = $data[0];
             $this->_id = intval($data["_id"]);
             $this->name = $data["name"];
-            $this->mac = $data["mac"];
             $this->status = $data["gw_status"];
         }
     }
