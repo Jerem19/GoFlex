@@ -14,7 +14,10 @@
         "chart" : {
             "temperature" : "Température",
             "power": "Puissance",
+            "consumption" : "Consommation",
+            "consumptionPAC" : "Consommation pompe à chaleur",
             "boiler_power": "Puissance du boiler",
+            "hotwaterTemperature": "Temperature eau chaude",
             "boiler_temp": "Température du boiler"
         },
         "sidebar": {
@@ -78,8 +81,8 @@
             "boilerTemperatureSensor": "Capteur temperature du boiler",
             "productionSensor": "Capteur de production",
             "technoHeat": "Technologie chauffage",
-            "technoHotWater": "Technologie eau chaude",
-            "energyHotWater": "Energie eau chaude",
+            "technoHotwater": "Technologie eau chaude",
+            "energyHotwater": "Energie eau chaude",
             "pac": "PAC",
             "boiler": "Boiler",
             "wood-burner": "Poêle",

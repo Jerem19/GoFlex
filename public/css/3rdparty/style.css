@@ -2247,4 +2247,29 @@ label {
     min-height: 900px;
 }
 
+#footerGoflexPics
+{
+    width: 150px;
+    float:left;
+    margin-left:10px;
+    display: inline-block;
+    vertical-align: middle;
+}
 
+#footerHessoPics{
+    width: 150px;
+    float:right;
+    margin-right:10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.socialMediaPicsList {
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+}
+
+.socialMediaPics {
+    color:green;
+}
