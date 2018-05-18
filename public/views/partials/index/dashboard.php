@@ -1,32 +1,85 @@
+<!--
 <div class="row mt col-lg-12 form-panel">
-<div class="row">
-    <div class="col-lg-9 main-chart">
+    <div style="text-align: center;">
+        <div style="font-size: 400%;">
+            <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
+        </div>
+        <div id="ElectricConsumption" style="margin-top: 20px; font-size: 300%;">
+            <p id="ElectricConsumption"></p>
+        </div>
+        <span style="font-size: 500%" class="fa fa-database"></span>
 
-        <div class="row mtbox">
-            <div class="col-md-2 col-sm-3 col-md-offset-1 box0">
-                <div class="box1">
-                    <span class="fa fa-bolt"></span>
-                    <h3>3</h3>
-                </div>
-                <p>Vous avez une consommation électrique totale instantanée de 3kW</p>
-            </div>
-            <div class="col-md-2 col-sm-3 box0">
-                <div class="box1">
-                    <span class="fa fa-thermometer"></span>
-                    <span class="fa fa-bath"></span>
-                    <h3>1</h3>
-                </div>
-                <p>Votre pompe à chaleur consomme 1kW.</p>
-            </div>
-            <div class="col-md-2 col-sm-3 box0">
-                <div class="box1">
-                    <span class="fa fa-plug"></span>
-                    <h3>1</h3>
-                </div>
-                <p>Vous surproduisez 10 kWatt soit 1 CHF</p>
-            </div>
-        </div><!-- /row mt -->
+    </div>
+</div>
+-->
+<div class="row mt col-lg-12 form-panel">
 
-        </div><!-- /row -->
-    </div><!-- /row -->
-</div><!-- /col-lg-9 END SECTION MIDDLE -->
+    <div style="text-align: center;">
+        <div style="font-size: 400%;">
+            <p><?= $l10n["chart"]["ConsumptionHeatPump"] ?></p>
+        </div>
+        <div id="consumptionPAC" style="margin-top: 20px; font-size: 300%;">
+            <p id="consumptionPACValue"></p>
+        </div>
+        <span style="font-size: 500%" class="fa fa-bolt"></span>
+    </div>
+</div>
+
+<div class="row mt col-lg-12 form-panel">
+
+    <div style="text-align: center;">
+        <div style="font-size: 400%;">
+            <p><?= $l10n["chart"]["hotwaterTemperature"] ?></p>
+        </div>
+        <div id="hotwaterTemperature" style="margin-top: 20px; font-size: 300%;">
+            <p id="hotwaterTemperature"></p>
+        </div>
+        <span style="font-size: 500%" class="fa fa-bath"></span>
+
+    </div>
+</div>
+
+<div class="row mt col-lg-12 form-panel">
+    <div style="text-align: center;">
+        <div style="font-size: 400%;">
+            <p><?= $l10n["chart"]["insideTemperature"] ?></p>
+        </div>
+        <div id="insideTemp" style="margin-top: 20px; font-size: 300%;">
+            <p id="insideTemp"></p>
+        </div>
+        <span style="font-size: 500%" class="fa fa-thermometer"></span>
+
+    </div>
+</div>
+
+
+
+<script>
+
+    window.onload = function() {
+
+        $.post("ConsumptionHeatPump", function (data) {
+            document.getElementById("consumptionPACValue").innerHTML = data['ConsumptionHeatPump'][0]['value']+ " kW";
+            }
+        );
+
+        $.post("hotwaterTemperature", function (data) {
+                document.getElementById("hotwaterTemperature").innerHTML = data['hotwaterTemperature'][0]['value']+ " °C";
+            }
+        );
+
+        $.post("insideTemp", function (data) {
+                document.getElementById("insideTemp").innerHTML = data['insideTemp'][0]['value'] + " °C";
+            }
+        );
+
+        $.post("ElectricConsumption", function (data) {
+                console.log(data);
+                document.getElementById("ElectricConsumption").innerHTML = data['ElectricConsumption'][0]['value'] + " W";
+            }
+        );
+
+
+    }
+
+</script>

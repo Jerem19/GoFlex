@@ -1,5 +1,5 @@
 <div class="row mt col-lg-12 form-panel">
-    <div id="hotwaterTemperature" class="synchronized-chart" style="width: calc(100% - 15px);">
+    <div id="insideTemp" class="synchronized-chart" style="width: calc(100% - 15px);">
     </div>
 
 
@@ -7,21 +7,21 @@
 <script>
     window.onload = function() {
 
-        $.post("hotwaterTemperature", function (data) {
+        $.post("insideTemp", function (data) {
             console.log(data);
             $.each(data, function (i, val) {
                 dataTime = [];
                 for (var j in val) {
                     dataTime.unshift([new Date(val[j]["time"]).getTime(), val[j]["value"]])
                 }
-                Highcharts.StockChart('hotwaterTemperature', {
+                Highcharts.StockChart('insideTemp', {
                         title: {
                             text: i
                         },
                         yAxis: {
                             opposite: false,
                             title: {
-                                text: "<?= $l10n["chart"]["hotwaterTemperature"] ?>"
+                                text: "<?= $l10n["chart"]["insideTemperature"] ?>"
                             }
                         },
                         series: [{

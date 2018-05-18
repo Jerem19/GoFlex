@@ -12,18 +12,21 @@
     },
     "index": {
         "chart" : {
-            "temperature" : "Temperature",
+            "insideTemperature" : "Inside Temperature",
             "power": "Power",
-            "consumption" : "Consumption",
-            "consumptionPAC" : "Consommation heat pump",
+            "electricalConsumption" : "Consumption",
+            "consumptionHeatPump" : "Consommation heat pump",
             "boiler_power": "Boiler power",
-            "hotwaterTemperature": "Hot water temperature",
-            "boiler_temp": "Boiler temperature"
+            "hotwaterTemperature": "Hot water temperature"
+        },
+        "dashboard":{
+            "electricalConsumption" : "Electrical Consumption"
         },
         "sidebar": {
             "profile": "My profile",
             "dashboard": "Dashboard",
             "creation": "Add",
+            "insideTemp": "Inside temperature",
             "consommation" : "consumption",
             "heat_pump" : "Heat pump",
             "analyse" : "analysis",

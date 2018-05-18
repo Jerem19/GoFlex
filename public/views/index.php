@@ -85,8 +85,11 @@ include "partials/header.php";
                     case "consumption":
                         include 'partials/index/chart/consumption.php';
                         break;
-                    case "heater":
+                    case "consumptionHeatPump":
                         include 'partials/index/chart/heat_pump.php';
+                        break;
+                    case "insideTemp":
+                        include 'partials/index/chart/insideTemperature.php';
                         break;
                 }
             }?>

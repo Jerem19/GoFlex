@@ -132,27 +132,27 @@ $router
         $data[L10N["index"]["chart"]["boiler_power"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["power"]];
         $res->send($data);
     })
-    ->post('/heater', function(Response $res) {
+    ->post('/insideTemp', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["temp Int"] = $result->getPoints();
+        $data["insideTemp"] = $result->getPoints();
 
         $res->send($data);
     })
-    ->post('/consumption', function(Response $res) {
+    ->post('/electricConsumption', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["Consommation electrique"] = $result->getPoints();
+        $data["ElectricConsumption"] = $result->getPoints();
 
         $res->send($data);
     })
-    ->post('/consumptionPAC', function(Response $res) {
+    ->post('/consumptionHeatPump', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["Consommation PAC"] = $result->getPoints();
+        $data["ConsumptionHeatPump"] = $result->getPoints();
 
         $res->send($data);
     })
@@ -161,7 +161,7 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["Consommation electrique"] = $result->getPoints();
+        $data["hotwaterTemperature"] = $result->getPoints();
 
         $res->send($data);
     })

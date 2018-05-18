@@ -105,8 +105,11 @@
                     "consumption" => [
                         "text" => $l10nNav["consumption"]
                     ],
-                    "heater" => [
+                    "consumptionHeatPump" => [
                         "text" => $l10nNav["heat_pump"]
+                    ],
+                    "insideTemp" => [
+                        "text" => $l10nNav["insideTemp"]
                     ],
                 ];
 

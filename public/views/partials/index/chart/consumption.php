@@ -1,25 +1,26 @@
 <div class="row mt col-lg-12 form-panel">
-    <div id="consumption" class="synchronized-chart" style="width: calc(100% - 15px);">
+    <div id="electricConsumption" class="synchronized-chart" style="width: calc(100% - 15px);">
     </div>
+</div>
 
     <script>
         window.onload = function() {
-            $.post("consumption", function (data) {
 
-                $.each(data, function(i, val) {
+            $.post("electricConsumption", function (data) {
+                console.log(data);
+                $.each(data, function (i, val) {
                     dataTime = [];
-                    time = 0;
                     for (var j in val) {
                         dataTime.unshift([new Date(val[j]["time"]).getTime(), val[j]["value"]])
                     }
-                    Highcharts.StockChart('consumption', {
+                    Highcharts.StockChart('electricConsumption', {
                             title: {
                                 text: i
                             },
                             yAxis: {
                                 opposite: false,
                                 title: {
-                                    text: "<?= $l10n["chart"]["consumption"] ?>"
+                                    text: "<?= $l10n["chart"]["electricalConsumption"] ?>"
                                 }
                             },
                             series: [{
@@ -37,7 +38,7 @@
                             },
                             rangeSelector: {
                                 floating: true,
-                                selected : 1,
+                                selected: 1,
                                 buttons: [{
                                     type: 'hour',
                                     count: 1,
@@ -64,6 +65,6 @@
                     );
                 });
             });
-        };
+        }
+
     </script>
-</div>

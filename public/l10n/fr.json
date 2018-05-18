@@ -12,19 +12,22 @@
     },
     "index": {
         "chart" : {
-            "temperature" : "Température",
+            "insideTemperature" : "Température intérieure",
             "power": "Puissance",
-            "consumption" : "Consommation",
-            "consumptionPAC" : "Consommation pompe à chaleur",
+            "electricalConsumption" : "Consommation",
+            "consumptionHeatPump" : "Consommation pompe à chaleur",
             "boiler_power": "Puissance du boiler",
-            "hotwaterTemperature": "Temperature eau chaude",
-            "boiler_temp": "Température du boiler"
+            "hotwaterTemperature": "Temperature eau chaude"
+        },
+        "dashboard":{
+            "electricalConsumption" : "Consommation électrique"
         },
         "sidebar": {
             "profile": "Mon profile",
             "dashboard": "Tableau de bord",
             "creation": "Creation",
             "consumption" : "Consommation",
+            "insideTemp": "Temperature intérieure",
             "heat_pump" : "Pompe à chaleur",
             "analyse" : "Analyses",
             "boiler" : "Eau Chaude",
