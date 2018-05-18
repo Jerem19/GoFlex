@@ -26,7 +26,7 @@ include "partials/header.php";
 <section id="container">
     <?php include 'partials/index/header.php';
     include 'partials/index/sidebar.php'; ?>
-    <section id="main-content">
+    <section id="main-content" style="position: relative;">
         <section class="wrapper">
 
             <?php
@@ -41,6 +41,10 @@ include "partials/header.php";
                         case "creationSpecialUser":
                             include 'partials/index/addSpecialUser.php';
                             break;
+
+                        case "checkUserData":
+                            include 'partials/index/checkUserData.php';
+                            break;
                     }
                 } elseif ($user->getRole()->getId() == 2) {
                     if (isset($path)) {
@@ -48,7 +52,18 @@ include "partials/header.php";
                             case "installationGateway":
                                 include 'partials/index/installationGateway.php';
                                 break;
+
                             case "checkUserData":
+                                include 'partials/index/checkUserData.php';
+                                break;
+                        }
+                    }
+                }
+
+                elseif ($user->getRole()->getId() == 3) {
+                    if (isset($path)) {
+                        switch ($path) {
+                           case "checkUserData":
                                 include 'partials/index/checkUserData.php';
                                 break;
                         }
@@ -66,7 +81,7 @@ include "partials/header.php";
                     case "profile":
                         include 'partials/index/profile.php';
                         break;
-                    case "boiler":
+                    case "consumption":
                         include 'partials/index/chart/consumption.php';
                         break;
                     case "heater":
@@ -76,9 +91,10 @@ include "partials/header.php";
             }?>
 
         </section>
-        <?php include 'partials/index/footer.php'; ?>
+
     </section>
 </section>
+<?php include 'partials/index/footer.php'; ?>
 
 <?php
 $scripts = [

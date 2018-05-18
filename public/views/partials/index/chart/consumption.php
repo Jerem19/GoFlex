@@ -19,7 +19,7 @@
                             yAxis: {
                                 opposite: false,
                                 title: {
-                                    text: "<?= $l10n["chart"]["temperature"] ?>"
+                                    text: "<?= $l10n["chart"]["consumption"] ?>"
                                 }
                             },
                             series: [{

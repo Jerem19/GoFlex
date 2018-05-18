@@ -135,11 +135,37 @@ $router
     ->post('/heater', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.temperatureSensor_A.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
         $data["temp Int"] = $result->getPoints();
 
         $res->send($data);
     })
+    ->post('/consumption', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC ;');
+        $data["Consommation electrique"] = $result->getPoints();
+
+        $res->send($data);
+    })
+    ->post('/consumptionPAC', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
+        $data["Consommation PAC"] = $result->getPoints();
+
+        $res->send($data);
+    })
+
+    ->post('/hotwaterTemperature', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
+        $data["Consommation electrique"] = $result->getPoints();
+
+        $res->send($data);
+    })
+
 
     ->post('/create', function(Response $res) {
         if (isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["gatewayname"])

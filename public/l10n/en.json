@@ -14,7 +14,10 @@
         "chart" : {
             "temperature" : "Temperature",
             "power": "Power",
+            "consumption" : "Consumption",
+            "consumptionPAC" : "Consommation heat pump",
             "boiler_power": "Boiler power",
+            "hotwaterTemperature": "Hot water temperature",
             "boiler_temp": "Boiler temperature"
         },
         "sidebar": {
@@ -22,7 +25,7 @@
             "dashboard": "Dashboard",
             "creation": "Add",
             "consommation" : "consumption",
-            "heat_pump" : "Pompe à chaleur",
+            "heat_pump" : "Heat pump",
             "analyse" : "analysis",
             "boiler" : "Hot water",
             "heater" : "Heating",

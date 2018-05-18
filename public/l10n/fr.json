@@ -14,7 +14,10 @@
         "chart" : {
             "temperature" : "Température",
             "power": "Puissance",
+            "consumption" : "Consommation",
+            "consumptionPAC" : "Consommation pompe à chaleur",
             "boiler_power": "Puissance du boiler",
+            "hotwaterTemperature": "Temperature eau chaude",
             "boiler_temp": "Température du boiler"
         },
         "sidebar": {

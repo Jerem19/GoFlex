@@ -19,6 +19,39 @@
 
 }
 
+@media (max-width: 700px) {
+    #footerGoflexPics {
+        width: 75px;
+        float:left;
+        margin-left:20px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    #footerHessoPics{
+        width: 75px;
+        float:right;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .socialMediaPicsList {
+        display: inline-block;
+        margin: 2px;
+        text-align: center;
+    }
+
+    .socialMediaPics {
+        color:green;
+        font-size: 16px;
+    }
+
+    .socialMediaSpan{
+        width: 8px;
+    }
+
+}
+
 @media (max-width: 768px) {
 
     .header {

@@ -72,6 +72,11 @@
                     "text" => $l10nNav["creationSpecialUser"],
                     "_iClass" => "fa fa-user-plus"
                 ];
+
+                $menu["checkUserData"] = [
+                    "text" => $l10nNav["checkUserData"],
+                    "_iClass" => "fa fa-odnoklassniki"
+                ];
             }
 
             if ($user->getRole()->getId() == 2) {
@@ -86,17 +91,25 @@
                 ];
             }
 
+            if ($user->getRole()->getId() == 3) {
+                $menu["checkUserData"] = [
+                    "text" => $l10nNav["checkUserData"],
+                    "_iClass" => "fa fa-odnoklassniki"
+                ];
+            }
+
             if ($user->getRole()->getId() == 4) {
                 $menu[] = [
                     "_iClass" => "fa fa-desktop",
                     "text" => $l10nNav["analyse"],
-                    "boiler" => [
+                    "consumption" => [
                         "text" => $l10nNav["consumption"]
                     ],
                     "heater" => [
                         "text" => $l10nNav["heat_pump"]
                     ],
                 ];
+
             }
 
             $menu["profile"] = [
