@@ -4,19 +4,18 @@ class Technology {
     private $_id = -1;
     private $name = "no_" . __CLASS__;
 
-    private static $technologies = null;
-
+    private static $all = null;
     /**
      * Return all status
      * @return Status[]
      */
-    public static function Technologies() {
-        if (self::$technologies == null) {
+    public static function getAll() {
+        if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblTechnology;");
             while ($d = $sth->fetch())
-                self::$technologies[] = new Technology($d["_id"]);
+                self::$all[] = new Technology($d["_id"]);
         }
-        return self::$technologies;
+        return self::$all;
     }
 
     /**

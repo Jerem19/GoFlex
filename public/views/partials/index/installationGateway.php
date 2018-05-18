@@ -1,214 +1,191 @@
 <div class="row mt col-lg-12 form-panel">
     <form class='form-horizontal style-form' id="formLinkGatewayUser" method='post' enctype="multipart/form-data">
-
-        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= L10N['index']['installation']['systemDefinition']?></label>
-
+        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['systemDefinition']?></label>
 
         <div class="form-group">
-            <!-- INSTALLATION -->
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['boxNumber']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['boxNumber']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="boxNumber" class="col-sm-8 form-control">
-                    <?php
-                    foreach(Gateway::getAllReady() as $valueGateway) {
-                        echo "<option value=" . $valueGateway->getId() .">" . $valueGateway->getName() . "</option>";
-                    }
-                    ?>
+                <select name="gwId" class="col-sm-8 form-control">
+                    <?php foreach(Gateway::getAllReady() as $valueGateway) { ?>
+                        <option value="<?= $valueGateway->getId()?>"><?= $valueGateway->getName()?></option>
+                    <?php } ?>
                 </select>
             </div>
 
-
-            <!-- FACTURATION -->
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['facturation']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['facturation']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <select name="facturation" class="col-sm-8 form-control">
-                    <option value="inf"><?= L10N['index']['installation']['lower']?></option>
-                    <option value="sup"><?= L10N['index']['installation']['higher']?></option>
+                    <option value="1"><?= $l10n['installation']['lower']?></option>
+                    <option value="0"><?= $l10n['installation']['higher']?></option>
                 </select>
             </div>
 
-            <!-- SECTEURACTIVITE -->
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['businessSector']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['businessSector']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <select name="businessSector" class="col-sm-8 form-control">
-                    <option value="residential"><?= L10N['index']['installation']['residential']?></option>
-                    <option value="industrial"><?= L10N['index']['installation']['industrial']?></option>
-                    <option value="tertiary"><?= L10N['index']['installation']['tertiary']?></option>
+                    <?php foreach (BusinessSector::getAll() as $busSec) { ?>
+                        <option value="<?= $busSec->getId() ?>"><?= $l10n['installation'][$busSec->getName()] ?></option>
+                    <?php } ?>
                 </select>
             </div>
         </div>
 
-
-        <!-- -------------------------------------------------------------------------------------------- -->
-
-        <!-- HEAT -->
-
-
-        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= L10N['index']['installation']['equipmentEnergyDefinitionHeat']?></label>
+        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['equipmentEnergyDefinitionHeat']?></label>
 
         <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['energyHeat']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['energyHeat']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="energyHeat" class="col-sm-8 form-control">
-                    <option value="electricity"><?= L10N['index']['installation']['electricity']?></option>
-                    <option value="gaz"><?= L10N['index']['installation']['gaz']?></option>
-                    <option value="wood"><?= L10N['index']['installation']['wood']?></option>
+                <select name="heatEner" class="col-sm-8 form-control">
+                    <?php foreach (Energy::getAll() as $ener) { ?>
+                        <option value="<?= $ener->getId() ?>"><?= $l10n['installation'][$ener->getName()]?></option>
+                    <?php } ?>
                 </select>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['technoHeat']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['technoHeat']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="technoHeat" class="col-sm-8 form-control">
-                    <option value="pac"><?= L10N['index']['installation']['pac']?></option>
-                    <option value="boiler"><?= L10N['index']['installation']['boiler']?></option>
-                    <option value="wood-burner"><?= L10N['index']['installation']['wood-burner']?></option>
+                <select name="heatTech" class="col-sm-8 form-control">
+                    <?php foreach (Technology::getAll() as $tech) { ?>
+                        <option value="<?= $tech->getId() ?>"><?= $l10n['installation'][$tech->getName()]?></option>
+                    <?php } ?>
                 </select>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['consommationSensor']?></label></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['consommationSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="consommationHeatSensor" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="heatSensors" />
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['insideTemperatureSensor']?></label></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['insideTemperatureSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="insideTemperatureSensor" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="heatTempSensors" />
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['positionNote']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['positionNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" name="heatNotePosition"></textarea>
+                <textarea class="col-sm-8 form-control" name="heatNote"></textarea>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['picture']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="pictureHeat[]" multiple="multiple" />
+                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures" id="heatPictures" />
             </div>
         </div>
 
-        <!-- -------------------------------------------------------------------------------------------- -->
 
-        <!-- Hot water -->
-
-        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= L10N['index']['installation']['equipmentEnergyDefinitionHotwater']?></label>
+        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['equipmentEnergyDefinitionHotwater']?></label>
 
         <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['energyHotWater']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['energyHotWater']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="energyHotWater" class="col-sm-8 form-control">
-                    <option value="electricity"><?= L10N['index']['installation']['electricity']?></option>
-                    <option value="gaz"><?= L10N['index']['installation']['gaz']?></option>
-                    <option value="wood"><?= L10N['index']['installation']['wood']?></option>
+                <select name="hotwaterEner" class="col-sm-8 form-control">
+                    <?php foreach (Energy::getAll() as $ener) { ?>
+                        <option value="<?= $ener->getId() ?>"><?= $l10n['installation'][$ener->getName()]?></option>
+                    <?php } ?>
                 </select>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['technoHotWater']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['technoHotWater']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="technoHotWater" class="col-sm-8 form-control">
-                    <option value="pac"><?= L10N['index']['installation']['pac']?></option>
-                    <option value="boiler"><?= L10N['index']['installation']['boiler']?></option>
-                    <option value="wood-burner"><?= L10N['index']['installation']['wood-burner']?></option>
+                <select name="hotwaterTech" class="col-sm-8 form-control">
+                    <?php foreach (Technology::getAll() as $tech) { ?>
+                        <option value="<?= $tech->getId() ?>"><?= $l10n['installation'][$tech->getName()]?></option>
+                    <?php } ?>
                 </select>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['consommationSensor']?></label></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['consommationSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="consommationHotwaterSensor" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="hotwaterSensors" />
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['boilerTemperatureSensor']?></label></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['boilerTemperatureSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="boilerTemperatureSensor" />
+                <input required="required" type="number" class="col-sm-8 form-control" name="hotwaterTempSensors" />
             </div>
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['positionNote']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['positionNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" name="hotwaterNotePosition"></textarea>
+                <textarea class="col-sm-8 form-control" name="hotwaterNote"></textarea>
             </div>
 
             <!-- 25mo autorises -->
-            <input type="hidden" name="MAX_FILE_SIZE" value="26214400" />
+            <!-- <input type="hidden" name="MAX_FILE_SIZE" value="26214400" /> -->
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['picture']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="pictureHotwater" />
+                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures" id="hotwaterPictures"/>
             </div>
         </div>
 
-        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= L10N['index']['installation']['equipmentEnergyDefinitionSolarPanel']?></label>
+        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['equipmentEnergyDefinitionSolarPanel']?></label>
 
         <div class="form-group">
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['solarPanel']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['solarPanel']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <select id="solarPanelSelect" name="solarPanel" class="col-sm-8 form-control" onChange="disabledOrEnable(this)">
-                    <option value="no"><?= L10N['index']['installation']['no']?></option>
-                    <option value="yes"><?= L10N['index']['installation']['yes']?></option>
+                    <option value="0"><?= $l10n['installation']['no']?></option>
+                    <option value="1"><?= $l10n['installation']['yes']?></option>
                 </select>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['productionSensor']?></label></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['productionSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input id="productionSensor" disabled="disabled" type="number" class="col-sm-8 form-control" name="productionSensor" />
+                <input id="productionSensor" disabled="disabled" type="number" class="col-sm-8 form-control" name="solarSensors" />
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['positionNote']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['positionNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea id="positionNoteSolarPanel" disabled="disabled" class="col-sm-8 form-control" name="solarPanelNotePosition"></textarea>
+                <textarea id="positionNoteSolarPanel" disabled="disabled" class="col-sm-8 form-control" name="solarNote"></textarea>
             </div>
 
         </div>
 
-        <!-- -------------------------------------------------------------------------------------------- -->
-
-        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= L10N['index']['installation']['generalInformation']?></label>
-
+        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['generalInformation']?></label>
         <div class="form-group">
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['address']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['address']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <input required="required" class="col-sm-8 form-control" name="address" />
             </div>
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['npa']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['npa']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <input required="required" type="number" class="col-sm-8 form-control" name="npa" />
             </div>
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['city']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['city']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <input required="required" class="col-sm-8 form-control" name="city" />
             </div>
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['generalNote']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['generalNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" name="generalNote"></textarea>
+                <textarea class="col-sm-8 form-control" name="note"></textarea>
             </div>
         </div>
 
-        <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['pictureHouse']?></label>
+        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
         <div class="col-sm-10" style="margin-bottom: 10px;">
-            <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="pictureHouse" />
+            <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="picture" id="picture" />
         </div>
 
-        <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['installation']['link']?></button>
-
+        <button class="btn btn-theme02 btn-block" type="submit"><?= $l10n['installation']['link']?></button>
     </form>
 </div>
 
 <script>
     window.onload = function() {
 
-        solarPanel.addEventListener("onchange", disabledOrEnable);
-
         $("#formLinkGatewayUser").submit(function (event) {
             att = $(this).serialize();
-
             $.post("linkUserGateway", att, function (data) {
+                console.log(data);
                 data = JSON.parse(data);
 
                 if (data) {
-                    alert("<?= L10N['index']['installation']['alertLinUserGatewaySuccess']?>");
+                    alert("<?= $l10n['installation']['alertLinUserGatewaySuccess']?>");
                     window.location.reload();
                 }
                 else {
-                    alert("<?= L10N['index']['installation']['alertLinUserGatewayFailed']?>");
+                    alert("<?= $l10n['installation']['alertLinUserGatewayFailed']?>");
                 }
             });
             return false;
@@ -219,6 +196,5 @@
     function disabledOrEnable(elem) {
         document.getElementById('productionSensor').disabled = !elem.selectedIndex;
         document.getElementById('positionNoteSolarPanel').disabled = !elem.selectedIndex;
-
-        }
+    }
 </script>

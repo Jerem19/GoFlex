@@ -4,19 +4,19 @@ class BusinessSector {
     private $_id = -1;
     private $name = "no_" . __CLASS__;
 
-    private static $busSecs = null;
+    private static $all = null;
 
     /**
      * Return all status
      * @return Status[]
      */
-    public static function BusinessSectors() {
-        if (self::$busSecs == null) {
+    public static function getAll() {
+        if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblBuisSector;");
             while ($d = $sth->fetch())
-                self::$busSecs[] = new BusinessSector($d["_id"]);
+                self::$all[] = new BusinessSector($d["_id"]);
         }
-        return self::$busSecs;
+        return self::$all;
     }
 
     /**

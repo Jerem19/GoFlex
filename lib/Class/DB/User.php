@@ -5,18 +5,18 @@ require_once 'Installation.php';
 
 class User {
 
-    private static $users = null;
+    private static $all = null;
     /**
      * Return all Users
      * @return User[]
      */
     public static function getAll() {
-        if (self::$users == null) {
+        if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblUser;");
             while ($d = $sth->fetch())
-                self::$users[] = new User($d["_id"]);
+                self::$all[] = new User($d["_id"]);
         }
-        return self::$users;
+        return self::$all;
     }
 
     /**
@@ -26,7 +26,7 @@ class User {
     public static function getAllClient() {
         $users = [];
         foreach (self::getAll() as $user)
-            if ($user->getRole() == Role::Roles()["client"])
+            if ($user->getRole() == Role::getAll()["client"])
                 $users[] = $user;
         return $users;
     }

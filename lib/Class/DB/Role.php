@@ -2,19 +2,18 @@
 
 class Role {
 
-    private static $roles = null;
-
+    private static $all = null;
     /**
      * Return all status
      * @return Role[]
      */
-    public static function Roles() {
-        if (self::$roles == null) {
+    public static function getAll() {
+        if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id, name FROM tblRole;");
             while ($d = $sth->fetch())
-                self::$roles[$d["name"]] = new Role($d["_id"]);
+                self::$all[$d["name"]] = new Role($d["_id"]);
         }
-        return self::$roles;
+        return self::$all;
     }
     private $_id = -1;
     private $name = "no_" . __CLASS__;
@@ -45,7 +44,7 @@ class Role {
      */
     public function __construct(int $id) {
         $data = Configuration::DB()->execute("SELECT * FROM tblRole WHERE _id = :id", ["id" => $id]);
-        if(!empty($data)) {
+        if (!empty($data)) {
             $this->name = $data[0]["name"];
             $this->_id = intval($data[0]["_id"]);
         }

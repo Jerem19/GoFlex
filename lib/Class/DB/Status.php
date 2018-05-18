@@ -4,19 +4,18 @@ class Status {
     private $_id = -1;
     private $name = "no_" . __CLASS__;
 
-    private static $statutes = null;
-
+    private static $all = null;
     /**
      * Return all status
      * @return Status[]
      */
-    public static function Statutes() {
-        if (self::$statutes == null) {
+    public static function getAll() {
+        if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblStatus;");
             while ($d = $sth->fetch())
-                self::$statutes[] = new Status($d["_id"]);
+                self::$all[] = new Status($d["_id"]);
         }
-        return self::$statutes;
+        return self::$all;
     }
 
     /**

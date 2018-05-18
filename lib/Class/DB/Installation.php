@@ -96,19 +96,42 @@ class Installation {
         return $this->_gateway;
     }
 
+    /**
+     * Ture if < 100Mwh
+     * @return bool
+     */
+    public function getFacturation() {
+        return $this->facturation;
+    }
+
+    /**
+     * @return BusinessSector
+     */
     public function getBuisinessSector() {
         if (!$this->$this->buisSector instanceof BusinessSector)
             $this->buisSector = new BusinessSector($this->buisSector);
         return $this->buisSector;
     }
 
-
+    /**
+     * @return Element
+     */
     public function Heat() {
         return $this->heat;
     }
 
+    /**
+     * @return Element
+     */
     public function Hotwater() {
         return $this->hotwater;
+    }
+
+    /**
+     * @return Solar
+     */
+    public function Solar() {
+        return $this->solar;
     }
 
     public function getCity() {
@@ -127,8 +150,60 @@ class Installation {
         return $this->note;
     }
 
-    public function update() {
-        // To DO
+    public function update(array $params = []) {
+
+        if (!isset($params["facturation"]))
+            $params["facturation"] = $this->getFacturation();
+        else $params["facturation"] = boolval($params["facturation"]);
+
+        if (!isset($params["businessSector"]))
+            $params["businessSector"] = $this->getBuisinessSector()->getId();
+
+        if (!isset($params["heatEner"]))
+            $params["heatEner"] = $this->heat->getEnergy()->getId();
+        if (!isset($params["heatTech"]))
+            $params["heatTech"] = $this->heat->getTechnology()->getId();
+        if (!isset($params["heatSensors"]))
+            $params["heatSensors"] = $this->heat->getSensorsCount();
+        if (!isset($params["heatTempSensors"]))
+            $params["hotwaterTempSensors"] = $this->heat->getTemperatureSensors();
+        if (!isset($params["heatNote"]))
+            $params["heatNote"] = $this->heat->getNote();
+
+        if (!isset($params["hotwaterEner"]))
+            $params["hotwaterEner"] = $this->hotwater->getEnergy()->getId();
+        if (!isset($params["hotwaterTech"]))
+            $params["hotwaterTech"] = $this->hotwater->getTechnology()->getId();
+        if (!isset($params["hotwaterSensors"]))
+            $params["hotwaterSensors"] = $this->hotwater->getSensorsCount();
+        if (!isset($params["hotwaterTempSensors"]))
+            $params["hotwaterTempSensors"] = $this->hotwater->getTemperatureSensors();
+        if (!isset($params["hotwaterNote"]))
+            $params["hotwaterNote"] = $this->hotwater->getNote();
+
+        if (!isset($params["solarPanel"]))
+            $params["solarPanel"] = $this->solar->isExistant();
+        if (!isset($params["solarSensors"]))
+            $params["solarSensors"] = $this->solar->getSensorsCount();
+        if (!isset($params["solarNote"]))
+            $params["solarNote"] = $this->solar->getNote();
+
+        if (!isset($params["city"]))
+            $params["city"] = $this->getCity();
+        if (!isset($params["npa"]))
+            $params["npa"] = $this->getNPA();
+        if (!isset($params["address"]))
+            $params["address"] = $this->getAddress();
+        if (!isset($params["note"]))
+            $params["note"] = $this->getNote();
+
+        $params["id"] = $this->getId();
+
+        return is_array(Configuration::DB()->execute("UPDATE tblInstallation SET
+          facturation = :facturation, businessSector = :businessSector,
+          heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote,
+          hotwaterEner = :hotwaterEner, hotwaterTech = :hotwaterTech, hotwaterSensors = :hotwaterSensors, hotwaterTempSensors = :hotwaterTempSensors, hotwaterNote = :hotwaterNote,
+          solarPanel = :solarPanel, solarSensors = :solarSensors, solarNote = :solarNote, city = :city, npa = :npa, address = :address, note = :note WHERE _id = :id;", $params));
     }
 
     /**
@@ -144,7 +219,7 @@ class Installation {
             $this->_user = $data["inst_userId"];
             $this->_gateway = $data["inst_gwId"];
 
-            $this->buisSector = $data["buisSector"];
+            $this->buisSector = $data["businessSector"];
             $this->heat = new Element("heat", $data);
             $this->hotwater = new Element("hotwater", $data);
             $this->solar = new Solar($data);

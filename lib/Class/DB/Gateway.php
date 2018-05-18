@@ -5,25 +5,25 @@ require_once 'Status.php';
 
 class Gateway {
 
-    private static $gateways = null;
+    private static $all = null;
 
     /**
      * Return all the gateways
      * @return Gateway[]
      */
     public static function getAll() {
-        if (self::$gateways == null) {
+        if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblGateway;");
             while ($g = $sth->fetch())
-                self::$gateways[] = new Gateway($g["_id"]);
+                self::$all[] = new Gateway($g["_id"]);
         }
-        return self::$gateways;
+        return self::$all;
     }
 
     public static function getAllReady() {
         $gws = [];
         foreach (self::getAll() as $gw)
-            if ($gw->getStatus() == Status::Statutes()[0])
+            if ($gw->getStatus() == Status::getAll()[0])
                 $gws[] = $gw;
         return $gws;
     }
@@ -84,6 +84,17 @@ class Gateway {
         if (!$this->status instanceof Status)
             $this->status = new Status($this->status);
         return $this->status;
+    }
+
+    /**
+     * @param Status|int $status
+     * @return bool
+     */
+    public function setStatus($status) {
+        return is_array(Configuration::DB()->execute("UPDATE tblGateway SET gw_status = :status WHERE _id = :id;", [
+            "id" => $this->getId(),
+            "status" => $status instanceof Status ? $status->getId() : $status
+        ]));
     }
 
     /**

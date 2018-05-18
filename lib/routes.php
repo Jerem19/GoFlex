@@ -166,7 +166,11 @@ $router
     })
 
     ->post('/linkUserGateway', function(Response $res) {
-        $res->send(User::linkUserGateway($_POST));
+        $gw = new Gateway($_POST["gwId"]);
+        unset($_POST["gwId"]);
+        if ($gw->getInstallation()->update($_POST))
+            $res->send($gw->setStatus(2));
+        $res->send(false);
     })
 
 

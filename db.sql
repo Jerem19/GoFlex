@@ -59,27 +59,50 @@ CREATE TABLE tblTechnology (
     name VARCHAR(45)
 );
 
+CREATE TABLE tblPicture (
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50)
+);
+
+CREATE TABLE tblPictures (
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT    
+);
+
+CREATE TABLE tblManyPictures (
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    pic_pics INT,
+    pic_pic INT,
+    
+    CONSTRAINT FK_pics
+	FOREIGN KEY (pic_pics)
+	REFERENCES tblPictures(_id),
+    
+    CONSTRAINT FK_pic
+	FOREIGN KEY (pic_pic)
+	REFERENCES tblPicture(_id)
+);
+
 CREATE TABLE tblInstallation (
 	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	inst_userId INT,
     inst_gwId INT UNIQUE,
     
     facturation BOOLEAN NOT NULL DEFAULT TRUE, # true < 100MWh
-    buisSector INT DEFAULT 1,
+    businessSector INT DEFAULT 1,
     
     heatEner INT DEFAULT 1,
     heatTech INT DEFAULT 1,
     heatSensors INT(2) DEFAULT 0,
     heatTempSensors INT(2) DEFAULT 0,
     heatNote TEXT,
-    heatPictures VARCHAR(500),
+    heatPictures INT,
     
     hotwaterEner INT DEFAULT 1,
     hotwaterTech INT DEFAULT 1,
     hotwaterSensors INT(2) DEFAULT 0,
     hotwaterTempSensors INT(2) DEFAULT 0,
     hotwaterNote TEXT,
-    hotwaterPictures VARCHAR(500),
+    hotwaterPictures INT,
     
     solarPanel BOOLEAN DEFAULT FALSE,
     solarSensors INT(2) DEFAULT 0,
@@ -90,7 +113,7 @@ CREATE TABLE tblInstallation (
     address VARCHAR(100),
         
     note TEXT DEFAULT NULL,
-    picture VARCHAR(100),
+    picture INT,
 
 	CONSTRAINT FK_UserSet
 	FOREIGN KEY (inst_userId)
@@ -101,7 +124,7 @@ CREATE TABLE tblInstallation (
 	REFERENCES tblGateway(_id),
     
     CONSTRAINT FK_BuisSect
-	FOREIGN KEY (buisSector)
+	FOREIGN KEY (businessSector)
 	REFERENCES tblBuisSector(_id),
     
     CONSTRAINT FK_heatEner
@@ -118,7 +141,19 @@ CREATE TABLE tblInstallation (
     
     CONSTRAINT FK_hotTech
 	FOREIGN KEY (hotwaterTech)
-	REFERENCES tblTechnology(_id)
+	REFERENCES tblTechnology(_id),
+        
+    CONSTRAINT FK_picHeat
+	FOREIGN KEY (heatPictures)
+	REFERENCES tblPictures(_id),
+    
+    CONSTRAINT FK_picHot
+	FOREIGN KEY (hotwaterPictures)
+	REFERENCES tblPictures(_id),
+    
+    CONSTRAINT FK_picture
+	FOREIGN KEY (picture)
+	REFERENCES tblPicture(_id)
 );
 
 
@@ -135,11 +170,9 @@ INSERT INTO tblUser (user_role, username, password, token, email, active) VALUES
 (4, 'noactive', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '5e7ce4fe8c1672a93687d2d6f1a6def5394ede477de57c150e83fb0b12c8er16e0c291e7d64171257d7e47676f466c657832', 'noactive@go.flex', false);
 
 INSERT INTO tblGateway (name) VALUES
-('goflex-dc-001'),
-('goflex-dc-002'),
-('goflex-dc-003');
+('goflex-dc-001'), ('goflex-dc-002'), ('goflex-dc-003');
 
-INSERT INTO tblBuisSector (name) VALUES ('residential'), ('industriel'), ('tertiary');
+INSERT INTO tblBuisSector (name) VALUES ('residential'), ('industrial'), ('tertiary');
 INSERT INTO tblEnergy (name) VALUES ('electricity'), ('wood'), ('gaz');
 INSERT INTO tblTechnology (name) VALUES ('heat_pump'), ('boiler'), ('wood_burner');
 

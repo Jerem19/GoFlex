@@ -4,19 +4,19 @@ class Energy {
     private $_id = -1;
     private $name = "no_" . __CLASS__;
 
-    private static $energies= null;
+    private static $all= null;
 
     /**
      * Return all status
      * @return Status[]
     */
-    public static function Energies() {
-        if (self::$energies == null) {
+    public static function getAll() {
+        if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblEnergy;");
             while ($d = $sth->fetch())
-                self::$energies[] = new Energy($d["_id"]);
+                self::$all[] = new Energy($d["_id"]);
         }
-        return self::$energies;
+        return self::$all;
     }
 
     /**
