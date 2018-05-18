@@ -12,6 +12,7 @@ $styles = [
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css",
     "3rdparty/style.css",
     "3rdparty/style-responsive.css",
+    "/footer.css",
     "/login.css"
 ];
 
@@ -21,7 +22,7 @@ $scriptsIE = [];
 
 include "partials/header.php";
 ?>
-    <div id="login-page">
+    <div id="main-content" style="margin: 0">
         <?php include 'partials/sltLang.php';?>
         <div class="container">
             <form class="form-login" method="post">
@@ -46,6 +47,8 @@ include 'partials/index/footer.php';
 $scripts = [
     "https://code.jquery.com/jquery-3.1.1.min.js",
     "https://blacktie.co/demo/dashgum/assets/js/jquery.backstretch.min.js",
-    "/l10n.js", "/login.js"
+    "/l10n.js",
+    "/footer.js",
+    "/login.js"
 ];
 include 'partials/footer.php';

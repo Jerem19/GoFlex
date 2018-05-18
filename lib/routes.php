@@ -194,8 +194,8 @@ $router
     ->post('/linkUserGateway', function(Response $res) {
         $gw = new Gateway($_POST["gwId"]);
         unset($_POST["gwId"]);
-        if ($gw->getInstallation()->update($_POST))
-            $res->send($gw->setStatus(2));
+        if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2))
+            $res->send(true); // send mail
         $res->send(false);
     })
 

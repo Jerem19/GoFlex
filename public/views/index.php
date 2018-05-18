@@ -11,7 +11,8 @@ $styles = [
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css",
     "3rdparty/style.css",
     "3rdparty/style-responsive.css",
-    "index.css"
+    "/footer.css",
+    "/index.css"
 ];
 $scriptsIE = [
     "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js",
@@ -92,9 +93,9 @@ include "partials/header.php";
 
         </section>
 
+        <?php include 'partials/index/footer.php'; ?>
     </section>
 </section>
-<?php include 'partials/index/footer.php'; ?>
 
 <?php
 $scripts = [
@@ -106,6 +107,7 @@ $scripts = [
 "https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js",
 "3rdparty/common-scripts.js",
 "/l10n.js",
+"/footer.js",
 "/index.js"
 ];
 include 'partials/footer.php';
