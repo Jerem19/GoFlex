@@ -3,6 +3,13 @@
 require_once 'User.php';
 require_once 'Gateway.php';
 
+require_once 'Installation/BusinessSector.php';
+require_once 'Installation/Energy.php';
+require_once 'Installation/Technology.php';
+
+require_once 'Installation/Solar.php';
+require_once 'Installation/Element.php';
+
 class Installation {
 
     /**
@@ -49,6 +56,18 @@ class Installation {
     private $_user = -1;
     private $_gateway = -1;
 
+    private $facturation = true;
+    private $buisSector = -1;
+
+    private $heat = null;
+    private $hotwater = null;
+    private $solar = null;
+
+    private $city = "";
+    private $npa = "";
+    private $address = "";
+    private $note = "";
+
     /**
      * Return the id of the installation
      * @return int
@@ -77,6 +96,41 @@ class Installation {
         return $this->_gateway;
     }
 
+    public function getBuisinessSector() {
+        if (!$this->$this->buisSector instanceof BusinessSector)
+            $this->buisSector = new BusinessSector($this->buisSector);
+        return $this->buisSector;
+    }
+
+
+    public function Heat() {
+        return $this->heat;
+    }
+
+    public function Hotwater() {
+        return $this->hotwater;
+    }
+
+    public function getCity() {
+        return $this->city;
+    }
+
+    public function getNPA() {
+        return $this->npa;
+    }
+
+    public function getAddress() {
+        return $this->address;
+    }
+
+    public function getNote() {
+        return $this->note;
+    }
+
+    public function update() {
+        // To DO
+    }
+
     /**
      * Installation constructor.
      * @param int $id
@@ -85,9 +139,22 @@ class Installation {
         $data = Configuration::DB()->execute("SELECT * FROM tblInstallation WHERE _id = :id", ["id" => $id]);
 
         if (!empty($data)) {
-            $this->_id = intval($data[0]["_id"]);
-            $this->_user = $data[0]["inst_userId"];
-            $this->_gateway = $data[0]["inst_gwId"];
+            $data = $data[0];
+            $this->_id = intval($data["_id"]);
+            $this->_user = $data["inst_userId"];
+            $this->_gateway = $data["inst_gwId"];
+
+            $this->buisSector = $data["buisSector"];
+            $this->heat = new Element("heat", $data);
+            $this->hotwater = new Element("hotwater", $data);
+            $this->solar = new Solar($data);
+
+            $this->facturation = boolval($data["facturation"]);
+
+            $this->city = $data["city"];
+            $this->npa = $data["npa"];
+            $this->address = $data["address"];
+            $this->note = $data["note"];
         }
     }
 }

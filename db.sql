@@ -21,7 +21,7 @@ CREATE TABLE tblUser (
     phone VARCHAR(15),
 	
 	active BOOLEAN DEFAULT FALSE,
-    token VARCHAR(100) UNIQUE,    
+    token VARCHAR(100) UNIQUE,
     count INT DEFAULT 0,
     
     CONSTRAINT FK_UserRole
@@ -72,25 +72,25 @@ CREATE TABLE tblInstallation (
     heatSensors INT(2) DEFAULT 0,
     heatTempSensors INT(2) DEFAULT 0,
     heatNote TEXT,
-    heatPictures VARCHAR(500),    
+    heatPictures VARCHAR(500),
     
     hotwaterEner INT DEFAULT 1,
     hotwaterTech INT DEFAULT 1,
     hotwaterSensors INT(2) DEFAULT 0,
     hotwaterTempSensors INT(2) DEFAULT 0,
     hotwaterNote TEXT,
-    hotwaterPictures VARCHAR(500),    
+    hotwaterPictures VARCHAR(500),
     
     solarPanel BOOLEAN DEFAULT FALSE,
     solarSensors INT(2) DEFAULT 0,
-    solarNote TEXT DEFAULT NULL,    
+    solarNote TEXT DEFAULT NULL,
     
     city VARCHAR(100),
     npa VARCHAR(10),
     address VARCHAR(100),
         
     note TEXT DEFAULT NULL,
-    picture VARCHAR(100),        
+    picture VARCHAR(100),
 
 	CONSTRAINT FK_UserSet
 	FOREIGN KEY (inst_userId)
@@ -123,7 +123,7 @@ CREATE TABLE tblInstallation (
 
 
 INSERT INTO tblRole VALUES (1, 'admin'), (2, 'technical'), (3, 'customer_care'), (4, 'client');
-INSERT INTO tblStatus VALUES (1, 'stock'), (2, 'ready'), (3, 'ok'), (4, 'busy');
+INSERT INTO tblStatus VALUES  (1, 'ready'), (2, 'ok'), (3, 'busy');
 
 INSERT INTO tblUser (user_role, username, password, token, email, active) VALUES
 (1, 'admin', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '409d565186e0385eacd12d059d1c6007369b0ab1a78fcdbe4608b87b23b6f9daf7d1b39706f4ab8ba4d38f89ac61646d696e', 'admin@go.flex', true),

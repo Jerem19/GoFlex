@@ -10,7 +10,7 @@
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <select name="boxNumber" class="col-sm-8 form-control">
                     <?php
-                    foreach(Gateway::getAll() as $valueGateway) {
+                    foreach(Gateway::getAllReady() as $valueGateway) {
                         echo "<option value=" . $valueGateway->getId() .">" . $valueGateway->getName() . "</option>";
                     }
                     ?>
@@ -134,41 +134,6 @@
             </div>
         </div>
 
-        <!-- -------------------------------------------------------------------------------------------- -->
-
-        <!-- Charging Borne -->
-        <!-- PROJET EVIP
-        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= L10N['index']['installation']['equipmentEnergyDefinitionChargingBorne']?></label>
-
-        <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['chargingBorne']?></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="chargingBorne" class="col-sm-8 form-control">
-                    <option value="yes"><?= L10N['index']['installation']['yes']?></option>
-                    <option value="no"><?= L10N['index']['installation']['no']?></option>
-                </select>
-            </div>
-
-            <label class="col-sm-2 col-sm-2 control-label">Capteur consommation</label></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="number" class="col-sm-8 form-control" name="consommationSensorChargingBorne" />
-            </div>
-
-            <label class="col-sm-2 col-sm-2 control-label">Capteur eau chaude</label></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="number" class="col-sm-8 form-control" name="HotWaterSensor" />
-            </div>
-
-            <label class="col-sm-2 col-sm-2 control-label"><?= L10N['index']['installation']['positionNote']?></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <textarea class="col-sm-8 form-control" name="positionNoteChargingBorne"></textarea>
-            </div>
-        </div>
--->
-        <!-- -------------------------------------------------------------------------------------------- -->
-
-        <!-- Solar panel -->
-
         <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= L10N['index']['installation']['equipmentEnergyDefinitionSolarPanel']?></label>
 
         <div class="form-group">
@@ -230,7 +195,7 @@
 <script>
     window.onload = function() {
 
-        solarPanel.addEventListener("onchange", disabledOrEnable)
+        solarPanel.addEventListener("onchange", disabledOrEnable);
 
         $("#formLinkGatewayUser").submit(function (event) {
             att = $(this).serialize();

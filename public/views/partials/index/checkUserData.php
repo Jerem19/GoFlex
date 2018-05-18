@@ -5,9 +5,9 @@
 
         <select name="clientNumber" class="col-sm-8 form-control">
             <?php
-            foreach($user->getAllUser() as $valueUser)
+            foreach(User::getAllClient() as $user)
             {
-                echo "<option value=" . $valueUser['userid'] .">" . $valueUser['username'] . "</option>";
+                echo "<option value=" . $user->getId() .">" . $user->getUsername() . "</option>";
             }
             ?>
         </select>

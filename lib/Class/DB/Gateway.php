@@ -20,6 +20,14 @@ class Gateway {
         return self::$gateways;
     }
 
+    public static function getAllReady() {
+        $gws = [];
+        foreach (self::getAll() as $gw)
+            if ($gw->getStatus() == Status::Statutes()[0])
+                $gws[] = $gw;
+        return $gws;
+    }
+
     /**
      * Return if a gateway exists
      * @param string $name

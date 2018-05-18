@@ -27,22 +27,25 @@
 <script>
     window.onload = function() {
 
-        $("#formAddUser").submit(function (event) {
-            att = $(this).serialize();
+        $("#formAddUser").submit(function () {
+            var att = $(this).serialize();
 
             $.post("create", att, function (data) {
-                console.log(data);
                 data = JSON.parse(data);
-
                 if (data) {
                     alert("<?= L10N['index']['profile']['alertCreateUserSuccess']?>");
                     window.location.reload();
                 }
-                else {
+                else
                     alert("<?= L10N['index']['profile']['alertCreateUserFailed']?>");
-                }
             });
             return false;
         });
+
+        var firstName = $('input[name="firstname"]'),
+            lastName = $('input[name="lastname"]');
+        firstName.add(lastName).on('change', function() {
+            $('input[name="username"]').val(firstName.val().toLowerCase() + "." + lastName.val().toLowerCase());
+        })
     }
 </script>
