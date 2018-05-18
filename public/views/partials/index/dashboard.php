@@ -16,7 +16,7 @@
 
     <div style="text-align: center;">
         <div style="font-size: 400%;">
-            <p><?= $l10n["chart"]["ConsumptionHeatPump"] ?></p>
+            <p><?= $l10n["chart"]["consumptionHeatPump"] ?></p>
         </div>
         <div id="consumptionPAC" style="margin-top: 20px; font-size: 300%;">
             <p id="consumptionPACValue"></p>
