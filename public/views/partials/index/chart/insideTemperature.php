@@ -12,6 +12,7 @@
                 dataTime = [];
                 for (var j in val) {
                     dataTime.unshift([new Date(val[j]["time"]).getTime(), val[j]["value"]])
+                    //// d.setHours(d.getHours() - 1 )
                 }
                 Highcharts.StockChart('insideTemp', {
                         title: {
