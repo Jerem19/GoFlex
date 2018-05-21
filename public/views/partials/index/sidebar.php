@@ -56,13 +56,11 @@
 
 
 
-            $menu["dashboard"] = [
-                "text" => $l10nNav["dashboard"],
-                "_iClass" => "fa fa-dashboard"
-            ];
 
 
             if ($user->getRole()->getId() == 1) {
+
+
                 $menu["creationUser"] = [
                     "text" => $l10nNav["creationUser"],
                     "_iClass" => "fa fa-user-plus"
@@ -94,14 +92,23 @@
             }
 
             if ($user->getRole()->getId() == 4) {
+
+                $menu["dashboard"] = [
+                    "text" => $l10nNav["dashboard"],
+                    "_iClass" => "fa fa-dashboard"
+                ];
+
                 $menu[] = [
 
                     "_iClass" => "fa fa-desktop",
                     "text" => $l10nNav["analyse"],
-                    /*
+
                     "consumption" => [
-                        "text" => $l10nNav["consumption"]
-                    ],*/
+                        "text" => $l10nNav["consumptionElec"]
+                    ],
+                    "boiler" => [
+                        "text" => $l10nNav["boiler"]
+                    ],
                     "consumptionHeatPump" => [
                         "text" => $l10nNav["heat_pump"]
                     ],

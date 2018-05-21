@@ -81,6 +81,9 @@ include "partials/header.php";
                     case "consumption":
                         include 'partials/index/chart/consumptionElect.php';
                         break;
+                    case "boiler":
+                        include 'partials/index/chart/boiler.php';
+                        break;
                     case "consumptionHeatPump":
                         include 'partials/index/chart/heat_pump.php';
                         break;

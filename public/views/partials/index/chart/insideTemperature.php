@@ -7,7 +7,8 @@
 <script>
     window.onload = function() {
         $.post("insideTemp", function (data) {
-            console.log(data);
+            try
+            {
             $.each(data, function (i, val) {
                 dataTime = [];
                 for (var j in val) {
@@ -65,6 +66,11 @@
                     }
                 );
             });
+            }
+            catch(error)
+            {
+                document.getElementById("insideTemp").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+            }
         });
     }
 
