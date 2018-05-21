@@ -93,7 +93,7 @@
 
             if ($user->getRole()->getId() == 4) {
 
-                $menu["dashboard"] = [
+                $menu[""] = [
                     "text" => $l10nNav["dashboard"],
                     "_iClass" => "fa fa-dashboard"
                 ];

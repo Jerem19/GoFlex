@@ -67,14 +67,7 @@ include "partials/header.php";
                     }
                 }
 
-                ?>
-
-                <?php
                 switch ($path) {
-
-                    case "dashboard":
-                        include 'partials/index/dashboard.php';
-                        break;
                     case "profile":
                         include 'partials/index/profile.php';
                         break;
@@ -91,6 +84,11 @@ include "partials/header.php";
                         include 'partials/index/chart/insideTemperature.php';
                         break;
                 }
+            } else {
+                if ($user->getRole()->getId() < 4)
+                    $this->redirect('/checkUserData');
+                else include 'partials/index/dashboard.php';
+
             }?>
 
         </section>

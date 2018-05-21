@@ -121,50 +121,32 @@ $router
             $res->send(403, false);
         }
     })
-
-    ->post('/boiler', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.temperatureProbe_A.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
-
-        $data[L10N["index"]["chart"]["boiler_temp"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["temperature"] ];
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.energyMeter_A.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
-
-        $data[L10N["index"]["chart"]["boiler_power"]] = ["data" => $result->getPoints(), "y" => L10N["index"]["chart"]["power"]];
-        $res->send($data);
-    })
     ->post('/insideTemp', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["insideTemp"] = $result->getPoints();
-
-        $res->send($data);
+        $res->send($result->getPoints());
     })
     ->post('/electricConsumption', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["ElectricConsumption"] = $result->getPoints();
 
-        $res->send($data);
+        $res->send($result->getPoints());
     })
     ->post('/consumptionHeatPump', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["ConsumptionHeatPump"] = $result->getPoints();
 
-        $res->send($data);
+        $res->send($result->getPoints());
     })
 
     ->post('/hotwaterTemperature', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
-        $data["hotwaterTemperature"] = $result->getPoints();
-
-        $res->send($data);
+        $res->send($result->getPoints());
     })
 
     ->post('/installInfo', function(Response $res) {

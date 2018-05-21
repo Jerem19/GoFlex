@@ -68,7 +68,7 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" mutliple style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures[]" id="heatPictures" />
+                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures[]" id="heatPictures" />
             </div>
         </div>
 
@@ -113,7 +113,7 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" mutliple style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures[]" id="hotwaterPictures"/>
+                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures[]" id="hotwaterPictures"/>
             </div>
         </div>
 
@@ -175,7 +175,6 @@
     window.onload = function() {
 
         $("#formLinkGatewayUser").submit(function (event) {
-
             var form_data = new FormData(this);
 
             $.ajax({
@@ -186,7 +185,10 @@
                 processData: false,
                 data : form_data,
                 success: function(response){
-                    console.log(response);
+                    if (JSON.parse(response)) {
+                        alert("<?= $l10n['installation']['alertLinUserGatewaySuccess']?>");
+                        window.location.reload();
+                    } else alert("<?= $l10n['installation']['alertLinUserGatewayFailed']?>");
                 }
             });
             return false;

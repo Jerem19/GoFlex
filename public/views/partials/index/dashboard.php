@@ -6,8 +6,7 @@
         </div>
         <span class="fa fa-bolt dashboardFaSize"></span>
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textConsumptionElec']?></p>
-        <div id="ElectricConsumption"  class="dashboardNumberSize">
-            <p id="ElectricConsumption"></p>
+        <div id="electricConsumption"  class="dashboardNumberSize">
         </div>
     </div>
 </div>
@@ -21,8 +20,7 @@
 
         <span class="fa fa-bolt dashboardFaSize"></span>
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHeatPump']?></p>
-        <div class="dashboardNumberSize" id="consumptionPAC" style="">
-            <p id="consumptionPACValue"></p>
+        <div class="dashboardNumberSize" id="consumptionHeatPump">
         </div>
     </div>
 </div>
@@ -37,7 +35,6 @@
         <span class="fa fa-bath dashboardFaSize"></span>
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHotwaterTemperature']?></p>
         <div class="dashboardNumberSize" id="hotwaterTemperature">
-            <p id="hotwaterTemperature"></p>
         </div>
 
     </div>
@@ -52,7 +49,6 @@
         <span class="fa fa-thermometer dashboardFaSize"></span>
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textInsideTemperature']?></p>
         <div class="dashboardNumberSize" id="insideTemp">
-            <p id="insideTemp"></p>
         </div>
 
     </div>
@@ -64,52 +60,33 @@
 
     window.onload = function() {
 
-        $.ajax({
-            url : 'consumptionHeatPump',
-            type : 'POST',
-            success : function(data) {
-                document.getElementById("consumptionPACValue").innerHTML = data['ConsumptionHeatPump'][0]['value'] + " kW";
-            },
-            error: function() {
-                document.getElementById("consumptionPACValue").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-            }
-        });
+        function ajaxError (elementId) {
+            document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
+        }
 
-        $.ajax({
-            url : 'hotwaterTemperature',
-            type : 'POST',
-            success : function(data) {
-                document.getElementById("hotwaterTemperature").innerHTML = data['hotwaterTemperature'][0]['value'] + " kW";
-            },
-            error: function() {
-                document.getElementById("hotwaterTemperature").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-            }
-        });
+        var urls = {
+            "consumptionHeatPump": 'kW',
+            "hotwaterTemperature": '°',
+            "insideTemp": '°',
+            "electricConsumption": 'kW'
+        };
 
-        $.ajax({
-            url : 'insideTemp',
-            type : 'POST',
-            success : function(data) {
-                document.getElementById("insideTemp").innerHTML = data['insideTemp'][0]['value'] + " kW";
-            },
-            error: function() {
-                document.getElementById("insideTemp").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-            }
-        });
-
-
-        $.ajax({
-            url : 'ElectricConsumption',
-            type : 'POST',
-            success : function(data) {
-                document.getElementById("ElectricConsumption").innerHTML = data['ElectricConsumption'][0]['value'] + " kW";
-            },
-            error: function() {
-                document.getElementById("ElectricConsumption").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-            }
-        });
-
-
+        for (const i in urls) {
+            $.ajax({
+                url : i,
+                type : 'POST',
+                success : function(data) {
+                    if (data && Array.isArray(data)) {
+                        document.getElementById(i).innerHTML = data[0]['value'] + urls[i] +
+                            "<br/><p style=\"font-size: 15px;\">" + new Date(data[0]["time"]).toISOString().substr(0,16) + "</p>";
+                    }
+                    else ajaxError(i);
+                },
+                error: function () {
+                    ajaxError(i);
+                }
+            });
+        }
     }
 
 </script>

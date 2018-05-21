@@ -79,6 +79,7 @@ class User {
      */
     public static function login(string $user, string $pass) {
         $u = Configuration::DB()->execute("SELECT _id, password FROM tblUser WHERE username = :user;", [":user" => $user]);
+        if (empty($u)) return false;
         return password_verify("Go" . $pass . "Flex", $u[0]["password"]) ? new User($u[0]["_id"], $pass) : false; // Improve if user is disable (error msg?)
     }
 
