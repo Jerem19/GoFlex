@@ -1,4 +1,5 @@
 #footer.row {
+    width: 100%;
     position: relative;
     #footer-child {
         text-align: center;
@@ -15,5 +16,8 @@
     img {
         width: 150px;
         margin: 0 10px;
+        @media screen and (max-width: 450px) {
+            width: 70px;
+        }
     }
 }
