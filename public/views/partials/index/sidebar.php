@@ -68,11 +68,6 @@
                     "_iClass" => "fa fa-user-plus"
                 ];
 
-                $menu["creationSpecialUser"] = [
-                    "text" => $l10nNav["creationSpecialUser"],
-                    "_iClass" => "fa fa-user-plus"
-                ];
-
                 $menu["checkUserData"] = [
                     "text" => $l10nNav["checkUserData"],
                     "_iClass" => "fa fa-odnoklassniki"
@@ -100,11 +95,13 @@
 
             if ($user->getRole()->getId() == 4) {
                 $menu[] = [
+
                     "_iClass" => "fa fa-desktop",
                     "text" => $l10nNav["analyse"],
+                    /*
                     "consumption" => [
                         "text" => $l10nNav["consumption"]
-                    ],
+                    ],*/
                     "consumptionHeatPump" => [
                         "text" => $l10nNav["heat_pump"]
                     ],

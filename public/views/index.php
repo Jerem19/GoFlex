@@ -39,10 +39,6 @@ include "partials/header.php";
                             include 'partials/index/addUser.php';
                             break;
 
-                        case "creationSpecialUser":
-                            include 'partials/index/addSpecialUser.php';
-                            break;
-
                         case "checkUserData":
                             include 'partials/index/checkUserData.php';
                             break;

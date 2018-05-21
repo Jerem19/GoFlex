@@ -1,13 +1,13 @@
 <!--
 <div class="row mt col-lg-12 form-panel">
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTextSize">
             <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
         </div>
-        <div id="ElectricConsumption" style="margin-top: 20px; font-size: 300%;">
+        <div id="ElectricConsumption"  class="dashboardNumberSize">
             <p id="ElectricConsumption"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-database"></span>
+        <span class="fa fa-database dashboardFaSize"></span>
 
     </div>
 </div>
@@ -15,39 +15,39 @@
 <div class="row mt col-lg-12 form-panel">
 
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTextSize">
             <p><?= $l10n["chart"]["consumptionHeatPump"] ?></p>
         </div>
-        <div id="consumptionPAC" style="margin-top: 20px; font-size: 300%;">
+        <div class="dashboardNumberSize" id="consumptionPAC" style="">
             <p id="consumptionPACValue"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-bolt"></span>
+        <span class="fa fa-bolt dashboardFaSize"></span>
     </div>
 </div>
 
 <div class="row mt col-lg-12 form-panel">
 
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTextSize">
             <p><?= $l10n["chart"]["hotwaterTemperature"] ?></p>
         </div>
-        <div id="hotwaterTemperature" style="margin-top: 20px; font-size: 300%;">
+        <div class="dashboardNumberSize" id="hotwaterTemperature">
             <p id="hotwaterTemperature"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-bath"></span>
+        <span class="fa fa-bath dashboardFaSize"></span>
 
     </div>
 </div>
 
 <div class="row mt col-lg-12 form-panel">
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTextSize">
             <p><?= $l10n["chart"]["insideTemperature"] ?></p>
         </div>
-        <div id="insideTemp" style="margin-top: 20px; font-size: 300%;">
+        <div class="dashboardNumberSize" id="insideTemp">
             <p id="insideTemp"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-thermometer"></span>
+        <span class="fa fa-thermometer dashboardFaSize"></span>
 
     </div>
 </div>

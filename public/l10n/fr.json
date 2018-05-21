@@ -36,7 +36,6 @@
             "summary" : "Résumé",
             "profil" : "Profil",
             "creationUser" : "Ajout utilisateur",
-            "creationSpecialUser" : "Ajout special",
             "installationGateway" : "Installation",
             "passwordModification" : "Gestion du mot de passe",
             "checkUserData" : "Acces données clients"
@@ -58,6 +57,7 @@
             "technical": "Technicien",
             "hotline": "Hotline",
             "user": "Utilisateur",
+            "admin" : "Admin",
             "role": "Role",
             "gatewayName": "Numero gateway",
             "update": "Modifier"

@@ -36,7 +36,7 @@
             "summary" : "Summary",
             "profil" : "Profile",
             "creationUser" : "Add User",
-            "creationSpecialUser" : "Add special user",
+            "admin" : "Admin",
             "installationGateway" : "Installation",
             "passwordModification" : "Password management",
             "checkUserData" : "Access clients data"

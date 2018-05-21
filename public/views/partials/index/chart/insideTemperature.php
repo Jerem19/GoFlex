@@ -6,7 +6,6 @@
 </div>
 <script>
     window.onload = function() {
-
         $.post("insideTemp", function (data) {
             console.log(data);
             $.each(data, function (i, val) {
