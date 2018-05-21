@@ -98,12 +98,12 @@ $router
                     && !$user->isActive() && $user->setPassword($_POST["password"])
                     && $user->setActive())
                     $user = new User($user->getUsername(), $_POST["password"]);
-
-                unset($_SESSION["_token"]);
             } else $user = User::login($_POST["username"], $_POST["password"]);
 
-            if ($user != false)
+            if ($user != false) {
+                unset($_SESSION["_token"]);
                 $_SESSION["User"] = $user;
+            }
 
             $res->send($user != false);
         } else $res->send(false);
@@ -121,6 +121,7 @@ $router
             $res->send(403, false);
         }
     })
+
     ->post('/boiler', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
@@ -166,6 +167,17 @@ $router
         $res->send($data);
     })
 
+    ->post('/installInfo', function(Response $res) {
+        if (isset($_POST["id"])){
+            $inst = Installation::getByUser($_POST["id"]);
+            if (isset($inst[0])) {
+                $data = $inst[0]->getJSON();
+                $data["gwId"] = $inst[0]->getGateway()->getId();
+                $res->send($data);
+            } else $res->send(false);
+        } else $res->send(false);
+    })
+
 
     ->post('/create', function(Response $res) {
         if (isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["gatewayname"])
@@ -191,11 +203,35 @@ $router
         $res->send($_SESSION['User']->setPhone($_POST["phone"]));
     })
 
+    ->get('/user.icon', function(Response $res) {
+        $user = $_SESSION["User"];
+
+        $ico = PUBLIC_FOLDER . 'images/default_user.jpg';
+        if (isset($user->getInstallations()[0])) {
+            $file = $user->getInstallations()[0]->getPicture()->getPath();
+            if (file_exists($file))
+                $ico = $file;
+        }
+        $res->sendFile($ico);
+    })
+
     ->post('/linkUserGateway', function(Response $res) {
+
+        //var_dump($_FILES);
+
+        require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
+        $id = Picture::create($_FILES["picture"]);
+
+        //var_dump($id);
+
         $gw = new Gateway($_POST["gwId"]);
         unset($_POST["gwId"]);
+
+        $_POST["picture"] = $id;
+
         if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2))
             $res->send(true); // send mail
+
         $res->send(false);
     })
 

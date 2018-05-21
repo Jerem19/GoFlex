@@ -12,6 +12,7 @@ class BusinessSector {
      */
     public static function getAll() {
         if (self::$all == null) {
+            self::$all = [];
             $sth = Configuration::DB()->query("SELECT _id FROM tblBuisSector;");
             while ($d = $sth->fetch())
                 self::$all[] = new BusinessSector($d["_id"]);

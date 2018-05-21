@@ -6,8 +6,8 @@
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['boxNumber']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <select name="gwId" class="col-sm-8 form-control">
-                    <?php foreach(Gateway::getAllReady() as $valueGateway) { ?>
-                        <option value="<?= $valueGateway->getId()?>"><?= $valueGateway->getName()?></option>
+                    <?php foreach(Gateway::getAllReady() as $gw) { ?>
+                        <option value="<?= $gw->getId()?>"><?= $gw->getName()?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -68,7 +68,7 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures" id="heatPictures" />
+                <input type="file" mutliple style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures[]" id="heatPictures" />
             </div>
         </div>
 
@@ -113,7 +113,7 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures" id="hotwaterPictures"/>
+                <input type="file" mutliple style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures[]" id="hotwaterPictures"/>
             </div>
         </div>
 
@@ -164,7 +164,7 @@
 
         <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
         <div class="col-sm-10" style="margin-bottom: 10px;">
-            <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="picture" id="picture" />
+            <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="picture" id="picture" />
         </div>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= $l10n['installation']['link']?></button>
@@ -175,17 +175,18 @@
     window.onload = function() {
 
         $("#formLinkGatewayUser").submit(function (event) {
-            att = $(this).serialize();
-            $.post("linkUserGateway", att, function (data) {
-                console.log(data);
-                data = JSON.parse(data);
 
-                if (data) {
-                    alert("<?= $l10n['installation']['alertLinUserGatewaySuccess']?>");
-                    window.location.reload();
-                }
-                else {
-                    alert("<?= $l10n['installation']['alertLinUserGatewayFailed']?>");
+            var form_data = new FormData(this);
+
+            $.ajax({
+                url: 'linkUserGateway',
+                type: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data : form_data,
+                success: function(response){
+                    console.log(response);
                 }
             });
             return false;

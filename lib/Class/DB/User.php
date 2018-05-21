@@ -12,6 +12,7 @@ class User {
      */
     public static function getAll() {
         if (self::$all == null) {
+            self::$all = [];
             $sth = Configuration::DB()->query("SELECT _id FROM tblUser;");
             while ($d = $sth->fetch())
                 self::$all[] = new User($d["_id"]);
@@ -28,6 +29,20 @@ class User {
         foreach (self::getAll() as $user)
             if ($user->getRole() == Role::getAll()["client"])
                 $users[] = $user;
+        return $users;
+    }
+
+    /**
+     * Return all the users who has a gateway
+     * @return User[]
+     */
+    public static function getAllLinked() {
+        $users = [];
+        foreach (self::getAll() as $user) {
+            if (isset($user->getInstallations()[0])
+                && $user->getInstallations()[0]->getGateway()->getStatus() == Status::getAll()[1])
+                    $users[] = $user;
+        }
         return $users;
     }
 

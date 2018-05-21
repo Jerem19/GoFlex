@@ -12,6 +12,7 @@ class Energy {
     */
     public static function getAll() {
         if (self::$all == null) {
+            self::$all = [];
             $sth = Configuration::DB()->query("SELECT _id FROM tblEnergy;");
             while ($d = $sth->fetch())
                 self::$all[] = new Energy($d["_id"]);

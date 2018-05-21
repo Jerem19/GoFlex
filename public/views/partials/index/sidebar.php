@@ -4,7 +4,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
 
-            <p class="centered"><a href="<?= BASE_URL ?>profile"><img src="<?= BASE_URL ?>userIco.jpg" class="img-circle" width="60"></a></p>
+            <p class="centered"><a href="<?= BASE_URL ?>profile"><img src="<?= BASE_URL ?>user.icon" class="img-circle" width="60"></a></p>
             <h5 class="centered"><?= $user ?></h5>
 
             <?php

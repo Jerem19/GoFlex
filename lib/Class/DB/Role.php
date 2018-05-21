@@ -9,9 +9,10 @@ class Role {
      */
     public static function getAll() {
         if (self::$all == null) {
-            $sth = Configuration::DB()->query("SELECT _id, name FROM tblRole;");
+            self::$all = [];
+            $sth = Configuration::DB()->query("SELECT _id FROM tblRole;");
             while ($d = $sth->fetch())
-                self::$all[$d["name"]] = new Role($d["_id"]);
+                self::$all[] = new Role($d["_id"]);
         }
         return self::$all;
     }

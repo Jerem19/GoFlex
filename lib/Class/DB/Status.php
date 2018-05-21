@@ -11,6 +11,7 @@ class Status {
      */
     public static function getAll() {
         if (self::$all == null) {
+            self::$all = [];
             $sth = Configuration::DB()->query("SELECT _id FROM tblStatus;");
             while ($d = $sth->fetch())
                 self::$all[] = new Status($d["_id"]);

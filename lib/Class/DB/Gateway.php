@@ -13,6 +13,7 @@ class Gateway {
      */
     public static function getAll() {
         if (self::$all == null) {
+            self::$all = [];
             $sth = Configuration::DB()->query("SELECT _id FROM tblGateway;");
             while ($g = $sth->fetch())
                 self::$all[] = new Gateway($g["_id"]);
@@ -20,10 +21,26 @@ class Gateway {
         return self::$all;
     }
 
+    /**
+     * Return all the gateway ready to install
+     * @return Gateway[]
+     */
     public static function getAllReady() {
         $gws = [];
         foreach (self::getAll() as $gw)
             if ($gw->getStatus() == Status::getAll()[0])
+                $gws[] = $gw;
+        return $gws;
+    }
+
+    /**
+     * Return all the gateway installed
+     * @return Gateway[]
+     */
+    public static function getAllInstalled() {
+        $gws = [];
+        foreach (self::getAll() as $gw)
+            if ($gw->getStatus() == Status::getAll()[1])
                 $gws[] = $gw;
         return $gws;
     }

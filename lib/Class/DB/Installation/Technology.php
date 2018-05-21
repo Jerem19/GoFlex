@@ -11,6 +11,7 @@ class Technology {
      */
     public static function getAll() {
         if (self::$all == null) {
+            self::$all = [];
             $sth = Configuration::DB()->query("SELECT _id FROM tblTechnology;");
             while ($d = $sth->fetch())
                 self::$all[] = new Technology($d["_id"]);

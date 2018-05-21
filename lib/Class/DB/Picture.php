@@ -13,15 +13,18 @@ class Picture {
     }
 
 
+    /**
+     * @param array $params
+     * @return int|false
+     */
     public static function create(array $params) {
         $name = $params["name"];
         $tmp_name = $params["tmp_name"];
         if (in_array(strtolower(pathinfo($name)["extension"]), ["png", "jpeg", "jpg", "tiff", "gif"])
             && substr(mime_content_type($tmp_name), 0, 5) == "image") {
             $ok = is_array(Configuration::DB()->execute("INSERT INTO tblPicture (name) VALUES (:name);", ["name" => $name]));
-            if ($ok) {
-                return move_uploaded_file($tmp_name, Configuration::pictures_path . Configuration::DB()->lastInsertId());
-            } else return false;
+            if ($ok && move_uploaded_file($tmp_name, Configuration::pictures_path . Configuration::DB()->lastInsertId()))                
+                return Configuration::DB()->lastInsertId();
         }
 
         return false;
@@ -40,7 +43,7 @@ class Picture {
     }
 
     public function getPath() {
-        return Configuration::pictures_path . $this->getId();
+        return $this->getId() > 0 ? Configuration::pictures_path . $this->getId() : -1;
     }
 
     public function __construct(int $id) {

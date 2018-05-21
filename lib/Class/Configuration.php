@@ -30,7 +30,7 @@ class DB extends PDO {
 class Configuration {
     const hostname = "";
 
-    const pictures_path = PUBLIC_FOLDER . '/pics/';
+    const pictures_path = PUBLIC_FOLDER . 'pics/';
 
     private static $db_name = "goFlexDb";
     private static $db_host = "localhost";

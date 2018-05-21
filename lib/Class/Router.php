@@ -50,9 +50,12 @@ class Response {
     public function sendFile(string $file, $contentType = null) {
         if (file_exists($file)) {
             if ($contentType == null) {
-                $mimeType = json_decode(file_get_contents(PRIVATE_FOLDER . 'Class/MIME_TYPES.json'), true);
-                $ext = pathinfo($file, PATHINFO_EXTENSION);
-                $contentType = isset($mimeType[$ext]) ? $mimeType[$ext] : "text/plain";
+                $contentType = mime_content_type($file);
+                if ($contentType == "text/plain") {
+                    $mimeTypes = json_decode(file_get_contents(PRIVATE_FOLDER . 'Class/MIME_TYPES.json'), true);
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    $contentType = isset($mimeTypes[$ext]) ? $mimeTypes[$ext] : "text/plain";
+                }
             }
             $this->setContentType($contentType);
             require_once $file;
