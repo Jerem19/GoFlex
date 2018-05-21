@@ -39,10 +39,6 @@ include "partials/header.php";
                             include 'partials/index/addUser.php';
                             break;
 
-                        case "creationSpecialUser":
-                            include 'partials/index/addSpecialUser.php';
-                            break;
-
                         case "checkUserData":
                             include 'partials/index/checkUserData.php';
                             break;
@@ -83,7 +79,10 @@ include "partials/header.php";
                         include 'partials/index/profile.php';
                         break;
                     case "consumption":
-                        include 'partials/index/chart/consumption.php';
+                        include 'partials/index/chart/consumptionElect.php';
+                        break;
+                    case "boiler":
+                        include 'partials/index/chart/boiler.php';
                         break;
                     case "consumptionHeatPump":
                         include 'partials/index/chart/heat_pump.php';

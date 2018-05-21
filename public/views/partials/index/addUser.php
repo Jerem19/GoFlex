@@ -16,8 +16,16 @@
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['username']?></label>
         <input required="required" type="text" class="col-sm-8 form-control" name="username"/>
 
+        <label class="control-label col-sm-4"><?= L10N['index']['profile']['role']?></label>
+        <select id="role" name="role" class="col-sm-8 form-control" onChange="disabledOrEnable()">
+            <option value="4"><?= L10N['index']['profile']['user']?></option>
+            <option value="1"><?= L10N['index']['profile']['admin']?></option>
+            <option value="2"><?= L10N['index']['profile']['technical']?></option>
+            <option value="3"><?= L10N['index']['profile']['hotline']?></option>
+        </select>
+
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['gatewayName']?></label>
-        <input required="required" type="text" style="margin-bottom: 20px;" class="col-sm-8 form-control" value="goflex-dc-" name="gatewayname"/>
+        <input id="gatewayname" type="text" style="margin-bottom: 20px;" class="col-sm-8 form-control" value="goflex-dc-" name="gatewayname"/>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['profile']['create']?></button>
 
@@ -48,4 +56,19 @@
             $('input[name="username"]').val(firstName.val().toLowerCase() + "." + lastName.val().toLowerCase());
         })
     }
+
+
+
+    function disabledOrEnable() {
+        if(document.getElementById("role").value < 4) {
+
+            document.getElementById("gatewayname").value = "";
+            document.getElementById("gatewayname").disabled = true;
+        }
+        if(document.getElementById("role").value == 4) {
+            document.getElementById("gatewayname").value = "goflex-dc-";
+            document.getElementById("gatewayname").disabled = false;
+        }
+    }
+
 </script>

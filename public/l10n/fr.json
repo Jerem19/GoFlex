@@ -14,19 +14,24 @@
         "chart" : {
             "insideTemperature" : "Température intérieure",
             "power": "Puissance",
+            "noData" : "Aucune donnée disponible",
             "electricalConsumption" : "Consommation",
             "consumptionHeatPump" : "Consommation pompe à chaleur",
             "boiler_power": "Puissance du boiler",
             "hotwaterTemperature": "Temperature eau chaude"
         },
         "dashboard":{
-            "electricalConsumption" : "Consommation électrique"
+            "electricalConsumption" : "Consommation électrique",
+            "textConsumptionElec" : "Votre consommation électrique globale instantanée est de ",
+            "textHeatPump" : "Votre pompe à chaleur reliée consomme ",
+            "textHotwaterTemperature" : "La température de votre boiler est à ",
+            "textInsideTemperature" : "La température intérieure est à "
         },
         "sidebar": {
             "profile": "Mon profile",
             "dashboard": "Tableau de bord",
             "creation": "Creation",
-            "consumption" : "Consommation",
+            "consumptionElec" : "Consommation",
             "insideTemp": "Temperature intérieure",
             "heat_pump" : "Pompe à chaleur",
             "analyse" : "Analyses",
@@ -36,7 +41,6 @@
             "summary" : "Résumé",
             "profil" : "Profil",
             "creationUser" : "Ajout utilisateur",
-            "creationSpecialUser" : "Ajout special",
             "installationGateway" : "Installation",
             "passwordModification" : "Gestion du mot de passe",
             "checkUserData" : "Acces données clients"
@@ -58,6 +62,7 @@
             "technical": "Technicien",
             "hotline": "Hotline",
             "user": "Utilisateur",
+            "admin" : "Admin",
             "role": "Role",
             "gatewayName": "Numero gateway",
             "update": "Modifier"

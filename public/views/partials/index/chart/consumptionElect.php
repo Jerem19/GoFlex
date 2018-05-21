@@ -3,11 +3,12 @@
     </div>
 </div>
 
-    <script>
-        window.onload = function() {
+<script>
+    window.onload = function() {
 
-            $.post("electricConsumption", function (data) {
-                console.log(data);
+        $.post("electricConsumption", function (data) {
+            try
+            {
                 $.each(data, function (i, val) {
                     dataTime = [];
                     for (var j in val) {
@@ -64,7 +65,16 @@
                         }
                     );
                 });
-            });
-        }
 
-    </script>
+            }
+            catch(error)
+            {
+                document.getElementById("electricConsumption").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+            }
+        });
+
+
+
+    }
+
+</script>

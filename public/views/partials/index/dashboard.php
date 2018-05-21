@@ -1,53 +1,59 @@
-<!--
+
 <div class="row mt col-lg-12 form-panel">
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTitleSize">
             <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
         </div>
-        <div id="ElectricConsumption" style="margin-top: 20px; font-size: 300%;">
+        <span class="fa fa-bolt dashboardFaSize"></span>
+        <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textConsumptionElec']?></p>
+        <div id="ElectricConsumption"  class="dashboardNumberSize">
             <p id="ElectricConsumption"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-database"></span>
-
     </div>
 </div>
--->
+
 <div class="row mt col-lg-12 form-panel">
 
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTitleSize">
             <p><?= $l10n["chart"]["consumptionHeatPump"] ?></p>
         </div>
-        <div id="consumptionPAC" style="margin-top: 20px; font-size: 300%;">
+
+        <span class="fa fa-bolt dashboardFaSize"></span>
+        <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHeatPump']?></p>
+        <div class="dashboardNumberSize" id="consumptionPAC" style="">
             <p id="consumptionPACValue"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-bolt"></span>
     </div>
 </div>
 
 <div class="row mt col-lg-12 form-panel">
 
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTitleSize">
             <p><?= $l10n["chart"]["hotwaterTemperature"] ?></p>
         </div>
-        <div id="hotwaterTemperature" style="margin-top: 20px; font-size: 300%;">
+
+        <span class="fa fa-bath dashboardFaSize"></span>
+        <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHotwaterTemperature']?></p>
+        <div class="dashboardNumberSize" id="hotwaterTemperature">
             <p id="hotwaterTemperature"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-bath"></span>
 
     </div>
 </div>
 
 <div class="row mt col-lg-12 form-panel">
     <div style="text-align: center;">
-        <div style="font-size: 400%;">
+        <div class="dashboardTitleSize">
             <p><?= $l10n["chart"]["insideTemperature"] ?></p>
         </div>
-        <div id="insideTemp" style="margin-top: 20px; font-size: 300%;">
+
+        <span class="fa fa-thermometer dashboardFaSize"></span>
+        <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textInsideTemperature']?></p>
+        <div class="dashboardNumberSize" id="insideTemp">
             <p id="insideTemp"></p>
         </div>
-        <span style="font-size: 500%" class="fa fa-thermometer"></span>
 
     </div>
 </div>
@@ -58,26 +64,50 @@
 
     window.onload = function() {
 
-        $.post("ConsumptionHeatPump", function (data) {
-            document.getElementById("consumptionPACValue").innerHTML = data['ConsumptionHeatPump'][0]['value']+ " kW";
+        $.ajax({
+            url : 'consumptionHeatPump',
+            type : 'POST',
+            success : function(data) {
+                document.getElementById("consumptionPACValue").innerHTML = data['ConsumptionHeatPump'][0]['value'] + " kW";
+            },
+            error: function() {
+                document.getElementById("consumptionPACValue").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
             }
-        );
+        });
 
-        $.post("hotwaterTemperature", function (data) {
-                document.getElementById("hotwaterTemperature").innerHTML = data['hotwaterTemperature'][0]['value']+ " °C";
+        $.ajax({
+            url : 'hotwaterTemperature',
+            type : 'POST',
+            success : function(data) {
+                document.getElementById("hotwaterTemperature").innerHTML = data['hotwaterTemperature'][0]['value'] + " kW";
+            },
+            error: function() {
+                document.getElementById("hotwaterTemperature").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
             }
-        );
+        });
 
-        $.post("insideTemp", function (data) {
-                document.getElementById("insideTemp").innerHTML = data['insideTemp'][0]['value'] + " °C";
+        $.ajax({
+            url : 'insideTemp',
+            type : 'POST',
+            success : function(data) {
+                document.getElementById("insideTemp").innerHTML = data['insideTemp'][0]['value'] + " kW";
+            },
+            error: function() {
+                document.getElementById("insideTemp").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
             }
-        );
+        });
 
-        $.post("ElectricConsumption", function (data) {
-                console.log(data);
-                document.getElementById("ElectricConsumption").innerHTML = data['ElectricConsumption'][0]['value'] + " W";
+
+        $.ajax({
+            url : 'ElectricConsumption',
+            type : 'POST',
+            success : function(data) {
+                document.getElementById("ElectricConsumption").innerHTML = data['ElectricConsumption'][0]['value'] + " kW";
+            },
+            error: function() {
+                document.getElementById("ElectricConsumption").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
             }
-        );
+        });
 
 
     }

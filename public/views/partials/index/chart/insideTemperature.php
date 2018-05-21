@@ -6,13 +6,14 @@
 </div>
 <script>
     window.onload = function() {
-
         $.post("insideTemp", function (data) {
-            console.log(data);
+            try
+            {
             $.each(data, function (i, val) {
                 dataTime = [];
                 for (var j in val) {
                     dataTime.unshift([new Date(val[j]["time"]).getTime(), val[j]["value"]])
+                    //// d.setHours(d.getHours() - 1 )
                 }
                 Highcharts.StockChart('insideTemp', {
                         title: {
@@ -65,6 +66,11 @@
                     }
                 );
             });
+            }
+            catch(error)
+            {
+                document.getElementById("insideTemp").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+            }
         });
     }
 

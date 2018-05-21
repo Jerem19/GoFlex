@@ -7,7 +7,7 @@
         window.onload = function() {
 
             $.post("consumptionHeatPump", function (data) {
-                console.log(data);
+                try{
                 $.each(data, function (i, val) {
                     dataTime = [];
                     for (var j in val) {
@@ -64,6 +64,11 @@
                         }
                     );
                 });
+            }
+            catch(error)
+            {
+                document.getElementById("consumptionHeatPump").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+            }
             });
         }
 
