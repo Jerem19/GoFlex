@@ -42,9 +42,9 @@
             "summary" : "Résumé",
             "profil" : "Profil",
             "creationUser" : "Ajout utilisateur",
-            "installationGateway" : "Installation",
+            "installationGateway" : "Ajout installation",
             "passwordModification" : "Gestion du mot de passe",
-            "checkUserData" : "Acces données clients"
+            "checkUserData" : "Visualisation client"
         },
         "header": {
             "nav-text": "Inverser la navigation"

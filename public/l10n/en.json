@@ -43,9 +43,9 @@
       "profil" : "Profile",
       "creationUser" : "Add User",
       "admin" : "Admin",
-      "installationGateway" : "Installation",
+      "installationGateway" : "Add nstallation",
       "passwordModification" : "Password management",
-      "checkUserData" : "Access clients data"
+      "checkUserData" : "Client visualisation"
     },
     "header": {
       "nav-text": "Toggle Navigation"
