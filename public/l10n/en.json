@@ -109,7 +109,8 @@
       "generalInformation": "General information",
       "alertLinUserGatewaySuccess": "The link between the user and the gateway is a success!",
       "alertLinUserGatewayFailed": "The link between the user and the gateway has failed!",
-      "picture": "Pictures",
+      "pictureHotwater": "Pictures hotwater",
+      "pictureHeat": "Pictures heat",
       "pictureHouse": "House picture",
       "energyHeat": "Energy Heat"
     },

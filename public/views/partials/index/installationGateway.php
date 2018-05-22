@@ -66,7 +66,7 @@
                 <textarea class="col-sm-8 form-control" name="heatNote"></textarea>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHeat']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <input type="file" disabled style="margin-bottom: 20px;" name="heatPictures[]" id="heatPictures" />
             </div>
@@ -111,7 +111,7 @@
             <!-- 25mo autorises -->
             <!-- <input type="hidden" name="MAX_FILE_SIZE" value="26214400" /> -->
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHotwater']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <input type="file" disabled style="margin-bottom: 20px;" name="hotwaterPictures[]" id="hotwaterPictures"/>
             </div>
