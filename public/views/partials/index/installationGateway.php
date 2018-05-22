@@ -160,13 +160,13 @@
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <textarea class="col-sm-8 form-control" name="note"></textarea>
             </div>
-        </div>
+
 
         <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
-        <div class="col-sm-10" style="margin-bottom: 10px; width: 200px;">
-            <input type="file" style="margin-bottom: 20px; width: 230px;" accept="image/x-png,image/jpeg" class="col-sm-8 form-control" name="picture" id="picture" />
+        <div class="col-sm-10" style="margin-bottom: 10px;">
+            <input type="file" style="margin-bottom: 20px;" accept="image/x-png,image/jpeg" name="picture" id="picture" />
         </div>
-
+        </div>
         <button class="btn btn-theme02 btn-block" type="submit"><?= $l10n['installation']['link']?></button>
     </form>
 </div>

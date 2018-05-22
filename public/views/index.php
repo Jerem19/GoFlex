@@ -104,7 +104,6 @@ $scripts = [
 "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
 "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.js",
 "https://blacktie.co/demo/dashgum/assets/js/jquery.dcjqaccordion.2.7.js",
-"https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.js",
 "3rdparty/common-scripts.js",
 "/l10n.js",
 "/footer.js",
