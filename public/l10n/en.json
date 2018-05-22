@@ -24,7 +24,7 @@
     "dashboard":{
       "electricalConsumption" : "Electrical Consumption",
       "textConsumptionElec" : "Your global instant electrcity consumption is ",
-      "textHeatPump" : "Your connected heat pumped use ",
+      "textHeatPump" : "Your heat pumped use ",
       "textHotwaterTemperature" : "The temperature of your boiler is ",
       "textInsideTemperature" : "The temperature inside the house is "
     },

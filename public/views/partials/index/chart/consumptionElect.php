@@ -24,7 +24,7 @@
                         yAxis: {
                             opposite: false,
                             title: {
-                                text: "Kw"
+                                text: "kW"
                             }
                         },
                         series: [{
