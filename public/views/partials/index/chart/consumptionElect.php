@@ -11,7 +11,7 @@
         $.ajax({
             type: "POST",
             url: "electricConsumption",
-            timeout: 5000,
+            timeout: 45000,
             success: function (data) {
                 dataTime = [];
                 for (var j in data) {

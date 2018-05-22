@@ -38,6 +38,7 @@ include "partials/header.php";
                             </span>
                     </label>
                     <button class="btn btn-theme btn-block" name="submit" type="submit"><?= L10N['login']['sign_in'] ?></button>
+                    <img src="<?= BASE_URL ?>/public/images/esr-logo.png" style="margin-top: 10px; width: 100%;">
                 </div>
             </form>
         </div>
