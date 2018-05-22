@@ -1,4 +1,4 @@
-<div class="row mt col-lg-12 form-panel">
+<div class="row mt col-lg-12 form-panel" style="margin-bottom: 40px;">
     <form class="form-horizontal style-form" id="formUpdateProfile" method="post">
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['firstname']?></label><input class="col-sm-8 form-control" disabled="disabled" value="<?= $user->getFirstname() ?>" name="firstname" />
 

@@ -17,6 +17,7 @@
       "noData" : "No data available",
       "electricalConsumption" : "Consumption",
       "consumptionHeatPump" : "Consommation heat pump",
+      "degrees" : "Degrees celsius",
       "boiler_power": "Boiler power",
       "hotwaterTemperature": "Hot water temperature"
     },

@@ -30,8 +30,9 @@ include "partials/header.php";
                 <div class="login-wrap">
                     <input autofocus type="text" class="form-control" required placeholder="<?= L10N['login']['username'] ?>" name="username" autofocus <?php if ($isSignup) echo 'disabled value="' . $user->getUsername() . '"'; ?>">
                     <br>
-                    <input type="password" class="form-control" required name="password" placeholder="<?= L10N['login']['password'] ?>">
-                    <label class="checkbox">
+                    <input style="margin-bottom: 20px;" type="password" class="form-control" required name="password" placeholder="<?= L10N['login']['password'] ?>">
+
+                    <label style="display: none;" class="checkbox">
                             <span class="pull-right">
                                 <a data-toggle="modal"><?= L10N['login']['forgot_pwd'] ?></a>
                             </span>

@@ -16,6 +16,7 @@
             "power": "Puissance",
             "noData" : "Aucune donnée disponible",
             "electricalConsumption" : "Consommation",
+            "degrees" : "Degrés celsius",
             "consumptionHeatPump" : "Consommation pompe à chaleur",
             "boiler_power": "Puissance du boiler",
             "hotwaterTemperature": "Temperature eau chaude"
