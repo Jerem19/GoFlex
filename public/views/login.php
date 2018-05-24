@@ -30,13 +30,15 @@ include "partials/header.php";
                 <div class="login-wrap">
                     <input autofocus type="text" class="form-control" required placeholder="<?= L10N['login']['username'] ?>" name="username" autofocus <?php if ($isSignup) echo 'disabled value="' . $user->getUsername() . '"'; ?>">
                     <br>
-                    <input type="password" class="form-control" required name="password" placeholder="<?= L10N['login']['password'] ?>">
-                    <label class="checkbox">
+                    <input style="margin-bottom: 20px;" type="password" class="form-control" required name="password" placeholder="<?= L10N['login']['password'] ?>">
+
+                    <label style="display: none;" class="checkbox">
                             <span class="pull-right">
                                 <a data-toggle="modal"><?= L10N['login']['forgot_pwd'] ?></a>
                             </span>
                     </label>
                     <button class="btn btn-theme btn-block" name="submit" type="submit"><?= L10N['login']['sign_in'] ?></button>
+                    <img src="<?= BASE_URL ?>/public/images/esr-logo.png" style="margin-top: 10px; width: 100%;">
                 </div>
             </form>
         </div>

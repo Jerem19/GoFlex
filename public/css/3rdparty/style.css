@@ -98,8 +98,8 @@ a, a:hover, a:focus {
 
 .btn-theme {
   color: #fff;
-  background-color: #68dff0;
-  border-color: #48bcb4;
+  background-color: #75b31e;
+  border-color: #75b31e;
 }
 .btn-theme:hover,
 .btn-theme:focus,
@@ -1934,7 +1934,7 @@ label {
 .form-login {
 	max-width: 330px;
 	margin: 80px auto 0;
-	background: #fff;
+	background: white;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
@@ -1943,10 +1943,10 @@ label {
 	margin: 0;
 	padding: 25px 20px;
 	text-align: center;
-	background: #68dff0;
+	background: white;
 	border-radius: 5px 5px 0 0;
 	-webkit-border-radius: 5px 5px 0 0;
-	color: #fff;
+	color: black;
 	font-size: 20px;
 	text-transform: uppercase;
 	font-weight: 300;

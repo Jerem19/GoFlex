@@ -5,7 +5,7 @@
         <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['boxNumber']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="gwId" class="col-sm-8 form-control">
+                <select required="required" name="gwId" class="col-sm-8 form-control">
                     <?php foreach(Gateway::getAllReady() as $gw) { ?>
                         <option value="<?= $gw->getId()?>"><?= $gw->getName()?></option>
                     <?php } ?>
@@ -66,9 +66,9 @@
                 <textarea class="col-sm-8 form-control" name="heatNote"></textarea>
             </div>
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHeat']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures[]" id="heatPictures" />
+                <input type="file" disabled style="margin-bottom: 20px;" name="heatPictures[]" id="heatPictures" />
             </div>
         </div>
 
@@ -111,9 +111,9 @@
             <!-- 25mo autorises -->
             <!-- <input type="hidden" name="MAX_FILE_SIZE" value="26214400" /> -->
 
-            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHotwater']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures[]" id="hotwaterPictures"/>
+                <input type="file" disabled style="margin-bottom: 20px;" name="hotwaterPictures[]" id="hotwaterPictures"/>
             </div>
         </div>
 
@@ -160,13 +160,13 @@
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <textarea class="col-sm-8 form-control" name="note"></textarea>
             </div>
-        </div>
+
 
         <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
         <div class="col-sm-10" style="margin-bottom: 10px;">
-            <input type="file" style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="picture" id="picture" />
+            <input type="file" style="margin-bottom: 20px;" accept="image/x-png,image/jpeg" name="picture" id="picture" />
         </div>
-
+        </div>
         <button class="btn btn-theme02 btn-block" type="submit"><?= $l10n['installation']['link']?></button>
     </form>
 </div>

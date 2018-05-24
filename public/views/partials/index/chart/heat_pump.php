@@ -1,11 +1,17 @@
 <div class="row mt col-lg-12 form-panel">
-    <div id="consumptionHeatPump" class="synchronized-chart" style="width: calc(100% - 15px);">
+    <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
+
+    <div id="consumptionHeatPump" style="width: calc(100% - 15px);">
     </div>
 
 </div>
-    <script>
-        window.onload = function() {
-            $.post("consumptionHeatPump", function (data) {
+<script>
+    window.onload = function() {
+        $.ajax({
+            type: "POST",
+            url: "consumptionHeatPump",
+            timeout: 45000,
+            success: function (data) {
                 dataTime = [];
                 for (var j in data) {
                     dataTime.unshift([new Date(data[j]["time"]).getTime(), data[j]["value"]])
@@ -17,7 +23,7 @@
                         yAxis: {
                             opposite: false,
                             title: {
-                                text: "<?= $l10n["chart"]["consumptionHeatPump"] ?>"
+                                text: "kW"
                             }
                         },
                         series: [{
@@ -60,7 +66,16 @@
                         }
                     }
                 );
-            });
-        }
 
-    </script>
+                document.getElementById("loader").style.display = "none";
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (textStatus === "timeout") {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("consumptionHeatPump").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+                }
+            }
+        });
+
+    }
+</script>

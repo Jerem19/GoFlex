@@ -17,13 +17,14 @@
       "noData" : "No data available",
       "electricalConsumption" : "Consumption",
       "consumptionHeatPump" : "Consommation heat pump",
+      "degrees" : "Degrees celsius",
       "boiler_power": "Boiler power",
       "hotwaterTemperature": "Hot water temperature"
     },
     "dashboard":{
       "electricalConsumption" : "Electrical Consumption",
       "textConsumptionElec" : "Your global instant electrcity consumption is ",
-      "textHeatPump" : "Your connected heat pumped use ",
+      "textHeatPump" : "Your heat pumped use ",
       "textHotwaterTemperature" : "The temperature of your boiler is ",
       "textInsideTemperature" : "The temperature inside the house is "
     },
@@ -42,9 +43,9 @@
       "profil" : "Profile",
       "creationUser" : "Add User",
       "admin" : "Admin",
-      "installationGateway" : "Installation",
+      "installationGateway" : "Add nstallation",
       "passwordModification" : "Password management",
-      "checkUserData" : "Access clients data"
+      "checkUserData" : "Client visualisation"
     },
     "header": {
       "nav-text": "Toggle Navigation"
@@ -108,7 +109,8 @@
       "generalInformation": "General information",
       "alertLinUserGatewaySuccess": "The link between the user and the gateway is a success!",
       "alertLinUserGatewayFailed": "The link between the user and the gateway has failed!",
-      "picture": "Pictures",
+      "pictureHotwater": "Pictures hotwater",
+      "pictureHeat": "Pictures heat",
       "pictureHouse": "House picture",
       "energyHeat": "Energy Heat"
     },

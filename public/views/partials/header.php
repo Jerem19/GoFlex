@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="<?= $style ?>">
     <?php } ?>
 
+
     <title><?= $title; ?></title>
 
     <!--[if lt IE 9]>
@@ -22,6 +23,8 @@
         <script type="text/javascript" src="<?= $script ?>"></script>
     <?php } ?>
     <![endif]-->
+
+
 
 </head>
 <body>

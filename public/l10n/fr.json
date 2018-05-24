@@ -16,14 +16,15 @@
             "power": "Puissance",
             "noData" : "Aucune donnée disponible",
             "electricalConsumption" : "Consommation",
+            "degrees" : "Degrés celsius",
             "consumptionHeatPump" : "Consommation pompe à chaleur",
             "boiler_power": "Puissance du boiler",
-            "hotwaterTemperature": "Temperature eau chaude"
+            "hotwaterTemperature": "Température eau chaude"
         },
         "dashboard":{
             "electricalConsumption" : "Consommation électrique",
             "textConsumptionElec" : "Votre consommation électrique globale instantanée est de ",
-            "textHeatPump" : "Votre pompe à chaleur reliée consomme ",
+            "textHeatPump" : "Votre pompe à chaleur consomme ",
             "textHotwaterTemperature" : "La température de votre boiler est à ",
             "textInsideTemperature" : "La température intérieure est à "
         },
@@ -32,7 +33,7 @@
             "dashboard": "Tableau de bord",
             "creation": "Creation",
             "consumptionElec" : "Consommation",
-            "insideTemp": "Temperature intérieure",
+            "insideTemp": "Température intérieure",
             "heat_pump" : "Pompe à chaleur",
             "analyse" : "Analyses",
             "boiler" : "Eau Chaude",
@@ -41,9 +42,9 @@
             "summary" : "Résumé",
             "profil" : "Profil",
             "creationUser" : "Ajout utilisateur",
-            "installationGateway" : "Installation",
+            "installationGateway" : "Ajout installation",
             "passwordModification" : "Gestion du mot de passe",
-            "checkUserData" : "Acces données clients"
+            "checkUserData" : "Visualisation client"
         },
         "header": {
             "nav-text": "Inverser la navigation"
@@ -85,8 +86,8 @@
             "gaz": "Gaz",
             "wood": "Bois",
             "consommationSensor": "Capteur de consommation",
-            "insideTemperatureSensor": "Capteur de temperature ambiante",
-            "boilerTemperatureSensor": "Capteur temperature du boiler",
+            "insideTemperatureSensor": "Capteur de température ambiante",
+            "boilerTemperatureSensor": "Capteur température du boiler",
             "productionSensor": "Capteur de production",
             "technoHeat": "Technologie chauffage",
             "technoHotWater": "Technologie eau chaude",
@@ -96,7 +97,7 @@
             "wood_burner": "Poêle",
             "yes": "yes",
             "no": "no",
-            "solarPanel": "Panneaux solaire",
+            "solarPanel": "Panneaux solaires",
             "equipmentEnergyDefinitionSolarPanel": "Panneaux solaires",
             "equipmentEnergyDefinitionChargingBorne": "Borne de recharge",
             "equipmentEnergyDefinitionHeat": "Chauffage",
@@ -107,8 +108,8 @@
             "lower": "Inférieur à 100.000 kWh",
             "generalNote": "Note General",
             "positionNote" : "Note sur la position de l'appareil",
-            "picture": "photos",
-            "pictureHouse": "photo de la maison",
+            "picture": "Photos",
+            "pictureHouse": "Photo de la maison",
             "city": "Ville",
             "npa": "NPA",
             "address": "Adresse",
