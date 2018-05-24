@@ -1,32 +1,30 @@
 {
-    "contact" : "Contact",
     "login": {
         "title": "Connexion",
 
         "username": "ID utilisateur",
         "password": "Mot de passe",
 
-        "forgot_pwd": "Mot de passe oublié?",
         "sign_in" : "S'identifier",
         "sign_in_now" : "S'identifier Maintenant"
     },
     "index": {
         "chart" : {
-            "insideTemperature" : "Température intérieure",
-            "power": "Puissance",
-            "noData" : "Aucune donnée disponible",
-            "electricalConsumption" : "Consommation",
-            "degrees" : "Degrés celsius",
-            "consumptionHeatPump" : "Consommation pompe à chaleur",
             "boiler_power": "Puissance du boiler",
-            "hotwaterTemperature": "Température eau chaude"
+            "consumptionHeatPump" : "Consommation pompe à chaleur",
+            "degrees" : "Degrés celsius",
+            "electricalConsumption" : "Consommation",
+            "insideTemperature" : "Température intérieure",
+            "hotwaterTemperature": "Température eau chaude",
+            "noData" : "Aucune donnée disponible",
+            "power": "Puissance"
         },
         "dashboard":{
             "electricalConsumption" : "Consommation électrique",
             "textConsumptionElec" : "Votre consommation électrique globale instantanée est de ",
+            "textInsideTemperature" : "La température intérieure est à ",
             "textHeatPump" : "Votre pompe à chaleur consomme ",
-            "textHotwaterTemperature" : "La température de votre boiler est à ",
-            "textInsideTemperature" : "La température intérieure est à "
+            "textHotwaterTemperature" : "La température de votre boiler est à "
         },
         "sidebar": {
             "profile": "Mon profile",
@@ -61,8 +59,8 @@
             "alertUpdateUserFailed": "La mise à jour a échouée!",
             "create": "Créer",
             "technical": "Technicien",
-            "hotline": "Hotline",
-            "user": "Utilisateur",
+            "customer_care": "Hotline",
+            "client": "Utilisateur",
             "admin" : "Admin",
             "role": "Role",
             "gatewayName": "Numero gateway",
@@ -110,6 +108,8 @@
             "positionNote" : "Note sur la position de l'appareil",
             "picture": "Photos",
             "pictureHouse": "Photo de la maison",
+            "pictureHotwater": "Photos hotwater",
+            "pictureHeat": "Photos du c",
             "city": "Ville",
             "npa": "NPA",
             "address": "Adresse",
