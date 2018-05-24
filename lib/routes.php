@@ -211,7 +211,7 @@ $router
         if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2)) {
             //$res->send(true); // send mail
             require_once PRIVATE_FOLDER .'./Class/Mail.php';
-            Mail::activation($_SESSION["User"]);
+            Mail::activation($gw->getInstallation()->getUser());
             $res->send(true);
         }
 

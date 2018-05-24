@@ -4,7 +4,7 @@ require_once 'DB/User.php';
 class Mail {
 
     public static function activation(User $user) {
-        $newLine = '\r\n';
+        $newLine = "\r\n";
 
         $sub = "";
         $text = "";
@@ -18,11 +18,11 @@ class Mail {
 
             if ($i + 1 < $countLn) {
                 $sub.= '/';
-                $text.= "$newLine------------------------------$newLine";
+                $text.= "$newLine$newLine------------------------------$newLine$newLine";
             }
         }
 
-        $text .= "$newLine$newLine\t". Configuration::hostname . BASE_URL. "/signup?id=" . $user->getToken();
+        $text .= "$newLine$newLine\t". Configuration::hostname . BASE_URL. "signup?id=" . $user->getToken();
 
         return mail($user->getEMail(), $sub, $text, "FROM: " . Configuration::email);
     }

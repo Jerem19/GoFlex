@@ -21,4 +21,4 @@ document.forms[0].onsubmit = function() {
     return false;
 }
 
-$.backstretch("/GoFlex/login-bg.jpg", {speed: 150});
+$.backstretch("login-bg.jpg", {speed: 150});
