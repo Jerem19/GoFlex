@@ -2,6 +2,8 @@
 require_once 'Technology.php';
 require_once 'Energy.php';
 
+require_once __DIR__ . '/../Picture.php';
+
 class Element {
 
     private $ener = -1;
@@ -86,6 +88,14 @@ class Element {
      */
     public function getNote() {
         return $this->note;
+    }
+
+
+    /**
+     * @return Picture[]
+     */
+    public function getPictures() {
+        return []; // TO DO
     }
 
     /**

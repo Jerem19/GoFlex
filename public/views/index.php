@@ -9,6 +9,7 @@ $metas = [
 $styles = [
     "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css",
+    "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/css/jquery.gritter.css",
     "3rdparty/style.css",
     "3rdparty/style-responsive.css",
     "/footer.css",
@@ -104,6 +105,7 @@ $scripts = [
 "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
 "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.js",
 "https://blacktie.co/demo/dashgum/assets/js/jquery.dcjqaccordion.2.7.js",
+"https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/js/jquery.gritter.min.js",
 "3rdparty/common-scripts.js",
 "/l10n.js",
 "/footer.js",

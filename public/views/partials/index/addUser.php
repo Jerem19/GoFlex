@@ -18,10 +18,9 @@
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['role']?></label>
         <select id="role" name="role" class="col-sm-8 form-control" onChange="disabledOrEnable()">
-            <option value="4"><?= L10N['index']['profile']['user']?></option>
-            <option value="1"><?= L10N['index']['profile']['admin']?></option>
-            <option value="2"><?= L10N['index']['profile']['technical']?></option>
-            <option value="3"><?= L10N['index']['profile']['hotline']?></option>
+            <?php foreach (Role::getAll() as $role) {?>
+                <option value="<?= $role->getId() ?>" <?php if ($role->getId() == 4) echo "selected"; ?>><?= $l10n["profile"][$role->getName()] ?></option>
+            <?php } ?>
         </select>
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['gatewayName']?></label>
@@ -33,19 +32,31 @@
 </div>
 
 <script>
+    var gwId = document.getElementById('gatewayname');
     window.onload = function() {
+        function testGateway(callback = new Function()) {
+            $.post('gw_exist', "gw="+ gwId.value, function(response) {
+                if (JSON.parse(response))
+                    $.gritter.add({
+                        text: "already exist"
+                    });
+                else callback();
+            });
+        }
+
+        gwId.onchange = function() { testGateway(); };
 
         $("#formAddUser").submit(function () {
-            var att = $(this).serialize();
-
-            $.post("create", att, function (data) {
-                data = JSON.parse(data);
-                if (data) {
-                    alert("<?= L10N['index']['profile']['alertCreateUserSuccess']?>");
-                    window.location.reload();
-                }
-                else
-                    alert("<?= L10N['index']['profile']['alertCreateUserFailed']?>");
+            var data = $(this).serialize();
+            testGateway(function() {
+                $.post("create", data, function (data) {
+                    data = JSON.parse(data);
+                    if (data) {
+                        alert("<?= L10N['index']['profile']['alertCreateUserSuccess']?>");
+                        window.location.reload();
+                    }
+                    else alert("<?= L10N['index']['profile']['alertCreateUserFailed']?>");
+                });
             });
             return false;
         });
@@ -53,22 +64,20 @@
         var firstName = $('input[name="firstname"]'),
             lastName = $('input[name="lastname"]');
         firstName.add(lastName).on('change', function() {
-            $('input[name="username"]').val(firstName.val().toLowerCase() + "." + lastName.val().toLowerCase());
+            //https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
+            $('input[name="username"]').val((firstName.val().toLowerCase() + "." + lastName.val().toLowerCase()).normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
         })
-    }
-
-
+    };
 
     function disabledOrEnable() {
-        if(document.getElementById("role").value < 4) {
-
-            document.getElementById("gatewayname").value = "";
-            document.getElementById("gatewayname").disabled = true;
-        }
-        if(document.getElementById("role").value == 4) {
-            document.getElementById("gatewayname").value = "goflex-dc-";
-            document.getElementById("gatewayname").disabled = false;
+        if (document.getElementById("role").value == 4) {
+            gwId.value = "goflex-dc-";
+            gwId.disabled = false;
+        } else {
+            gwId.value = "";
+            gwId.disabled = true;
         }
     }
+    disabledOrEnable();
 
 </script>

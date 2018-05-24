@@ -7,7 +7,7 @@
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <select required="required" name="gwId" class="col-sm-8 form-control">
                     <?php foreach(Gateway::getAllReady() as $gw) { ?>
-                        <option value="<?= $gw->getId()?>"><?= $gw->getName()?></option>
+                        <option value="<?= $gw->getId()?>"><?= $gw->getName()?> [<?= $gw->getInstallation()->getUser()->getUsername() ?>]</option>
                     <?php } ?>
                 </select>
             </div>

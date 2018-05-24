@@ -160,6 +160,9 @@ $router
         } else $res->send(false);
     })
 
+    ->post('/gw_exist', function(Response $res) {
+        $res->send(isset($_POST["gw"]) ? Gateway::exists($_POST["gw"]) : false);
+    })
 
     ->post('/create', function(Response $res) {
         if (isset($_POST["username"]) && isset($_POST["email"])
