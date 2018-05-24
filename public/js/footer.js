@@ -1,10 +1,17 @@
+var footerDiv = document.getElementById('footer'),
+    main = document.getElementById('main-content');
+
+footerDiv.style.minHeight = document.getElementById('footer-child').offsetHeight + "px";
+
+var winHeight = null;
 window.onresize = function() {
-    var h = window.innerHeight - document.getElementById('main-content').offsetHeight;
-    if (h < 0)
-        h = document.getElementById('footer-child').offsetHeight;
-    //ajoute car le height et trop grand et la page coulisse pour rien. ce sera mieux pour l'utilisateur
-    //A valider
-    h-= 20;
-    document.getElementById('footer').style.height = h + "px";
+    if (winHeight != window.innerHeight) {
+        // TO DO: correct the main div height (change while the process)
+        winHeight = window.innerHeight;
+        var mainS = main.offsetHeight;
+        var h = winHeight - mainS;
+
+        footerDiv.style.height = h + "px";
+    }
 };
 window.onresize();

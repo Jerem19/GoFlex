@@ -97,7 +97,7 @@ $router
                 if ($user != false && $_POST["username"] == $user->getUsername()
                     && !$user->isActive() && $user->setPassword($_POST["password"])
                     && $user->setActive())
-                    $user = new User($user->getUsername(), $_POST["password"]);
+                    $user = new User($user->getId(), $_POST["password"]);
             } else $user = User::login($_POST["username"], $_POST["password"]);
 
             if ($user != false) {
@@ -200,20 +200,20 @@ $router
 
     ->post('/linkUserGateway', function(Response $res) {
 
-        //var_dump($_FILES);
-
         require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
         $id = Picture::create($_FILES["picture"]);
-
-        //var_dump($id);
 
         $gw = new Gateway($_POST["gwId"]);
         unset($_POST["gwId"]);
 
         $_POST["picture"] = $id;
 
-        if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2))
-            $res->send(true); // send mail
+        if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2)) {
+            //$res->send(true); // send mail
+            require_once PRIVATE_FOLDER .'./Class/Mail.php';
+            Mail::activation($_SESSION["User"]);
+            $res->send(true);
+        }
 
         $res->send(false);
     })

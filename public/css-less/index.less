@@ -1,35 +1,46 @@
+ul.top-menu > li > .logout {
+    text-align: center;
+    width: 70px;
+    margin-right: 0;
+    @media screen and (max-width: 770px){
+        @buttonSize: 15px; // max 20
+        padding: @buttonSize 0;
+        margin-top: 20-@buttonSize;
+    }
+}
+
 .dashboardTitleSize {
-  font-size: 400%;
+    font-size: 400%;
 }
 
 .dashboardTextSize {
-  margin-top: 20px;
-  font-size: 150%;
+    margin-top: 20px;
+    font-size: 150%;
 }
 .dashboardNumberSize {
-  font-size: 300%;
+    font-size: 300%;
 }
 
 .dashboardFaSize {
-  font-size: 500%
+    font-size: 500%
 }
 
 @media (max-width: 700px) {
 
-  .dashboardTitleSize {
-    font-size: 200%;
-  }
+    .dashboardTitleSize {
+        font-size: 200%;
+    }
 
-  .dashboardTextSize {
-    font-size: 100%;
-  }
+    .dashboardTextSize {
+        font-size: 100%;
+    }
 
-  .dashboardNumberSize {
-    margin-top: 20px;
-    font-size: 120%;
-  }
+    .dashboardNumberSize {
+        margin-top: 20px;
+        font-size: 120%;
+    }
 
-  .dashboardFaSize {
-    font-size: 250%
-  }
+    .dashboardFaSize {
+        font-size: 250%
+    }
 }

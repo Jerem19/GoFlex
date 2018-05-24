@@ -185,7 +185,7 @@
 
 <script>
     window.onload = function() {
-        $('input').add('select[name!="client"]').add('textarea').prop("disabled", true);
+        $('input').add('#formCheckUserData > select[name!="client"]').add('textarea').prop("disabled", true);
 
 
         $('select[name="client"').on('change', function() {

@@ -122,5 +122,11 @@
         "checkUserData" : {
             "chooseUser" : "Choisissez un utilisateur"
         }
+    },
+    "mail": {
+        "activation": {
+            "subject" : "Activation",
+            "text" : "Bonjour %s,\r\nVeuillez utiliser le lien ci-dessous pour activer votre compte."
+        }
     }
 }

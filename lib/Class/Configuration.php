@@ -28,7 +28,8 @@ class DB extends PDO {
 }
 
 class Configuration {
-    const hostname = "";
+    const hostname = "https://cloudio-data.esr.ch";
+    const email = "info@goflex.ch";
 
     const pictures_path = PUBLIC_FOLDER . 'pics/';
 

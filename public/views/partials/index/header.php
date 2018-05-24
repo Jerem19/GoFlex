@@ -7,15 +7,7 @@
 
     <div class="top-menu">
         <ul class="nav pull-right top-menu">
-            <li>
-                <?php include __DIR__ . '/../sltLang.php'; ?>
-            </li>
-
-
-            <?php
-            //agrandisssement du button de deco
-            ?>
-            <li><a class="logout" style="width: 70px; text-align: center; margin-right: 20px;" href="<?= BASE_URL ?>logout"><span class="fa fa-sign-out"></span></a></li>
+            <li><a class="logout" href="<?= BASE_URL ?>logout"><span class="fa fa-sign-out"></span></a></li>
         </ul>
     </div>
 </header>

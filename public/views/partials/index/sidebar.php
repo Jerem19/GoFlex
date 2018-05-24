@@ -9,15 +9,15 @@
 
             <?php
             function doLink ($href, $attr, $isActive = false) {
-                if (!isset($attr["_iClass"])) $attr["_iClass"] = ""; ?>
-                <li <?= $isActive ? 'class="active"': '' ?>>
+                if (!isset($attr["_iClass"])) $attr["_iClass"] = "";
+                printf("<li %s>" , $isActive ? 'class="active"': ''); ?>
                     <a href="<?= BASE_URL . $href ?>" >
                         <i class="<?= $attr["_iClass"] ?>"></i><span><?= $attr["text"] ?></span>
                     </a>
                 </li> <?php
             }
 
-            function doSubMenu($menu, $isActive = false) {
+            function doSubMenu($menu, $isActive = false, $pathMenu = "") {
                 if (!isset($menu["_iClass"])) $menu["_iClass"] = ""; ?>
                 <li class="sub-menu">
                     <a href="javascript:;" <?= $isActive ? 'class="active"': '' ?> >
@@ -25,14 +25,12 @@
                         <span><?= $menu["text"] ?></span>
                     </a>
                     <ul class="sub">
-                        <?php doMenu($menu); ?>
+                        <?php doMenu($menu, $pathMenu); ?>
                     </ul>
                 </li> <?php
             }
 
-            $pathMenu = isset($path) ? $path : BASE_URL;
-            function doMenu($menu = []) {
-                global $pathMenu;
+            function doMenu($menu = [], $pathMenu = "") {
                 foreach ($menu as $href => $attr) {
                     if (is_array($attr)) {
                         $isSubMenu = false;
@@ -46,16 +44,11 @@
                                 }
                             }
                         }
-                        if ($isSubMenu)
-                            doSubMenu($attr, $isActive);
-                        else
-                            doLink($href, $attr, $href == $pathMenu);
+                        if ($isSubMenu) doSubMenu($attr, $isActive, $pathMenu);
+                        else doLink($href, $attr, $href == $pathMenu);
                     }
                 }
             }
-
-
-
 
 
             if ($user->getRole()->getId() == 1) {
@@ -124,8 +117,8 @@
                 "_iClass" => "fa fa-book"
             ];
 
-
-            doMenu($menu);?>
+            doMenu($menu, isset($path) ? $path : ""); ?>
+            <li style="text-align: center"><?php include __DIR__ . '/../sltLang.php'; ?></li>
         </ul>
     </div>
 </aside>
