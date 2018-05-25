@@ -1,3 +1,6 @@
+<div class="row mt col-lg-12 form-panel" style="margin-bottom: 10px; text-align: center; font-size: xx-large;">
+    <?= L10N['index']['sidebar']['checkUserData']?>
+</div>
 <div class="row mt col-lg-12 form-panel">
     <form class="form-horizontal style-form" id="formCheckUserData" method="post">
 
@@ -6,7 +9,7 @@
         <select name="client" class="col-sm-8 form-control">
             <?php
             foreach (User::getAllLinked() as $user) { ?>
-                <option value="<?= $user->getId() ?>"><?= $user->getUsername() ?> [<?= $user ?>]</option>
+                <option value="<?= $user->getId() ?>"><?= $user->getInstallations()[0]->getGateway()->getName() ?> [<?= $user->getUsername() ?>]</option>
             <?php }?>
         </select>
     </form>
@@ -195,5 +198,28 @@
                 }
             });
         }).change();
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCMWpD5Uib4iQ5Ol0HoTpkyI6Ux2AIyMC0"></script>
+<script> // https://www.google.com/maps/search/Massongex+routes+de+l'église
+    window.onload = function() {
+        var geocoder = new google.maps.Geocoder();
+        var address = "Chemin de Coudrine 5 Grimisuat";
+
+        geocoder.geocode({'address': address}, function (results, status) {
+
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: {lat: latitude, lng: longitude}
+            });
+            var geocoder = new google.maps.Geocoder;
+            var infowindow = new google.maps.InfoWindow;
+        });
     }
 </script>

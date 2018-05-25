@@ -1,3 +1,6 @@
+<div class="row mt col-lg-12 form-panel" style="margin-bottom: 10px; text-align: center; font-size: xx-large;">
+    <?= L10N['index']['sidebar']['installationGateway']?>
+</div>
 <div class="row mt col-lg-12 form-panel">
     <form class='form-horizontal style-form' id="formLinkGatewayUser" method='post' enctype="multipart/form-data">
         <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['systemDefinition']?></label>
@@ -185,6 +188,7 @@
                 processData: false,
                 data : form_data,
                 success: function(response){
+                    console.log(response);
                     if (JSON.parse(response)) {
                         alert("<?= $l10n['installation']['alertLinUserGatewaySuccess']?>");
                         window.location.reload();

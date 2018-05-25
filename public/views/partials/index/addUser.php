@@ -1,3 +1,7 @@
+<div class="row mt col-lg-12 form-panel" style="margin-bottom: 10px; text-align: center; font-size: xx-large;">
+    <?= L10N['index']['sidebar']['creationUser']?>
+</div>
+
 <div class="row mt col-lg-12 form-panel">
     <form class='form-horizontal style-form' id="formAddUser" method='post'>
 

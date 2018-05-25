@@ -1,4 +1,6 @@
-
+<div class="row mt col-lg-12 form-panel" style="margin-bottom: 10px; text-align: center; font-size: xx-large;">
+    <?= L10N['index']['sidebar']['dashboard']?>
+</div>
 <div class="row mt col-lg-12 form-panel">
     <div style="text-align: center;">
         <div class="dashboardTitleSize">

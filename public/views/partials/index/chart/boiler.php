@@ -16,7 +16,10 @@
             success: function (data) {                
                 dataTime = [];
                 for (var j in data) {
-                    dataTime.unshift([new Date(data[j]["time"]).getTime(), data[j]["value"]])
+                    d = new Date(data[j]["time"]);
+                    d.setHours(d.getHours() - 1);
+
+                    dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["value"]])
                 }
                 Highcharts.StockChart('hotwaterTemperature', {
                     chart: {
