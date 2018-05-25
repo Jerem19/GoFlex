@@ -205,7 +205,7 @@ $router
 
         require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
         $picId = null;
-        if (isset($_FILES["picture"]) && !is_array($_FILES["pictures"]) && $_FILES["pictures"]["error"] == 0)
+        if (isset($_FILES["picture"]) && !is_array($_FILES["picture"]) && $_FILES["picture"]["error"] == 0)
             $id = Picture::create($_FILES["picture"]);
 
         $gw = new Gateway($_POST["gwId"]);
@@ -215,7 +215,7 @@ $router
         $_POST["picture"] = $picId;
         if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2)) {
             require_once PRIVATE_FOLDER .'./Class/Mail.php';
-            Mail::activation($gw->getInstallation()->getUser());
+            //Mail::activation($gw->getInstallation()->getUser());
             $res->send(true);
         }
 

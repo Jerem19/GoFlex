@@ -1,12 +1,17 @@
+<div class="row mt col-lg-12 form-panel" style="margin-bottom: 10px; text-align: center; font-size: xx-large;">
+    <?= L10N['index']['sidebar']['checkUserData']?>
+</div>
 <div class="row mt col-lg-12 form-panel">
     <form class="form-horizontal style-form" id="formCheckUserData" method="post">
+
+        <div id="map"></div>
 
         <label class="control-label col-sm-12" style="font-size: x-large;"><?= L10N['index']['checkUserData']['chooseUser']?></label>
 
         <select name="client" class="col-sm-8 form-control">
             <?php
             foreach (User::getAllLinked() as $user) { ?>
-                <option value="<?= $user->getId() ?>"><?= $user->getUsername() ?> [<?= $user ?>]</option>
+                <option value="<?= $user->getId() ?>"><?= $user->getInstallations()[0]->getGateway()->getName() ?> [<?= $user->getUsername() ?>]</option>
             <?php }?>
         </select>
     </form>
@@ -33,6 +38,7 @@
                     <option value="0"><?= $l10n['installation']['higher']?></option>
                 </select>
             </div>
+
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['businessSector']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
@@ -174,6 +180,7 @@
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <textarea class="col-sm-8 form-control" name="note"></textarea>
             </div>
+
         </div>
 
         <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
@@ -195,5 +202,28 @@
                 }
             });
         }).change();
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCMWpD5Uib4iQ5Ol0HoTpkyI6Ux2AIyMC0"></script>
+<script>
+    window.onload = function() {
+        var geocoder = new google.maps.Geocoder();
+        var address = "Chemin de Coudrine 5 Grimisuat";
+
+        geocoder.geocode({'address': address}, function (results, status) {
+
+            if (status == google.maps.GeocoderStatus.OK) {
+                var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: {lat: latitude, lng: longitude}
+            });
+            var geocoder = new google.maps.Geocoder;
+            var infowindow = new google.maps.InfoWindow;
+        });
     }
 </script>
