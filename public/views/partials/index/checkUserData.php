@@ -185,8 +185,7 @@
 
 <script>
     window.onload = function() {
-        $('input').add('#formCheckUserData > select[name!="client"]').add('textarea').prop("disabled", true);
-
+        $('#formLinkGatewayUser').find('input, select, textarea').prop("disabled", true);
 
         $('select[name="client"').on('change', function() {
             $.post('installInfo', 'id=' + $(this).val(), function(data) {
