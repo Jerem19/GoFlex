@@ -191,7 +191,7 @@
             $.post('installInfo', 'id=' + $(this).val(), function(data) {
                 if(data != false) {
                     for (var d in data)
-                        var ele = $('[name="' + d + '"]').val(data[d]);
+                        $('[name="' + d + '"]').val(data[d]);
                 }
             });
         }).change();

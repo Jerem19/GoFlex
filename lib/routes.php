@@ -1,8 +1,8 @@
-<?php
-
-require_once 'Class/Router.php';
+<?php require_once 'Class/Router.php';
 
 $router = new Router();
+define('BASE_URL', $router->getBaseURL() . '/');
+
 $router
     ->on('/*.css', function(Response $res, $args) { // active less (if 2 same names => less has priority)
         $file = PUBLIC_FOLDER . 'css-less/' . $args[0] . '.less';
@@ -14,17 +14,19 @@ $router
     })
     ->byExt('css', PUBLIC_FOLDER . 'css')
     ->byExt('js', PUBLIC_FOLDER . 'js')
-    ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp'], PUBLIC_FOLDER . 'images');
-
+    ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp'], PUBLIC_FOLDER . 'images')
+    ->on('/base_url', function(Response $res) {
+        $res->send(BASE_URL);
+    });
 
 require_once 'Class/DB/User.php';
 session_start();
 session_set_cookie_params(30*30*60);
-define('BASE_URL', $router->getBaseURL() . '/');
 
 // Define lang and verify if connected
 if (!isset($_SESSION["lang"]))
     $_SESSION["lang"] = "fr";
+
 define('L10N', json_decode(file_get_contents(PUBLIC_FOLDER . 'l10n/' . $_SESSION["lang"] . '.json'), true));
 define('L10NAvail', json_decode(file_get_contents(PUBLIC_FOLDER . 'l10n/l10n.json'), true));
 
@@ -109,18 +111,16 @@ $router
         } else $res->send(false);
     })
 
-    ->get("*", function(Response $res) {
-        global $isConnected;
-        if (!$isConnected)
-            $res->render("login.php");
-    })
-    ->post("*", function(Response $res) {
-        global $isConnected;
+    ->on('*', function(Response $res) {
+        global $isConnected, $router;
         if (!$isConnected) {
-            $res->setHeader('HTTP/1.1 403 Unauthorized');
-            $res->send(403, false);
+            if ($router->getMethod() == Router::POST) {
+                $res->setHeader('HTTP/1.1 403 Unauthorized');
+                $res->send(403, false);
+            } else $res->render('login.php');
         }
     })
+
     ->post('/insideTemp', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);

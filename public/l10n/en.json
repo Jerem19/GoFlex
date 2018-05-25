@@ -69,7 +69,7 @@
 		},
 		"installation": {
 			"clientName": "Client",
-			"boxNumber": "Box Number",
+			"boxNumber": "Gateway Number",
 			"facturation": "Facturation",
 			"businessSector": "Business sector",
 			"residential": "Residential",

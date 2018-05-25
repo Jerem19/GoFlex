@@ -38,7 +38,7 @@
             $.post('gw_exist', "gw="+ gwId.value, function(response) {
                 if (JSON.parse(response))
                     $.gritter.add({
-                        text: "already exist"
+                        text: "error: already exist"
                     });
                 else callback();
             });
