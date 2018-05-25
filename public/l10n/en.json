@@ -59,6 +59,7 @@
 			"alertUpdateUserSuccess": "User correctly updated!",
 			"alertUpdateUserFailed": "The update process has failed!",
 			"create": "Create",
+			"admin": "Admin",
 			"technical": "Technical",
 			"customer_care": "Hotline",
 			"client": "User",

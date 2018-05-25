@@ -204,15 +204,16 @@ $router
     ->post('/linkUserGateway', function(Response $res) {
 
         require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
-        $id = Picture::create($_FILES["picture"]);
+        $picId = null;
+        if (isset($_FILES["picture"]) && !is_array($_FILES["pictures"]) && $_FILES["pictures"]["error"] == 0)
+            $id = Picture::create($_FILES["picture"]);
 
         $gw = new Gateway($_POST["gwId"]);
         unset($_POST["gwId"]);
 
-        $_POST["picture"] = $id;
 
+        $_POST["picture"] = $picId;
         if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2)) {
-            //$res->send(true); // send mail
             require_once PRIVATE_FOLDER .'./Class/Mail.php';
             Mail::activation($gw->getInstallation()->getUser());
             $res->send(true);

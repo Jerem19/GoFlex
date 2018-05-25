@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS goFlexDb;
-CREATE DATABASE goFlexDb;
+DROP DATABASE IF EXISTS goflex_clients;
+CREATE DATABASE goflex_clients;
 
-USE goFlexDb;
+USE goflex_clients;
 
 CREATE TABLE tblRole (
 	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -163,22 +163,8 @@ INSERT INTO tblStatus VALUES  (1, 'ready'), (2, 'ok'), (3, 'busy');
 INSERT INTO tblUser (user_role, username, password, token, email, active) VALUES
 (1, 'admin', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '409d565186e0385eacd12d059d1c6007369b0ab1a78fcdbe4608b87b23b6f9daf7d1b39706f4ab8ba4d38f89ac61646d696e', 'admin@go.flex', true),
 (2, 'technical', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '1fe3e1dbea55b842ba8d29660df2bccedf8ce94066037b93e8d299def420c795b1f5ca15615ace896b746563686e6963616c', 'technical@go.flex', true),
-(3, 'customer_care', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '2673517f79d47244a9d3eb962f2b4708bc85574b6d3de817940b29c238d857966176989022637573746f6d65725f63617265', 'info@go.flex', true),
-(4, 'goFlex1', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '8b5e2b7fac8d84191f887852139e9864573f36b305e555e1ec205c8284ea73aeebf5db0604e749e57b2cd7676f466c657831', '1@go.flex', true),
-(4, 'goFlex2', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '5e7ce4fe8c1672a93687d2d6f1a6def5394ede477de57c0e0e83fb0b12c82a16e0c291e7d64171257d7e47676f466c657832', '2@go.flex', true),
-(4, 'goFlex3', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', 'aa53b69c2dd2a075ef00fe476fb4953ae1b70bc5d1dd9c86e3a9d6dcf86fd7c51d93a58ab1ce07712c03cb676f466c657833', '3@go.flex', true),
-(4, 'noactive', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '5e7ce4fe8c1672a93687d2d6f1a6def5394ede477de57c150e83fb0b12c8er16e0c291e7d64171257d7e47676f466c657832', 'noactive@go.flex', false);
-(4, 4, 'jessen.page', '$2y$13$aX/r/Pj8GchBdHf9UtL3XO4kNYB/nL201ZLYdbF7T7O2.izShAMYq', 'Jessen', 'Page', '1@go.flex', NULL, 1, '8b5e2b7fac8d84191f887852139e9864573f36b305e555e1ec205c8284ea73aeebf5db0604e749e57b2cd7676f466c657831', 0),
-(5, 4, 'pierreandre.seppey', '$2y$13$d6Bn6maqP7E81POhriO48e5UqislALPiXwmS5Q4uCsMYZODeCpeNu', 'Pierre-André', 'Seppey', '2@go.flex', NULL, 1, '5e7ce4fe8c1672a93687d2d6f1a6def5394ede477de57c0e0e83fb0b12c82a16e0c291e7d64171257d7e47676f466c657832', 0),
-(6, 4, 'gregory.clivaz', '$2y$14$05B6ymBUzpqAIoisEkKexexOKzcAPRpePaIrlndTGQ9LwuHiIvc.y', 'Gregory', 'Clivaz', '3@go.flex', NULL, 1, 'aa53b69c2dd2a075ef00fe476fb4953ae1b70bc5d1dd9c86e3a9d6dcf86fd7c51d93a58ab1ce07712c03cb676f466c657833', 0),
-
-
-INSERT INTO tblGateway (name) VALUES
-('goflex-dc-001'), ('goflex-dc-002'), ('goflex-dc-003');
+(3, 'customer_care', '$2y$12$1IXJt84dRbEw0v6OIpNVRuH6cXJPbOS.IYoccc3hCYFu9ZXqdePgS', '2673517f79d47244a9d3eb962f2b4708bc85574b6d3de817940b29c238d857966176989022637573746f6d65725f63617265', 'info@go.flex', true);
 
 INSERT INTO tblBuisSector (name) VALUES ('residential'), ('industrial'), ('tertiary');
 INSERT INTO tblEnergy (name) VALUES ('electricity'), ('wood'), ('gaz');
 INSERT INTO tblTechnology (name) VALUES ('heat_pump'), ('boiler'), ('wood_burner');
-
-INSERT INTO tblInstallation (inst_userId, inst_gwId) VALUES
-(4, 1), (5, 2), (6, 3);
