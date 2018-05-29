@@ -167,11 +167,11 @@ $router
     ->post('/create', function(Response $res) {
         if (isset($_POST["username"]) && isset($_POST["email"])
             && !(User::exists($_POST["username"]))) {
-            $_POST['gatewayname'] = "goflex-dc-" . $_POST['gatewayname'];
+
             if($_POST["role"] == 4)
             {
                 if (isset($_POST["gatewayname"]) && !Gateway::exists($_POST["gatewayname"])) {
-                    $gateway = $_POST["gatewayname"];
+                    $gateway = "goflex-dc-" . $_POST["gatewayname"];
                     unset($_POST["gatewayname"]);
 
                     $userId = User::create($_POST);
@@ -183,6 +183,8 @@ $router
             } else
             {
                 require_once PRIVATE_FOLDER .'./Class/Mail.php';
+                unset($_POST["gatewayname"]);
+
                 $user = new User(User::create($_POST));
                 $res->send(Mail::activation($user));
             }
