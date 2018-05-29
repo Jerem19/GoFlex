@@ -182,8 +182,8 @@ $router
                 } else $res->send(false);
             } else
             {
-                $userId = User::create($_POST);
-                $res->send(Mail::activation(new User($userId)));
+                $user = new User(User::create($_POST));
+                Mail::activation($user);
             }
 
         }
