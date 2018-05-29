@@ -43,7 +43,7 @@
 			"creationUser": "Add User",
 			"admin": "Admin",
 			"grafana" : "Grafana",
-			"installationGateway": "Add nstallation",
+			"installationGateway": "Add installation",
 			"passwordModification": "Password management",
 			"checkUserData": "Client visualisation"
 		},
