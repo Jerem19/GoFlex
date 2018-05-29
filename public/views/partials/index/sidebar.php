@@ -75,6 +75,11 @@
                     "text" => $l10nNav["checkUserData"],
                     "_iClass" => "fa fa-odnoklassniki"
                 ];
+
+                $menu["grafana"] = [
+                    "text" => $l10nNav["grafana"],
+                    "_iClass" => "fa fa-wrench"
+                ];
             }
 
             if ($user->getRole()->getId() == 3) {

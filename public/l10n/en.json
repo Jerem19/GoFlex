@@ -41,6 +41,7 @@
 			"profil": "Profile",
 			"creationUser": "Add User",
 			"admin": "Admin",
+			"grafana" : "Grafana",
 			"installationGateway": "Add nstallation",
 			"passwordModification": "Password management",
 			"checkUserData": "Client visualisation"

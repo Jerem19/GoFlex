@@ -1,7 +1,7 @@
 
 <div class="row col-lg-12" id="footer">
     <div id="footer-child">
-    <a href="https://www.hevs.ch/fr/rad-instituts/institut-systemes-industriels/projets/goflex-13835" target="_blank">
+    <a href="https://www.esr.ch/fr/" target="_blank">
         <img src="<?= BASE_URL ?>esr-logo.png" style="float: left;">
     </a>
 

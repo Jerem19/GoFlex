@@ -6,10 +6,14 @@
         <div class="dashboardTitleSize">
             <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
         </div>
+
+
         <span class="fa fa-bolt dashboardFaSize"></span>
+
+        <a href="consumption">
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textConsumptionElec']?></p>
         <div id="electricConsumption"  class="dashboardNumberSize">
-        </div>
+        </div></a>
     </div>
 </div>
 
@@ -21,9 +25,13 @@
         </div>
 
         <span class="fa fa-bolt dashboardFaSize"></span>
+
+        <a href="consumptionHeatPump">
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHeatPump']?></p>
+
         <div class="dashboardNumberSize" id="consumptionHeatPump">
-        </div>
+
+        </div></a>
     </div>
 </div>
 
@@ -35,10 +43,12 @@
         </div>
 
         <span class="fa fa-bath dashboardFaSize"></span>
+
+        <a href="boiler">
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHotwaterTemperature']?></p>
         <div class="dashboardNumberSize" id="hotwaterTemperature">
         </div>
-
+        </a>
     </div>
 </div>
 
@@ -49,10 +59,13 @@
         </div>
 
         <span class="fa fa-thermometer dashboardFaSize"></span>
+
+
+        <a href="insideTemp">
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textInsideTemperature']?></p>
         <div class="dashboardNumberSize" id="insideTemp">
         </div>
-
+        </a>
     </div>
 </div>
 
@@ -79,8 +92,11 @@
                 type : 'POST',
                 success : function(data) {
                     if (data && Array.isArray(data)) {
+                        d = new Date(data[0]["time"]).toISOString().substr(0,16);
+                        d = d.replace("T", " ");
+
                         document.getElementById(i).innerHTML = data[0]['value'] + urls[i] +
-                            "<br/><p style=\"font-size: 15px;\">" + new Date(data[0]["time"]).toISOString().substr(0,16) + "</p>";
+                            "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
                     }
                     else ajaxError(i);
                 },

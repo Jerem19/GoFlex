@@ -38,6 +38,7 @@
             "heater" : "Chauffage",
             "user" : "Utilisateur",
             "summary" : "Résumé",
+            "grafana" : "Grafana",
             "profil" : "Profil",
             "creationUser" : "Ajout utilisateur",
             "installationGateway" : "Ajout installation",

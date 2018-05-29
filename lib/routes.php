@@ -167,6 +167,7 @@ $router
     ->post('/create', function(Response $res) {
         if (isset($_POST["username"]) && isset($_POST["email"])
             && !(User::exists($_POST["username"]))) {
+            $_POST['gatewayname'] = "goflex-dc-" . $_POST['gatewayname'];
             if($_POST["role"] == 4)
             {
                 if (isset($_POST["gatewayname"]) && !Gateway::exists($_POST["gatewayname"])) {
@@ -179,7 +180,11 @@ $router
 
                     $res->send(Installation::link($userId, $gwId) != false);
                 } else $res->send(false);
-            } else $res->send(User::create($_POST));
+            } else
+            {
+                $userId = User::create($_POST);
+                $res->send(Mail::activation(new User($userId)));
+            }
 
         }
         $res->send(false);
