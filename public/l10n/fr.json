@@ -82,6 +82,7 @@
             "residential": "Residentiel",
             "industrial": "Industriel",
             "tertiary": "Tertiaire",
+            "ppe": "PPE",
             "electricity": "Electricité",
             "gaz": "Gaz",
             "wood": "Bois",
