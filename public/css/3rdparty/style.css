@@ -122,8 +122,8 @@ a, a:hover, a:focus {
 .btn-theme02.active,
 .open .dropdown-toggle.btn-theme02 {
   color: #fff;
-  background-color: #967adc;
-  border-color: #967adc;
+  background-color: #007cbc;
+  border-color: #007cbc;
 }
 
 .btn-theme03 {

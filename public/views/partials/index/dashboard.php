@@ -7,10 +7,10 @@
             <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
         </div>
 
-
+        <a href="consumption">
         <span class="fa fa-bolt dashboardFaSize"></span>
 
-        <a href="consumption">
+
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textConsumptionElec']?></p>
         <div id="electricConsumption"  class="dashboardNumberSize">
         </div></a>
@@ -23,10 +23,10 @@
         <div class="dashboardTitleSize">
             <p><?= $l10n["chart"]["consumptionHeatPump"] ?></p>
         </div>
-
+        <a href="consumptionHeatPump">
         <span class="fa fa-bolt dashboardFaSize"></span>
 
-        <a href="consumptionHeatPump">
+
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHeatPump']?></p>
 
         <div class="dashboardNumberSize" id="consumptionHeatPump">
@@ -41,10 +41,10 @@
         <div class="dashboardTitleSize">
             <p><?= $l10n["chart"]["hotwaterTemperature"] ?></p>
         </div>
-
+        <a href="boiler">
         <span class="fa fa-bath dashboardFaSize"></span>
 
-        <a href="boiler">
+
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textHotwaterTemperature']?></p>
         <div class="dashboardNumberSize" id="hotwaterTemperature">
         </div>
@@ -58,10 +58,10 @@
             <p><?= $l10n["chart"]["insideTemperature"] ?></p>
         </div>
 
+        <a href="insideTemp">
         <span class="fa fa-thermometer dashboardFaSize"></span>
 
 
-        <a href="insideTemp">
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textInsideTemperature']?></p>
         <div class="dashboardNumberSize" id="insideTemp">
         </div>
