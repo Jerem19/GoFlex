@@ -27,8 +27,8 @@
             <?php } ?>
         </select>
 
-        <label class="control-label col-sm-4"><?= L10N['index']['profile']['gatewayName']?></label>
-        <input id="gatewayname" type="text" style="margin-bottom: 20px;" class="col-sm-8 form-control" value="goflex-dc-" name="gatewayname"/>
+        <label class="control-label col-sm-4">goflex-dc-</label>
+        <input id="gatewayname" type="number" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="gatewayname"/>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['profile']['create']?></button>
 
