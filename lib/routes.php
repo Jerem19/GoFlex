@@ -170,7 +170,7 @@ $router
 
             if($_POST["role"] == 4)
             {
-                if (isset($_POST["gatewayname"]) && !Gateway::exists($_POST["gatewayname"])) {
+                if (isset($_POST["gatewayname"]) && !Gateway::exists($_POST["gatewayname"]) && $_POST["gatewayname"] = "") {
                     $gateway = "goflex-dc-" . $_POST["gatewayname"];
                     unset($_POST["gatewayname"]);
 
