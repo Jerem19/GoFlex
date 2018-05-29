@@ -184,7 +184,7 @@ $router
             {
                 require_once PRIVATE_FOLDER .'./Class/Mail.php';
                 $user = new User(User::create($_POST));
-                Mail::activation($user);
+                $res->send(Mail::activation($user));
             }
 
         }
