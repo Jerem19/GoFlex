@@ -35,6 +35,7 @@
 			"heat_pump": "Heat pump",
 			"analyse": "analysis",
 			"boiler": "Hot water",
+			"allUsers" : "All users",
 			"heater": "Heating",
 			"user": "User",
 			"summary": "Summary",

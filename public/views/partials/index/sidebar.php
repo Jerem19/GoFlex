@@ -59,9 +59,20 @@
                     "_iClass" => "fa fa-user-plus"
                 ];
 
+                /*
+                $menu["allUsers"] = [
+                    "text" => $l10nNav["allUsers"],
+                    "_iClass" => "fa fa-users"
+                ];*/
+
                 $menu["checkUserData"] = [
                     "text" => $l10nNav["checkUserData"],
                     "_iClass" => "fa fa-odnoklassniki"
+                ];
+
+                $menu["grafana"] = [
+                    "text" => $l10nNav["grafana"],
+                    "_iClass" => "fa fa-wrench"
                 ];
             }
 

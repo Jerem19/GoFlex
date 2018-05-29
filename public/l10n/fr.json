@@ -36,6 +36,7 @@
             "analyse" : "Analyses",
             "boiler" : "Eau Chaude",
             "heater" : "Chauffage",
+            "allUsers" : "Voir utilisateurs",
             "user" : "Utilisateur",
             "summary" : "Résumé",
             "grafana" : "Grafana",

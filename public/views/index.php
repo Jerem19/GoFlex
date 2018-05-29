@@ -45,6 +45,10 @@
                                 include 'partials/index/checkUserData.php';
                                 break;
 
+                            case "allUsers":
+                                include 'partials/index/allUsers.php';
+                                break;
+
                             case "grafana":
                                 header('Location: https://cloudio-data.esr.ch/grafana/');
                                 break;
