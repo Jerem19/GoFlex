@@ -33,7 +33,7 @@
             "consumptionElec" : "Consommation globale",
             "insideTemp": "Température intérieure",
             "heat_pump" : "Pompe à chaleur",
-            "analyse" : "Analyses",
+            "analyse" : "Graphiques",
             "boiler" : "Eau Chaude",
             "heater" : "Chauffage",
             "allUsers" : "Voir utilisateurs",
