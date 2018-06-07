@@ -205,8 +205,8 @@ $router
 
         require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
         $picId = null;
-        if (isset($_FILES["picture"]) && !is_array($_FILES["picture"]) && $_FILES["picture"]["error"] == 0)
-            $id = Picture::create($_FILES["picture"]);
+        if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0)
+            $picId = Picture::create($_FILES["picture"]);
 
         $gw = new Gateway($_POST["gwId"]);
         unset($_POST["gwId"]);
