@@ -82,11 +82,11 @@
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <textarea class="col-sm-8 form-control" name="heatNote"></textarea>
             </div>
-
+<!--
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures" id="heatPictures" />
-            </div>
+            </div>-->
         </div>
 
 
@@ -127,11 +127,11 @@
 
             <!-- 25mo autorises -->
             <!-- <input type="hidden" name="MAX_FILE_SIZE" value="26214400" /> -->
-
+        <!--
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures" id="hotwaterPictures"/>
-            </div>
+            </div>-->
         </div>
 
         <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['equipmentEnergyDefinitionSolarPanel']?></label>
@@ -178,11 +178,11 @@
                 <textarea class="col-sm-8 form-control" name="note"></textarea>
             </div>
         </div>
-
+<!--
         <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
         <div class="col-sm-10" style="margin-bottom: 10px;">
             <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="picture" id="picture" />
-        </div>
+        </div>-->
     </form>
 </div>
 
@@ -201,25 +201,3 @@
     }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCMWpD5Uib4iQ5Ol0HoTpkyI6Ux2AIyMC0"></script>
-<script> // https://www.google.com/maps/search/Massongex+routes+de+l'église
-    window.onload = function() {
-        var geocoder = new google.maps.Geocoder();
-        var address = "Chemin de Coudrine 5 Grimisuat";
-
-        geocoder.geocode({'address': address}, function (results, status) {
-
-            if (status == google.maps.GeocoderStatus.OK) {
-                var latitude = results[0].geometry.location.lat();
-                var longitude = results[0].geometry.location.lng();
-            }
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 8,
-                center: {lat: latitude, lng: longitude}
-            });
-            var geocoder = new google.maps.Geocoder;
-            var infowindow = new google.maps.InfoWindow;
-        });
-    }
-</script>

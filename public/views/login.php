@@ -38,7 +38,7 @@ $l10n = L10N["login"];
                             </span>
                         </label>
                         <button class="btn btn-theme btn-block" name="submit" type="submit"><?= $l10n['sign_in'] ?></button>
-                        <img src="<?= BASE_URL ?>goflex-logo.png" style="margin-top: 10px; width: 100%;">
+                        <a href="https://goflex-community.eu/"><img src="<?= BASE_URL ?>goflex-logo.png" style="margin-top: 10px; width: 100%;"></a>
                     </div>
                 </form>
             </div>
