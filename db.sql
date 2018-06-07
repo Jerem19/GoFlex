@@ -64,24 +64,6 @@ CREATE TABLE tblPicture (
     name VARCHAR(50)
 );
 
-CREATE TABLE tblPictures (
-	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT    
-);
-
-CREATE TABLE tblManyPictures (
-	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    pic_pics INT,
-    pic_pic INT,
-    
-    CONSTRAINT FK_pics
-	FOREIGN KEY (pic_pics)
-	REFERENCES tblPictures(_id),
-    
-    CONSTRAINT FK_pic
-	FOREIGN KEY (pic_pic)
-	REFERENCES tblPicture(_id)
-);
-
 CREATE TABLE tblInstallation (
 	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	inst_userId INT,
@@ -95,14 +77,14 @@ CREATE TABLE tblInstallation (
     heatSensors INT(2) DEFAULT 0,
     heatTempSensors INT(2) DEFAULT 0,
     heatNote TEXT,
-    heatPictures INT,
+    heatPictures VARCHAR(100),
     
     hotwaterEner INT DEFAULT 1,
     hotwaterTech INT DEFAULT 1,
     hotwaterSensors INT(2) DEFAULT 0,
     hotwaterTempSensors INT(2) DEFAULT 0,
     hotwaterNote TEXT,
-    hotwaterPictures INT,
+    hotwaterPictures VARCHAR(100),
     
     solarPanel BOOLEAN DEFAULT FALSE,
     solarSensors INT(2) DEFAULT 0,
@@ -142,14 +124,6 @@ CREATE TABLE tblInstallation (
     CONSTRAINT FK_hotTech
 	FOREIGN KEY (hotwaterTech)
 	REFERENCES tblTechnology(_id),
-        
-    CONSTRAINT FK_picHeat
-	FOREIGN KEY (heatPictures)
-	REFERENCES tblPictures(_id),
-    
-    CONSTRAINT FK_picHot
-	FOREIGN KEY (hotwaterPictures)
-	REFERENCES tblPictures(_id),
     
     CONSTRAINT FK_picture
 	FOREIGN KEY (picture)

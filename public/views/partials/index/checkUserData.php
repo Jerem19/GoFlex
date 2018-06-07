@@ -82,11 +82,10 @@
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <textarea class="col-sm-8 form-control" name="heatNote"></textarea>
             </div>
-<!--
-            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="heatPictures" id="heatPictures" />
-            </div>-->
+
+            <div class="img-galery col-sm-12" >
+                <div id="heatPics"></div>
+            </div>
         </div>
 
 
@@ -125,13 +124,9 @@
                 <textarea class="col-sm-8 form-control" name="hotwaterNote"></textarea>
             </div>
 
-            <!-- 25mo autorises -->
-            <!-- <input type="hidden" name="MAX_FILE_SIZE" value="26214400" /> -->
-        <!--
-            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['picture']?></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" name="hotwaterPictures" id="hotwaterPictures"/>
-            </div>-->
+            <div class="img-galery col-sm-12">
+                <div id="hotwaterPics"></div>
+            </div>
         </div>
 
         <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['equipmentEnergyDefinitionSolarPanel']?></label>
@@ -178,11 +173,6 @@
                 <textarea class="col-sm-8 form-control" name="note"></textarea>
             </div>
         </div>
-<!--
-        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
-        <div class="col-sm-10" style="margin-bottom: 10px;">
-            <input type="file" disabled style="margin-bottom: 20px;" class="col-sm-8 form-control" style="margin-bottom: 10px;" name="picture" id="picture" />
-        </div>-->
     </form>
 </div>
 
@@ -190,8 +180,27 @@
     window.onload = function() {
         $('#formLinkGatewayUser').find('input, select, textarea').prop("disabled", true);
 
+        var divHot = $("#hotwaterPics");
+        var divHeat = $("#heatPics");
+
         $('select[name="client"').on('change', function() {
             $.post('installInfo', 'id=' + $(this).val(), function(data) {
+
+                divHeat.empty();
+                divHot.empty();
+
+                function showImg(imgs, target) {
+                    for (i in imgs) {
+                        var img = document.createElement('img');
+                        img.src = imgs[i];
+                        target.append(img);
+                    }
+                }
+
+                showImg(data.hotwaterPics, divHot);
+                showImg(data.heatPics, divHeat);
+                // TO DO: style-JS to show img
+
                 if(data != false) {
                     for (var d in data)
                         $('[name="' + d + '"]').val(data[d]);

@@ -56,12 +56,12 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['consommationSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="heatSensors" />
+                <input required="required" type="number" value="0" min="0" class="col-sm-8 form-control" name="heatSensors" />
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['insideTemperatureSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="heatTempSensors" />
+                <input required="required" type="number" value="0" min="0" class="col-sm-8 form-control" name="heatTempSensors" />
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['positionNote']?></label>
@@ -71,7 +71,7 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHeat']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" name="heatPictures[]" id="heatPictures" />
+                <input type="file" style="margin-bottom: 20px;" multiple accept="image/*" name="heatPictures[]" id="heatPictures" />
             </div>
         </div>
 
@@ -99,24 +99,20 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['consommationSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="hotwaterSensors" />
+                <input required="required" type="number" value="0" min="0" class="col-sm-8 form-control" name="hotwaterSensors" />
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['boilerTemperatureSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" type="number" class="col-sm-8 form-control" name="hotwaterTempSensors" />
+                <input required="required" type="number" value="0" min="0" class="col-sm-8 form-control" name="hotwaterTempSensors" />
             </div>
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['positionNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <textarea class="col-sm-8 form-control" name="hotwaterNote"></textarea>
             </div>
-
-            <!-- 25mo autorises -->
-            <!-- <input type="hidden" name="MAX_FILE_SIZE" value="26214400" /> -->
-
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHotwater']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input type="file" disabled style="margin-bottom: 20px;" name="hotwaterPictures[]" id="hotwaterPictures"/>
+                <input type="file" style="margin-bottom: 20px;" multiple accept="image/*" name="hotwaterPictures[]" id="hotwaterPictures"/>
             </div>
         </div>
 
@@ -134,7 +130,7 @@
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['productionSensor']?></label></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input id="productionSensor" disabled="disabled" type="number" class="col-sm-8 form-control" name="solarSensors" />
+                <input id="productionSensor" disabled value="0" min="0" type="number" class="col-sm-8 form-control" name="solarSensors" />
             </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['positionNote']?></label>
@@ -187,8 +183,7 @@
                 contentType: false,
                 processData: false,
                 data : form_data,
-                success: function(response){
-                    console.log(response);
+                success: function(response) {
                     if (JSON.parse(response)) {
                         alert("<?= $l10n['installation']['alertLinUserGatewaySuccess']?>");
                         window.location.reload();
@@ -198,7 +193,6 @@
             return false;
         });
     }
-
 
     function disabledOrEnable(elem) {
         document.getElementById('productionSensor').disabled = !elem.selectedIndex;

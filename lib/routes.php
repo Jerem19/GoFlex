@@ -149,15 +149,27 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->get('/pics/:img.pic', function(Response $res, $params) {        
+        if ($_SESSION["User"]->getRole()->getId() != 4)
+            $res->sendFile( (new Picture($params["img"]))->getPath());
+    })
+
     ->post('/installInfo', function(Response $res) {
-        if (isset($_POST["id"])){
+        if (isset($_POST["id"])) {
             $inst = Installation::getByUser($_POST["id"]);
             if (isset($inst[0])) {
-                $data = $inst[0]->getJSON();
-                $data["gwId"] = $inst[0]->getGateway()->getId();
+                $inst = $inst[0];
+                $data = $inst->getJSON();
+                foreach ($inst->Hotwater()->getPictures() as $pic)
+                    $data["hotwaterPics"][] = sprintf('%spics/%s.pic', BASE_URL, $pic->getId());
+                foreach ($inst->Heat()->getPictures() as $pic)
+                    $data["heatPics"][] = sprintf('%spics/%s.pic', BASE_URL, $pic->getId());
+
+                $data["gwId"] = $inst->getGateway()->getId();
                 $res->send($data);
-            } else $res->send(false);
-        } else $res->send(false);
+            }
+        }
+        $res->send(false);
     })
 
     ->post('/gw_exist', function(Response $res) {
@@ -207,17 +219,31 @@ $router
     })
 
     ->post('/linkUserGateway', function(Response $res) {
-
         require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
+
+        function getPicsIds($files) {
+            $ids = [];
+            for ($i = 0; $i < count($files["name"]); $i++) {
+                if ($files["error"][$i] == 0) {
+                    $ids[] = Picture::create([
+                        "name" => $files["name"][$i],
+                        "tmp_name" => $files["tmp_name"][$i]
+                    ]);
+                }
+            }
+            return $ids;
+        }
+
         $picId = null;
         if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0)
             $picId = Picture::create($_FILES["picture"]);
 
+        $_POST["picture"] = $picId;
+        $_POST["heatPictures"] = json_encode(getPicsIds($_FILES["heatPictures"]));
+        $_POST["hotwaterPictures"] = json_encode(getPicsIds($_FILES["hotwaterPictures"]));
+
         $gw = new Gateway($_POST["gwId"]);
         unset($_POST["gwId"]);
-
-
-        $_POST["picture"] = $picId;
         if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2)) {
             require_once PRIVATE_FOLDER .'./Class/Mail.php';
             Mail::activation($gw->getInstallation()->getUser());
@@ -227,12 +253,10 @@ $router
         $res->send(false);
     })
 
-
     ->on('/logout', function($res) {
         unset($_SESSION["User"]);
         $res->redirect('/');
     })
-
 
     ->get('/', function(Response $res) {
         $res->render("index.php", ["user" => $_SESSION["User"]]);

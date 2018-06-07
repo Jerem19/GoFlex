@@ -31,7 +31,7 @@ class Picture {
     }
 
 
-    private $_id;
+    private $_id = -1;
     private $name = "no_" . __CLASS__;
 
     public function getId() {

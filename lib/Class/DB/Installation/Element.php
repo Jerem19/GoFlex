@@ -12,6 +12,8 @@ class Element {
     private $tempSensors = 0;
     private $note = "";
 
+    private $_picsId = [];
+    private $pictures = null;
 
     /**
      * Return the energy
@@ -95,7 +97,19 @@ class Element {
      * @return Picture[]
      */
     public function getPictures() {
-        return []; // TO DO
+        if ($this->pictures == null) {
+            $this->pictures = [];
+            foreach ($this->_picsId as $picId)
+                $this->pictures[] = new Picture($picId);
+        }
+        return $this->pictures;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getPicturesId() {
+        return $this->_picsId;
     }
 
     /**
@@ -112,5 +126,7 @@ class Element {
         $this->sensors = intval($params[$prefix . "Sensors"]);
         $this->tempSensors= intval($params[$prefix . "TempSensors"]);
         $this->note = $params[$prefix . "Note"];
+
+        $this->_picsId = json_decode($params[$prefix . "Pictures"]);
     }
 }

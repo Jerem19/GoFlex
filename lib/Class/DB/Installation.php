@@ -275,11 +275,16 @@ class Installation {
         if (!isset($params["note"]))
             $params["note"] = $this->getNote();
 
+        if (!isset($params["heatPictures"]))
+            $params["heatPictures"] = json_encode($this->_heat->getPicturesId());
 
+        if (!isset($params["hotwaterPictures"]))
+            $params["hotwaterPictures"] = json_encode($this->_hotwater->getPicturesId());
 
-        if (!isset($params["picture"]))
-            $params["picture"] = null;
-
+        if (!isset($params["picture"])) {
+            $id = $this->getPicture()->getId();
+            $params["picture"] = $id > 0 ? $id : null;
+        }
 
         $params["id"] = $this->getId();
 
@@ -288,6 +293,6 @@ class Installation {
           heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote,
           hotwaterEner = :hotwaterEner, hotwaterTech = :hotwaterTech, hotwaterSensors = :hotwaterSensors, hotwaterTempSensors = :hotwaterTempSensors, hotwaterNote = :hotwaterNote,
           solarPanel = :solarPanel, solarSensors = :solarSensors, solarNote = :solarNote,
-          city = :city, npa = :npa, address = :address, note = :note, picture = :picture WHERE _id = :id;", $params));
+          city = :city, npa = :npa, address = :address, note = :note, heatPictures = :heatPictures, hotwaterPictures = :hotwaterPictures, picture = :picture WHERE _id = :id;", $params));
     }
 }

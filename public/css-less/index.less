@@ -9,6 +9,25 @@ ul.top-menu > li > .logout {
     }
 }
 
+div.img-galery {
+    position: relative;
+    height: 130px;
+    margin: 0 30px;
+    width: calc(~"100% - 60px");
+    
+    div {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    img {
+        max-height: 130px;
+    }
+}
+
 .dashboardTitleSize {
     font-size: 400%;
 }
