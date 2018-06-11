@@ -54,6 +54,7 @@
             var data = $(this).serialize();
             testGateway(function() {
                 $.post("create", data, function (data) {
+                    console.log(data);
                     data = JSON.parse(data);
                     if (data) {
                         alert("<?= L10N['index']['profile']['alertCreateUserSuccess']?>");

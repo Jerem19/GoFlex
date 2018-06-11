@@ -1,10 +1,30 @@
-<?php $l10nNav = $l10n["sidebar"]; ?>
+<?php $l10nNav = $l10n["sidebar"];
+
+if($user->getRole() == "client")
+{
+    $userIcon = Picture::getIcon($user->getInstallations()[0]->getId()) ;
+
+    if(empty($userIcon))
+    {
+        $userIconPath = "public/images/default_user.jpg";
+    }
+    else
+    {
+        $userIconPath = "public/pics/" . $userIcon;
+    }
+}
+else
+{
+    $userIconPath = "public/images/default_user.jpg";
+}
+
+?>
 <aside>
     <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
 
-            <p class="centered"><a href="<?= BASE_URL ?>profile"><img src="<?= BASE_URL ?>user.icon" class="img-circle" width="60"></a></p>
+            <p class="centered"><a href="<?= BASE_URL ?>profile"><img src="<?= $userIconPath ?>" class="img-circle" width="70"></a></p>
             <h5 class="centered"><?= $user ?></h5>
 
             <?php

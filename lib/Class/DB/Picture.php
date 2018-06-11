@@ -1,9 +1,12 @@
 <?php require_once __DIR__ .'/../Configuration.php';
 
-class Picture {
+class Picture
+{
 
     private static $all = null;
-    public static function getAll() {
+
+    public static function getAll()
+    {
         if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblPicture;");
             while ($d = $sth->fetch())
@@ -14,9 +17,22 @@ class Picture {
 
 
     /**
+     * Return all the users whose the role is client
+     * @return User[]
+     */
+    public static function getAllPicsOfInstallation(int $idInstall, string $type) {
+
+        $data = Configuration::DB()->execute("SELECT name FROM tblPictures WHERE install = :idInstall AND type = :type", ["idInstall" => $idInstall, "type" => $type]);
+
+        return $data;
+    }
+
+
+    /**
      * @param array $params
      * @return int|false
      */
+
     public static function create(array $params) {
         $name = $params["name"];
         $tmp_name = $params["tmp_name"];
@@ -30,9 +46,9 @@ class Picture {
         return false;
     }
 
-
     private $_id = -1;
     private $name = "no_" . __CLASS__;
+    private $install;
 
     public function getId() {
         return $this->_id;
@@ -40,6 +56,10 @@ class Picture {
 
     public function getName() {
         return $this->name;
+    }
+
+    public function getInstall() {
+        return $this->install;
     }
 
     public function getPath() {

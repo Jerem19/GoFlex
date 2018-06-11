@@ -199,7 +199,6 @@
 
                 showImg(data.hotwaterPics, divHot);
                 showImg(data.heatPics, divHeat);
-                // TO DO: style-JS to show img
 
                 if(data != false) {
                     for (var d in data)
