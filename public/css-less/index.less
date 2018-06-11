@@ -10,8 +10,9 @@ ul.top-menu > li > .logout {
 }
 
 div.img-galery {
+    @imgHeight: 125px;
     position: relative;
-    height: 130px;
+    height: @imgHeight;
     margin: 0 30px;
     width: calc(~"100% - 60px");
     
@@ -19,12 +20,26 @@ div.img-galery {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
+        max-width: 100%;
+
         overflow-x: auto;
-        width: 100%;
+        white-space: nowrap;
+    }
+
+    a {
+        margin: 0 5px;
+        &:first-child {
+            margin-left: 0px;
+        }
+        &:last-child {
+            margin-right: 0px;
+        }
     }
 
     img {
-        max-height: 130px;
+        border-radius: 15px;
+        border: 2px solid #8fb36e;
+        max-height: @imgHeight;
     }
 }
 

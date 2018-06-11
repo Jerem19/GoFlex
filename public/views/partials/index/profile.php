@@ -23,8 +23,7 @@
     window.onload = function() {
         $("#formUpdateProfile").submit(function (event) {
             att = $(this).serialize();
-            $.post("updateProfile", att, function (data) {
-                console.log(data);
+            $.post("updateProfile", att, function (data) {                
                 data = JSON.parse(data);
                 if (data) {
                     alert("<?= L10N['index']['profile']['alertUpdateUserSuccess']?>");

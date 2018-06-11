@@ -176,6 +176,9 @@
     </form>
 </div>
 
+<?php loadStyles([
+    "3rdparty/lightbox.css"
+]); ?>
 <script>
     window.onload = function() {
         $('#formLinkGatewayUser').find('input, select, textarea').prop("disabled", true);
@@ -189,17 +192,29 @@
                 divHeat.empty();
                 divHot.empty();
 
-                function showImg(imgs, target) {
+                function showImg(imgs, target, attrName) {
                     for (i in imgs) {
                         var img = document.createElement('img');
-                        img.src = imgs[i];
-                        target.append(img);
+                        img.src = imgs[i]['url'];
+                        img.alt = imgs[i]['name'];
+
+                        var a = document.createElement('a');
+                        a.href = img.src;
+                        a.setAttribute("data-title", img.alt);
+                        a.setAttribute("data-lightbox", attrName);
+
+                        a.append(img)
+                        target.append(a);
                     }
                 }
 
-                showImg(data.hotwaterPics, divHot);
-                showImg(data.heatPics, divHeat);
-                // TO DO: style-JS to show img
+                showImg(data.hotwaterPics, divHot, "hotwater");
+                showImg(data.heatPics, divHeat, "heat");
+
+                lightbox.option({
+                    'resizeDuration': 200,
+                    'wrapAround': true
+                });
 
                 if(data != false) {
                     for (var d in data)

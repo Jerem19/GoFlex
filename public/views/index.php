@@ -120,6 +120,7 @@
         "https://blacktie.co/demo/dashgum/assets/js/jquery.dcjqaccordion.2.7.js",
         "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/js/jquery.gritter.min.js",
         "3rdparty/common-scripts.js",
+        "3rdparty/lightbox.js",
         "/script.js",
         "/index.js"
     ]); ?>

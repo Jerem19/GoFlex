@@ -161,10 +161,15 @@ $router
                 $inst = $inst[0];
                 $data = $inst->getJSON();
                 foreach ($inst->Hotwater()->getPictures() as $pic)
-                    $data["hotwaterPics"][] = sprintf('%spics/%s.pic', BASE_URL, $pic->getId());
+                    $data["hotwaterPics"][] = [
+                        "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
+                        "name" => $pic->getName()
+                    ];
                 foreach ($inst->Heat()->getPictures() as $pic)
-                    $data["heatPics"][] = sprintf('%spics/%s.pic', BASE_URL, $pic->getId());
-
+                    $data["heatPics"][] = [
+                        "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
+                        "name" => $pic->getName()
+                    ];
                 $data["gwId"] = $inst->getGateway()->getId();
                 $res->send($data);
             }
