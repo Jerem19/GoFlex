@@ -116,7 +116,8 @@
 			"pictureHotwater": "Pictures hotwater",
 			"pictureHeat": "Pictures heat",
 			"pictureHouse": "House picture",
-			"energyHeat": "Energy Heat"
+			"energyHeat": "Energy Heat",
+			"map_url" : "Google Maps Address"
 		},
 		"checkUserData": {
 			"chooseUser": "Choose a user"

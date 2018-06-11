@@ -122,7 +122,8 @@
             "alertLinUserGatewaySuccess": "Le lien entre l'utilisateur et la gateway est un succès!",
             "alertLinUserGatewayFailed": "Le lien entre l'utilisateur et la gateway n'a pas fonctionné!",
             "chargingBorne": "Borne de recharge",
-            "energyHeat": "Energie chauffage"
+            "energyHeat": "Energie chauffage",
+            "map_url" : "Adresse Google Maps"
         },
         "checkUserData" : {
             "chooseUser" : "Choisissez un utilisateur"

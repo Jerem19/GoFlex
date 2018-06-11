@@ -153,7 +153,9 @@
 
         </div>
 
-        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['generalInformation']?></label>
+        <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['generalInformation']?>
+            <a style="font-size: 15px;" id="map-url" target="_blank">[ <?= $l10n['installation']['map_url'] ?> ]</a>
+        </label>
         <div class="form-group">
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['address']?></label>
@@ -185,7 +187,7 @@
 
         var divHot = $("#hotwaterPics");
         var divHeat = $("#heatPics");
-
+        
         $('select[name="client"').on('change', function() {
             $.post('installInfo', 'id=' + $(this).val(), function(data) {
 
@@ -220,6 +222,8 @@
                     for (var d in data)
                         $('[name="' + d + '"]').val(data[d]);
                 }
+
+                document.getElementById("map-url").href = ("https://www.google.com/maps/place/" + data["address"] + ", " + data["npa"] + " " + data["city"]).replace(' ', '+');
             });
         }).change();
     }
