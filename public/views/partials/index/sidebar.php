@@ -112,7 +112,7 @@
                     "_iClass" => "fa fa-desktop",
                     "text" => $l10nNav["analyse"],
 
-                    "consumption" => [
+                    "consumptionElect" => [
                         "text" => $l10nNav["consumptionElec"]
                     ],
                     "boiler" => [

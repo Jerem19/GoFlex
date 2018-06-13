@@ -85,7 +85,7 @@
                         case "profile":
                             include 'partials/index/profile.php';
                             break;
-                        case "consumption":
+                        case "consumptionElect":
                             include 'partials/index/chart/consumptionElect.php';
                             break;
                         case "boiler":

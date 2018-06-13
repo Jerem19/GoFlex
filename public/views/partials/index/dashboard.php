@@ -7,7 +7,7 @@
             <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
         </div>
 
-        <a href="consumption">
+        <a href="consumptionElect">
         <span class="fa fa-bolt dashboardFaSize"></span>
 
 

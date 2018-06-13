@@ -13,7 +13,7 @@
             "boiler_power": "Puissance du boiler",
             "consumptionHeatPump" : "Consommation pompe à chaleur",
             "degrees" : "Degrés celsius",
-            "electricalConsumption" : "Consommation",
+            "consumptionElect" : "Consommation",
             "insideTemperature" : "Température intérieure",
             "hotwaterTemperature": "Température eau chaude",
             "noData" : "Aucune donnée disponible",
