@@ -17,9 +17,10 @@
                 dataTime = [];
                 for (var j in data) {
                     d = new Date(data[j]["time"]);
-                    d.setHours(d.getHours() - 1);
+                    d.setHours(d.getHours() + 2);
 
                     dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["value"]])
+
                 }
                 Highcharts.StockChart('consumptionElect', {
                     chart: {

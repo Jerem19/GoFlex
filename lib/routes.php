@@ -131,7 +131,7 @@ $router
     ->post('/consumptionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
