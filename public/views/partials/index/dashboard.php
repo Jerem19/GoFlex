@@ -96,8 +96,16 @@
                         d = new Date(data[0]["time"]).toISOString().substr(0,16);
                         d = d.replace("T", " ");
 
-                        document.getElementById(i).innerHTML = data[0]['value'] + urls[i] +
-                            "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
+                        if(i == "consumptionElectSpeed")
+                        {
+                            document.getElementById(i).innerHTML = data[0]['value']/1000 + urls[i] +
+                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
+                        }
+                        else
+                        {
+                            document.getElementById(i).innerHTML = data[0]['value'] + urls[i] +
+                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
+                        }
                     }
                     else ajaxError(i);
                 },
