@@ -58,6 +58,7 @@
 			"phone": "Phone number",
 			"email": "Email",
 			"username": "Username",
+			"active": "Activate",
 			"alertCreateUserFailed": "The process 'add a new user' has failed!",
 			"alertCreateUserSuccess": "New user correctly added!",
 			"alertUpdateUserSuccess": "User correctly updated!",
