@@ -38,6 +38,9 @@
                     title: {
                         text: "<?= $l10n["chart"]["consumptionElect"] ?>"
                     },
+                    xAxis: {
+                        ordinal:false
+                    },
                     yAxis: {
                         opposite: false,
                         title: {

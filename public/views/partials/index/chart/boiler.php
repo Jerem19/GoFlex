@@ -37,6 +37,9 @@
                     title: {
                         text: "<?= $l10n["chart"]["hotwaterTemperature"] ?>"
                     },
+                    xAxis: {
+                        ordinal:false
+                    },
                     yAxis: {
                         opposite: false,
                         title: {

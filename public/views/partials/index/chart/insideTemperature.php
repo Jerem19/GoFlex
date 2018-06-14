@@ -36,6 +36,9 @@
                     title: {
                         text: "<?= $l10n["chart"]["insideTemperature"] ?>"
                     },
+                    xAxis: {
+                        ordinal:false
+                    },
                     yAxis: {
                         opposite: false,
                         title: {

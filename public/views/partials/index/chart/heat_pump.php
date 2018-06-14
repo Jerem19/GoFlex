@@ -38,7 +38,7 @@
                     },
 
                     xAxis: {
-                        type: 'datetime'
+                        ordinal:false
                     },
 
                     yAxis: {
