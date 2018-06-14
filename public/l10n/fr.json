@@ -6,7 +6,8 @@
         "password": "Mot de passe",
 
         "sign_in" : "S'identifier",
-        "sign_in_now" : "S'identifier Maintenant"
+        "sign_in_now" : "S'identifier Maintenant",
+        "passwordCreation" : "Créer votre mot de passe"
     },
     "index": {
         "chart" : {
@@ -17,6 +18,7 @@
             "insideTemperature" : "Température intérieure",
             "hotwaterTemperature": "Température eau chaude",
             "noData" : "Aucune donnée disponible",
+            "graphics": "Graphics",
             "power": "Puissance"
         },
         "dashboard":{

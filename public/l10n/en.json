@@ -6,7 +6,8 @@
 		"password": "Password",
 
 		"sign_in": "Sign in",
-		"sign_in_now": "Sign in now"
+		"sign_in_now": "Sign in now",
+		"passwordCreation" : "Create your password"
 	},
 	"index": {
 		"chart": {
@@ -17,6 +18,7 @@
 			"insideTemperature": "Inside Temperature",
 			"hotwaterTemperature": "Hot water temperature",
 			"noData": "No data available",
+			"graphics": "Graphics",
 			"power": "Power"
 		},
 		"dashboard": {

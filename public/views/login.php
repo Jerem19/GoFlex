@@ -37,7 +37,7 @@ $l10n = L10N["login"];
                                 <a data-toggle="modal"><?= $l10n['forgot_pwd'] ?></a>
                             </span>
                         </label>
-                        <button class="btn btn-theme btn-block" name="submit" type="submit"><?= $l10n['sign_in'] ?></button>
+                        <button class="btn btn-theme btn-block" name="submit" type="submit"><?php if ($isSignup) echo $l10n['passwordCreation'];  else echo $l10n['sign_in']; ?></button>
                         <a href="https://goflex-community.eu/"><img src="<?= BASE_URL ?>goflex-logo.png" style="margin-top: 10px; width: 100%;"></a>
                     </div>
                 </form>

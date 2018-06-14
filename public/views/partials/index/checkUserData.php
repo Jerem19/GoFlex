@@ -226,6 +226,8 @@
                 document.getElementById("map-url").href = ("https://www.google.com/maps/place/" + data["address"] + ", " + data["npa"] + " " + data["city"]).replace(' ', '+');
             });
         }).change();
+
+
     }
 </script>
 
