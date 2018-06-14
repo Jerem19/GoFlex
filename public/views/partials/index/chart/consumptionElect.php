@@ -76,10 +76,6 @@
                             count: 2,
                             text: '2d'
                         }, {
-                            type: 'month',
-                            count: 1,
-                            text: '1m'
-                        }, {
                             type: 'all',
                             text: 'All'
                         }],
