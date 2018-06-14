@@ -14,8 +14,16 @@
             success: function (data) {
                 dataTime = [];
                 for (var j in data) {
+
                     d = new Date(data[j]["time"]);
-                    d.setHours(d.getHours() + 2);
+
+                    if(d.getTimezoneOffset() == 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+                    else {
+                        d.setHours(d.getHours() + 2)
+                    }
 
                     dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["value"]])
                 }
@@ -28,12 +36,18 @@
                     title: {
                         text: "<?= $l10n["chart"]["consumptionHeatPump"] ?>"
                     },
+
+                    xAxis: {
+                        type: 'datetime'
+                    },
+
                     yAxis: {
                         opposite: false,
                         title: {
                             text: "kW"
                         }
                     },
+
                     series: [{
                         data: dataTime,
                         step: 'left',

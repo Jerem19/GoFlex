@@ -12,7 +12,7 @@
 
 
         <p class="dashboardTextSize"><?= L10N['index']['dashboard']['textConsumptionElec']?></p>
-        <div id="electricConsumption"  class="dashboardNumberSize">
+        <div id="consumptionElectSpeed"  class="dashboardNumberSize">
         </div></a>
     </div>
 </div>
@@ -80,10 +80,10 @@
         }
 
         var urls = {
+            "consumptionElectSpeed": 'kW',
             "consumptionHeatPump": 'kW',
             "hotwaterTemperature": '°',
-            "insideTemp": '°',
-            "electricConsumption": 'kW'
+            "insideTemp": '°'
         };
 
         for (const i in urls) {
@@ -92,6 +92,7 @@
                 type : 'POST',
                 success : function(data) {
                     if (data && Array.isArray(data)) {
+                        console.log(data);
                         d = new Date(data[0]["time"]).toISOString().substr(0,16);
                         d = d.replace("T", " ");
 
