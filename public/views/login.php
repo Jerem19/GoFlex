@@ -8,6 +8,8 @@ $l10n = L10N["login"];
         <meta charset="utf-8">
         <title><?= $l10n["title"]; ?></title>
 
+        <link rel="icon" type="image/ico" href="<?= BASE_URL ?>favicon_Goflex.ico">
+
         <?php loadMeta([
             "viewport" => "width=device-width, initial-scale=1.0",
             "keyword" => "Login"

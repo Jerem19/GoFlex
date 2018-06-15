@@ -1,6 +1,5 @@
 <header class="header black-bg">
 
-    <LINK REL="icon" type="image/x-icon" href="<?= BASE_URL ?>favicon_Goflex.ico">
 
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="<?= $l10n["header"]["nav-text"] ?>"></div>
