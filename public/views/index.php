@@ -99,6 +99,9 @@
                         case "insideTemp":
                             include 'partials/index/chart/insideTemperature.php';
                             break;
+                        case "productionElect":
+                            include 'partials/index/chart/productionElect.php';
+                            break;
                     }
                 } else {
                     if ($user->getRole()->getId() < 4)

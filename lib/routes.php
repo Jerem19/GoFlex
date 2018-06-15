@@ -135,6 +135,13 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->post('/productionElect', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
+        $res->send($result->getPoints());
+    })
+
 
     ->post('/consumptionElectSpeed', function(Response $res) {
         $database = getInfluxDb();

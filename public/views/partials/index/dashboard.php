@@ -69,6 +69,30 @@
     </div>
 </div>
 
+<?php
+if($user->getInstallations()[0]->Solar()->isExistant())
+{
+
+?>
+<div class="row mt col-lg-12 form-panel">
+    <div style="text-align: center;">
+        <div class="dashboardTitleSize">
+            <p><?= $l10n["chart"]["productionElect"] ?></p>
+</div>
+
+<a href="productionElect">
+    <span class="fa fa-thermometer dashboardFaSize"></span>
+
+
+    <p class="dashboardTextSize"><?= L10N['index']['dashboard']['productionElect']?></p>
+    <div class="dashboardNumberSize" id="productionElect">
+    </div>
+</a>
+</div>
+</div>
+<?php } ?>
+
+
 
 
 <script>
@@ -83,7 +107,8 @@
             "consumptionElectSpeed": 'kW',
             "consumptionHeatPump": 'kW',
             "hotwaterTemperature": '°',
-            "insideTemp": '°'
+            "insideTemp": '°',
+            "productionElect": 'kW'
         };
 
         for (const i in urls) {

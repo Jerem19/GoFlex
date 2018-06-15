@@ -17,6 +17,7 @@
             "consumptionElect" : "Consommation",
             "insideTemperature" : "Température intérieure",
             "hotwaterTemperature": "Température eau chaude",
+            "productionElect": "Production des panneaux solaires",
             "noData" : "Aucune donnée disponible",
             "graphics": "Graphics",
             "power": "Puissance"
@@ -26,6 +27,7 @@
             "textConsumptionElec" : "Votre consommation électrique globale instantanée est de ",
             "textInsideTemperature" : "La température intérieure est à ",
             "textHeatPump" : "Votre pompe à chaleur consomme ",
+            "productionElect": "La production des panneaux solaires est de ",
             "textHotwaterTemperature" : "La température de votre boiler est à "
         },
         "sidebar": {
@@ -38,6 +40,7 @@
             "analyse" : "Graphiques",
             "boiler" : "Eau Chaude",
             "heater" : "Chauffage",
+            "productionElect" : "Production",
             "allUsers" : "Voir utilisateurs",
             "user" : "Utilisateur",
             "summary" : "Résumé",

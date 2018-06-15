@@ -107,25 +107,51 @@
                     "_iClass" => "fa fa-dashboard"
                 ];
 
-                $menu[] = [
+                if($user->getInstallations()[0]->Solar()->isExistant())
+                {
+                    $menu[] = [
 
-                    "_iClass" => "fa fa-desktop",
-                    "text" => $l10nNav["analyse"],
+                        "_iClass" => "fa fa-desktop",
+                        "text" => $l10nNav["analyse"],
 
-                    "consumptionElect" => [
-                        "text" => $l10nNav["consumptionElec"]
-                    ],
-                    "boiler" => [
-                        "text" => $l10nNav["boiler"]
-                    ],
-                    "consumptionHeatPump" => [
-                        "text" => $l10nNav["heat_pump"]
-                    ],
-                    "insideTemp" => [
-                        "text" => $l10nNav["insideTemp"]
-                    ],
-                ];
+                        "consumptionElect" => [
+                            "text" => $l10nNav["consumptionElec"]
+                        ],
+                        "boiler" => [
+                            "text" => $l10nNav["boiler"]
+                        ],
+                        "consumptionHeatPump" => [
+                            "text" => $l10nNav["heat_pump"]
+                        ],
+                        "insideTemp" => [
+                            "text" => $l10nNav["insideTemp"]
+                        ],
+                        "productionElect" => [
+                            "text" => $l10nNav["productionElect"]
+                        ],
+                    ];
+                }
+                else
+                {
+                    $menu[] = [
 
+                        "_iClass" => "fa fa-desktop",
+                        "text" => $l10nNav["analyse"],
+
+                        "consumptionElect" => [
+                            "text" => $l10nNav["consumptionElec"]
+                        ],
+                        "boiler" => [
+                            "text" => $l10nNav["boiler"]
+                        ],
+                        "consumptionHeatPump" => [
+                            "text" => $l10nNav["heat_pump"]
+                        ],
+                        "insideTemp" => [
+                            "text" => $l10nNav["insideTemp"]
+                        ],
+                    ];
+                }
             }
 
             $menu["profile"] = [
