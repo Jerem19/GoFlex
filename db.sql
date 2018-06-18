@@ -93,7 +93,8 @@ CREATE TABLE tblInstallation (
     city VARCHAR(100),
     npa VARCHAR(10),
     address VARCHAR(100),
-        
+    
+    noteAdmin TEXT DEFAULT NULL,
     note TEXT DEFAULT NULL,
     picture INT,
 

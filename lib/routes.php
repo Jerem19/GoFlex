@@ -203,21 +203,38 @@ $router
             if($_POST["role"] == 4) {
                 if (isset($_POST["gatewayname"]) && $_POST["gatewayname"] != "" && !Gateway::exists($_POST["gatewayname"])) {
                     $gateway = "goflex-dc-" . $_POST["gatewayname"];
-                    unset($_POST["gatewayname"]);
-
-                    $userId = User::create($_POST);
+                    $userId = User::create([
+                        "firstname" => $_POST["firstname"],
+                        "lastname" => $_POST["lastname"],
+                        "phone" => $_POST["phone"],
+                        "username" => $_POST["username"],
+                        "email" => $_POST["email"]
+                    ]);
                     $gwId = Gateway::create(["name" => $gateway]);
 
-                    $res->send(Installation::link($userId, $gwId) != false);
+                    $inst = Installation::link($userId, $gwId);
+                    if ($inst != false)
+                        $res->send((new Installation($inst))->update([
+                            "city" => $_POST["city"],
+                            "npa" => $_POST["npa"],
+                            "address" => $_POST["address"],
+                            "noteAdmin" => $_POST["adminNote"]
+                        ]));
+                    else $res->send(false);
                 }
             } else {
                 require_once PRIVATE_FOLDER .'./Class/Mail.php';
-                unset($_POST["gatewayname"]);
-                $user = new User(User::create($_POST));
+                $user = new User(User::create([
+                    "firstname" => $_POST["firstname"],
+                    "lastname" => $_POST["lastname"],
+                    "phone" => $_POST["phone"],
+                    "username" => $_POST["username"],
+                    "email" => $_POST["email"],
+                    "role" => $_POST["role"]
+                ]));
                 Mail::activation($user);
                 $res->send(true);
             }
-
         }
         $res->send(false);
     })

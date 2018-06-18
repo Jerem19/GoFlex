@@ -170,14 +170,6 @@ class User {
     }
 
     /**
-     * Return if it's active or not
-     * @return string
-     */
-    public function getActive() {
-        return $this->active;
-    }
-
-    /**
      * @param string $phone
      * @return bool
      */

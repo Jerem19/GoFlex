@@ -31,7 +31,7 @@
                     }
                 ?>
 
-                <td><?php if($user->getActive() == 1) { echo L10N['index']['installation']['yes']; } else { echo L10N['index']['installation']['no']; } ?></td>
+                <td><?php if($user->isActive()) { echo L10N['index']['installation']['yes']; } else { echo L10N['index']['installation']['no']; } ?></td>
             </tr>
 
         <?php }?>

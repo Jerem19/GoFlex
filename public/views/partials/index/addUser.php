@@ -21,17 +21,28 @@
         <input required="required" type="text" class="col-sm-8 form-control" name="username"/>
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['role']?></label>
-        <select id="role" name="role" class="col-sm-8 form-control" onChange="disabledOrEnable()">
+        <select id="role" style="margin-bottom: 10px;" name="role" class="col-sm-8 form-control" onChange="disabledOrEnable()">
             <?php foreach (Role::getAll() as $role) {?>
                 <option value="<?= $role->getId() ?>" <?php if ($role->getId() == 4) echo "selected"; ?>><?= $l10n["profile"][$role->getName()] ?></option>
             <?php } ?>
         </select>
 
-        <label class="control-label col-sm-4">goflex-dc-</label>
-        <input id="gatewayname" type="number" style="margin-bottom: 20px;" class="col-sm-8 form-control" name="gatewayname"/>
+        <label class="control-label col-sm-4">goflex-dc-xxx</label>
+        <input required id="gatewayname" type="number" class="col-sm-8 form-control user-only" name="gatewayname" />
+
+        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['address']?></label>
+        <input required="required" class="col-sm-8 form-control user-only" name="address" />
+
+        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['npa']?></label>
+        <input required="required" type="number" class="col-sm-8 form-control user-only" name="npa" />
+
+        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['city']?></label>
+        <input required="required" class="col-sm-8 form-control user-only" name="city" />
+
+        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['generalNote']?></label>
+        <textarea class="col-sm-8 form-control user-only" name="adminNote" style="margin-bottom: 20px;"></textarea>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['profile']['create']?></button>
-
     </form>
 </div>
 
@@ -54,8 +65,7 @@
             var data = $(this).serialize();
             testGateway(function() {
                 $.post("create", data, function (data) {
-                    data = JSON.parse(data);
-                    if (data) {
+                    if (JSON.parse(data)) {
                         alert("<?= L10N['index']['profile']['alertCreateUserSuccess']?>");
                         window.location.reload();
                     }
@@ -73,14 +83,10 @@
         })
     };
 
+    var inputsUser = document.getElementsByClassName('user-only');
     function disabledOrEnable() {
-        if (document.getElementById("role").value == 4) {
-            gwId.value = "goflex-dc-";
-            gwId.disabled = false;
-        } else {
-            gwId.value = "";
-            gwId.disabled = true;
-        }
+        for (var i in inputsUser)
+            inputsUser.item(i).disabled = !(document.getElementById("role").value == 4);
     }
     disabledOrEnable();
 

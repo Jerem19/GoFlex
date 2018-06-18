@@ -69,6 +69,7 @@ class Installation {
     private $npa = "";
     private $address = "";
     private $note = "";
+    private $adminNote = "";
 
     private $_picture = -1;
 
@@ -155,6 +156,14 @@ class Installation {
     }
 
     /**
+     * Return the admin note
+     * @return string
+     */
+    public function getAdminNote() {
+        return $this->adminNote;
+    }
+
+    /**
      * @return Picture
      */
     public function getPicture() {
@@ -222,6 +231,8 @@ class Installation {
             $this->address = $data["address"];
             $this->note = $data["note"];
 
+            $this->adminNote = $data["noteAdmin"];
+
             // Pictures
             $this->_picture = intval($data["picture"]);
         }
@@ -243,7 +254,7 @@ class Installation {
         if (!isset($params["heatSensors"]))
             $params["heatSensors"] = $this->_heat->getSensorsCount();
         if (!isset($params["heatTempSensors"]))
-            $params["hotwaterTempSensors"] = $this->_heat->getTemperatureSensors();
+            $params["heatTempSensors"] = $this->_heat->getTemperatureSensors();
         if (!isset($params["heatNote"]))
             $params["heatNote"] = $this->_heat->getNote();
 
@@ -259,7 +270,7 @@ class Installation {
             $params["hotwaterNote"] = $this->_hotwater->getNote();
 
         if (!isset($params["solarPanel"]))
-            $params["solarPanel"] = $this->_solar->isExistant();
+            $params["solarPanel"] = $this->_solar->isExistant() ? 1 : 0;
         else $params["solarPanel"] = boolval($params["solarPanel"]) ? 1 : 0;
         if (!isset($params["solarSensors"]))
             $params["solarSensors"] = $this->_solar->getSensorsCount();
@@ -275,6 +286,10 @@ class Installation {
         if (!isset($params["note"]))
             $params["note"] = $this->getNote();
 
+        if (!isset($params["noteAdmin"]))
+            $params["noteAdmin"] = $this->getAdminNote();
+
+
         if (!isset($params["heatPictures"]))
             $params["heatPictures"] = json_encode($this->_heat->getPicturesId());
 
@@ -287,12 +302,11 @@ class Installation {
         }
 
         $params["id"] = $this->getId();
-
         return is_array(Configuration::DB()->execute("UPDATE tblInstallation SET
           facturation = :facturation, businessSector = :businessSector,
           heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote,
           hotwaterEner = :hotwaterEner, hotwaterTech = :hotwaterTech, hotwaterSensors = :hotwaterSensors, hotwaterTempSensors = :hotwaterTempSensors, hotwaterNote = :hotwaterNote,
           solarPanel = :solarPanel, solarSensors = :solarSensors, solarNote = :solarNote,
-          city = :city, npa = :npa, address = :address, note = :note, heatPictures = :heatPictures, hotwaterPictures = :hotwaterPictures, picture = :picture WHERE _id = :id;", $params));
+          city = :city, npa = :npa, address = :address, note = :note, noteAdmin = :noteAdmin, heatPictures = :heatPictures, hotwaterPictures = :hotwaterPictures, picture = :picture WHERE _id = :id;", $params));
     }
 }
