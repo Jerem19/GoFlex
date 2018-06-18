@@ -43,8 +43,8 @@
                                 include 'partials/index/addUser.php';
                                 break;
 
-                            case "checkUserData":
-                                include 'partials/index/checkUserData.php';
+                            case "checkUserData": $isInstall = false;
+                                include 'partials/index/userData.php';
                                 break;
 
                             case "allUsers":
@@ -58,14 +58,11 @@
                     } else if ($user->getRole()->getId() == 2) {
                         if (isset($path)) {
                             switch ($path) {
+                                case "checkUserData": $isInstall = false;
                                 case "installationGateway":
-                                    include 'partials/index/installationGateway.php';
+                                    $isInstall = !isset($isInstall) || $isInstall && true;
+                                    include 'partials/index/userData.php';
                                     break;
-
-                                case "checkUserData":
-                                    include 'partials/index/checkUserData.php';
-                                    break;
-
                                 case "grafana":
                                     header('Location: https://cloudio-data.esr.ch/grafana/');
                                     break;

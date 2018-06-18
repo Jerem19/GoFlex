@@ -1,33 +1,24 @@
 <div class="row mt col-lg-12 form-panel" style="margin-bottom: 10px; text-align: center; font-size: xx-large;">
-    <?= L10N['index']['sidebar']['checkUserData']?>
+    <?= $isInstall ? L10N['index']['sidebar']['installationGateway'] : L10N['index']['sidebar']['checkUserData'] ?>
 </div>
-<div class="row mt col-lg-12 form-panel">
-    <form class="form-horizontal style-form" id="formCheckUserData" method="post">
 
+<div class="row mt col-lg-12 form-panel">
         <label class="control-label col-sm-12" style="font-size: x-large;"><?= L10N['index']['checkUserData']['chooseUser']?></label>
 
-        <select name="client" class="col-sm-8 form-control">
+        <select name="gwId" class="col-sm-8 form-control">
             <?php
-            foreach (User::getAllLinked() as $user) { ?>
-                <option value="<?= $user->getId() ?>"><?= $user->getInstallations()[0]->getGateway()->getName() ?> [<?= $user->getUsername() ?>]</option>
-            <?php }?>
+            $gws = $isInstall ? Gateway::getAllReady() : Gateway::getAllInstalled();
+            foreach($gws as $gw) { ?>
+                <option value="<?= $gw->getId()?>"><?= $gw->getName()?> [<?= $gw->getInstallation()->getUser()->getUsername() ?>]</option>
+            <?php } ?>
         </select>
-    </form>
 </div>
 
-<div class="row mt col-lg-12 form-panel" id="info" style="display: <?= empty(Gateway::getAllInstalled()) ? "none" : "block" ?>">
-    <form class='form-horizontal style-form' id="formLinkGatewayUser" method='post' enctype="multipart/form-data">
+<div class="row mt col-lg-12 form-panel" id="info" style="display: <?= empty($gws) ? "none" : "block" ?>">
+    <form class='form-horizontal style-form' id="formGw" method='post' enctype="multipart/form-data">
         <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['systemDefinition']?></label>
 
         <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['boxNumber']?></label>
-            <div class="col-sm-10" style="margin-bottom: 10px;">
-                <select name="gwId" class="col-sm-8 form-control">
-                    <?php foreach(Gateway::getAllInstalled() as $gw) { ?>
-                        <option value="<?= $gw->getId()?>"><?= $gw->getName()?></option>
-                    <?php } ?>
-                </select>
-            </div>
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['facturation']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
@@ -44,6 +35,11 @@
                         <option value="<?= $busSec->getId() ?>"><?= $l10n['installation'][$busSec->getName()] ?></option>
                     <?php } ?>
                 </select>
+            </div>
+
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['adminNote'] ?></label>
+            <div class="col-sm-10" style="margin-bottom: 10px;">
+                <textarea class="col-sm-8 form-control" name="adminNote"></textarea>
             </div>
         </div>
 
@@ -83,8 +79,14 @@
                 <textarea class="col-sm-8 form-control" name="heatNote"></textarea>
             </div>
 
-            <div class="img-galery col-sm-12" >
-                <div id="heatPics"></div>
+            <?php if (!$isInstall) { ?>
+                <div class="img-galery col-sm-12" >
+                    <div id="heatPics"></div>
+                </div>
+            <?php } ?>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHeat']?></label>
+            <div class="col-sm-10" style="margin-bottom: 10px;">
+                <input type="file" style="margin-bottom: 20px;" multiple accept="image/*" name="heatPictures[]" id="heatPictures" />
             </div>
         </div>
 
@@ -124,8 +126,14 @@
                 <textarea class="col-sm-8 form-control" name="hotwaterNote"></textarea>
             </div>
 
-            <div class="img-galery col-sm-12">
-                <div id="hotwaterPics"></div>
+            <?php if (!$isInstall) { ?>
+                <div class="img-galery col-sm-12">
+                    <div id="hotwaterPics"></div>
+                </div>
+            <?php } ?>
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHotwater']?></label>
+            <div class="col-sm-10" style="margin-bottom: 10px;">
+                <input type="file" style="margin-bottom: 20px;" multiple accept="image/*" name="hotwaterPictures[]" id="hotwaterPictures"/>
             </div>
         </div>
 
@@ -154,13 +162,13 @@
         </div>
 
         <label class="control-label col-sm-12" style="font-size: x-large; margin-bottom: 20px;"><?= $l10n['installation']['generalInformation']?>
-            <a style="font-size: 15px;" id="map-url" target="_blank">[ <?= $l10n['installation']['map_url'] ?> ]</a>
+            <br><a style="font-size: 12px;" id="map-url" target="_blank">[ <?= $l10n['installation']['map_url'] ?> ]</a>
         </label>
-        <div class="form-group">
+        <div class="form-group localisation">
 
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['address']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" class="col-sm-8 form-control" name="address" />
+                <input required="required" type="text" class="col-sm-8 form-control" name="address" />
             </div>
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['npa']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
@@ -168,13 +176,21 @@
             </div>
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['city']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
-                <input required="required" class="col-sm-8 form-control" name="city" />
+                <input required="required" type="text" class="col-sm-8 form-control" name="city" />
             </div>
             <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['generalNote']?></label>
             <div class="col-sm-10" style="margin-bottom: 10px;">
                 <textarea class="col-sm-8 form-control" name="note"></textarea>
             </div>
+
+            <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['pictureHouse']?></label>
+            <div class="col-sm-10" style="margin-bottom: 10px;">
+                <input type="file" style="margin-bottom: 20px;" accept="image/*" name="picture" id="picture" />
+            </div>
         </div>
+        <?php if ($user->getRole()->getId() <= 2) { ?>
+            <button class="btn btn-theme02 btn-block" type="submit"><?= $isInstall ? $l10n['installation']['link'] : $l10n['installation']['update'] ?></button>
+        <?php } ?>
     </form>
 </div>
 
@@ -182,41 +198,81 @@
     "3rdparty/lightbox.css"
 ]); ?>
 <script>
+    function disabledOrEnable(elem) {
+        document.getElementById('productionSensor').disabled = !elem.selectedIndex;
+        document.getElementById('positionNoteSolarPanel').disabled = !elem.selectedIndex;
+    }
+
     window.onload = function() {
-        $('#formLinkGatewayUser').find('input, select, textarea').prop("disabled", true);
+        $('#formGw')<?php if ($user->getRole()->getId() <= 2) { ?>
+            .submit(function() {
+                var form_data = new FormData(this);
+                form_data.append('id', $('select[name="gwId"]').val());
+                $.ajax({
+                    url: 'updateInfo',
+                    type: 'POST',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data : form_data,
+                    success: function(response) {
+                        if (JSON.parse(response)) {
+                            alert("<?= $l10n['installation']['alertLinUserGatewaySuccess']?>");
+                            window.location.reload();
+                        } else alert("<?= $l10n['installation']['alertLinUserGatewayFailed']?>");
+                    }
+                });
+                return false;
+            })
+        <?php } ?>.find('<?php
+        switch ($user->getRole()->getId()) {
+            case 1:
+                echo ':not(.localisation input, textarea[name="adminNote"], button[type="submit"]), input[type="file"]';
+                break;
+            case 2:
+                echo 'textarea[name="adminNote"]';
+                break;
+            default:
+                echo 'input, select, textarea';
+                break;
+        } ?>').prop("disabled", true);
 
         var divHot = $("#hotwaterPics");
         var divHeat = $("#heatPics");
         
-        $('select[name="client"').on('change', function() {
+        $('select[name="gwId"]').on('change', function() {
+
             $.post('installInfo', 'id=' + $(this).val(), function(data) {
 
-                divHeat.empty();
-                divHot.empty();
+                <?php if (!$isInstall) { ?>
+                    divHeat.empty();
+                    divHot.empty();
 
-                function showImg(imgs, target, attrName) {
-                    for (i in imgs) {
-                        var img = document.createElement('img');
-                        img.src = imgs[i]['url'];
-                        img.alt = imgs[i]['name'];
+                    function showImg(imgs, target, attrName) {
+                        for (i in imgs) {
+                            var img = document.createElement('img');
+                            img.src = imgs[i]['url'];
+                            img.alt = imgs[i]['name'];
 
-                        var a = document.createElement('a');
-                        a.href = img.src;
-                        a.setAttribute("data-title", img.alt);
-                        a.setAttribute("data-lightbox", attrName);
+                            var a = document.createElement('a');
+                            a.href = img.src;
+                            a.setAttribute("data-title", img.alt);
+                            a.setAttribute("data-lightbox", attrName);
 
-                        a.append(img)
-                        target.append(a);
+                            a.append(img);
+                            target.append(a);
+                        }
                     }
-                }
 
-                showImg(data.hotwaterPics, divHot, "hotwater");
-                showImg(data.heatPics, divHeat, "heat");
+                    showImg(data.hotwaterPics, divHot, "hotwater");
+                    showImg(data.heatPics, divHeat, "heat");
 
-                lightbox.option({
-                    'resizeDuration': 200,
-                    'wrapAround': true
-                });
+                    lightbox.option({
+                        'resizeDuration': 200,
+                        'wrapAround': true
+                    });
+                <?php } ?>
+
 
                 if(data != false) {
                     for (var d in data)
@@ -226,8 +282,6 @@
                 document.getElementById("map-url").href = ("https://www.google.com/maps/place/" + data["address"] + ", " + data["npa"] + " " + data["city"]).replace(' ', '+');
             });
         }).change();
-
-
     }
 </script>
 

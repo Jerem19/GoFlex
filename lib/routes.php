@@ -170,73 +170,77 @@ $router
     })
 
     ->post('/installInfo', function(Response $res) {
-        if (isset($_POST["id"])) {
-            $inst = Installation::getByUser($_POST["id"]);
-            if (isset($inst[0])) {
-                $inst = $inst[0];
-                $data = $inst->getJSON();
-                foreach ($inst->Hotwater()->getPictures() as $pic)
-                    $data["hotwaterPics"][] = [
-                        "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
-                        "name" => $pic->getName()
-                    ];
-                foreach ($inst->Heat()->getPictures() as $pic)
-                    $data["heatPics"][] = [
-                        "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
-                        "name" => $pic->getName()
-                    ];
-                $data["gwId"] = $inst->getGateway()->getId();
-                $res->send($data);
+        if ($_SESSION["User"]->getRole()->getId() != 4) {
+            if (isset($_POST["id"])) {
+                $inst = Installation::getByGateway($_POST["id"]);
+                if ($inst != false) {
+                    $data = $inst->getJSON();                    
+                    foreach ($inst->Hotwater()->getPictures() as $pic)
+                        $data["hotwaterPics"][] = [
+                            "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
+                            "name" => $pic->getName()
+                        ];
+                    foreach ($inst->Heat()->getPictures() as $pic)
+                        $data["heatPics"][] = [
+                            "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
+                            "name" => $pic->getName()
+                        ];
+                    $data["gwId"] = $inst->getGateway()->getId();
+                    $res->send($data);
+                }
             }
+            $res->send(false);
         }
-        $res->send(false);
     })
 
     ->post('/gw_exist', function(Response $res) {
-        $res->send(isset($_POST["gw"]) ? Gateway::exists($_POST["gw"]) : false);
+        if ($_SESSION["User"]->getRole()->getId() != 4)
+            $res->send(isset($_POST["gw"]) ? Gateway::exists($_POST["gw"]) : false);
     })
 
     ->post('/create', function(Response $res) {
-        if (isset($_POST["username"]) && isset($_POST["email"])
-            && !(User::exists($_POST["username"]))) {
+        if ($_SESSION["User"]->getRole()->getId() == 1) {
+            if (isset($_POST["username"]) && isset($_POST["email"])
+                && !(User::exists($_POST["username"]))) {
 
-            if($_POST["role"] == 4) {
-                if (isset($_POST["gatewayname"]) && $_POST["gatewayname"] != "" && !Gateway::exists($_POST["gatewayname"])) {
-                    $gateway = "goflex-dc-" . $_POST["gatewayname"];
-                    $userId = User::create([
+                if ($_POST["role"] == 4) {
+                    if (isset($_POST["gatewayname"]) && $_POST["gatewayname"] != "" && !Gateway::exists($_POST["gatewayname"])) {
+                        $gateway = "goflex-dc-" . $_POST["gatewayname"];
+                        $userId = User::create([
+                            "firstname" => $_POST["firstname"],
+                            "lastname" => $_POST["lastname"],
+                            "phone" => $_POST["phone"],
+                            "username" => $_POST["username"],
+                            "email" => $_POST["email"]
+                        ]);
+                        $gwId = Gateway::create(["name" => $gateway]);
+
+                        $inst = Installation::link($userId, $gwId);
+                        if ($inst != false)
+                            $res->send((new Installation($inst))->update([
+                                "city" => $_POST["city"],
+                                "npa" => $_POST["npa"],
+                                "address" => $_POST["address"],
+                                "noteAdmin" => $_POST["adminNote"]
+                            ]));
+                        else $res->send(false);
+                    }
+                } else {
+                    require_once PRIVATE_FOLDER . './Class/Mail.php';
+                    $user = new User(User::create([
                         "firstname" => $_POST["firstname"],
                         "lastname" => $_POST["lastname"],
                         "phone" => $_POST["phone"],
                         "username" => $_POST["username"],
-                        "email" => $_POST["email"]
-                    ]);
-                    $gwId = Gateway::create(["name" => $gateway]);
-
-                    $inst = Installation::link($userId, $gwId);
-                    if ($inst != false)
-                        $res->send((new Installation($inst))->update([
-                            "city" => $_POST["city"],
-                            "npa" => $_POST["npa"],
-                            "address" => $_POST["address"],
-                            "noteAdmin" => $_POST["adminNote"]
-                        ]));
-                    else $res->send(false);
+                        "email" => $_POST["email"],
+                        "role" => $_POST["role"]
+                    ]));
+                    Mail::activation($user);
+                    $res->send(true);
                 }
-            } else {
-                require_once PRIVATE_FOLDER .'./Class/Mail.php';
-                $user = new User(User::create([
-                    "firstname" => $_POST["firstname"],
-                    "lastname" => $_POST["lastname"],
-                    "phone" => $_POST["phone"],
-                    "username" => $_POST["username"],
-                    "email" => $_POST["email"],
-                    "role" => $_POST["role"]
-                ]));
-                Mail::activation($user);
-                $res->send(true);
             }
+            $res->send(false);
         }
-        $res->send(false);
     })
 
     ->post('/updateProfile', function(Response $res) {
@@ -255,39 +259,51 @@ $router
         $res->sendFile($ico);
     })
 
-    ->post('/linkUserGateway', function(Response $res) {
-        require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
+    ->post('/updateInfo', function(Response $res) {
+        $roleId = $_SESSION["User"]->getRole()->getId();
+        if ($roleId <= 2 && $roleId > 0) {
+            $gw = new Gateway($_POST["id"]);
+            if ($roleId == 1) {
+                $res->send($gw->getInstallation()->update([
+                    "city" => isset($_POST["city"]) ? $_POST["city"] : null,
+                    "npa" => isset($_POST["npa"]) ? $_POST["npa"] : null,
+                    "address" => isset($_POST["address"]) ? $_POST["address"] : null,
+                    "noteAdmin" => isset($_POST["adminNote"]) ? $_POST["adminNote"] : null
+                ]));
+            } else {
+                require_once PRIVATE_FOLDER .'./Class/DB/Picture.php';
 
-        function getPicsIds($files) {
-            $ids = [];
-            for ($i = 0; $i < count($files["name"]); $i++) {
-                if ($files["error"][$i] == 0) {
-                    $ids[] = Picture::create([
-                        "name" => $files["name"][$i],
-                        "tmp_name" => $files["tmp_name"][$i]
-                    ]);
+                function getPicsIds($files) {
+                    $ids = [];
+                    for ($i = 0; $i < count($files["name"]); $i++) {
+                        if ($files["error"][$i] == 0) {
+                            $ids[] = Picture::create([
+                                "name" => $files["name"][$i],
+                                "tmp_name" => $files["tmp_name"][$i]
+                            ]);
+                        }
+                    }
+                    return $ids;
                 }
+
+                $picId = null;
+                if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0)
+                    $picId = Picture::create($_FILES["picture"]);
+
+                $_POST["picture"] = $picId;
+                $_POST["heatPictures"] = json_encode(getPicsIds($_FILES["heatPictures"]));
+                $_POST["hotwaterPictures"] = json_encode(getPicsIds($_FILES["hotwaterPictures"]));
+
+                unset($_POST["adminNote"]);
+
+                if ($gw->getStatus()->getId() == 1) {
+                    require_once PRIVATE_FOLDER .'./Class/Mail.php';
+                    Mail::activation($gw->getInstallation()->getUser());
+                }
+
+                $res->send($gw->getInstallation()->update($_POST) && $gw->setStatus(2));
             }
-            return $ids;
         }
-
-        $picId = null;
-        if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0)
-            $picId = Picture::create($_FILES["picture"]);
-
-        $_POST["picture"] = $picId;
-        $_POST["heatPictures"] = json_encode(getPicsIds($_FILES["heatPictures"]));
-        $_POST["hotwaterPictures"] = json_encode(getPicsIds($_FILES["hotwaterPictures"]));
-
-        $gw = new Gateway($_POST["gwId"]);
-        unset($_POST["gwId"]);
-        if ($gw->getInstallation()->update($_POST) && $gw->setStatus(2)) {
-            require_once PRIVATE_FOLDER .'./Class/Mail.php';
-            Mail::activation($gw->getInstallation()->getUser());
-            $res->send(true);
-        }
-
-        $res->send(false);
     })
 
     ->on('/logout', function($res) {

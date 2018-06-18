@@ -39,7 +39,7 @@
         <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['city']?></label>
         <input required="required" class="col-sm-8 form-control user-only" name="city" />
 
-        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['generalNote']?></label>
+        <label class="col-sm-2 col-sm-2 control-label"><?= $l10n['installation']['adminNote'] ?></label>
         <textarea class="col-sm-8 form-control user-only" name="adminNote" style="margin-bottom: 20px;"></textarea>
 
         <button class="btn btn-theme02 btn-block" type="submit"><?= L10N['index']['profile']['create']?></button>

@@ -128,5 +128,7 @@ class Element {
         $this->note = $params[$prefix . "Note"];
 
         $this->_picsId = json_decode($params[$prefix . "Pictures"]);
+
+        if (!isset($this->_picsId)) $this->_picsId = [];
     }
 }

@@ -201,7 +201,8 @@ class Installation {
             "npa" => $this->getNPA(),
             "address" => $this->getAddress(),
 
-            "note" => $this->getNote()
+            "note" => $this->getNote(),
+            "adminNote" => $this->getAdminNote()
         ];
     }
 
