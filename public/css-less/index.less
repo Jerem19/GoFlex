@@ -14,11 +14,55 @@ th, td {
     padding: 8px;
 }
 
+#loading {
+    position: fixed;
+    max-height: 50%;
+    max-width: 50%;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+
+    transform: translateX(-50%) translateY(-50%);
+
+    @borderSize: 10px solid;
+    border: @borderSize #f3f3f3;
+    border-top: @borderSize #3497DB;
+    border-radius: 50%;
+
+    @circleSize: 125px;
+    width: @circleSize;
+    height: @circleSize;
+
+    @animLoading: spin 2s linear infinite;
+    animation: @animLoading;
+    -webkit-animation: @animLoading;
+    -moz-animation: @animLoading;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.form-horizontal {
+    * {
+        margin-bottom: 2px;
+    }
+    .head-title {
+        font-size: x-large;
+    }
+}
+
 div.img-galery {
     @imgHeight: 125px;
     position: relative;
     height: @imgHeight;
-    margin: 0 30px;
+    margin: 20px 30px;
     width: calc(~"100% - 60px");
     
     div {
