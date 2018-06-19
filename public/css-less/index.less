@@ -2,7 +2,7 @@ ul.top-menu > li > .logout {
     text-align: center;
     width: 70px;
     margin-right: 0;
-    @media screen and (max-width: 770px){
+    @media screen and (max-width: 768px) {
         @buttonSize: 15px; // max 20
         padding: @buttonSize 0;
         margin-top: 20-@buttonSize;
@@ -50,12 +50,21 @@ th, td {
 }
 
 .form-horizontal {
-    * {
-        margin-bottom: 2px;
+    div {
+        margin-bottom: 4px;
+        @media screen and (max-width: 768px) {
+            margin-bottom: 15px;
+        }
     }
     .head-title {
         font-size: x-large;
     }
+}
+
+h2.head-title {
+    margin: 2px;
+    text-align: center;
+    font-size: xx-large;
 }
 
 div.img-galery {
@@ -64,7 +73,7 @@ div.img-galery {
     height: @imgHeight;
     margin: 20px 30px;
     width: calc(~"100% - 60px");
-    
+
     div {
         position: absolute;
         left: 50%;
@@ -100,6 +109,7 @@ div.img-galery {
     margin-top: 20px;
     font-size: 150%;
 }
+
 .dashboardNumberSize {
     font-size: 300%;
 }

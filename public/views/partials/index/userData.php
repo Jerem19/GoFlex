@@ -1,6 +1,6 @@
 <div id="loading" style="display: none;"></div>
 <div class="row mt form-panel" style="text-align: center; font-size: xx-large;">
-    <?= $isInstall ? L10N['index']['sidebar']['installationGateway'] : L10N['index']['sidebar']['checkUserData'] ?>
+    <h2 class="head-title"><?= $isInstall ? L10N['index']['sidebar']['installationGateway'] : L10N['index']['sidebar']['checkUserData'] ?></h2>
 </div>
 
 <div class="row mt form-panel">
@@ -189,8 +189,9 @@
         </div>
 
         <div class="form-group localisation">
-            <label class="control-label col-sm-12 head-title"><?= $l10n['installation']['generalInformation'] ?>
-                <br><a style="font-size: 12px;" id="map-url" target="_blank">[ <?= $l10n['installation']['map_url'] ?> ]</a>
+            <label class="control-label col-sm-12 head-title">
+                <?= $l10n['installation']['generalInformation'] ?>
+                <br><a style="font-size: 12px; margin-left: 25px;" id="map-url" target="_blank">[ <?= $l10n['installation']['map_url'] ?> ]</a>
             </label>
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['address'] ?></label>

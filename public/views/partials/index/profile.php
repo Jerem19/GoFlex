@@ -1,5 +1,5 @@
 <div class="row mt col-lg-12 form-panel" style="margin-bottom: 10px; text-align: center; font-size: xx-large;">
-    <?= L10N['index']['sidebar']['profile']?>
+    <h2 class="head-title"><?= L10N['index']['sidebar']['profile']?></h2>
 </div>
 
 <div class="row mt col-lg-12 form-panel" style="margin-bottom: 40px;">
