@@ -124,21 +124,21 @@ $router
     ->post('/insideTemp', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC LIMIT 69000 ;');
         $res->send($result->getPoints());
     })
 
     ->post('/consumptionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 80000 ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 69000 ;');
         $res->send($result->getPoints());
     })
 
     ->post('/productionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 69000 ;');
         $res->send($result->getPoints());
     })
 
@@ -153,18 +153,18 @@ $router
     ->post('/consumptionHeatPump', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 69000 ;');
         $res->send($result->getPoints());
     })
 
     ->post('/hotwaterTemperature', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC LIMIT 69000 ;');
         $res->send($result->getPoints());
     })
 
-    ->get('/pics/:img.pic', function(Response $res, $params) {        
+    ->get('/pics/:img.pic', function(Response $res, $params) {
         if ($_SESSION["User"]->getRole()->getId() != 4)
             $res->sendFile( (new Picture($params["img"]))->getPath());
     })
@@ -174,7 +174,7 @@ $router
             if (isset($_POST["id"])) {
                 $inst = Installation::getByGateway($_POST["id"]);
                 if ($inst != false) {
-                    $data = $inst->getJSON();                    
+                    $data = $inst->getJSON();
                     foreach ($inst->Hotwater()->getPictures() as $pic)
                         $data["hotwaterPics"][] = [
                             "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
@@ -194,9 +194,9 @@ $router
     })
 
     ->post('/gw_exist', function(Response $res) {
-        if ($_SESSION["User"]->getRole()->getId() != 4)
-            $res->send(isset($_POST["gw"]) ? Gateway::exists($_POST["gw"]) : false);
-    })
+    if ($_SESSION["User"]->getRole()->getId() != 4)
+        $res->send(isset($_POST["gw"]) ? Gateway::exists($_POST["gw"]) : false);
+})
 
     ->post('/create', function(Response $res) {
         if ($_SESSION["User"]->getRole()->getId() == 1) {
