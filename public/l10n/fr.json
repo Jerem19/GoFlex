@@ -4,6 +4,10 @@
 
         "username": "ID utilisateur",
         "password": "Mot de passe",
+        "email": "Email",
+
+        "forgot_pwd":"Mot de passe oublié",
+        "passwordRecuperation":"Password recuperation",
 
         "sign_in" : "S'identifier",
         "sign_in_now" : "S'identifier Maintenant",
@@ -66,6 +70,8 @@
             "alertUpdateUserSuccess": "La mise à jour a réussi!",
             "alertUpdateUserFailed": "La mise à jour a échouée!",
             "create": "Créer",
+            "alertPasswordCreationSuccess": "Vous devriez recevoir un mail avec le processus de récupération du mot de passe",
+            "alertPasswordCreationFailed": "La récupération du mot de passe a échouée",
             "technical": "Technicien",
             "customer_care": "Hotline",
             "client": "Utilisateur",

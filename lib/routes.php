@@ -92,6 +92,44 @@ $router
         }
     })
 
+    ->get('/passwordRecuperation', function(Response $res) {
+            $res->render('passwordRecuperation.php');
+    })
+
+
+    ->post('/passwordRecuperation', function(Response $res) {
+        if(isset($_POST['email']))
+        {
+
+            $secret = "6Leynl8UAAAAACjjVBYat9eXBq9wvEuWURkyi6nI";
+            $response = $_POST['g-recaptcha-response'];
+            $remoteip = $_SERVER['REMOTE_ADDR'];
+
+            $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
+                . $secret
+                . "&response=" . $response
+                . "&remoteip=" . $remoteip ;
+
+            $decode = json_decode(file_get_contents($api_url), true);
+
+            if ($decode['success'] == true) {
+            $user = User::getByEmail($_POST['email']);
+            $user->desactiveUser();
+
+
+            require_once PRIVATE_FOLDER .'./Class/Mail.php';
+            Mail::activation($user);
+
+            $res->render('login.php');
+
+            }
+            else $res->render('passwordRecuperation.php');
+
+        }
+        else $res->render('passwordRecuperation.php');
+    })
+
+
     ->post('/login', function(Response $res) {
         if (isset($_POST["username"]) and isset($_POST["password"])) {
             if (isset($_SESSION["_token"])) {
@@ -146,7 +184,7 @@ $router
     ->post('/consumptionElectSpeed', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 500 ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
         $res->send($result->getPoints());
     })
 

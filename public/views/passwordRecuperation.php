@@ -29,18 +29,13 @@ $l10n = L10N["login"];
         <div id="main-content" style="margin: 0">
             <div class="container">
                 <form class="form-login" method="post">
-                    <h2 class="form-login-heading"><?= $l10n['sign_in_now'] ?></h2>
+                    <h2 class="form-login-heading"><?= $l10n['passwordRecuperation'] ?></h2>
                     <div class="login-wrap">
-                        <input autofocus type="text" class="form-control" required placeholder="<?= $l10n['username'] ?>" name="username" autofocus <?php if ($isSignup) echo 'disabled value="' . $user->getUsername() . '"'; ?>">
+                        <input autofocus type="text" class="form-control" required placeholder="<?= $l10n['email'] ?>" name="email" autofocus>
                         <br>
-                        <input type="password" class="form-control" required name="password" placeholder="<?= $l10n['password'] ?>">
+                        <div class="g-recaptcha" data-sitekey="6Leynl8UAAAAAEsejH5h0AcmjYh_GsimjlrMdpfm"></div>
                         <br>
-                        <label class="checkbox">
-                            <span style="margin-bottom: 20px;" class="pull-right">
-                                <a data-toggle="modal" href="<?= BASE_URL ?>passwordRecuperation"><?= $l10n['forgot_pwd'] ?></a>
-                            </span>
-                        </label>
-                        <button class="btn btn-theme btn-block" name="submit" type="submit"><?php if ($isSignup) echo $l10n['passwordCreation'];  else echo $l10n['sign_in']; ?></button>
+                        <button class="btn btn-theme btn-block" name="submit" type="submit"><?php echo $l10n['passwordRecuperation'];  ?></button>
                         <a href="https://goflex-community.eu/"><img src="<?= BASE_URL ?>goflex-logo.png" style="margin-top: 10px; width: 100%;"></a>
                     </div>
                 </form>
@@ -52,6 +47,7 @@ $l10n = L10N["login"];
     loadScripts([
         "https://code.jquery.com/jquery-3.1.1.min.js",
         "https://blacktie.co/demo/dashgum/assets/js/jquery.backstretch.min.js",
+        "https://www.google.com/recaptcha/api.js",
         "/script.js",
         "/login.js"
     ]); ?>

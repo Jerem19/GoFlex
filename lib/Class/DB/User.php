@@ -71,6 +71,13 @@ class User {
         return false;
     }
 
+    public static function getByEmail(string $email) {
+        foreach (self::getAll() as $user)
+            if ($user->getEMail() == $email)
+                return $user;
+        return false;
+    }
+
     /**
      * Test login username and password
      * @param string $user
@@ -197,6 +204,12 @@ class User {
             is_array(Configuration::DB()->execute("UPDATE tblUser SET active = :active WHERE _id = :id;)", [
                 ":active" => $active, ":id" => $this->getId()])) :
             $this->active;
+    }
+
+    public function desactiveUser()
+    {
+        $username = $this->getUsername();
+        $u = Configuration::DB()->execute("UPDATE tblUser SET active = 0 WHERE username = :username;", [":username" => $username]);
     }
 
     /**
