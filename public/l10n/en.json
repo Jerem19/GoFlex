@@ -1,17 +1,27 @@
 {
 	"login": {
-		"title": "Login",
+        "login" : {
+            "button" : "Sign in",
+            "header" : "Sign in now",
+            "title": "Login"
+        },
+        "signup" : {
+            "button" : "Create your password",
+            "header" : "Sign up now",
+            "title": "Sign up"
+        },
+        "pwd_rec" : {
+            "button" : "Password recuperation",
+            "header" : "Password lost ?",
+            "title": "Password lost ?"
+        },
 
 		"username": "User ID",
 		"password": "Password",
+        "email": "Email",
 
-		"forgot_pwd":"Forgot password",
-		"passwordRecuperation":"Password recuperation",
-		"email": "Email",
-
-		"sign_in": "Sign in",
-		"sign_in_now": "Sign in now",
-		"passwordCreation" : "Create your password"
+		"forgot_pwd":"Forgot password ?",
+        "return_login": "Return to login ?"
 	},
 	"index": {
 		"chart": {

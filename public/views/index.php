@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <title>GOFLEX-Service technique</title>
 
-        <link rel="icon" href="<?= BASE_URL ?>favicon_Goflex.png">
+        <link rel="icon" href="<?= BASE_URL ?>favicon_Goflex.ico">
 
         <?php loadMeta([
             "viewport" => "width=device-width, initial-scale=1.0",

@@ -1,3 +1,7 @@
+input.form-control, label.checkbox span, div.g-recaptcha {
+    margin-bottom: 10px;
+}
+
 button[type="submit"] {
     &.wrong {
         animation: shake 0.5s;
@@ -23,4 +27,39 @@ select#languages {
     40%, 60% {
         transform: translate(4px, 0);
     }
+}
+
+#loading {
+    position: fixed;
+    max-height: 50%;
+    max-width: 50%;
+    z-index: 1;
+
+
+    @borderSize: 10px solid;
+    border: @borderSize #f3f3f3;
+    border-top: @borderSize #3497DB;
+    border-radius: 50%;
+
+    @circleSize: 125px;
+    width: @circleSize;
+    height: @circleSize;
+
+    top: calc(~"50% - "@circleSize/2~" - 80px");
+    left: calc(~"50% - "@circleSize/2);
+
+    @animLoading: spin 2s linear infinite;
+    animation: @animLoading;
+    -webkit-animation: @animLoading;
+    -moz-animation: @animLoading;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

@@ -14,7 +14,7 @@ $router
     })
     ->byExt('css', PUBLIC_FOLDER . 'css')
     ->byExt('js', PUBLIC_FOLDER . 'js')
-    ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp'], PUBLIC_FOLDER . 'images')
+    ->byExt(['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bmp', 'ico'], PUBLIC_FOLDER . 'images')
     ->on('/base_url', function(Response $res) {
         $res->send(BASE_URL);
     });
@@ -83,7 +83,6 @@ function getUser(User $user) {
 $router
     ->get("/signup", function (Response $res) {
         if (isset($_GET["id"])) {
-
             $user = User::getByToken($_GET["id"]);
             if ($user != false && !$user->isActive()) {
                 $_SESSION["_token"] = $_GET["id"];
@@ -92,41 +91,32 @@ $router
         }
     })
 
-    ->get('/passwordRecuperation', function(Response $res) {
-            $res->render('passwordRecuperation.php');
+    ->get('/getpassword', function(Response $res) {
+        $res->render('login.php', [ "pwdRecup" => true ]);
     })
 
+    ->post('/getpassword', function (Response $res) {
+        if (isset($_POST['email'])) {
+            $api_url = "https://www.google.com/recaptcha/api/siteverify?"
+                . http_build_query([
+                    "secret" => "6Leynl8UAAAAACjjVBYat9eXBq9wvEuWURkyi6nI",
+                    "response" => $_POST['g-recaptcha-response'],
+                    "remoteip" => $_SERVER['REMOTE_ADDR']
+                ])
+            ;
 
-    ->post('/passwordRecuperation', function(Response $res) {
-        if(isset($_POST['email']))
-        {
+            $apiRes = json_decode(file_get_contents($api_url), true);
 
-            $secret = "6Leynl8UAAAAACjjVBYat9eXBq9wvEuWURkyi6nI";
-            $response = $_POST['g-recaptcha-response'];
-            $remoteip = $_SERVER['REMOTE_ADDR'];
+            if (isset($apiRes['success']) && $apiRes['success']) {
+                $user = User::getByEmail($_POST['email']);
+                $user->setInactive();
 
-            $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
-                . $secret
-                . "&response=" . $response
-                . "&remoteip=" . $remoteip ;
-
-            $decode = json_decode(file_get_contents($api_url), true);
-
-            if ($decode['success'] == true) {
-            $user = User::getByEmail($_POST['email']);
-            $user->desactiveUser();
-
-
-            require_once PRIVATE_FOLDER .'./Class/Mail.php';
-            Mail::activation($user);
-
-            $res->render('login.php');
-
+                require_once PRIVATE_FOLDER . './Class/Mail.php';
+                Mail::activation($user);
+                $res->send(true);
             }
-            else $res->render('passwordRecuperation.php');
-
         }
-        else $res->render('passwordRecuperation.php');
+        $res->send(false);
     })
 
 

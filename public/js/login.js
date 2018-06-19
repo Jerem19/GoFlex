@@ -1,24 +1,28 @@
-document.forms[0].onsubmit = function() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "login", true);
+var loadingDiv = document.getElementById('loading');
 
-    var submitBtn = this["submit"];
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-            var success = JSON.parse(this.responseText);
-            if (success)
-                location.reload();
+$('form.form-login').submit(function() {
+    var submitBtn = this["submit"],
+        formData = $(this).serialize();
+
+    loadingDiv.style.display = 'block';
+    $('fieldset').prop('disabled', true);
+
+    $.post(this.action, formData, function(response) {
+        try {
+            if (JSON.parse(response)) location.reload();
             else {
                 submitBtn.classList.add('wrong');
                 setTimeout(function() {
                     submitBtn.classList.remove('wrong')
                 }, 501);
             }
+        } catch (e) {
+            console.error("Error"); // To Remove ?
         }
-    };
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send('username='+this["username"].value+'&password='+this["password"].value);
+        loadingDiv.style.display = 'none';
+        $('fieldset').prop('disabled', false);
+    });
     return false;
-}
+});
 
 $.backstretch("login-bg.jpg", {speed: 150});

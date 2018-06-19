@@ -28,6 +28,7 @@ class Response {
             if (!is_array($files)) $files = [$files];
 
             foreach ($files as $file) {
+                if ($file == "") continue;
                 if (!(substr($file, 0, 2) == '//'
                     || substr($file, 0, 4) == "http"))
                     $file = BASE_URL . $file;

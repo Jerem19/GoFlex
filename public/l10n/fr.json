@@ -1,17 +1,27 @@
 {
     "login": {
-        "title": "Connexion",
+        "login" : {
+            "button" : "S'identifier",
+            "header" : "Se Connecter maintenant",
+            "title": "Connexion"
+        },
+        "signup" : {
+            "button" : "Créer le mot de passe",
+            "header" : "S'inscrire maintenant",
+            "title": "S'inscrire"
+        },
+        "pwd_rec" : {
+            "button" : "Récupérer le mot de passe",
+            "header" : "Mot de passe oublié?",
+            "title": "MDP oublié ?"
+        },
 
         "username": "ID utilisateur",
         "password": "Mot de passe",
         "email": "Email",
 
-        "forgot_pwd":"Mot de passe oublié",
-        "passwordRecuperation":"Password recuperation",
-
-        "sign_in" : "S'identifier",
-        "sign_in_now" : "S'identifier Maintenant",
-        "passwordCreation" : "Créer votre mot de passe"
+        "forgot_pwd":"Mot de passe oublié ?",
+        "return_login": "Se connecter ?"
     },
     "index": {
         "chart" : {

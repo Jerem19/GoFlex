@@ -195,7 +195,7 @@ class User {
     }
 
     /**
-     * Return if the user is Activate
+     * Return or set if the user is Activate
      * @param null|bool active
      * @return bool
      */
@@ -204,12 +204,6 @@ class User {
             is_array(Configuration::DB()->execute("UPDATE tblUser SET active = :active WHERE _id = :id;)", [
                 ":active" => $active, ":id" => $this->getId()])) :
             $this->active;
-    }
-
-    public function desactiveUser()
-    {
-        $username = $this->getUsername();
-        $u = Configuration::DB()->execute("UPDATE tblUser SET active = 0 WHERE username = :username;", [":username" => $username]);
     }
 
     /**
@@ -221,7 +215,7 @@ class User {
     }
 
     /**
-     * Inactive the user
+     * disable the user
      * @return bool
      */
     public function setInactive() {
