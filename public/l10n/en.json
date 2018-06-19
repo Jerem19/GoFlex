@@ -5,6 +5,10 @@
 		"username": "User ID",
 		"password": "Password",
 
+		"forgot_pwd":"Forgot password",
+		"passwordRecuperation":"Password recuperation",
+		"email": "Email",
+
 		"sign_in": "Sign in",
 		"sign_in_now": "Sign in now",
 		"passwordCreation" : "Create your password"
@@ -67,6 +71,8 @@
 			"alertUpdateUserSuccess": "User correctly updated!",
 			"alertUpdateUserFailed": "The update process has failed!",
 			"create": "Create",
+			"alertPasswordCreationSuccess": "You should receive an email with the process",
+			"alertPasswordCreationFailed": "The password recuperation failed",
 			"admin": "Admin",
 			"technical": "Technical",
 			"customer_care": "Hotline",
