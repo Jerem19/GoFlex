@@ -69,7 +69,7 @@ class Gateway {
             $params["status"] = 1;
 
         $ok = is_array(Configuration::DB()->execute("INSERT INTO tblGateway (name, gw_status) VALUES (:name, :status);", $params));
-        return $ok ? Configuration::DB()->lastInsertId() : false;
+        return $ok ? intval(Configuration::DB()->lastInsertId()) : false;
     }
 
 

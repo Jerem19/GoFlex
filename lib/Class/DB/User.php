@@ -106,7 +106,7 @@ class User {
 
         $ok = is_array(Configuration::DB()->execute("INSERT INTO tblUser (firstname, lastname, phone, username, password, email, token, user_role) VALUES (:firstname, :lastname, :phone, :username, :password, :email, :token, :role);", $params));
 
-        return $ok ? Configuration::DB()->lastInsertId() : false;
+        return $ok ? intval(Configuration::DB()->lastInsertId()) : false;
     }
 
     private $_id = -1;

@@ -24,7 +24,7 @@ class Installation {
             "user" => $user instanceof User ? $user->getId() : $user,
             "gw" => $gateway instanceof Gateway ? $gateway->getId() : $gateway
         ])))
-            return Configuration::DB()->lastInsertId();
+            return intval(Configuration::DB()->lastInsertId());
         return false;
     }
 

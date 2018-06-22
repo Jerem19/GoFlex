@@ -92,17 +92,14 @@
                     <textarea class="form-control" name="heatNote"></textarea>
                 </div>
             </div>
-
-            <?php if (!$isInstall) { ?>
-                <div class="img-galery col-sm-12">
-                    <div id="heatPics"></div>
-                </div>
-            <?php } ?>
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['pictureHeat'] ?></label>
                 <div >
                     <input type="file" multiple accept="image/*" name="heatPictures[]" id="heatPictures"/>
                 </div>
+            </div>
+            <div class="img-galery col-sm-12">
+                <div class="img-slider" id="heatPics"></div>
             </div>
         </div>
 
@@ -146,18 +143,15 @@
                     <textarea class="form-control" name="hotwaterNote"></textarea>
                 </div>
             </div>
-
-            <?php if (!$isInstall) { ?>
-                <div class="img-galery col-sm-12">
-                    <div id="hotwaterPics"></div>
-                </div>
-            <?php } ?>
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['pictureHotwater'] ?></label>
                 <div>
                     <input type="file" multiple accept="image/*" name="hotwaterPictures[]"
                            id="hotwaterPictures"/>
                 </div>
+            </div>
+            <div class="img-galery col-sm-12">
+                <div class="img-slider" id="hotwaterPics"></div>
             </div>
         </div>
 
@@ -218,7 +212,9 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <label class="control-label"><?= $l10n['installation']['pictureHouse'] ?></label>
+                <label class="control-label"><?= $l10n['installation']['pictureHouse'] ?>
+                    <a id="picHouse" target="_blank"><i class="fa fa-download"></i></a>
+                </label>
                 <div>
                     <input type="file" accept="image/*" name="picture" id="picture"/>
                 </div>
@@ -235,6 +231,7 @@
 <?php loadStyles([
     "3rdparty/lightbox.css"
 ]); ?>
+
 <script>
     function disabledOrEnable(elem) {
         document.getElementById('productionSensor').disabled = !elem.selectedIndex;
@@ -242,15 +239,11 @@
     }
     disabledOrEnable({ selectedIndex: false });
 
-
-
     window.onload = function () {
-
         $('.form-group div label:first-child').addClass('col-sm-3 col-lg-2');
         $('.form-group div:not(.img-galery) div:last-child').addClass('col-sm-9 col-lg-10');
 
-        var loadingDiv = document.getElementById('loading');
-        $('#formGw')<?php if ($user->getRole()->getId() <= 2) { ?>
+        $('#formGw')<?php if ($user->getRole()->getId() <= 2) { // admin and tech only can update ?>
             .submit(function () {
                 var form_data = new FormData(this);
                 form_data.append('id', $('select[name="gwId"]').val());
@@ -270,7 +263,7 @@
                 });
                 return false;
             })
-            <?php } ?>.find('<?php
+            <?php } ?>.find('<?php // Desactivate some inputs
             switch ($user->getRole()->getId()) {
                 case 1:
                     echo ':not(.localisation input, textarea[name="adminNote"], button[type="submit"]), input[type="file"]';
@@ -283,10 +276,86 @@
                     break;
             } ?>').prop("disabled", true);
 
-        var divHot = $("#hotwaterPics");
-        var divHeat = $("#heatPics");
 
-        $('select[name="gwId"]').on('change', function () {
+
+        var divHot = $("#hotwaterPics"),
+            divHeat = $("#heatPics"),
+            selectGw = $('select[name="gwId"]');
+        var loadingDiv = document.getElementById('loading'),
+            aHouse = document.getElementById('picHouse');
+
+
+        function delImg (imgId, domain, container) {
+            $.ajax({
+                url : 'pics/delete',
+                type: 'POST',
+                data: {
+                    gwId: selectGw.val(),
+                    imgId: imgId,
+                    element: domain
+                }, success: function(response) {
+                    var gritterText = "";
+                    if (response) {
+                        gritterText = "Successful deletion.";
+                        $(container).remove();
+                    } else gritterText = "Error when deleting.";
+
+                    $.gritter.add({
+                        text: gritterText
+                    });
+                }
+            });
+        }
+
+        function showImg(imgs, target, attrName) {
+            target.parent().css({
+                display : imgs  && imgs.length > 0 ? "block" : "none"
+            });
+
+            for (i in imgs) {
+                const imgArr = imgs[i];
+
+                const divCont = document.createElement('div');
+                divCont.classList.add('img-container');
+
+                var img = document.createElement('img');
+                img.src = imgArr['url'];
+                img.alt = imgArr['name'];
+
+                var a = document.createElement('a');
+                a.href = img.src;
+                a.setAttribute("data-title", img.alt);
+                a.setAttribute("data-lightbox", attrName);
+
+                a.append(img);
+                divCont.append(a);
+
+                { // Icons
+                    <?php if ($user->getRole()->getId() == 2) { ?>
+                        var iDel = document.createElement('i');
+                        iDel.classList.add('img-delete', 'fa', 'fa-trash');
+
+                        iDel.onclick = function() {
+                            delImg(imgArr.id, attrName, divCont);
+                        };
+                        divCont.append(iDel);
+                    <?php } ?>
+
+                    var iDown = document.createElement('i');
+                    iDown.classList.add('img-down', 'fa', 'fa-download');
+
+                    var aDown = document.createElement('a');
+                    aDown.href = imgArr['url'];
+                    aDown.target = "_blank";
+
+                    aDown.append(iDown);
+                    divCont.append(aDown);
+                }
+                target.append(divCont);
+            }
+        }
+
+        selectGw.on('change', function () {
             $.ajax({
                 url: 'installInfo',
                 type: 'POST',
@@ -294,44 +363,32 @@
                 beforeSend: function () {
                     $('fieldset').prop('disabled', true);
                     loadingDiv.style.display = 'block';
-                },
-                success : function (data) {
-                    <?php if (!$isInstall) { ?>
-                    divHeat.empty();
-                    divHot.empty();
-
-                    function showImg(imgs, target, attrName) {
-                        for (i in imgs) {
-                            var img = document.createElement('img');
-                            img.src = imgs[i]['url'];
-                            img.alt = imgs[i]['name'];
-
-                            var a = document.createElement('a');
-                            a.href = img.src;
-                            a.setAttribute("data-title", img.alt);
-                            a.setAttribute("data-lightbox", attrName);
-
-                            a.append(img);
-                            target.append(a);
-                        }
-                    }
-
-                    showImg(data.hotwaterPics, divHot, "hotwater");
-                    showImg(data.heatPics, divHeat, "heat");
-
-                    lightbox.option({
-                        'resizeDuration': 200,
-                        'wrapAround': true
-                    });
-                    <?php } ?>
-
-
+                }, success : function (data) {
                     if (data != false) {
+                        divHeat.empty();
+                        divHot.empty();
+
+                        if (data.picHouse) {
+                            aHouse.href = data.picHouse;
+                            aHouse.style.display = "block";
+                        } else {
+                            aHouse.removeAttribute('href');
+                            aHouse.style.display = "none";
+                        }
+
+                        showImg(data.hotwaterPics, divHot, "hotwater");
+                        showImg(data.heatPics, divHeat, "heat");
+
+                        lightbox.option({
+                            'resizeDuration': 200,
+                            'wrapAround': true
+                        });
+
                         for (var d in data)
                             $('[name="' + d + '"]').val(data[d]);
-                    }
 
-                    document.getElementById("map-url").href = ("https://www.google.com/maps/place/" + data["address"] + ", " + data["npa"] + " " + data["city"]).replace(' ', '+');
+                        document.getElementById("map-url").href = ("https://www.google.com/maps/place/" + data["address"] + ", " + data["npa"] + " " + data["city"]).replace(' ', '+');
+                    } else console.error("No data");
                     loadingDiv.style.display = 'none';
                     $('fieldset').prop('disabled', false);
                 }

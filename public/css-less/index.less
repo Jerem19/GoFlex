@@ -68,13 +68,13 @@ h2.head-title {
 }
 
 div.img-galery {
-    @imgHeight: 125px;
+    @imgHeight: 150px;
     position: relative;
     height: @imgHeight;
     margin: 20px 30px;
     width: calc(~"100% - 60px");
 
-    div {
+    div.img-slider {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -82,24 +82,45 @@ div.img-galery {
 
         overflow-x: auto;
         white-space: nowrap;
-    }
 
-    a {
-        margin: 0 5px;
-        &:first-child {
-            margin-left: 0px;
-        }
-        &:last-child {
-            margin-right: 0px;
+        div.img-container {
+            height: @imgHeight;
+            margin: 0 5px;
+            &:first-child {
+                margin-left: 0px;
+            }
+            &:last-child {
+                margin-right: 0px;
+            }
+            position: relative;
+            display: inline-block;
+
+            @imgIconSize: 25px;
+            .img-delete, .img-down {
+                position: absolute;
+                bottom: 5px;
+                font-size: @imgIconSize;
+                cursor: pointer;
+            }
+
+            .img-delete {
+                right: 10px;
+            }
+
+            .img-down {
+                right: 10px + @imgIconSize;
+            }
         }
     }
 
     img {
+        vertical-align: top;
         border-radius: 15px;
         border: 2px solid #8fb36e;
         max-height: @imgHeight;
     }
 }
+
 
 .dashboardTitleSize {
     font-size: 400%;

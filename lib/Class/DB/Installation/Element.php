@@ -127,7 +127,7 @@ class Element {
         $this->tempSensors= intval($params[$prefix . "TempSensors"]);
         $this->note = $params[$prefix . "Note"];
 
-        $this->_picsId = json_decode($params[$prefix . "Pictures"]);
+        $this->_picsId = json_decode($params[$prefix . "Pictures"], true);
 
         if (!isset($this->_picsId)) $this->_picsId = [];
     }

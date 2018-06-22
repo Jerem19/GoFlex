@@ -192,10 +192,48 @@ $router
         $res->send($result->getPoints());
     })
 
-    ->get('/pics/:img.pic', function(Response $res, $params) {
-        if ($_SESSION["User"]->getRole()->getId() != 4)
-            $res->sendFile( (new Picture($params["img"]))->getPath());
-    })
+    ->use('/pics', [
+        "/:img.pic" => [
+            "method" => Router::GET,
+            "callback" => function(Response $res, $params) {
+                if ($_SESSION["User"]->getRole()->getId() != 4)
+                    $res->sendFile( (new Picture($params["img"]))->getPath());
+            }
+        ],
+        "/delete" => [
+            "method" => Router::POST,
+            "callback" => function(Response $res) {
+                if ($_SESSION["User"]->getRole()->getId() == 2) {
+
+                    if (isset($_POST["imgId"]) && isset($_POST["gwId"])) {
+                        $inst = (new Gateway(isset($_POST["gwId"])))->getInstallation();
+
+                        if (isset($_POST["element"])) {
+                            $picsHeat = $inst->Heat()->getPicturesId();
+                            $picsHot = $inst->Hotwater()->getPicturesId();
+
+                            switch ($_POST["element"]) {
+                                case 'heat':
+                                    if (($key = array_search($_POST["imgId"], $picsHeat)) !== false)
+                                        unset($picsHeat[$key]);
+                                    break;
+                                case 'hotwater':
+                                    if (($key = array_search($_POST["imgId"], $picsHot)) !== false)
+                                        unset($picsHot[$key]);
+                                    break;
+                            }
+
+                            if (Picture::delete($_POST["imgId"]))
+                                $res->send($inst->update([
+                                    "heatPictures" => json_encode($picsHeat),
+                                    "hotwaterPictures" => json_encode($picsHot)
+                                ]));
+                        } else { } // House Pic (! foreign key !)
+                    } $res->send(false);
+                }
+            }
+        ]
+    ])
 
     ->post('/installInfo', function(Response $res) {
         if ($_SESSION["User"]->getRole()->getId() != 4) {
@@ -203,17 +241,23 @@ $router
                 $inst = Installation::getByGateway($_POST["id"]);
                 if ($inst != false) {
                     $data = $inst->getJSON();
-                    foreach ($inst->Hotwater()->getPictures() as $pic)
-                        $data["hotwaterPics"][] = [
-                            "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
-                            "name" => $pic->getName()
-                        ];
-                    foreach ($inst->Heat()->getPictures() as $pic)
-                        $data["heatPics"][] = [
-                            "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
-                            "name" => $pic->getName()
-                        ];
+
+                    function getPicsHTMLinfos(array $pics) {
+                        $return = [];
+                        foreach ($pics as $pic)
+                            $return[] = [
+                                "id" => $pic->getId(),
+                                "url" => sprintf('%spics/%s.pic', BASE_URL, $pic->getId()),
+                                "name" => $pic->getName()
+                            ];
+                        return $return;
+                    }
+                    $data["hotwaterPics"] = getPicsHTMLinfos($inst->Hotwater()->getPictures());
+                    $data["heatPics"] = getPicsHTMLinfos($inst->Heat()->getPictures());
+
                     $data["gwId"] = $inst->getGateway()->getId();
+                    if ($inst->getPicture()->getId() > 0)
+                        $data["picHouse"] = sprintf('%spics/%s.pic', BASE_URL, $inst->getPicture()->getId());
                     $res->send($data);
                 }
             }
@@ -221,10 +265,10 @@ $router
         }
     })
 
-    ->post('/gw_exist', function(Response $res) {
-    if ($_SESSION["User"]->getRole()->getId() != 4)
-        $res->send(isset($_POST["gw"]) ? Gateway::exists($_POST["gw"]) : false);
-})
+    ->post('/gw_exist', function (Response $res) {
+        if ($_SESSION["User"]->getRole()->getId() != 4)
+            $res->send(isset($_POST["gw"]) ? Gateway::exists($_POST["gw"]) : false);
+    })
 
     ->post('/create', function(Response $res) {
         if ($_SESSION["User"]->getRole()->getId() == 1) {
@@ -251,7 +295,6 @@ $router
                                 "address" => $_POST["address"],
                                 "noteAdmin" => $_POST["adminNote"]
                             ]));
-                        else $res->send(false);
                     }
                 } else {
                     require_once PRIVATE_FOLDER . './Class/Mail.php';
@@ -291,8 +334,9 @@ $router
         $roleId = $_SESSION["User"]->getRole()->getId();
         if ($roleId <= 2 && $roleId > 0) {
             $gw = new Gateway($_POST["id"]);
+            $inst = $gw->getInstallation();
             if ($roleId == 1) {
-                $res->send($gw->getInstallation()->update([
+                $res->send($inst->update([
                     "city" => isset($_POST["city"]) ? $_POST["city"] : null,
                     "npa" => isset($_POST["npa"]) ? $_POST["npa"] : null,
                     "address" => isset($_POST["address"]) ? $_POST["address"] : null,
@@ -315,12 +359,16 @@ $router
                 }
 
                 $picId = null;
-                if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0)
-                    $picId = Picture::create($_FILES["picture"]);
+                if (isset($_FILES["picture"]) && $_FILES["picture"]["error"] == 0) {
+                    if ($inst->getPicture()->getId() > 0) {
+                        $inst->getPicture()->change($_FILES["picture"]);
+                    } else $picId = Picture::create($_FILES["picture"]);
+                }
+
 
                 $_POST["picture"] = $picId;
-                $_POST["heatPictures"] = json_encode(getPicsIds($_FILES["heatPictures"]));
-                $_POST["hotwaterPictures"] = json_encode(getPicsIds($_FILES["hotwaterPictures"]));
+                $_POST["heatPictures"] = json_encode(array_merge(getPicsIds($_FILES["heatPictures"]), $inst->Heat()->getPicturesId()));
+                $_POST["hotwaterPictures"] = json_encode(array_merge(getPicsIds($_FILES["hotwaterPictures"]), $inst->Hotwater()->getPicturesId()));
 
                 unset($_POST["adminNote"]);
 
@@ -329,7 +377,7 @@ $router
                     Mail::activation($gw->getInstallation()->getUser());
                 }
 
-                $res->send($gw->getInstallation()->update($_POST) && $gw->setStatus(2));
+                $res->send($inst->update($_POST) && $gw->setStatus(2));
             }
         }
     })
