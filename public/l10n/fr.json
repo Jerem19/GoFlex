@@ -157,7 +157,7 @@
     "activation": {
       "subject" : "Activation GoFlex - ESR",
       "text" : "Bonjour %s,\r\n\r\nVous recevez cette email car vous participez au projet Goflex. \r\n\r\nLes techniciens de l’ESR et de la HES-SO Valais/Wallis viennent d’installer chez vous le boîtier de mesure et pilotage. Vous avez désormais la possibilité de suivre votre consommation électrique sur une page web. \r\n\r\nUne identification est nécessaire pour que vous accédiez aux données spécifiques de votre logement de manière sécurisée. Pour cela un compte à votre nom a été créé. \r\n\r\nVeuillez utiliser le lien ci-dessous pour activer votre compte.\r\n\r\n",
-      "textSec" : "Une fois votre compte activé, vous pourrez vous rendre sur https://cloudio-data.esr.ch/goflex-web/ et vous logger avec votre identifiant et mot de passe pour observer ce qui se passe au niveau électrique dans votre maison. \r\n\r\nL’ESR et la HESSO-Valais restent à votre entière disposition en cas de questions. \r\n\r\nMerci de votre participation et meilleures salutations \r\n\r\n\r\n\r\nL’équipe de projet"
+      "textSec" : "\r\n\r\nUne fois votre compte activé, vous pourrez vous rendre sur https://cloudio-data.esr.ch/goflex-web/ et vous logger avec votre identifiant et mot de passe pour observer ce qui se passe au niveau électrique dans votre maison. \r\n\r\nL’ESR et la HESSO-Valais restent à votre entière disposition en cas de questions. \r\n\r\nMerci de votre participation et meilleures salutations \r\n\r\n\r\n\r\nL’équipe de projet"
     }
   }
 }
