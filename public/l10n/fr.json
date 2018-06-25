@@ -1,162 +1,163 @@
 {
-    "login": {
-        "login" : {
-            "button" : "S'identifier",
-            "header" : "Se Connecter maintenant",
-            "title": "Connexion"
-        },
-        "signup" : {
-            "button" : "Créer le mot de passe",
-            "header" : "S'inscrire maintenant",
-            "title": "S'inscrire"
-        },
-        "pwd_rec" : {
-            "button" : "Récupérer le mot de passe",
-            "header" : "Mot de passe oublié?",
-            "title": "MDP oublié ?"
-        },
-
-        "username": "ID utilisateur",
-        "password": "Mot de passe",
-        "email": "Email",
-
-        "forgot_pwd":"Mot de passe oublié ?",
-        "return_login": "Se connecter ?"
+  "login": {
+    "login" : {
+      "button" : "S'identifier",
+      "header" : "Se Connecter maintenant",
+      "title": "Connexion"
     },
-    "index": {
-        "chart" : {
-            "boiler_power": "Puissance du boiler",
-            "consumptionHeatPump" : "Consommation pompe à chaleur",
-            "degrees" : "Degrés celsius",
-            "consumptionElect" : "Consommation",
-            "insideTemperature" : "Température intérieure",
-            "hotwaterTemperature": "Température eau chaude",
-            "productionElect": "Production des panneaux solaires",
-            "noData" : "Aucune donnée disponible",
-            "graphics": "Graphics",
-            "power": "Puissance"
-        },
-        "dashboard":{
-            "electricalConsumption" : "Consommation électrique",
-            "textConsumptionElec" : "Votre consommation électrique globale instantanée est de ",
-            "textInsideTemperature" : "La température intérieure est à ",
-            "textHeatPump" : "Votre pompe à chaleur consomme ",
-            "productionElect": "La production des panneaux solaires est de ",
-            "textHotwaterTemperature" : "La température de votre boiler est à "
-        },
-        "sidebar": {
-            "profile": "Mon profile",
-            "dashboard": "Tableau de bord",
-            "creation": "Creation",
-            "consumptionElec" : "Consommation globale",
-            "insideTemp": "Température intérieure",
-            "heat_pump" : "Pompe à chaleur",
-            "analyse" : "Graphiques",
-            "boiler" : "Eau Chaude",
-            "heater" : "Chauffage",
-            "productionElect" : "Production",
-            "allUsers" : "Voir utilisateurs",
-            "user" : "Utilisateur",
-            "summary" : "Résumé",
-            "grafana" : "Grafana",
-            "profil" : "Profil",
-            "creationUser" : "Ajout utilisateur",
-            "installationGateway" : "Ajout installation",
-            "passwordModification" : "Gestion du mot de passe",
-            "checkUserData" : "Visualisation client"
-        },
-        "header": {
-            "nav-text": "Inverser la navigation"
-        },
-        "profile" : {
-            "firstname" : "Prénom",
-            "lastname": "Nom",
-            "phone": "N° de tél.",
-            "email": "email",
-            "username": "Nom d'utilisateur",
-            "active": "Activé",
-            "alertCreateUserFailed": "Une erreur a été détectée lors de l'ajout du nouvel utilisateur.",
-            "alertCreateUserSuccess": "Nouvel utilisateur ajouté correctement!",
-            "alertUpdateUserSuccess": "La mise à jour a réussi!",
-            "alertUpdateUserFailed": "La mise à jour a échouée!",
-            "create": "Créer",
-            "alertPasswordCreationSuccess": "Vous devriez recevoir un mail avec le processus de récupération du mot de passe",
-            "alertPasswordCreationFailed": "La récupération du mot de passe a échouée",
-            "technical": "Technicien",
-            "customer_care": "Hotline",
-            "client": "Utilisateur",
-            "admin" : "Admin",
-            "role": "Role",
-            "gatewayName": "Numero gateway",
-            "update": "Modifier"
-        },
-        "addInstallation" : {
-            "name" : "Nom",
-            "macAddress": "Adresse MAC",
-            "alertCreateInstallationFailed": "Une erreur a été détectée lors de l'ajout d'une nouvelle installation.",
-            "alertCreateInstallationSuccess": "Nouvelle instllation ajoutée correctement!"
-        },
-        "installation" : {
-            "clientName" : "Client",
-            "boxNumber": "Numéro de la gateway",
-            "facturation": "Facturation",
-            "businessSector": "Secteur d'activité",
-            "residential": "Residentiel",
-            "industrial": "Industriel",
-            "tertiary": "Tertiaire",
-            "ppf": "PPE",
-            "electricity": "Electricité",
-            "gaz": "Gaz",
-            "wood": "Bois",
-            "fuelOil": "Mazout",
-            "other": "Autre",
-            "consommationSensor": "Capteur de consommation",
-            "insideTemperatureSensor": "Capteur de température ambiante",
-            "boilerTemperatureSensor": "Capteur température du boiler",
-            "productionSensor": "Capteur de production",
-            "technoHeat": "Technologie chauffage",
-            "technoHotWater": "Technologie eau chaude",
-            "energyHotWater": "Energie eau chaude",
-            "heat_pump": "PAC",
-            "boiler": "Boiler",
-            "wood_burner": "Poêle",
-            "yes": "Oui",
-            "no": "Non",
-            "solarPanel": "Panneaux solaires",
-            "equipmentEnergyDefinitionSolarPanel": "Panneaux solaires",
-            "equipmentEnergyDefinitionChargingBorne": "Borne de recharge",
-            "equipmentEnergyDefinitionHeat": "Chauffage",
-            "equipmentEnergyDefinitionHotwater": "Eau chaude",
-            "systemDefinition": "Définition du système",
-            "update": "Mettre à jour",
-            "link": "Lier",
-            "higher": "Supérieur à 100.000 kWh",
-            "lower": "Inférieur à 100.000 kWh",
-            "adminNote": "Note de l'admin",
-            "generalNote": "Note Generale",
-            "positionNote" : "Note sur la position de l'appareil",
-            "picture": "Photos",
-            "pictureHouse": "Photo de la maison",
-            "pictureHotwater": "Photos eau chaude",
-            "pictureHeat": "Photos du chauffage",
-            "city": "Ville",
-            "npa": "NPA",
-            "address": "Adresse",
-            "generalInformation": "Information generale",
-            "alertLinUserGatewaySuccess": "Le lien entre l'utilisateur et la gateway est un succès!",
-            "alertLinUserGatewayFailed": "Le lien entre l'utilisateur et la gateway n'a pas fonctionné!",
-            "chargingBorne": "Borne de recharge",
-            "energyHeat": "Energie chauffage",
-            "map_url" : "Adresse Google Maps"
-        },
-        "checkUserData" : {
-            "chooseUser" : "Choisissez un utilisateur"
-        }
+    "signup" : {
+      "button" : "Créer le mot de passe",
+      "header" : "S'inscrire maintenant",
+      "title": "S'inscrire"
     },
-    "mail": {
-        "activation": {
-            "subject" : "Activation",
-            "text" : "Bonjour %s,\r\nVeuillez utiliser le lien ci-dessous pour activer votre compte."
-        }
+    "pwd_rec" : {
+      "button" : "Récupérer le mot de passe",
+      "header" : "Mot de passe oublié?",
+      "title": "MDP oublié ?"
+    },
+
+    "username": "ID utilisateur",
+    "password": "Mot de passe",
+    "email": "Email",
+
+    "forgot_pwd":"Mot de passe oublié ?",
+    "return_login": "Se connecter ?"
+  },
+  "index": {
+    "chart" : {
+      "boiler_power": "Puissance du boiler",
+      "consumptionHeatPump" : "Consommation pompe à chaleur",
+      "degrees" : "Degrés celsius",
+      "consumptionElect" : "Consommation",
+      "insideTemperature" : "Température intérieure",
+      "hotwaterTemperature": "Température eau chaude",
+      "productionElect": "Production des panneaux solaires",
+      "noData" : "Aucune donnée disponible",
+      "graphics": "Graphics",
+      "power": "Puissance"
+    },
+    "dashboard":{
+      "electricalConsumption" : "Consommation électrique",
+      "textConsumptionElec" : "Votre consommation électrique globale instantanée est de ",
+      "textInsideTemperature" : "La température intérieure est à ",
+      "textHeatPump" : "Votre pompe à chaleur consomme ",
+      "productionElect": "La production des panneaux solaires est de ",
+      "textHotwaterTemperature" : "La température de votre boiler est à "
+    },
+    "sidebar": {
+      "profile": "Mon profile",
+      "dashboard": "Tableau de bord",
+      "creation": "Creation",
+      "consumptionElec" : "Consommation globale",
+      "insideTemp": "Température intérieure",
+      "heat_pump" : "Pompe à chaleur",
+      "analyse" : "Graphiques",
+      "boiler" : "Eau Chaude",
+      "heater" : "Chauffage",
+      "productionElect" : "Production",
+      "allUsers" : "Voir utilisateurs",
+      "user" : "Utilisateur",
+      "summary" : "Résumé",
+      "grafana" : "Grafana",
+      "profil" : "Profil",
+      "creationUser" : "Ajout utilisateur",
+      "installationGateway" : "Ajout installation",
+      "passwordModification" : "Gestion du mot de passe",
+      "checkUserData" : "Visualisation client"
+    },
+    "header": {
+      "nav-text": "Inverser la navigation"
+    },
+    "profile" : {
+      "firstname" : "Prénom",
+      "lastname": "Nom",
+      "phone": "N° de tél.",
+      "email": "email",
+      "username": "Nom d'utilisateur",
+      "active": "Activé",
+      "alertCreateUserFailed": "Une erreur a été détectée lors de l'ajout du nouvel utilisateur.",
+      "alertCreateUserSuccess": "Nouvel utilisateur ajouté correctement!",
+      "alertUpdateUserSuccess": "La mise à jour a réussi!",
+      "alertUpdateUserFailed": "La mise à jour a échouée!",
+      "create": "Créer",
+      "alertPasswordCreationSuccess": "Vous devriez recevoir un mail avec le processus de récupération du mot de passe",
+      "alertPasswordCreationFailed": "La récupération du mot de passe a échouée",
+      "technical": "Technicien",
+      "customer_care": "Hotline",
+      "client": "Utilisateur",
+      "admin" : "Admin",
+      "role": "Role",
+      "gatewayName": "Numero gateway",
+      "update": "Modifier"
+    },
+    "addInstallation" : {
+      "name" : "Nom",
+      "macAddress": "Adresse MAC",
+      "alertCreateInstallationFailed": "Une erreur a été détectée lors de l'ajout d'une nouvelle installation.",
+      "alertCreateInstallationSuccess": "Nouvelle instllation ajoutée correctement!"
+    },
+    "installation" : {
+      "clientName" : "Client",
+      "boxNumber": "Numéro de la gateway",
+      "facturation": "Facturation",
+      "businessSector": "Secteur d'activité",
+      "residential": "Residentiel",
+      "industrial": "Industriel",
+      "tertiary": "Tertiaire",
+      "ppf": "PPE",
+      "electricity": "Electricité",
+      "gaz": "Gaz",
+      "wood": "Bois",
+      "fuelOil": "Mazout",
+      "other": "Autre",
+      "consommationSensor": "Capteur de consommation",
+      "insideTemperatureSensor": "Capteur de température ambiante",
+      "boilerTemperatureSensor": "Capteur température du boiler",
+      "productionSensor": "Capteur de production",
+      "technoHeat": "Technologie chauffage",
+      "technoHotWater": "Technologie eau chaude",
+      "energyHotWater": "Energie eau chaude",
+      "heat_pump": "PAC",
+      "boiler": "Boiler",
+      "wood_burner": "Poêle",
+      "yes": "Oui",
+      "no": "Non",
+      "solarPanel": "Panneaux solaires",
+      "equipmentEnergyDefinitionSolarPanel": "Panneaux solaires",
+      "equipmentEnergyDefinitionChargingBorne": "Borne de recharge",
+      "equipmentEnergyDefinitionHeat": "Chauffage",
+      "equipmentEnergyDefinitionHotwater": "Eau chaude",
+      "systemDefinition": "Définition du système",
+      "update": "Mettre à jour",
+      "link": "Lier",
+      "higher": "Supérieur à 100.000 kWh",
+      "lower": "Inférieur à 100.000 kWh",
+      "adminNote": "Note de l'admin",
+      "generalNote": "Note Generale",
+      "positionNote" : "Note sur la position de l'appareil",
+      "picture": "Photos",
+      "pictureHouse": "Photo de la maison",
+      "pictureHotwater": "Photos eau chaude",
+      "pictureHeat": "Photos du chauffage",
+      "city": "Ville",
+      "npa": "NPA",
+      "address": "Adresse",
+      "generalInformation": "Information generale",
+      "alertLinUserGatewaySuccess": "Le lien entre l'utilisateur et la gateway est un succès!",
+      "alertLinUserGatewayFailed": "Le lien entre l'utilisateur et la gateway n'a pas fonctionné!",
+      "chargingBorne": "Borne de recharge",
+      "energyHeat": "Energie chauffage",
+      "map_url" : "Adresse Google Maps"
+    },
+    "checkUserData" : {
+      "chooseUser" : "Choisissez un utilisateur"
     }
+  },
+  "mail": {
+    "activation": {
+      "subject" : "Activation GoFlex - ESR",
+      "text" : "Bonjour %s,\r\n\r\nVous recevez cette email car vous participez au projet Goflex. \r\n\r\nLes techniciens de l’ESR et de la HES-SO Valais/Wallis viennent d’installer chez vous le boîtier de mesure et pilotage. Vous avez désormais la possibilité de suivre votre consommation électrique sur une page web. \r\n\r\nUne identification est nécessaire pour que vous accédiez aux données spécifiques de votre logement de manière sécurisée. Pour cela un compte à votre nom a été créé. \r\n\r\nVeuillez utiliser le lien ci-dessous pour activer votre compte.\r\n\r\n",
+      "textSec" : "Une fois votre compte activé, vous pourrez vous rendre sur https://cloudio-data.esr.ch/goflex-web/ et vous logger avec votre identifiant et mot de passe pour observer ce qui se passe au niveau électrique dans votre maison. \r\n\r\nL’ESR et la HESSO-Valais restent à votre entière disposition en cas de questions. \r\n\r\nMerci de votre participation et meilleures salutations \r\n\r\n\r\n\r\nL’équipe de projet"
+    }
+  }
 }

@@ -15,6 +15,8 @@ class Mail {
 
             $sub.= $l10n["subject"];
             $text.= sprintf($l10n["text"], $user);
+            $text .= "$newLine$newLine\t". Configuration::hostname . BASE_URL. "signup?id=" . $user->getToken();
+            $text.= sprintf($l10n["textSec"], $user);
 
             if ($i + 1 < $countLn) {
                 $sub.= '/';
@@ -22,7 +24,7 @@ class Mail {
             }
         }
 
-        $text .= "$newLine$newLine\t". Configuration::hostname . BASE_URL. "signup?id=" . $user->getToken();
+
 
         return mail($user->getEMail(), $sub, $text, "FROM: " . Configuration::email);
     }

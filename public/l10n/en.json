@@ -150,7 +150,8 @@
 	"mail": {
 		"activation": {
 			"subject": "Activation",
-			"text": "Hello %s,\r\nPlease use the link below to activate your account."
-		}
+            "text" : "Bonjour %s,\r\n\r\nYou receive this email because you participate in the project Goflex. \r\n\r\nThe technicians of the ESR and the HES-SO Valais/Wallis have just installed at your home the case of measure and piloting. You have from now on the possibility of following your electric consumption on a Web page. \r\n\r\nAn identification is necessary so that you reached the specific data of your accommodation in a secure way. For it an account in your name was created. \r\n\r\nPlease use the link below to activate your account.",
+            "textSec" : "Once your account was activated, you can go on https://cloudio-data.esr.ch/goflex-web/and to log in you with your identifier and password to observe what takes place at the electric level in your house. \r\n\r\nTHE ESR and the HESSO- COST remains entirely at your question \r\n\r\nThank you for your participation and kind regard \r\n\r\n\r\n\r\nThe project team"
+        }
 	}
 }
