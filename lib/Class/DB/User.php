@@ -199,8 +199,8 @@ class User {
      * @param null|bool active
      * @return bool
      */
-    public function isActive($active) {
-        return $active == 1 || $active == 0 ?
+    public function isActive($active = null) {
+        return $active != null ?
             is_array(Configuration::DB()->execute("UPDATE tblUser SET active = :active WHERE _id = :id;)", [
                 ":active" => $active, ":id" => $this->getId()])) :
             $this->active;
@@ -211,7 +211,7 @@ class User {
      * @return bool
      */
     public function setActive() {
-        return $this->isActive(1);
+        return $this->isActive(true);
     }
 
     /**
@@ -219,7 +219,7 @@ class User {
      * @return bool
      */
     public function setInactive() {
-        return $this->isActive(0);
+        return $this->isActive(false);
     }
 
     /**
