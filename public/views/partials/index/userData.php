@@ -315,23 +315,25 @@
             for (i in imgs) {
                 const imgArr = imgs[i];
 
-                const divCont = document.createElement('div');
-                divCont.classList.add('img-container');
+                if(imgArr['name'] != "no_Picture")
+                {
+                    const divCont = document.createElement('div');
+                    divCont.classList.add('img-container');
 
-                var img = document.createElement('img');
-                img.src = imgArr['url'];
-                img.alt = imgArr['name'];
+                    var img = document.createElement('img');
+                    img.src = imgArr['url'];
+                    img.alt = imgArr['name'];
 
-                var a = document.createElement('a');
-                a.href = img.src;
-                a.setAttribute("data-title", img.alt);
-                a.setAttribute("data-lightbox", attrName);
+                    var a = document.createElement('a');
+                    a.href = img.src;
+                    a.setAttribute("data-title", img.alt);
+                    a.setAttribute("data-lightbox", attrName);
 
-                a.append(img);
-                divCont.append(a);
+                    a.append(img);
+                    divCont.append(a);
 
-                { // Icons
-                    <?php if ($user->getRole()->getId() == 2) { ?>
+                    { // Icons
+                        <?php if ($user->getRole()->getId() == 2) { ?>
                         var iDel = document.createElement('i');
                         iDel.classList.add('img-delete', 'fa', 'fa-trash');
 
@@ -339,19 +341,21 @@
                             delImg(imgArr.id, attrName, divCont);
                         };
                         divCont.append(iDel);
-                    <?php } ?>
+                        <?php } ?>
 
-                    var iDown = document.createElement('i');
-                    iDown.classList.add('img-down', 'fa', 'fa-download');
+                        var iDown = document.createElement('i');
+                        iDown.classList.add('img-down', 'fa', 'fa-download');
 
-                    var aDown = document.createElement('a');
-                    aDown.href = imgArr['url'];
-                    aDown.target = "_blank";
+                        var aDown = document.createElement('a');
+                        aDown.href = imgArr['url'];
+                        aDown.target = "_blank";
 
-                    aDown.append(iDown);
-                    divCont.append(aDown);
+                        aDown.append(iDown);
+                        divCont.append(aDown);
+                    }
+                    target.append(divCont);
                 }
-                target.append(divCont);
+
             }
         }
 
