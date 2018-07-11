@@ -43,8 +43,11 @@ class Picture {
 
         if (self::test($tmp_name, $name)) {
             $ok = is_array(Configuration::DB()->execute("INSERT INTO tblPicture (name) VALUES (:name);", ["name" => $name]));
-            if ($ok && move_uploaded_file($tmp_name, Configuration::pictures_path . Configuration::DB()->lastInsertId()))                
+            $move = move_uploaded_file($tmp_name, Configuration::pictures_path . Configuration::DB()->lastInsertId());
+            if ($ok && $move)
                 return intval(Configuration::DB()->lastInsertId());
+
+
         }
 
         return false;

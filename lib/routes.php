@@ -239,6 +239,7 @@ $router
         if ($_SESSION["User"]->getRole()->getId() != 4) {
             if (isset($_POST["id"])) {
                 $inst = Installation::getByGateway($_POST["id"]);
+
                 if ($inst != false) {
                     $data = $inst->getJSON();
 
@@ -254,6 +255,7 @@ $router
                     }
                     $data["hotwaterPics"] = getPicsHTMLinfos($inst->Hotwater()->getPictures());
                     $data["heatPics"] = getPicsHTMLinfos($inst->Heat()->getPictures());
+
 
                     $data["gwId"] = $inst->getGateway()->getId();
                     if ($inst->getPicture()->getId() > 0)
