@@ -219,7 +219,7 @@ class User {
      * @return bool
      */
     public function setInactive() {
-        return $this->isActive(false);
+        is_array(Configuration::DB()->execute("UPDATE tblUser SET active = 0 WHERE _id = :id;)", [":id" => $this->getId()]));
     }
 
     /**
