@@ -54,6 +54,10 @@
                             case "grafana":
                                 header('Location: https://cloudio-data.esr.ch/grafana/');
                                 break;
+
+                            case "userGraph":
+                                include 'partials/index/userGraph.php';
+                                break;
                         }
                     } else if ($user->getRole()->getId() == 2) {
                         if (isset($path)) {
@@ -65,6 +69,9 @@
                                     break;
                                 case "grafana":
                                     header('Location: https://cloudio-data.esr.ch/grafana/');
+                                    break;
+                                case "userGraph":
+                                    include 'partials/index/userGraph.php';
                                     break;
                             }
                         }

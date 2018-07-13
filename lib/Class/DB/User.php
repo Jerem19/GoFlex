@@ -78,6 +78,13 @@ class User {
         return false;
     }
 
+    public static function getByUsername(string $username) {
+        foreach (self::getAll() as $user)
+            if ($user->getUsername() == $username)
+                return $user;
+        return false;
+    }
+
     /**
      * Test login username and password
      * @param string $user

@@ -70,6 +70,11 @@
                     "_iClass" => "fa fa-odnoklassniki"
                 ];
 
+                $menu["userGraph"] = [
+                    "text" => $l10nNav["userGraph"],
+                    "_iClass" => "fa fa-odnoklassniki"
+                ];
+
                 $menu["grafana"] = [
                     "text" => $l10nNav["grafana"],
                     "_iClass" => "fa fa-wrench"
@@ -84,6 +89,11 @@
 
                 $menu["checkUserData"] = [
                     "text" => $l10nNav["checkUserData"],
+                    "_iClass" => "fa fa-odnoklassniki"
+                ];
+
+                $menu["userGraph"] = [
+                    "text" => $l10nNav["userGraph"],
                     "_iClass" => "fa fa-odnoklassniki"
                 ];
 

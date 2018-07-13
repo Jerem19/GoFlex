@@ -54,6 +54,7 @@
       "analyse" : "Graphiques",
       "boiler" : "Eau Chaude",
       "heater" : "Chauffage",
+      "userGraph" : "Graphes utilisateur",
       "productionElect" : "Production",
       "allUsers" : "Voir utilisateurs",
       "user" : "Utilisateur",
