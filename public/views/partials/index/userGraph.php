@@ -95,7 +95,7 @@
                         type: "POST",
                         url: "consumptionElectSpec",
                         data: "idGateway=" + dataUser,
-                        timeout: 45000,
+                        timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
@@ -180,7 +180,7 @@
                         type: "POST",
                         url: "consumptionHeatPumpSpec",
                         data: "idGateway=" + dataUser,
-                        timeout: 45000,
+                        timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
@@ -267,7 +267,7 @@
                         type: "POST",
                         url: "hotwaterTemperatureSpec",
                         data: "idGateway=" + dataUser,
-                        timeout: 45000,
+                        timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
@@ -349,7 +349,7 @@
                         type: "POST",
                         url: "insideTempSpec",
                         data: "idGateway=" + dataUser,
-                        timeout: 45000,
+                        timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
@@ -431,7 +431,7 @@
                         type: "POST",
                         url: "productionElectSpec",
                         data: "idGateway=" + dataUser,
-                        timeout: 45000,
+                        timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
