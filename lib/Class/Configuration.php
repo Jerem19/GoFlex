@@ -6,6 +6,7 @@ class DB extends PDO {
         parent::__construct(sprintf('mysql:dbname=%s;host=%s;port=%d', $name, $host, $port), $user, $pass);
     }
     /**
+     *
      * Delete a row in a table
      * @param string $table
      * @param int $id
