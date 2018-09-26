@@ -117,6 +117,7 @@
                     "_iClass" => "fa fa-dashboard"
                 ];
 
+
                 if($user->getInstallations()[0]->Solar()->isExistant())
                 {
                     $menu[] = [
@@ -143,6 +144,8 @@
                 }
                 else
                 {
+
+
                     $menu[] = [
 
                         "_iClass" => "fa fa-desktop",

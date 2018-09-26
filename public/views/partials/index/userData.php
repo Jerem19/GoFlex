@@ -216,7 +216,7 @@
                     <a id="picHouse" target="_blank"><i class="fa fa-download"></i></a>
                 </label>
                 <div>
-                    <input type="file" accept="image/*" name="picture" id="picture"/>
+                    <input type="file" accept="image/*" name="picture"capture="camera" id="picture"/>
                 </div>
             </div>
         </div>

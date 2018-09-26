@@ -26,7 +26,9 @@
                         d.setHours(d.getHours() + 2)
                     }
 
-                    dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["value"]/1000])
+                    newData = data[j]["value"]/1000;
+
+                    dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
 
                 }
                 Highcharts.StockChart('consumptionElect', {

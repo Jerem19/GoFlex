@@ -43,7 +43,7 @@
                     yAxis: {
                         opposite: false,
                         title: {
-                            text: "C°"
+                            text: "°C"
                         }
                     },
                     series: [{

@@ -37,8 +37,8 @@ class Configuration {
     private static $db_name = "goflex_clients";
     private static $db_host = "localhost";
     private static $db_port = "3306";
-    private static $db_user = "root";
-    private static $db_pass = "";
+    private static $db_user = "ca";
+    private static $db_pass = "secret";
 
     private static $DB = null;
 

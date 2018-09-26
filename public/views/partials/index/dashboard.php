@@ -104,11 +104,11 @@ if($user->getInstallations()[0]->Solar()->isExistant())
         }
 
         var urls = {
-            "consumptionElectSpeed": 'kW',
-            "consumptionHeatPump": 'kW',
-            "hotwaterTemperature": '°',
-            "insideTemp": '°',
-            "productionElect": 'kW'
+            "consumptionElectSpeed": ' kW',
+            "consumptionHeatPump": ' kW',
+            "hotwaterTemperature": ' °C',
+            "insideTemp": ' °C',
+            "productionElect": ' kW'
         };
 
         for (const i in urls) {
