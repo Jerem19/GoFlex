@@ -117,7 +117,38 @@
                     "_iClass" => "fa fa-dashboard"
                 ];
 
+                $menu["consumptionElect"] = [
+                    "text" => $l10nNav["consumptionElec"],
+                    "_iClass" => "fa fa-desktop"
+                ];
 
+                $menu["boiler"] = [
+                    "text" => $l10nNav["boiler"],
+                    "_iClass" => "fa fa-desktop"
+                ];
+
+                $menu["consumptionHeatPump"] = [
+                    "text" => $l10nNav["heat_pump"],
+                    "_iClass" => "fa fa-desktop"
+                ];
+
+                $menu["insideTemp"] = [
+                    "text" => $l10nNav["insideTemp"],
+                    "_iClass" => "fa fa-desktop"
+                ];
+
+                if($user->getInstallations()[0]->Solar()->isExistant()) {
+
+                    $menu["productionElect"] = [
+                        "text" => $l10nNav["productionElect"],
+                        "_iClass" => "fa fa-desktop"
+                    ];
+                }
+
+
+
+                /*
+                 * :TODO Put a submenu Graphics
                 if($user->getInstallations()[0]->Solar()->isExistant())
                 {
                     $menu[] = [
@@ -144,8 +175,6 @@
                 }
                 else
                 {
-
-
                     $menu[] = [
 
                         "_iClass" => "fa fa-desktop",
@@ -164,7 +193,7 @@
                             "text" => $l10nNav["insideTemp"]
                         ],
                     ];
-                }
+                }*/
             }
 
             $menu["profile"] = [

@@ -65,6 +65,22 @@ class Installation {
     private $_hotwater = null;
     private $_solar = null;
 
+    private $flexibleChargeNumber = -1 ;
+    private $buildingYear = "" ;
+    private $renovationYear = "";
+    private $surfaceSRE = -1;
+    private $inhabitantsNumber = -1;
+    private $typeOfHousing = "";
+    private $remoteManagement = "";
+    private $egidNumber = -1 ;
+    private $heatingSurface = -1;
+    private $distribution = "";
+    private $boilerVolume = -1;
+    private $boilerYear = -1;
+    private $heatingYear = -1;
+    private $relay1 = "";
+    private $relay2 = "";
+
     private $city = "";
     private $npa = "";
     private $address = "";
@@ -142,17 +158,59 @@ class Installation {
     public function getCity() {
         return $this->city;
     }
-
     public function getNPA() {
         return $this->npa;
     }
-
     public function getAddress() {
         return $this->address;
     }
-
     public function getNote() {
         return $this->note;
+    }
+    public function getFlexibleChargeNumber() {
+        return $this->flexibleChargeNumber;
+    }
+    public function getBuildingYear() {
+        return $this->buildingYear;
+    }
+    public function getRenovationYear() {
+        return $this->renovationYear;
+    }
+    public function getSurfaceSRE() {
+        return $this->surfaceSRE;
+    }
+    public function getInhabitantsNumber() {
+        return $this->inhabitantsNumber;
+    }
+    public function getTypeOfHousing() {
+        return $this->typeOfHousing;
+    }
+    public function getRemoteManagement() {
+        return $this->remoteManagement;
+    }
+    public function getEgidNumber() {
+        return $this->egidNumber;
+    }
+    public function getHeatingSurface() {
+        return $this->heatingSurface;
+    }
+    public function getDistribution() {
+        return $this->distribution;
+    }
+    public function getBoilerVolume() {
+        return $this->boilerVolume;
+    }
+    public function getBoilerYear() {
+        return $this->boilerYear;
+    }
+    public function getHeatingYear() {
+        return $this->heatingYear;
+    }
+    public function getRelay1() {
+        return $this->relay1;
+    }
+    public function getRelay2() {
+        return $this->relay2;
     }
 
     /**
@@ -201,6 +259,22 @@ class Installation {
             "npa" => $this->getNPA(),
             "address" => $this->getAddress(),
 
+            "flexibleChargeNumber" => $this->getFlexibleChargeNumber(),
+            "buildingYear" => $this->getBuildingYear(),
+            "renovationYear" => $this->getRenovationYear(),
+            "surfaceSRE" => $this->getSurfaceSRE(),
+            "inhabitantsNumber" => $this->getInhabitantsNumber(),
+            "typeOfHousing" => $this->getTypeOfHousing(),
+            "remoteManagement" => $this->getRemoteManagement(),
+            "egidNumber" => $this->getEgidNumber(),
+            "heatingSurface" => $this->getHeatingSurface(),
+            "distribution" => $this->getDistribution(),
+            "boilerVolume" => $this->getBoilerVolume(),
+            "boilerYear" => $this->getBoilerYear(),
+            "heatingYear" => $this->getHeatingYear(),
+            "relay1" => $this->getRelay1(),
+            "relay2" => $this->getRelay2(),
+
             "note" => $this->getNote(),
             "adminNote" => $this->getAdminNote()
         ];
@@ -231,6 +305,23 @@ class Installation {
             $this->npa = $data["npa"];
             $this->address = $data["address"];
             $this->note = $data["note"];
+
+            $this->flexibleChargeNumber = $data["flexibleChargeNumber"];
+            $this->buildingYear = $data["buildingYear"];
+            $this->renovationYear = $data["renovationYear"];
+            $this->surfaceSRE = $data["surfaceSRE"];
+            $this->inhabitantsNumber = $data["inhabitantsNumber"];
+            $this->typeOfHousing = $data["typeOfHousing"];
+            $this->remoteManagement = $data["remoteManagement"];
+            $this->egidNumber = $data["egidNumber"];
+            $this->heatingSurface = $data["heatingSurface"];
+            $this->distribution = $data["distribution"];
+            $this->boilerVolume = $data["boilerVolume"];
+            $this->boilerYear = $data["boilerYear"];
+            $this->heatingYear = $data["heatingYear"];
+            $this->relay1 = $data["relay1"];
+            $this->relay2 = $data["relay2"];
+
 
             $this->adminNote = $data["noteAdmin"];
 
@@ -287,6 +378,39 @@ class Installation {
         if (!isset($params["note"]))
             $params["note"] = $this->getNote();
 
+
+        if (!isset($params["flexibleChargeNumber"]))
+            $params["flexibleChargeNumber"] = $this->getFlexibleChargeNumber();
+        if (!isset($params["buildingYear"]))
+            $params["buildingYear"] = $this->getBuildingYear();
+        if (!isset($params["renovationYear"]))
+            $params["renovationYear"] = $this->getRenovationYear();
+        if (!isset($params["surfaceSRE"]))
+            $params["surfaceSRE"] = $this->getSurfaceSRE();
+        if (!isset($params["inhabitantsNumber"]))
+            $params["inhabitantsNumber"] = $this->getInhabitantsNumber();
+        if (!isset($params["typeOfHousing"]))
+            $params["typeOfHousing"] = $this->getTypeOfHousing();
+        if (!isset($params["remoteManagement"]))
+            $params["remoteManagement"] = $this->getRemoteManagement();
+        if (!isset($params["egidNumber"]))
+            $params["egidNumber"] = $this->getEgidNumber();
+        if (!isset($params["heatingSurface"]))
+            $params["heatingSurface"] = $this->getHeatingSurface();
+        if (!isset($params["distribution"]))
+            $params["distribution"] = $this->getDistribution();
+        if (!isset($params["boilerVolume"]))
+            $params["boilerVolume"] = $this->getBoilerVolume();
+        if (!isset($params["boilerYear"]))
+            $params["boilerYear"] = $this->getBoilerYear();
+        if (!isset($params["heatingYear"]))
+            $params["heatingYear"] = $this->getHeatingYear();
+        if (!isset($params["relay1"]))
+            $params["relay1"] = $this->getRelay1();
+        if (!isset($params["relay2"]))
+            $params["relay2"] = $this->getRelay2();
+
+
         if (!isset($params["noteAdmin"]))
             $params["noteAdmin"] = $this->getAdminNote();
 
@@ -308,6 +432,9 @@ class Installation {
           heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote,
           hotwaterEner = :hotwaterEner, hotwaterTech = :hotwaterTech, hotwaterSensors = :hotwaterSensors, hotwaterTempSensors = :hotwaterTempSensors, hotwaterNote = :hotwaterNote,
           solarPanel = :solarPanel, solarSensors = :solarSensors, solarNote = :solarNote,
-          city = :city, npa = :npa, address = :address, note = :note, noteAdmin = :noteAdmin, heatPictures = :heatPictures, hotwaterPictures = :hotwaterPictures, picture = :picture WHERE _id = :id;", $params));
+          city = :city, npa = :npa, address = :address, note = :note, noteAdmin = :noteAdmin, heatPictures = :heatPictures, hotwaterPictures = :hotwaterPictures, 
+          picture = :picture, flexibleChargeNumber = :flexibleChargeNumber, buildingYear = :buildingYear, renovationYear = :renovationYear, surfaceSRE = :surfaceSRE, 
+          inhabitantsNumber = :inhabitantsNumber, typeOfHousing = :typeOfHousing, remoteManagement = :remoteManagement, egidNumber = :egidNumber, heatingSurface = :heatingSurface, 
+          distribution = :distribution, boilerVolume = :boilerVolume, boilerYear = :boilerYear, heatingYear = :heatingYear, relay1 = :relay1, relay2 = :relay2 WHERE _id = :id;", $params));
     }
 }
