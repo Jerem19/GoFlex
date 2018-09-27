@@ -53,28 +53,28 @@
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['flexibleChargeNumber'] ?></label></label>
                 <div>
-                    <input required="required" type="number" class="form-control" name="flexibleChargeNumber"/>
+                    <input type="number" class="form-control" name="flexibleChargeNumber"/>
                 </div>
             </div>
 
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['buildingYear'] ?></label></label>
                 <div>
-                    <input required="required" type="text" class="form-control" name="buildingYear"/>
+                    <input type="text" class="form-control" name="buildingYear"/>
                 </div>
             </div>
 
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['renovationYear'] ?></label></label>
                 <div>
-                    <input required="required" type="text" class="form-control" name="renovationYear"/>
+                    <input type="text" class="form-control" name="renovationYear"/>
                 </div>
             </div>
 
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['surfaceSRE'] ?></label></label>
                 <div>
-                    <input required="required" type="number" class="form-control" name="surfaceSRE"/>
+                    <input type="number" class="form-control" name="surfaceSRE"/>
                 </div>
             </div>
 
@@ -82,7 +82,7 @@
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['inhabitantsNumber'] ?></label></label>
                 <div>
-                    <input required="required" type="number" class="form-control" name="inhabitantsNumber"/>
+                    <input type="number" class="form-control" name="inhabitantsNumber"/>
                 </div>
             </div>
 
@@ -122,7 +122,7 @@
                 <label class="control-label"><?= $l10n['installation']['remoteManagement'] ?></label>
                 <div>
                     <select name="remoteManagement" class="form-control">
-                        <option value="iena"> none </option>
+                        <option value="none"> none </option>
                         <option value="iena"> iena </option>
                         <option value="aau"> aau </option>
                     </select>
@@ -166,7 +166,7 @@
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['heatingSurface'] ?></label></label>
                 <div>
-                    <input required="required" type="number" class="form-control" name="egidNumber"/>
+                    <input type="number" class="form-control" name="egidNumber"/>
                 </div>
             </div>
 
@@ -174,7 +174,7 @@
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['heatingYear'] ?></label></label>
                 <div >
-                    <input required="required" type="text" class="form-control" name="heatingYear"/>
+                    <input type="text" class="form-control" name="heatingYear"/>
                 </div>
             </div>
 
@@ -245,14 +245,14 @@
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['boilerYear'] ?></label></label>
                 <div >
-                    <input required="required" type="text" class="form-control" name="boilerYear"/>
+                    <input type="text" class="form-control" name="boilerYear"/>
                 </div>
             </div>
 
             <div class="col-sm-12">
                 <label class="control-label"><?= $l10n['installation']['boilerVolume'] ?></label></label>
                 <div >
-                    <input required="required" type="number" class="form-control" name="boilerVolume"/>
+                    <input type="number" class="form-control" name="boilerVolume"/>
                 </div>
             </div>
 
