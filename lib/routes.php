@@ -163,6 +163,14 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->post('/insideTempSpeed', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "' . $dbName . '.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $res->send($result->getPoints());
+    })
+
+
     ->post('/insideTempSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
@@ -206,6 +214,13 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->post('/productionElectSpeed', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $res->send($result->getPoints());
+    })
+
     ->post('/productionElectSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
@@ -223,6 +238,13 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->post('/consumptionHeatPumpSpeed', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $res->send($result->getPoints());
+    })
+
     ->post('/consumptionHeatPumpSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
@@ -237,6 +259,13 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC LIMIT 69000 ;');
+        $res->send($result->getPoints());
+    })
+
+    ->post('/hotwaterTemperatureSpeed', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
         $res->send($result->getPoints());
     })
 

@@ -119,29 +119,29 @@
 
                 $menu["consumptionElect"] = [
                     "text" => $l10nNav["consumptionElec"],
-                    "_iClass" => "fa fa-desktop"
+                    "_iClass" => "fa fa-bolt"
                 ];
 
                 $menu["boiler"] = [
                     "text" => $l10nNav["boiler"],
-                    "_iClass" => "fa fa-desktop"
+                    "_iClass" => "fa fa-bath"
                 ];
 
                 $menu["consumptionHeatPump"] = [
                     "text" => $l10nNav["heat_pump"],
-                    "_iClass" => "fa fa-desktop"
+                    "_iClass" => "fa fa-fire"
                 ];
 
                 $menu["insideTemp"] = [
                     "text" => $l10nNav["insideTemp"],
-                    "_iClass" => "fa fa-desktop"
+                    "_iClass" => "fa fa-thermometer"
                 ];
 
                 if($user->getInstallations()[0]->Solar()->isExistant()) {
 
                     $menu["productionElect"] = [
                         "text" => $l10nNav["productionElect"],
-                        "_iClass" => "fa fa-desktop"
+                        "_iClass" => "fa fa-certificate"
                     ];
                 }
 
