@@ -14,7 +14,7 @@ class Gateway {
     public static function getAll() {
         if (self::$all == null) {
             self::$all = [];
-            $sth = Configuration::DB()->query("SELECT _id FROM tblGateway;");
+            $sth = Configuration::DB()->query("SELECT _id FROM tblGateway ORDER BY name DESC;");
             while ($g = $sth->fetch())
                 self::$all[] = new Gateway($g["_id"]);
         }
