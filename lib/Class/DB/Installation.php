@@ -76,8 +76,8 @@ class Installation {
     private $heatingSurface = -1;
     private $distribution = "";
     private $boilerVolume = -1;
-    private $boilerYear = -1;
-    private $heatingYear = -1;
+    private $boilerYear = "";
+    private $heatingYear = "";
     private $relay1 = "";
     private $relay2 = "";
 

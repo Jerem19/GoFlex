@@ -44,35 +44,35 @@
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['egidNumber'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['egidNumber'] ?></label>
                     <div>
-                        <input required="required" type="number" class="form-control" name="egidNumber"/>
+                        <input type="number" class="form-control" name="egidNumber"/>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['flexibleChargeNumber'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['flexibleChargeNumber'] ?></label>
                     <div>
                         <input type="number" class="form-control" name="flexibleChargeNumber"/>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['buildingYear'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['buildingYear'] ?></label>
                     <div>
                         <input type="text" class="form-control" name="buildingYear"/>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['renovationYear'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['renovationYear'] ?></label>
                     <div>
                         <input type="text" class="form-control" name="renovationYear"/>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['surfaceSRE'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['surfaceSRE'] ?></label>
                     <div>
                         <input type="number" class="form-control" name="surfaceSRE"/>
                     </div>
@@ -80,7 +80,7 @@
 
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['inhabitantsNumber'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['inhabitantsNumber'] ?></label>
                     <div>
                         <input type="number" class="form-control" name="inhabitantsNumber"/>
                     </div>
@@ -123,7 +123,7 @@
                     <div>
                         <select name="remoteManagement" class="form-control">
                             <option value="none"> none </option>
-                            <option value="iena"> iena </option>
+                            <option value="inea"> inea </option>
                             <option value="aau"> aau </option>
                         </select>
                     </div>
@@ -164,7 +164,7 @@
 
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['heatingSurface'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['heatingSurface'] ?></label>
                     <div>
                         <input type="number" class="form-control" name="egidNumber"/>
                     </div>
@@ -172,7 +172,7 @@
 
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['heatingYear'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['heatingYear'] ?></label>
                     <div >
                         <input type="text" class="form-control" name="heatingYear"/>
                     </div>
@@ -191,13 +191,13 @@
 
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['consommationSensor'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['consommationSensor'] ?></label>
                     <div>
                         <input required="required" type="number" class="form-control" name="heatSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['insideTemperatureSensor'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['insideTemperatureSensor'] ?></label>
                     <div>
                         <input required="required" type="number" class="form-control" name="heatTempSensors"/>
                     </div>
@@ -243,27 +243,27 @@
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['boilerYear'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['boilerYear'] ?></label>
                     <div >
                         <input type="text" class="form-control" name="boilerYear"/>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['boilerVolume'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['boilerVolume'] ?></label>
                     <div >
                         <input type="number" class="form-control" name="boilerVolume"/>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['consommationSensor'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['consommationSensor'] ?></label>
                     <div>
                         <input required="required" type="number" class="form-control" name="hotwaterSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['boilerTemperatureSensor'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['boilerTemperatureSensor'] ?></label>
                     <div >
                         <input required="required" type="number" class="form-control" name="hotwaterTempSensors"/>
                     </div>
@@ -299,7 +299,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['productionSensor'] ?></label></label>
+                    <label class="control-label"><?= $l10n['installation']['productionSensor'] ?></label>
                     <div>
                         <input id="productionSensor" type="number" class="form-control" name="solarSensors"/>
                     </div>
