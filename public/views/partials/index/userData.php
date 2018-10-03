@@ -166,7 +166,7 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['heatingSurface'] ?></label>
                     <div>
-                        <input type="number" class="form-control" name="egidNumber"/>
+                        <input type="number" class="form-control" name="heatingSurface"/>
                     </div>
                 </div>
 
@@ -193,13 +193,13 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['consommationSensor'] ?></label>
                     <div>
-                        <input required="required" type="number" class="form-control" name="heatSensors"/>
+                        <input type="number" class="form-control" name="heatSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['insideTemperatureSensor'] ?></label>
                     <div>
-                        <input required="required" type="number" class="form-control" name="heatTempSensors"/>
+                        <input type="number" class="form-control" name="heatTempSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -259,13 +259,13 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['consommationSensor'] ?></label>
                     <div>
-                        <input required="required" type="number" class="form-control" name="hotwaterSensors"/>
+                        <input type="number" class="form-control" name="hotwaterSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['boilerTemperatureSensor'] ?></label>
                     <div >
-                        <input required="required" type="number" class="form-control" name="hotwaterTempSensors"/>
+                        <input type="number" class="form-control" name="hotwaterTempSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -513,6 +513,7 @@
                     loadingDiv.style.display = 'block';
                 }, success : function (data) {
                     if (data != false) {
+
                         divHeat.empty();
                         divHot.empty();
 
