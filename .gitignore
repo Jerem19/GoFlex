@@ -3,6 +3,7 @@
 *.swp
 *.swo
 public/pics/*
+lib/Class/Configuration.php
 
 !.gitignore
 !.htaccess
