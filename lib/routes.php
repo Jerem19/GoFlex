@@ -159,7 +159,7 @@ $router
     ->post('/insideTemp', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -175,7 +175,7 @@ $router
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
 
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
 
     })
@@ -183,10 +183,11 @@ $router
 
     /* CONSUMPTION ELECT */
 
+    /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     ->post('/consumptionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
 
         $res->send($result->getPoints());
     })
@@ -201,41 +202,41 @@ $router
     ->post('/consumptionElectSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
-
+    /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     /* PRODUCTION ELECT */
 
     ->post('/productionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
     ->post('/productionElectSpeed', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
         $res->send($result->getPoints());
     })
 
     ->post('/productionElectSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
 
     /* CONSUMPTION HEAT PUMP */
-
+    /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     ->post('/consumptionHeatPump', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -249,17 +250,17 @@ $router
     ->post('/consumptionHeatPumpSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
-
+    /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     /* HOTWATER */
 
     ->post('/hotwaterTemperature', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -273,7 +274,7 @@ $router
     ->post('/hotwaterTemperatureSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1h) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
