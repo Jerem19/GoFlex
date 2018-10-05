@@ -242,14 +242,14 @@ $router
     ->post('/consumptionHeatPumpSpeed', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
         $res->send($result->getPoints());
     })
 
     ->post('/consumptionHeatPumpSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-1.objects.wattsTotal.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(2h) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
