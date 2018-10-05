@@ -14,6 +14,7 @@
             url: "consumptionElect",
             timeout: 45000,
             success: function (data) {
+                console.log(data);
                 dataTime = [];
                 for (var j in data) {
                     d = new Date(data[j]["time"]);
@@ -26,7 +27,7 @@
                         d.setHours(d.getHours() + 2)
                     }
 
-                    newData = data[j]["value"]/1000;
+                    newData = data[j]["sum_count"]/1000;
 
                     dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
 
@@ -66,21 +67,23 @@
                         floating: true,
                         selected: 1,
                         buttons: [{
-                            type: 'hour',
-                            count: 1,
-                            text: '1h'
-                        }, {
                             type: 'day',
                             count: 1,
                             text: '1d'
                         }, {
                             type: 'day',
-                            count: 2,
-                            text: '2d'
-                        }, {
-                            type: 'all',
-                            text: 'All'
-                        }],
+                            count: 7,
+                            text: '7d'
+                        },
+                            {
+                                type: 'day',
+                                count: 15,
+                                text: '15d'
+                            },
+                            {
+                                type: 'all',
+                                text: 'All'
+                            }],
                         inputEnabled: false // it supports only days
                     }
                 });
