@@ -55,9 +55,9 @@
                         </div>
                     </div>
 
-
                     <div>
-                        <img id="loaderProductionElect" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
+                        <img id="loaderProductionElect" src="<?= BASE_URL ?>/public/images/loader.gif"
+                             style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
 
                         <div id="productionElect" style="width: calc(100% - 15px); text-align: center;">
 
@@ -155,16 +155,16 @@
                                         count: 2,
                                         text: '2d'
                                     }, {
-                                            type: 'day',
-                                            count: 7,
-                                            text: '7d'
+                                        type: 'day',
+                                        count: 7,
+                                        text: '7d'
                                     }, {
-                                            type: 'day',
-                                            count: 15,
-                                            text: '15d'
+                                        type: 'day',
+                                        count: 15,
+                                        text: '15d'
                                     }, {
-                                            type: 'all',
-                                            text: 'All'
+                                        type: 'all',
+                                        text: 'All'
                                     }],
                                     inputEnabled: false // it supports only days
                                 }
@@ -250,15 +250,15 @@
                                         count: 7,
                                         text: '7d'
                                     },
-                                     {
-                                        type: 'day',
-                                        count: 15,
-                                        text: '15d'
-                                    },
                                         {
-                                        type: 'all',
-                                        text: 'All'
-                                    }],
+                                            type: 'day',
+                                            count: 15,
+                                            text: '15d'
+                                        },
+                                        {
+                                            type: 'all',
+                                            text: 'All'
+                                        }],
                                     inputEnabled: false // it supports only days
                                 }
                             });

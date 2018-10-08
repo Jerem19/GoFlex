@@ -5,6 +5,8 @@
 
     </div>
 
+    <h5 style="text-align: center;">Ce graphique est en réparation. Merci de ne pas tenir compte des valeurs retournées. Les valeurs correctes seront disponibles rapidement. Nous vous prions de nous excuser pour la gène occasionnée.</h5>
+
 </div>
 
 <script>
