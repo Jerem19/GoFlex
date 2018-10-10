@@ -6,6 +6,7 @@ class DelegatedControl {
 
     private static $all = null;
 
+
     /**
      * Return all status
      * @return Status[]

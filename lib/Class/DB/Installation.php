@@ -376,6 +376,7 @@ class Installation {
     }
 
 
+    
 
     /**
      * Return all settings (without user, gateway and pictures)

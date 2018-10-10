@@ -400,6 +400,7 @@
     "3rdparty/lightbox.css"
 ]); ?>
 
+
 <script>
     function disabledOrEnable() {
         if(document.getElementById('solarPanelSelect').value == 0)
