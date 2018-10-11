@@ -108,7 +108,7 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['delegatedControl'] ?></label>
                     <div>
-                        <select name="delegatedControl" class="form-control">
+                        <select name="inst_dcId" class="form-control">
                             <?php foreach (DelegatedControl::getAll() as $delcontr) { ?>
                                 <option value="<?= $delcontr->getId() ?>"><?= $l10n['installation'][$delcontr->getName()] ?></option>
                             <?php } ?>
@@ -244,37 +244,89 @@
             <div class="form-group">
                 <label class="control-label col-sm-12 head-title"><?= $l10n['installation']['equipmentEnergyDefinitionHotwater'] ?></label>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['energyHotWater'] ?></label>
+                    <label class="control-label"><?= $l10n['installation']['heatProduction'] ?></label>
+                    <div>
+                        <select name="watterHeatProduction" class="form-control">
+                            <option value="0"><?= $l10n['installation']['idemHeating'] ?></option>
+                            <option value="1"><?= $l10n['installation']['boilerPac'] ?></option>
+                            <option value="2"><?= $l10n['installation']['electricBoiler'] ?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label"><?= $l10n['installation']['serviceYear'] ?></label>
+                    <div>
+                        <input required="required" type="text" class="form-control" name="watterServiceYear"/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label"><?= $l10n['installation']['boilerVolume'] ?></label>
+                    <div>
+                        <input required="required" type="text" class="form-control" name="boilerVolume"/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label"><?= $l10n['installation']['powerMeter'] ?></label>
+                    <div>
+                        <select name="watterPowerMeter" class="form-control">
+                            <option value="0"><?= "0"?></option>
+                            <option value="1"><?= "1"?></option>
+                            <option value="2"><?= "2"?></option>
+                            <option value="3"><?= "3"?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label"><?= $l10n['installation']['boilerTemperature'] ?></label>
+                    <div>
+                        <select name="boilerTemperature" class="form-control">
+                            <option value="0"><?= "0"?></option>
+                            <option value="1"><?= "1"?></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label"><?= $l10n['installation']['relay'] ?></label>
+                    <div>
+                        <select name="watterRelay" class="form-control">
+                            <option value="0"><?= "0"?></option>
+                            <option value="1"><?= "1"?></option>
+                            <option value="2"><?= "2"?></option>
+                        </select>
+                    </div>
+                </div>
+                <!--<div class="col-sm-12">
+                    <label class="control-label"><?/*= $l10n['installation']['energyHotWater'] */?></label>
                     <div>
                         <select name="hotwaterEner" class="form-control">
-                            <?php foreach (Energy::getAll() as $ener) { ?>
-                                <option value="<?= $ener->getId() ?>"><?= $l10n['installation'][$ener->getName()] ?></option>
-                            <?php } ?>
+                            <?php /*foreach (Energy::getAll() as $ener) { */?>
+                                <option value="<?/*= $ener->getId() */?>"><?/*= $l10n['installation'][$ener->getName()] */?></option>
+                            <?php /*} */?>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['technoHotWater'] ?></label>
+                    <label class="control-label"><?/*= $l10n['installation']['technoHotWater'] */?></label>
                     <div >
                         <select name="hotwaterTech" class="form-control">
-                            <?php foreach (Technology::getAll() as $tech) { ?>
-                                <option value="<?= $tech->getId() ?>"><?= $l10n['installation'][$tech->getName()] ?></option>
-                            <?php } ?>
+                            <?php /*foreach (Technology::getAll() as $tech) { */?>
+                                <option value="<?/*= $tech->getId() */?>"><?/*= $l10n['installation'][$tech->getName()] */?></option>
+                            <?php /*} */?>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['consommationSensor'] ?></label></label>
+                    <label class="control-label"><?/*= $l10n['installation']['consommationSensor'] */?></label></label>
                     <div>
                         <input required="required" type="number" class="form-control" name="hotwaterSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['boilerTemperatureSensor'] ?></label></label>
+                    <label class="control-label"><?/*= $l10n['installation']['boilerTemperatureSensor'] */?></label></label>
                     <div >
                         <input required="required" type="number" class="form-control" name="hotwaterTempSensors"/>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['positionNote'] ?></label>
                     <div>
