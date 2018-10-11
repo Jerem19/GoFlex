@@ -327,6 +327,7 @@
                         <input required="required" type="number" class="form-control" name="hotwaterTempSensors"/>
                     </div>
                 </div>-->
+
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['positionNote'] ?></label>
                     <div>

@@ -413,6 +413,7 @@ class Installation {
             "inhabitants" => $this->getInhabitants(),
             "housingType" => $this->getHousingType(),
             "inst_dcId" => $this->getDelegatedControl()->getId(),
+            
 
             //heat
             "heatProduction" => $this->getHeatProduction(),
