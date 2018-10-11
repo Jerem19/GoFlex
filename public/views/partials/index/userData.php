@@ -29,19 +29,19 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['address'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="address"/>
+                        <input type="text" class="form-control" name="address"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['npa'] ?></label>
                     <div>
-                        <input required="required" type="number" class="form-control" name="npa"/>
+                        <input type="number" class="form-control" name="npa"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['city'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="city"/>
+                        <input type="text" class="form-control" name="city"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -68,31 +68,31 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['egidNumber'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="egidNumber"/>
+                        <input type="text" class="form-control" name="egidNumber"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['constructionYear'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="constructionYear"/>
+                        <input type="text" class="form-control" name="constructionYear"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['renovationYear'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="renovationYear"/>
+                        <input type="text" class="form-control" name="renovationYear"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['sreArea'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="sreArea"/>
+                        <input type="text" class="form-control" name="sreArea"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['inhabitants'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="inhabitants"/>
+                        <input type="text" class="form-control" name="inhabitants"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -113,6 +113,12 @@
                                 <option value="<?= $delcontr->getId() ?>"><?= $l10n['installation'][$delcontr->getName()] ?></option>
                             <?php } ?>
                         </select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label"><?= $l10n['installation']['generalNote'] ?></label>
+                    <div>
+                        <textarea class="form-control" name="note"></textarea>
                     </div>
                 </div>
 
@@ -159,7 +165,7 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['serviceYear'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="heatServiceYear"/>
+                        <input type="text" class="form-control" name="heatServiceYear"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -318,13 +324,13 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?/*= $l10n['installation']['consommationSensor'] */?></label></label>
                     <div>
-                        <input required="required" type="number" class="form-control" name="hotwaterSensors"/>
+                        <input type="number" class="form-control" name="hotwaterSensors"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?/*= $l10n['installation']['boilerTemperatureSensor'] */?></label></label>
                     <div >
-                        <input required="required" type="number" class="form-control" name="hotwaterTempSensors"/>
+                        <input type="number" class="form-control" name="hotwaterTempSensors"/>
                     </div>
                 </div>-->
 
@@ -378,22 +384,26 @@
                         </select>
                     </div>
                 </div>
+
+
+                <!--
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['solarPanel'] ?></label>
                     <div>
                         <select id="solarPanelSelect" name="solarPanel" class="form-control"
                                 onChange="disabledOrEnable(this)">
-                            <option value="0"><?= $l10n['installation']['no'] ?></option>
-                            <option value="1"><?= $l10n['installation']['yes'] ?></option>
+                            <option value="0"><?/*= $l10n['installation']['no']*/?></option>
+                            <option value="1"><?/*= $l10n['installation']['yes']*/ ?></option>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['productionSensor'] ?></label></label>
+                    <label class="control-label"><?/*= $l10n['installation']['productionSensor']*/ ?></label></label>
                     <div>
                         <input id="productionSensor" type="number" class="form-control" name="solarSensors"/>
                     </div>
                 </div>
+                -->
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['positionNote'] ?></label>
                     <div>
@@ -426,12 +436,7 @@
                         <input required="required" type="text" class="form-control" name="city"/>
                     </div>
                 </div>
-                <div class="col-sm-12">
-                    <label class="control-label"><?/*= $l10n['installation']['generalNote'] */?></label>
-                    <div>
-                        <textarea class="form-control" name="note"></textarea>
-                    </div>
-                </div>
+
                 <div class="col-sm-12">
                     <label class="control-label"><?/*= $l10n['installation']['pictureHouse'] */?>
                         <a id="picHouse" target="_blank"><i class="fa fa-download"></i></a>
@@ -455,6 +460,7 @@
 
 
 <script>
+    /*
     function disabledOrEnable() {
         if(document.getElementById('solarPanelSelect').value == 0)
         {
@@ -470,7 +476,7 @@
         //document.getElementById('positionNoteSolarPanel').disabled = !elem.selectedIndex;
     }
     disabledOrEnable();
-
+     */
     window.onload = function () {
         $('.form-group div label:first-child').addClass('col-sm-3 col-lg-2');
         $('.form-group div:not(.img-galery) div:last-child').addClass('col-sm-9 col-lg-10');
