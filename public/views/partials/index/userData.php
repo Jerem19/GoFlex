@@ -262,13 +262,13 @@
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['serviceYear'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="watterServiceYear"/>
+                        <input type="text" class="form-control" name="watterServiceYear"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['boilerVolume'] ?></label>
                     <div>
-                        <input required="required" type="text" class="form-control" name="boilerVolume"/>
+                        <input type="text" class="form-control" name="boilerVolume"/>
                     </div>
                 </div>
                 <div class="col-sm-12">

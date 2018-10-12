@@ -44,6 +44,7 @@ class Installation {
         return $i;
     }
 
+
     /**
      * Return an installation by the gateway
      * @param int|Gateway $gwId
@@ -85,6 +86,7 @@ class Installation {
     private $heatPowerMeter = -1;
     private $ambiantTemperature = -1;
     private $heatRelay = -1;
+    private $hotwaterRelay = -1;
 
     private $watterHeatProduction = -1;
     private $watterServiceYear = "";
@@ -303,6 +305,11 @@ class Installation {
         return $this->heatRelay;
     }
 
+    public function getHotwaterRelay(): int
+    {
+        return $this->hotwaterRelay;
+    }
+
     /**
      * @return int
      */
@@ -413,7 +420,7 @@ class Installation {
             "inhabitants" => $this->getInhabitants(),
             "housingType" => $this->getHousingType(),
             "inst_dcId" => $this->getDelegatedControl()->getId(),
-            
+
 
             //heat
             "heatProduction" => $this->getHeatProduction(),
@@ -422,6 +429,7 @@ class Installation {
             "heatPowerMeter" => $this->getHeatPowerMeter(),
             "ambiantTemperature" => $this->getAmbiantTemperature(),
             "heatRelay" => $this->getHeatRelay(),
+            "hotwaterRelay" => $this->getHotwaterRelay(),
 
             //Watter
             "watterHeatProduction" => $this->getWatterHeatProduction(),
@@ -482,6 +490,7 @@ class Installation {
             $this->heatPowerMeter = $data["heatPowerMeter"];
             $this->ambiantTemperature = $data["ambiantTemperature"];
             $this->heatRelay = $data["heatRelay"];
+            $this->hotwaterRelay = $data["hotwaterRelay"];
 
             //Watter
             $this->watterHeatProduction = $data["watterHeatProduction"];
@@ -595,6 +604,8 @@ class Installation {
             $params["boilerTemperature"] = $this->getBoilerTemperature();
         if (!isset($params["watterRelay"]))
             $params["watterRelay"] = $this->getWatterRelay();
+        if (!isset($params["hotwaterRelay"]))
+            $params["hotwaterRelay"] = $this->getHotwaterRelay();
 
         //Solar
         if (!isset($params["photovoltaic"]))
@@ -621,11 +632,33 @@ class Installation {
         }
 
         $params["id"] = $this->getId();
+
         return is_array(Configuration::DB()->execute("UPDATE tblInstallation SET
           facturation = :facturation, businessSector = :businessSector, housingType = :housingType, inst_dcId = :inst_dcId,
-          heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote, heatProduction = :heatProduction, heatDistribution = :heatDistribution, heatServiceYear = :heatServiceYear, heatPowerMeter = :heatPowerMeter, ambiantTemperature = :ambiantTemperature, heatRelay= :heatRelay,
+          heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote, heatProduction = :heatProduction, heatDistribution = :heatDistribution, heatServiceYear = :heatServiceYear, heatPowerMeter = :heatPowerMeter, ambiantTemperature = :ambiantTemperature, heatRelay= :heatRelay, hotwaterRelay = :hotwaterRelay,
           hotwaterEner = :hotwaterEner, hotwaterTech = :hotwaterTech, hotwaterSensors = :hotwaterSensors, hotwaterTempSensors = :hotwaterTempSensors, hotwaterNote = :hotwaterNote, watterHeatProduction = :watterHeatProduction, watterServiceYear = :watterServiceYear, boilerVolume = :boilerVolume, watterPowerMeter = :watterPowerMeter, boilerTemperature = :boilerTemperature, watterRelay = :watterRelay,
           solarPanel = :solarPanel, solarSensors = :solarSensors, solarNote = :solarNote, photovoltaic = :photovoltaic, thermal = :thermal, solarPowerMeter = :solarPowerMeter,
           city = :city, npa = :npa, address = :address, note = :note, noteAdmin = :noteAdmin, heatPictures = :heatPictures, hotwaterPictures = :hotwaterPictures, picture = :picture, egidNumber = :egidNumber, constructionYear = :constructionYear, renovationYear = :renovationYear, sreArea = :sreArea, inhabitants = :inhabitants, heatPictures = :heatPictures WHERE _id = :id;", $params));
     }
+
+
+    public function updateCreation(array $params = [])
+    {
+
+
+        if (!isset($params["city"]))
+            $params["city"] = $this->getCity();
+        if (!isset($params["npa"]))
+            $params["npa"] = $this->getNPA();
+        if (!isset($params["address"]))
+            $params["address"] = $this->getAddress();
+        if (!isset($params["noteAdmin"]))
+            $params["noteAdmin"] = $this->getAdminNote();
+
+        $params["id"] = $this->getId();
+
+        return is_array(Configuration::DB()->execute("UPDATE tblInstallation SET
+          city = :city, npa = :npa, address = :address, noteAdmin = :noteAdmin WHERE _id = :id;", $params));
+    }
+
 }
