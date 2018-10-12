@@ -105,17 +105,7 @@
                     </div>
                 </div>
 
-                <!--
-                <div class="col-sm-12">
-                    <label class="control-label"><?= $l10n['installation']['delegatedControl'] ?></label>
-                    <div>
-                        <select name="inst_dcId" class="form-control">
-                            <?php foreach (DelegatedControl::getAll() as $delcontr) { ?>
-                                <option value="<?= $delcontr->getId() ?>"><?= $l10n['installation'][$delcontr->getName()] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>-->
+
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['generalNote'] ?></label>
                     <div>
