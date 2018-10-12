@@ -465,6 +465,7 @@
                     $('fieldset').prop('disabled', true);
                     loadingDiv.style.display = 'block';
                 }, success : function (data) {
+                    console.log(data);
                     if (data != false) {
                         divHeat.empty();
                         divHot.empty();

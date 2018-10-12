@@ -204,14 +204,14 @@ class Installation {
     /**
      * @return string
      */
-    public function getEgidNumber(): string
+    public function getEgidNumber()
     {
         return $this->egidNumber;
     }
     /**
-     * @return string
+     * @return
      */
-    public function getConstructionYear(): string
+    public function getConstructionYear()
     {
         return $this->constructionYear;
     }
@@ -219,7 +219,7 @@ class Installation {
     /**
      * @return string
      */
-    public function getRenovationYear(): string
+    public function getRenovationYear()
     {
         return $this->renovationYear;
     }
@@ -227,7 +227,7 @@ class Installation {
     /**
      * @return string
      */
-    public function getSreArea(): string
+    public function getSreArea()
     {
         return $this->sreArea;
     }
@@ -235,7 +235,7 @@ class Installation {
     /**
      * @return string
      */
-    public function getInhabitants(): string
+    public function getInhabitants()
     {
         return $this->inhabitants;
     }
@@ -276,7 +276,7 @@ class Installation {
     /**
      * @return string
      */
-    public function getHeatServiceYear(): string
+    public function getHeatServiceYear()
     {
         return $this->heatServiceYear;
     }
@@ -321,7 +321,7 @@ class Installation {
     /**
      * @return string
      */
-    public function getWatterServiceYear(): string
+    public function getWatterServiceYear()
     {
         return $this->watterServiceYear;
     }
@@ -329,7 +329,7 @@ class Installation {
     /**
      * @return string
      */
-    public function getBoilerVolume(): string
+    public function getBoilerVolume()
     {
         return $this->boilerVolume;
     }
