@@ -105,6 +105,7 @@
                     </div>
                 </div>
 
+                <!--
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['delegatedControl'] ?></label>
                     <div>
@@ -114,7 +115,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['generalNote'] ?></label>
                     <div>
