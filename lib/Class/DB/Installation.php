@@ -78,7 +78,7 @@ class Installation {
     private $sreArea = "";
     private $inhabitants = "";
     private $housingType = null;
-    private $_control = -1;
+    //private $_control = -1;
 
     private $heatProduction = -1;
     private $heatDistribution = -1;
@@ -250,13 +250,13 @@ class Installation {
 
     /**
      * @return DelegatedControl
-     */
+
     public function getDelegatedControl() {
         if (!$this->_control instanceof DelegatedControl)
             $this->_control = new DelegatedControl($this->_control);
         return $this->_control;
     }
-
+     */
     /**
      * @return int
      */
@@ -419,7 +419,7 @@ class Installation {
             "sreArea" => $this->getSreArea(),
             "inhabitants" => $this->getInhabitants(),
             "housingType" => $this->getHousingType(),
-            "inst_dcId" => $this->getDelegatedControl()->getId(),
+            //"inst_dcId" => $this->getDelegatedControl()->getId(),
 
 
             //heat
@@ -481,7 +481,7 @@ class Installation {
             $this->sreArea = $data["sreArea"];
             $this->inhabitants = $data["inhabitants"];
             $this->housingType = $data["housingType"];
-            $this->_control = $data["inst_dcId"];
+            //$this->_control = $data["inst_dcId"];
 
             // Heat
             $this->heatProduction = $data["heatProduction"];
@@ -574,8 +574,8 @@ class Installation {
             $params["housingType"] = $this->getHousingType();
         if (!isset($params["noteAdmin"]))
             $params["noteAdmin"] = $this->getAdminNote();
-        if (!isset($params["inst_dcId"]))
-            $params["inst_dcId"] = $this->getDelegatedControl()->getId();
+        /*if (!isset($params["inst_dcId"]))
+            $params["inst_dcId"] = $this->getDelegatedControl()->getId();*/
 
         //Heat
         if (!isset($params["heatProduction"]))
@@ -634,7 +634,7 @@ class Installation {
         $params["id"] = $this->getId();
 
         return is_array(Configuration::DB()->execute("UPDATE tblInstallation SET
-          facturation = :facturation, businessSector = :businessSector, housingType = :housingType, inst_dcId = :inst_dcId,
+          facturation = :facturation, businessSector = :businessSector, housingType = :housingType,
           heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote, heatProduction = :heatProduction, heatDistribution = :heatDistribution, heatServiceYear = :heatServiceYear, heatPowerMeter = :heatPowerMeter, ambiantTemperature = :ambiantTemperature, heatRelay= :heatRelay, hotwaterRelay = :hotwaterRelay,
           hotwaterEner = :hotwaterEner, hotwaterTech = :hotwaterTech, hotwaterSensors = :hotwaterSensors, hotwaterTempSensors = :hotwaterTempSensors, hotwaterNote = :hotwaterNote, watterHeatProduction = :watterHeatProduction, watterServiceYear = :watterServiceYear, boilerVolume = :boilerVolume, watterPowerMeter = :watterPowerMeter, boilerTemperature = :boilerTemperature, watterRelay = :watterRelay,
           solarPanel = :solarPanel, solarSensors = :solarSensors, solarNote = :solarNote, photovoltaic = :photovoltaic, thermal = :thermal, solarPowerMeter = :solarPowerMeter,
