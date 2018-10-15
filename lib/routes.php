@@ -413,7 +413,7 @@ $router
                         "email" => $_POST["email"],
                         "role" => $_POST["role"]
                     ]));
-                    Mail::activation($user);
+                   // Mail::activation($user);
                     $res->send(true);
                 }
             }

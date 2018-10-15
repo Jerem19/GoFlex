@@ -615,6 +615,8 @@ class Installation {
         if (!isset($params["solarPowerMeter"]))
             $params["solarPowerMeter"] = $this->getSolarPowerMeter();
 
+        
+
 
         if (!isset($params["noteAdmin"]))
             $params["noteAdmin"] = $this->getAdminNote();
