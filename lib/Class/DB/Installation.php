@@ -78,7 +78,7 @@ class Installation {
     private $sreArea = "";
     private $inhabitants = "";
     private $housingType = null;
-    //private $_control = -1;
+    private $_control = -1;
 
     private $heatProduction = -1;
     private $heatDistribution = -1;
@@ -250,17 +250,18 @@ class Installation {
 
     /**
      * @return DelegatedControl
+     * */
 
     public function getDelegatedControl() {
-        if (!$this->_control instanceof DelegatedControl)
-            $this->_control = new DelegatedControl($this->_control);
-        return $this->_control;
+    if (!$this->_control instanceof DelegatedControl)
+    $this->_control = new DelegatedControl($this->_control);
+    return $this->_control;
     }
-     */
+
     /**
      * @return int
      */
-    public function getHeatProduction(): int
+    public function getHeatProduction()
     {
         return $this->heatProduction;
     }
@@ -268,7 +269,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getHeatDistribution(): int
+    public function getHeatDistribution()
     {
         return $this->heatDistribution;
     }
@@ -284,7 +285,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getHeatPowerMeter(): int
+    public function getHeatPowerMeter()
     {
         return $this->heatPowerMeter;
     }
@@ -292,7 +293,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getAmbiantTemperature(): int
+    public function getAmbiantTemperature()
     {
         return $this->ambiantTemperature;
     }
@@ -300,12 +301,12 @@ class Installation {
     /**
      * @return int
      */
-    public function getHeatRelay(): int
+    public function getHeatRelay()
     {
         return $this->heatRelay;
     }
 
-    public function getHotwaterRelay(): int
+    public function getHotwaterRelay()
     {
         return $this->hotwaterRelay;
     }
@@ -313,7 +314,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getWatterHeatProduction(): int
+    public function getWatterHeatProduction()
     {
         return $this->watterHeatProduction;
     }
@@ -337,7 +338,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getWatterPowerMeter(): int
+    public function getWatterPowerMeter()
     {
         return $this->watterPowerMeter;
     }
@@ -345,7 +346,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getBoilerTemperature(): int
+    public function getBoilerTemperature()
     {
         return $this->boilerTemperature;
     }
@@ -353,7 +354,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getWatterRelay(): int
+    public function getWatterRelay()
     {
         return $this->watterRelay;
     }
@@ -361,7 +362,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getPhotovoltaic(): int
+    public function getPhotovoltaic()
     {
         return $this->photovoltaic;
     }
@@ -369,7 +370,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getThermal(): int
+    public function getThermal()
     {
         return $this->thermal;
     }
@@ -377,7 +378,7 @@ class Installation {
     /**
      * @return int
      */
-    public function getSolarPowerMeter(): int
+    public function getSolarPowerMeter()
     {
         return $this->solarPowerMeter;
     }
@@ -419,7 +420,7 @@ class Installation {
             "sreArea" => $this->getSreArea(),
             "inhabitants" => $this->getInhabitants(),
             "housingType" => $this->getHousingType(),
-            //"inst_dcId" => $this->getDelegatedControl()->getId(),
+            "inst_dcId" => $this->getDelegatedControl()->getId(),
 
 
             //heat
@@ -481,7 +482,7 @@ class Installation {
             $this->sreArea = $data["sreArea"];
             $this->inhabitants = $data["inhabitants"];
             $this->housingType = $data["housingType"];
-            //$this->_control = $data["inst_dcId"];
+            $this->_control = $data["inst_dcId"];
 
             // Heat
             $this->heatProduction = $data["heatProduction"];
@@ -574,8 +575,8 @@ class Installation {
             $params["housingType"] = $this->getHousingType();
         if (!isset($params["noteAdmin"]))
             $params["noteAdmin"] = $this->getAdminNote();
-        /*if (!isset($params["inst_dcId"]))
-            $params["inst_dcId"] = $this->getDelegatedControl()->getId();*/
+        if (!isset($params["inst_dcId"]))
+            $params["inst_dcId"] = $this->getDelegatedControl()->getId();
 
         //Heat
         if (!isset($params["heatProduction"]))
@@ -615,8 +616,6 @@ class Installation {
         if (!isset($params["solarPowerMeter"]))
             $params["solarPowerMeter"] = $this->getSolarPowerMeter();
 
-        
-
 
         if (!isset($params["noteAdmin"]))
             $params["noteAdmin"] = $this->getAdminNote();
@@ -636,7 +635,7 @@ class Installation {
         $params["id"] = $this->getId();
 
         return is_array(Configuration::DB()->execute("UPDATE tblInstallation SET
-          facturation = :facturation, businessSector = :businessSector, housingType = :housingType,
+          facturation = :facturation, businessSector = :businessSector, housingType = :housingType, inst_dcId = :inst_dcId,
           heatEner = :heatEner, heatTech = :heatTech, heatSensors = :heatSensors, heatTempSensors = :heatTempSensors, heatNote = :heatNote, heatProduction = :heatProduction, heatDistribution = :heatDistribution, heatServiceYear = :heatServiceYear, heatPowerMeter = :heatPowerMeter, ambiantTemperature = :ambiantTemperature, heatRelay= :heatRelay, hotwaterRelay = :hotwaterRelay,
           hotwaterEner = :hotwaterEner, hotwaterTech = :hotwaterTech, hotwaterSensors = :hotwaterSensors, hotwaterTempSensors = :hotwaterTempSensors, hotwaterNote = :hotwaterNote, watterHeatProduction = :watterHeatProduction, watterServiceYear = :watterServiceYear, boilerVolume = :boilerVolume, watterPowerMeter = :watterPowerMeter, boilerTemperature = :boilerTemperature, watterRelay = :watterRelay,
           solarPanel = :solarPanel, solarSensors = :solarSensors, solarNote = :solarNote, photovoltaic = :photovoltaic, thermal = :thermal, solarPowerMeter = :solarPowerMeter,
