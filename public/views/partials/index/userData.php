@@ -114,6 +114,7 @@
                         </select>
                     </div>
                 </div>
+                
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['generalNote'] ?></label>
                     <div>
