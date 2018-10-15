@@ -465,6 +465,7 @@
             }
         }
 
+
         selectGw.on('change', function () {
             $.ajax({
                 url: 'installInfo',

@@ -13,6 +13,7 @@ require_once 'Installation/Element.php';
 
 require_once 'Picture.php';
 
+
 class Installation {
 
     /**

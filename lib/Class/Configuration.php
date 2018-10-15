@@ -15,6 +15,7 @@ class DB extends PDO {
         //$this->query(sprintf('DELETE FROM tbl%s WHERE _d = %d', ucfirst($table), $table, $id));
     }*/
 
+
     /**
      * @param string $query
      * @param array $attributes
