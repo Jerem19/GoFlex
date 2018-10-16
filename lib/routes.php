@@ -80,6 +80,10 @@ function getUser(User $user) {
     return $user->getInstallations()[0]->getGateway()->getName();
 }
 
+function getHeatPowerMeter(User $user){
+    return $user->getInstallations()[0]->getHeatPowerMeter();
+}
+
 
 $router
     ->get("/signup", function (Response $res) {
@@ -237,21 +241,24 @@ $router
     ->post('/consumptionHeatPump', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-1.objects.kWhTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
+        $powerMeter = getHeatPowerMeter($_SESSION["User"]);
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.kWhTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
     ->post('/consumptionHeatPumpSpeed', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-1.objects.kWhTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $powerMeter = getHeatPowerMeter($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.kWhTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
         $res->send($result->getPoints());
     })
 
     ->post('/consumptionHeatPumpSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-1.objects.kWhTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
+        $powerMeter = Installation::getByGateway($_POST['idGateway'])->getHeatPowerMeter();
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.kWhTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
