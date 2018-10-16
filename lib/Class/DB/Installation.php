@@ -262,6 +262,14 @@ class Installation {
     /**
      * @return int
      */
+    public function getControl()
+    {
+        return $this->_control;
+    }
+
+    /**
+     * @return int
+     */
     public function getHeatProduction()
     {
         return $this->heatProduction;
@@ -421,7 +429,8 @@ class Installation {
             "sreArea" => $this->getSreArea(),
             "inhabitants" => $this->getInhabitants(),
             "housingType" => $this->getHousingType(),
-            "inst_dcId" => $this->getDelegatedControl()->getId(),
+            //"inst_dcId" => $this->getDelegatedControl()->getId(),
+            "inst_dcId" => $this->getControl(),
 
 
             //heat
@@ -577,7 +586,8 @@ class Installation {
         if (!isset($params["noteAdmin"]))
             $params["noteAdmin"] = $this->getAdminNote();
         if (!isset($params["inst_dcId"]))
-            $params["inst_dcId"] = $this->getDelegatedControl()->getId();
+            //$params["inst_dcId"] = $this->getDelegatedControl()->getId();
+            $params["inst_dcId"] = $this->getControl();
 
         //Heat
         if (!isset($params["heatProduction"]))

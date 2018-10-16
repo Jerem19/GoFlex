@@ -104,16 +104,21 @@
                         </select>
                     </div>
                 </div>
-                <!--<div class="col-sm-12">
-                    <label class="control-label"><?/*= $l10n['installation']['delegatedControl'] */?></label>
+                <div class="col-sm-12">
+                    <label class="control-label"><?= $l10n['installation']['delegatedControl'] ?></label>
                     <div>
-                        <select name="inst_dcId" class="form-control">
+                        <!--<select name="inst_dcId" class="form-control">
                             <?php /*foreach (DelegatedControl::getAll() as $delContr) { */?>
                                 <option value="<?/*= $delContr->getId() */?>"><?/*= $l10n['installation'][$delContr->getName()] */?></option>
                             <?php /*} */?>
+                        </select>-->
+                        <select name="inst_dcId" class="form-control">
+                            <option value="0"><?= $l10n['installation']['none'] ?></option>
+                            <option value="1"><?= $l10n['installation']['aau'] ?></option>
+                            <option value="2"><?= $l10n['installation']['inea'] ?></option>
                         </select>
                     </div>
-                </div>-->
+                </div>
 
                 <div class="col-sm-12">
                     <label class="control-label"><?= $l10n['installation']['generalNote'] ?></label>
