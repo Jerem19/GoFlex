@@ -242,7 +242,7 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $powerMeter = getHeatPowerMeter($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.kWhTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -250,7 +250,7 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $powerMeter = getHeatPowerMeter($_SESSION["User"]);
-        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.kWhTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
         $res->send($result->getPoints());
     })
 
@@ -258,7 +258,7 @@ $router
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
         $powerMeter = Installation::getByGateway($_POST['idGateway'])->getHeatPowerMeter();
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.kWhTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -420,7 +420,7 @@ $router
                         "email" => $_POST["email"],
                         "role" => $_POST["role"]
                     ]));
-                   // Mail::activation($user);
+                    Mail::activation($user);
                     $res->send(true);
                 }
             }
