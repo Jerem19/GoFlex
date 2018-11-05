@@ -149,9 +149,10 @@
                     <label class="control-label"><?= $l10n['installation']['heatProduction'] ?></label>
                     <div>
                         <select name="heatProduction" class="form-control">
-                            <option value="0"><?= $l10n['installation']['pac'] ?></option>
-                            <option value="1"><?= $l10n['installation']['directElectric'] ?></option>
-                            <option value="2"><?= $l10n['installation']['other'] ?></option>
+                            <option value="0"><?= $l10n['installation']['unknown'] ?></option>
+                            <option value="1"><?= $l10n['installation']['pac'] ?></option>
+                            <option value="2"><?= $l10n['installation']['directElectric'] ?></option>
+                            <option value="3"><?= $l10n['installation']['other'] ?></option>
 
                         </select>
                     </div>
@@ -160,10 +161,11 @@
                     <label class="control-label"><?= $l10n['installation']['heatDistribution'] ?></label>
                     <div>
                         <select name="heatDistribution" class="form-control">
-                            <option value="0"><?= $l10n['installation']['electricFloor'] ?></option>
-                            <option value="1"><?= $l10n['installation']['hydraulicFloor'] ?></option>
-                            <option value="2"><?= $l10n['installation']['electricRadiator'] ?></option>
-                            <option value="3"><?= $l10n['installation']['hydraulicRadiator'] ?></option>
+                            <option value="0"><?= $l10n['installation']['unknown'] ?></option>
+                            <option value="1"><?= $l10n['installation']['electricFloor'] ?></option>
+                            <option value="2"><?= $l10n['installation']['hydraulicFloor'] ?></option>
+                            <option value="3"><?= $l10n['installation']['electricRadiator'] ?></option>
+                            <option value="4"><?= $l10n['installation']['hydraulicRadiator'] ?></option>
                         </select>
                     </div>
                 </div>
@@ -226,9 +228,10 @@
                     <label class="control-label"><?= $l10n['installation']['heatProduction'] ?></label>
                     <div>
                         <select name="watterHeatProduction" class="form-control">
-                            <option value="0"><?= $l10n['installation']['idemHeating'] ?></option>
-                            <option value="1"><?= $l10n['installation']['boilerPac'] ?></option>
-                            <option value="2"><?= $l10n['installation']['electricBoiler'] ?></option>
+                            <option value="0"><?= $l10n['installation']['unknown'] ?></option>
+                            <option value="1"><?= $l10n['installation']['idemHeating'] ?></option>
+                            <option value="3"><?= $l10n['installation']['boilerPac'] ?></option>
+                            <option value="3"><?= $l10n['installation']['electricBoiler'] ?></option>
                         </select>
                     </div>
                 </div>
@@ -308,9 +311,10 @@
                     <label class="control-label"><?= $l10n['installation']['thermal'] ?></label>
                     <div>
                         <select name="thermal" class="form-control">
-                            <option value="0"><?= $l10n['installation']['no'] ?></option>
-                            <option value="1"><?= $l10n['installation']['ecs'] ?></option>
-                            <option value="1"><?= $l10n['installation']['ecsHeat'] ?></option>
+                            <option value="0"><?= $l10n['installation']['unknown'] ?></option>
+                            <option value="1"><?= $l10n['installation']['no'] ?></option>
+                            <option value="2"><?= $l10n['installation']['ecs'] ?></option>
+                            <option value="3"><?= $l10n['installation']['ecsHeat'] ?></option>
                         </select>
                     </div>
                 </div>

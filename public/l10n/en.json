@@ -141,6 +141,7 @@
 			"individual": "Individual",
 			"electricity": "Electricity",
 			"gaz": "Gaz",
+			"unknown": "Unknown",
 			"wood": "Wood",
 			"fuelOil": "Fuel oil",
 			"other": "Other",

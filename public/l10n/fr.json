@@ -122,6 +122,7 @@
       "pac": "PAC",
       "directElectric": "Electrique direct",
       "other": "Autre",
+      "unknown": "Inconnu",
       "heatDistribution": "Distribution de chaleur",
       "electricFloor": "Chauffage au sol électrique",
       "hydraulicFloor": "Chauffage au sol hydraulique",
