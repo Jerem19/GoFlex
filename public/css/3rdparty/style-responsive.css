@@ -109,7 +109,7 @@
         background: transparent !important ;
     }
     #sidebar > ul > li > ul.sub > li > a:hover {
-        
+
     }
 
 
@@ -234,7 +234,7 @@
     /*--*/
 
     /*.chart-position {*/
-        /*margin-top: 0px;*/
+    /*margin-top: 0px;*/
     /*}*/
 
     .stepy-titles li {
@@ -278,8 +278,8 @@
     }
 
     .chart-position {
-       margin-top: 0px;
-     }
+        margin-top: 0px;
+    }
 
     .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
         background-color: #ccc;
@@ -322,6 +322,12 @@
         width: 75%;
     }
 
+}
+
+@media screen and (min-width: 1430px) {
+    .divSize{
+        height:170px;
+    }
 }
 
 
