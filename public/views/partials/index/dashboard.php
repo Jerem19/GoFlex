@@ -37,6 +37,7 @@
     <div class="mt col-lg-12 col-xl-7 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> Données historiques</p>
         <hr>
+        <div id="historicData"></div>
     </div>
 </div>
 <div class="row">
@@ -125,16 +126,24 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             "consumptionHeatPumpSpeed": ' kW',
             "hotwaterTemperatureSpeed": ' °C',
             "insideTempSpeed": ' °C',
-            "productionElectSpeed": ' kW'
+            "productionElectSpeed": ' kW',
+            "insideTemp": ' kW'
         };
+        var insideArray =[];
+        var boilerArray = [];
+        var electArray = [];
+        var heatPumpArray = [];
+        var boiler;
+        var electConsumption;
+        var heatPumpConsumption;
 
         for (const i in urls) {
+
             $.ajax({
                 url : i,
                 type : 'POST',
                 success : function(data) {
                     if (data && Array.isArray(data)) {
-                        console.log(data);
                         d = new Date(data[0]["time"]).toISOString().substr(0,16);
                         d = d.replace("T", " ");
 
@@ -156,6 +165,224 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                 }
             });
         }
+
+        $.ajax({
+            type: "POST",
+            url: "hotwaterTemperatureHistory",
+            success : function (data) {
+                boiler = data;
+            },
+            error: function () {
+                ajaxError('TEST');
+            }
+
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "consumptionElectHistory",
+            success : function (data) {
+                electConsumption = data;
+                console.log(electConsumption);
+            },
+            error: function () {
+                ajaxError('TEST');
+            }
+
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "consumptionHeatPumpHistory",
+            success : function (data) {
+                heatPumpConsumption = data;
+            },
+            error: function () {
+                ajaxError('TEST');
+            }
+
+        });
+
+
+        $.ajax({
+            type: "POST",
+            url: "insideTempHistory",
+            timeout: 45000,
+            success : function (data) {
+                for(let index = 0;index< data.length;index++)
+                {
+                    d = new Date(data[index]["time"]);
+                    if(d.getTimezoneOffset() == 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+                    else {
+                        d.setHours(d.getHours() + 2)
+                    }
+                    insideArray.unshift([new Date(d.toISOString()).getTime(), data[index]["sum_count"]])
+                }
+                for(let index = 0;index< boiler.length;index++)
+                {
+                    d = new Date(boiler[index]["time"]);
+
+                    if(d.getTimezoneOffset() == 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+                    else {
+                        d.setHours(d.getHours() + 2)
+                    }
+                    boilerArray.unshift([new Date(d.toISOString()).getTime(), boiler[index]["sum_count"]])
+                }
+
+                for(let index = 0;index< electConsumption.length;index++)
+                {
+                    d = new Date(electConsumption[index]["time"]);
+
+                    if(d.getTimezoneOffset() == 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+                    else {
+                        d.setHours(d.getHours() + 2)
+                    }
+                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["sum_count"]])
+                }
+
+                for(let index = 0;index< heatPumpConsumption.length;index++)
+                {
+                    d = new Date(heatPumpConsumption[index]["time"]);
+
+                    if(d.getTimezoneOffset() == 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+                    else {
+                        d.setHours(d.getHours() + 2)
+                    }
+                    if(heatPumpConsumption[index]["sum_count"] >= 0)
+                    {
+                        heatPumpArray.unshift([new Date(d.toISOString()).getTime(), heatPumpConsumption[index]["sum_count"]])
+                    }
+
+                }
+
+                Highcharts.StockChart('historicData', {
+                    chart: {
+                        height:300+ 'px',
+                    },
+                    title: {
+                        text: ''
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    xAxis: {
+                        type:'datetime',
+                        title:{
+                            text: 'Date'
+                        }
+                    },
+                    yAxis: [{
+                            title: {
+                                text: "Température (°C)"
+                            },
+                            opposite:false
+                        },
+                        {
+                            title:{
+                                text: "Puissance (kW)"
+                            },
+                            opposite:true
+                        }
+                    ],
+                    legend: {
+                        enabled: true
+                    },
+                    plotOptions: {
+                        area: {
+                            lineWidth: 0,
+                            marker: {
+                                enabled: true,
+                                symbol: 'circle',
+                                radius: 2,
+                                states: {
+                                    hover: {
+                                        enabled: true
+                                    }
+                                }
+                            }
+                        },
+
+                        series: {
+                            animation: false,
+                            events: {
+                                legendItemClick: function () {
+                                    var visibility = this.visible ? 'visible' : 'hidden';
+                                }
+
+                            }
+                        }
+                    },
+                    rangeSelector: {
+                        selected: 1,
+                        inputEnabled: false,
+                        buttonTheme: {
+                            visibility: 'hidden'
+                        },
+                        labelStyle: {
+                            visibility: 'hidden'
+                        }
+                    },
+                    tooltip: {
+                        shared: false
+                    },
+                    scrollbar: {
+                        enabled: false
+                    },
+                    navigator: {
+                        enabled: false
+                    },
+                    series:[
+                        {
+                            name: 'Electrique',
+                            type: 'area',
+                            data: electArray,
+                            index:1,
+                            yAxis:1
+                        },
+                        {
+                            name: 'Pompe à chaleur',
+                            type: 'area',
+                            data: heatPumpArray,
+                            index:2,
+                            yAxis:1
+                        },
+                        {
+                            name: 'Intérieur',
+                            type: 'line',
+                            data: insideArray,
+                            index:3,
+                            yAxis:0
+                        },
+                        {
+                            name: 'Boiler',
+                            type: 'line',
+                            data: boilerArray,
+                            index:4,
+                            yAxis:0
+                        },
+                    ]
+
+
+                });
+
+            },
+            error: function () {
+                ajaxError('TEST');
+            }
+        });
+
     }
 
 </script>
