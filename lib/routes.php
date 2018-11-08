@@ -178,7 +178,6 @@ $router
     ->post('/insideTempSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-
         $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
 
@@ -191,7 +190,7 @@ $router
     ->post('/consumptionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
 
         $res->send($result->getPoints());
     })
@@ -237,7 +236,7 @@ $router
 
     /* CONSUMPTION HEAT PUMP */
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    //TODO: Modifier le 1 par la valeur stockée dans heatPowerMeter
+
     ->post('/consumptionHeatPump', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
