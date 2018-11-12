@@ -317,6 +317,24 @@ $router
 
     /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+    /* Counter */
+
+    ->post('/counterConsumption', function (Response $res){
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_1_8_2_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $res->send($result->getPoints());
+    })
+
+    ->post('/counterProduction', function (Response $res){
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT value FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_2_8_2_255_2.attributes.datapoint" ORDER BY "time" DESC LIMIT 1 ;');
+        $res->send($result->getPoints());
+    })
+
+    /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
     ->use('/pics', [
         "/:img.pic" => [
             "method" => Router::GET,

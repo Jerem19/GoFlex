@@ -13,6 +13,7 @@
 
                 <!--<p class="dashboardTextSize"><?//= L10N['index']['dashboard']['textConsumptionElec']?></p> -->
                 <div id="consumptionElectSpeed"  class="dashboardNumberSize">
+
                 </div></a>
         </div>
 
@@ -80,10 +81,45 @@
     <div class="mt col-lg-12 col-xl-4 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> Index de votre compteur</p>
         <hr>
+        <div class="indexAlert alert-secondary">
+            <strong><span class="fa fa-lightbulb-o"></span> Consommation</strong>
+        </div>
+        <div class="col col-md-7"><span class="fa fa-user"></span> Votre consommation</div>
+        <div id="counterConsumption"  class="dashboardNumberSize" style="text-align: right;"></div>
+        <div style="text-align: center;">
+            <img style="height: 122px;" src="<?= BASE_URL ?>/public/images/montage.png" />
+        </div>
+        <div class="indexAlert alert-secondary">
+            <strong><span class="fa fa-line-chart"></span> Production</strong>
+        </div>
+        <div class="col col-md-5"><span class="fa fa-battery-full"></span> Excédent PV</div>
+        <?php
+        if($user->getInstallations()[0]->Solar()->isExistant())
+        {
+
+        ?>
+        <div id="counterProduction"  class="dashboardNumberSize" style="text-align: right;"></div>
+        <?php }
+        else{
+            ?>
+        <div class="dashboardNumberSize" style="text-align: right;">
+            <p>Aucun panneau solaire</p>
+        </div>
+        <?php } ?>
     </div>
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> Eco'gestes</p>
         <hr>
+        <h2 style="color: limegreen;"> Le petit geste malin </h2>
+        <strong>
+            <div class="col col-md-6">
+                Préférez l'achat d'un réfrigérateur et d'un congélateur séparés: le
+                congélateur coffre consomme 15% d'électricité en moins qu'un
+                congélateur armoire.
+            </div>
+            <img src="<?= BASE_URL ?>/public/images/eco-reflexes.png" style=" height: 281px;" />
+        </strong>
+        <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success">Plus d'éco'gestes</a>
     </div>
 </div>
 
@@ -127,7 +163,10 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             "hotwaterTemperatureSpeed": ' °C',
             "insideTempSpeed": ' °C',
             "productionElectSpeed": ' kW',
-            "insideTemp": ' kW'
+            "insideTemp": ' kW',
+            "counterConsumption": ' kWH',
+            "counterProduction": ' kWH'
+
         };
         var insideArray =[];
         var boilerArray = [];
@@ -269,7 +308,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
                 Highcharts.StockChart('historicData', {
                     chart: {
-                        height:300+ 'px',
+                        height:350+ 'px',
                     },
                     title: {
                         text: ''
