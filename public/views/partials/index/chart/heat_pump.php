@@ -17,11 +17,9 @@
 
                     d = new Date(data[j]["time"]);
 
-                    if (d.getTimezoneOffset() == 120) {
+                    if(d.getTimezoneOffset() != 120)
+                    {
                         d.setHours(d.getHours() + 1)
-                    }
-                    else {
-                        d.setHours(d.getHours() + 2)
                     }
 
 

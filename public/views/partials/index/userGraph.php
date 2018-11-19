@@ -99,12 +99,9 @@
                             for (var j in data) {
                                 d = new Date(data[j]["time"]);
 
-                                if(d.getTimezoneOffset() == 120)
+                                if(d.getTimezoneOffset() != 120)
                                 {
                                     d.setHours(d.getHours() + 1)
-                                }
-                                else {
-                                    d.setHours(d.getHours() + 2)
                                 }
 
                                 newData = data[j]["sum_count"]/1000
@@ -191,12 +188,9 @@
 
                                 d = new Date(data[j]["time"]);
 
-                                if(d.getTimezoneOffset() == 120)
+                                if(d.getTimezoneOffset() != 120)
                                 {
                                     d.setHours(d.getHours() + 1)
-                                }
-                                else {
-                                    d.setHours(d.getHours() + 2)
                                 }
 
                                 newdata = data[j]["sum_count"]/1000;
@@ -281,14 +275,10 @@
                             for (var j in data) {
                                 d = new Date(data[j]["time"]);
 
-                                if(d.getTimezoneOffset() == 120)
+                                if(d.getTimezoneOffset() != 120)
                                 {
                                     d.setHours(d.getHours() + 1)
                                 }
-                                else {
-                                    d.setHours(d.getHours() + 2)
-                                }
-
                                 dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
                             }
                             Highcharts.StockChart('hotwaterTemperature', {
@@ -365,14 +355,14 @@
                             for (var j in data) {
                                 d = new Date(data[j]["time"]);
 
-                                if(d.getTimezoneOffset() == 120)
+                                if(d.getTimezoneOffset() != 120)
                                 {
                                     d.setHours(d.getHours() + 1)
                                 }
-                                else {
-                                    d.setHours(d.getHours() + 2)
+
+                                if(data[j]["sum_count"] >= 0 && data[j]["sum_count"] < 50) {
+                                    dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
                                 }
-                                dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
                             }
                             Highcharts.StockChart('insideTemp', {
                                 chart: {
@@ -449,12 +439,9 @@
                             for (var j in data) {
                                 d = new Date(data[j]["time"]);
 
-                                if(d.getTimezoneOffset() == 120)
+                                if(d.getTimezoneOffset() != 120)
                                 {
                                     d.setHours(d.getHours() + 1)
-                                }
-                                else {
-                                    d.setHours(d.getHours() + 2)
                                 }
 
                                 newData = data[j]["sum_count"]/1000

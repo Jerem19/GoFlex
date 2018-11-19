@@ -18,13 +18,11 @@
                 for (var j in data) {
                     d = new Date(data[j]["time"]);
 
-                    if(d.getTimezoneOffset() == 120)
+                    if(d.getTimezoneOffset() != 120)
                     {
                         d.setHours(d.getHours() + 1)
                     }
-                    else {
-                        d.setHours(d.getHours() + 2)
-                    }
+
                     if(data[j]["sum_count"] >= 30 && data[j]["sum_count"] < 120) {
                         dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
                     }
