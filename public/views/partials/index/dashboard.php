@@ -248,7 +248,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             url: "insideTempHistory",
             timeout: 45000,
             success : function (data) {
-                for(let index = 0;index< data.length;index++)
+                for(var index = 0;index< data.length;index++)
                 {
                     d = new Date(data[index]["time"]);
                     if(d.getTimezoneOffset() == 120)
@@ -260,7 +260,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     }
                     insideArray.unshift([new Date(d.toISOString()).getTime(), data[index]["sum_count"]])
                 }
-                for(let index = 0;index< boiler.length;index++)
+                for(var index = 0;index< boiler.length;index++)
                 {
                     d = new Date(boiler[index]["time"]);
 
@@ -274,7 +274,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     boilerArray.unshift([new Date(d.toISOString()).getTime(), boiler[index]["sum_count"]])
                 }
 
-                for(let index = 0;index< electConsumption.length;index++)
+                for(var index = 0;index< electConsumption.length;index++)
                 {
                     d = new Date(electConsumption[index]["time"]);
 
@@ -288,7 +288,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["sum_count"]])
                 }
 
-                for(let index = 0;index< heatPumpConsumption.length;index++)
+                for(var index = 0;index< heatPumpConsumption.length;index++)
                 {
                     d = new Date(heatPumpConsumption[index]["time"]);
 

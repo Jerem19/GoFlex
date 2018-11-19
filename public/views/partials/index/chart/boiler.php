@@ -8,12 +8,17 @@
 </div>
 
 <script>
-    window.onload = function() {
+    function loadGraph(interval,range,url)
+    {
         $.ajax({
             type: "POST",
-            url: "hotwaterTemperature",
+            url: url,
+            data:{
+                'range': range,
+                'time': interval
+            },
             timeout: 45000,
-            success: function (data) {                
+            success: function (data) {
                 dataTime = [];
                 for (var j in data) {
                     d = new Date(data[j]["time"]);
@@ -59,40 +64,44 @@
                         liveRedraw: false
                     },
                     rangeSelector: {
+                        enabled:true,
                         floating: true,
-                        selected: 1,
+                        selected: 3,
                         buttons: [{
-                            type: 'minute',
-                            count: 60,
-                            text: '1h',
-                            dataGrouping: {
-                                forced: true,
-                                units: [['minute', [1]]]
+                            text: 'court',
+                            events: {
+                                click: function () {
+                                    loadGraph('5s','3h','hotwaterTemperature');
+                                }
                             }
                         }, {
-                            type: 'minute',
-                            count: 360,
-                            text: '6h',
-                            dataGrouping: {
-                                forced: true,
-                                units: [['minute', [15]]]
+                            text: 'court moyen',
+                            events: {
+                                click: function () {
+                                    loadGraph('1m','1d','hotwaterTemperature');
+                                }
                             }
                         }, {
-                            type: 'day',
-                            count: 7,
-                            text: '1d',
-                            dataGrouping: {
-                                forced: true,
-                                units: [['hour', [1]]]
+                            text: 'moyen',
+                            events: {
+                                click: function () {
+                                    loadGraph('15m','7d','hotwaterTemperature');
+                                }
                             }
                         }, {
-                            type: 'all',
-                            text: 'All',
-                            dataGrouping: {
-                                forced: true,
-                                units: [['day', [1]]]
+                            text: 'long',
+                            events: {
+                                click: function () {
+                                    loadGraph('1d','1y','hotwaterTemperatureAll');
+                                }
                             }
                         }],
+                        buttonTheme:{
+                            height:18,
+                            padding:2,
+                            width:20 + '%',
+                            zIndex:7
+                        },
                         inputEnabled: false // it supports only days
                     }
                 });
@@ -104,6 +113,9 @@
                 }
             }
         });
+    }
+    window.onload = function() {
+        loadGraph('15m','7d','hotwaterTemperature');
 
     }
 </script>
