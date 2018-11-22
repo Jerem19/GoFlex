@@ -270,7 +270,16 @@ $router
     ->post('/productionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
+        $interval = $_POST["time"];
+        $range = $_POST["range"];
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+        $res->send($result->getPoints());
+    })
+
+    ->post('/productionElectAll', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -284,7 +293,17 @@ $router
     ->post('/productionElectSpec', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(15m) fill(none) ORDER BY "time" DESC ;');
+        $interval = $_POST["time"];
+        $range = $_POST["range"];
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+        $res->send($result->getPoints());
+
+    })
+
+    ->post('/productionElectSpecAll', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = Gateway::getById($_POST['idGateway']);
+        $result = $database->query('SELECT sum(value)/COUNT(value) FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
 
     })

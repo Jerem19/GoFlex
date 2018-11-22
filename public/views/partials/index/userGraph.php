@@ -75,25 +75,151 @@
 ]); ?>
 
 <script>
-    window.onload = function() {
 
+
+    function loadProductionElect(interval,range,url)
+    {
         selectGw = $('select[name="gwId"]');
         var dataUser = 0;
-
-
-        selectGw.on('change', function () {
             $.ajax({
                 url: 'installUser',
                 type: 'POST',
-                data: { id : $(this).val() },
+                data: { id : selectGw.val() },
                 success : function (data) {
                     dataUser = data;
 
                     $.ajax({
                         type: "POST",
-                        url: "consumptionElectSpec",
-                        data: "idGateway=" + dataUser,
+                        url: url,
+                        data:{
+                            'range': range,
+                            'time': interval,
+                            "idGateway": dataUser
+                        },
                         timeout: 25000,
+                        success: function (data) {
+                            dataTime = [];
+                            for (var j in data) {
+                                d = new Date(data[j]["time"]);
+
+                                if(d.getTimezoneOffset() != 120)
+                                {
+                                    d.setHours(d.getHours() + 1)
+                                }
+
+                                newData = data[j]["sum_count"]/1000
+
+                                dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
+                            }
+                            Highcharts.StockChart('productionElect', {
+                                chart: {
+                                    events: {
+                                        load: function() { document.getElementById("loaderProductionElect").style.display = "none"; resizeFooter(); }
+                                    }
+                                },
+                                title: {
+                                    text: "<?= $l10n["chart"]["productionElect"] ?>"
+                                },
+                                xAxis: {
+                                    ordinal:false
+                                },
+                                yAxis: {
+                                    opposite: false,
+                                    title: {
+                                        text: "kW"
+                                    }
+                                },
+                                series: [{
+                                    data: dataTime,
+                                    tooltip: {
+                                        valueDecimals: 2
+                                    }
+                                }],
+                                navigator: {
+                                    margin: 60,
+                                    adaptToUpdatedData: false,
+                                },
+                                scrollbar: {
+                                    liveRedraw: false
+                                },
+                                rangeSelector: {
+                                    enabled:true,
+                                    floating: true,
+                                    selected: 3,
+                                    buttons: [{
+                                        text: 'court',
+                                        events: {
+                                            click: function () {
+                                                loadProductionElect('5s','3h','productionElectSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'court moyen',
+                                        events: {
+                                            click: function () {
+                                                loadProductionElect('1m','1d','productionElectSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'moyen',
+                                        events: {
+                                            click: function () {
+                                                loadProductionElect('15m','7d','productionElectSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'long',
+                                        events: {
+                                            click: function () {
+                                                loadProductionElect('1d','1y','productionElectSpecAll');
+                                            }
+                                        }
+                                    }],
+                                    buttonTheme:{
+                                        height:18,
+                                        padding:2,
+                                        width:20 + '%',
+                                        zIndex:7
+                                    },
+                                    inputEnabled: false // it supports only days
+                                }
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (textStatus === "timeout") {
+                                document.getElementById("loaderProductionElect").style.display = "none";
+                                document.getElementById("productionElect").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+                            }
+                        }
+                    });
+
+
+                }
+            });
+
+
+    }
+
+    function loadConsumptionElect(interval,range,url)
+    {
+        selectGw = $('select[name="gwId"]');
+        var dataUser = 0;
+            $.ajax({
+                url: 'installUser',
+                type: 'POST',
+                data: { id : selectGw.val() },
+                success : function (data) {
+                    dataUser = data;
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data:{
+                            'range': range,
+                            'time': interval,
+                            "idGateway": dataUser
+                        },
+                        //timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
@@ -141,28 +267,44 @@
                                     liveRedraw: false
                                 },
                                 rangeSelector: {
+                                    enabled:true,
                                     floating: true,
-                                    selected: 1,
+                                    selected: 3,
                                     buttons: [{
-                                        type: 'day',
-                                        count: 1,
-                                        text: '1d'
+                                        text: 'court',
+                                        events: {
+                                            click: function () {
+                                                loadConsumptionElect('5s','3h','consumptionElectSpec');
+                                            }
+                                        }
                                     }, {
-                                        type: 'day',
-                                        count: 2,
-                                        text: '2d'
+                                        text: 'court moyen',
+                                        events: {
+                                            click: function () {
+                                                loadConsumptionElect('1m','1d','consumptionElectSpec');
+                                            }
+                                        }
                                     }, {
-                                        type: 'day',
-                                        count: 7,
-                                        text: '7d'
+                                        text: 'moyen',
+                                        events: {
+                                            click: function () {
+                                                loadConsumptionElect('15m','7d','consumptionElectSpec');
+                                            }
+                                        }
                                     }, {
-                                        type: 'day',
-                                        count: 15,
-                                        text: '15d'
-                                    }, {
-                                        type: 'all',
-                                        text: 'All'
+                                        text: 'long',
+                                        events: {
+                                            click: function () {
+                                                loadConsumptionElect('1d','1y','consumptionElectSpecAll');
+                                            }
+                                        }
                                     }],
+                                    buttonTheme:{
+                                        height:18,
+                                        padding:2,
+                                        width:20 + '%',
+                                        zIndex:7
+                                    },
                                     inputEnabled: false // it supports only days
                                 }
                             });
@@ -176,12 +318,158 @@
                     });
 
 
+                }
+            });
+
+
+    }
+
+    function loadBoiler(interval,range,url)
+    {
+
+        selectGw = $('select[name="gwId"]');
+        var dataUser = 0;
+            $.ajax({
+                url: 'installUser',
+                type: 'POST',
+                data: { id : selectGw.val() },
+                timeout: 25000,
+                success : function (data) {
+                    dataUser = data;
+
 
                     $.ajax({
                         type: "POST",
-                        url: "consumptionHeatPumpSpec",
-                        data: "idGateway=" + dataUser,
+                        url: url,
+                        data:{
+                            'range': range,
+                            'time': interval,
+                            "idGateway": dataUser
+                        },
                         timeout: 25000,
+                        success: function (data) {
+                            dataTime = [];
+                            for (var j in data) {
+                                d = new Date(data[j]["time"]);
+
+                                if(d.getTimezoneOffset() != 120)
+                                {
+                                    d.setHours(d.getHours() + 1)
+                                }
+                                dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
+                            }
+                            Highcharts.StockChart('hotwaterTemperature', {
+                                chart: {
+                                    events: {
+                                        load: function() { document.getElementById("loaderHotwater").style.display = "none"; resizeFooter(); }
+                                    }
+                                },
+                                title: {
+                                    text: "<?= $l10n["chart"]["hotwaterTemperature"] ?>"
+                                },
+                                xAxis: {
+                                    ordinal:false
+                                },
+                                yAxis: {
+                                    opposite: false,
+                                    title: {
+                                        text: "°C"
+                                    }
+                                },
+                                series: [{
+                                    data: dataTime,
+                                    tooltip: {
+                                        valueDecimals: 2
+                                    }
+                                }],
+                                navigator: {
+                                    margin: 60,
+                                    adaptToUpdatedData: false,
+                                },
+                                scrollbar: {
+                                    liveRedraw: false
+                                },
+                                rangeSelector: {
+                                    enabled:true,
+                                    floating: true,
+                                    selected: 3,
+                                    buttons: [{
+                                        text: 'court',
+                                        events: {
+                                            click: function () {
+                                                loadBoiler('5s','3h','hotwaterTemperatureSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'court moyen',
+                                        events: {
+                                            click: function () {
+                                                loadBoiler('1m','1d','hotwaterTemperatureSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'moyen',
+                                        events: {
+                                            click: function () {
+                                                loadBoiler('15m','7d','hotwaterTemperatureSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'long',
+                                        events: {
+                                            click: function () {
+                                                loadBoiler('1d','1y','hotwaterTemperatureSpecAll');
+                                            }
+                                        }
+                                    }],
+                                    buttonTheme:{
+                                        height:18,
+                                        padding:2,
+                                        width:20 + '%',
+                                        zIndex:7
+                                    },
+                                    inputEnabled: false // it supports only days
+                                }
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (textStatus === "timeout") {
+                                document.getElementById("loaderHotwater").style.display = "none";
+                                document.getElementById("hotwaterTemperature").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+                            }
+                        }
+                    });
+
+
+
+                }
+            });
+
+
+    }
+
+    function loadHeatPump(interval,range,url)
+    {
+
+        selectGw = $('select[name="gwId"]');
+        var dataUser = 0;
+            $.ajax({
+                url: 'installUser',
+                type: 'POST',
+                data: { id : selectGw.val() },
+                success : function (data) {
+                    dataUser = data;
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data:{
+                            'range': range,
+                            'time': interval,
+                            "idGateway": dataUser
+                        },
+                        //timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
@@ -233,26 +521,44 @@
                                     liveRedraw: false
                                 },
                                 rangeSelector: {
+                                    enabled:true,
                                     floating: true,
-                                    selected: 1,
+                                    selected: 3,
                                     buttons: [{
-                                        type: 'day',
-                                        count: 1,
-                                        text: '1d'
+                                        text: 'court',
+                                        events: {
+                                            click: function () {
+                                                loadHeatPump('5s','3h','consumptionHeatPumpSpec');
+                                            }
+                                        }
                                     }, {
-                                        type: 'day',
-                                        count: 7,
-                                        text: '7d'
+                                        text: 'court moyen',
+                                        events: {
+                                            click: function () {
+                                                loadHeatPump('1m','1d','consumptionHeatPumpSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'moyen',
+                                        events: {
+                                            click: function () {
+                                                loadHeatPump('15m','7d','consumptionHeatPumpSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'long',
+                                        events: {
+                                            click: function () {
+                                                loadHeatPump('1d','1y','consumptionHeatPumpSpecAll');
+                                            }
+                                        }
+                                    }],
+                                    buttonTheme:{
+                                        height:18,
+                                        padding:2,
+                                        width:20 + '%',
+                                        zIndex:7
                                     },
-                                        {
-                                            type: 'day',
-                                            count: 15,
-                                            text: '15d'
-                                        },
-                                        {
-                                            type: 'all',
-                                            text: 'All'
-                                        }],
                                     inputEnabled: false // it supports only days
                                 }
                             });
@@ -265,91 +571,33 @@
                         }
                     });
 
+                }
+            });
+
+    }
+
+    function loadInsideTemp(interval,range,url)
+    {
+
+        selectGw = $('select[name="gwId"]');
+        var dataUser = 0;
+            $.ajax({
+                url: 'installUser',
+                type: 'POST',
+                data: { id : selectGw.val() },
+                success : function (data) {
+                    dataUser = data;
+
+
                     $.ajax({
                         type: "POST",
-                        url: "hotwaterTemperatureSpec",
-                        data: "idGateway=" + dataUser,
-                        timeout: 25000,
-                        success: function (data) {
-                            dataTime = [];
-                            for (var j in data) {
-                                d = new Date(data[j]["time"]);
-
-                                if(d.getTimezoneOffset() != 120)
-                                {
-                                    d.setHours(d.getHours() + 1)
-                                }
-                                dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
-                            }
-                            Highcharts.StockChart('hotwaterTemperature', {
-                                chart: {
-                                    events: {
-                                        load: function() { document.getElementById("loaderHotwater").style.display = "none"; resizeFooter(); }
-                                    }
-                                },
-                                title: {
-                                    text: "<?= $l10n["chart"]["hotwaterTemperature"] ?>"
-                                },
-                                xAxis: {
-                                    ordinal:false
-                                },
-                                yAxis: {
-                                    opposite: false,
-                                    title: {
-                                        text: "°C"
-                                    }
-                                },
-                                series: [{
-                                    data: dataTime,
-                                    tooltip: {
-                                        valueDecimals: 2
-                                    }
-                                }],
-                                navigator: {
-                                    margin: 60,
-                                    adaptToUpdatedData: false,
-                                },
-                                scrollbar: {
-                                    liveRedraw: false
-                                },
-                                rangeSelector: {
-                                    floating: true,
-                                    selected: 1,
-                                    buttons: [{
-                                        type: 'day',
-                                        count: 1,
-                                        text: '1d'
-                                    }, {
-                                        type: 'day',
-                                        count: 7,
-                                        text: '7d'
-                                    },
-                                        {
-                                            type: 'day',
-                                            count: 15,
-                                            text: '15d'
-                                        },
-                                        {
-                                            type: 'all',
-                                            text: 'All'
-                                        }],
-                                    inputEnabled: false // it supports only days
-                                }
-                            });
+                        url: url,
+                        data:{
+                            'range': range,
+                            'time': interval,
+                            "idGateway": dataUser
                         },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            if (textStatus === "timeout") {
-                                document.getElementById("loaderHotwater").style.display = "none";
-                                document.getElementById("hotwaterTemperature").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
-                            }
-                        }
-                    });
-
-                    $.ajax({
-                        type: "POST",
-                        url: "insideTempSpec",
-                        data: "idGateway=" + dataUser,
-                        timeout: 25000,
+                        //timeout: 25000,
                         success: function (data) {
                             dataTime = [];
                             for (var j in data) {
@@ -396,26 +644,44 @@
                                     liveRedraw: false
                                 },
                                 rangeSelector: {
+                                    enabled:true,
                                     floating: true,
-                                    selected: 1,
+                                    selected: 3,
                                     buttons: [{
-                                        type: 'day',
-                                        count: 1,
-                                        text: '1d'
+                                        text: 'court',
+                                        events: {
+                                            click: function () {
+                                                loadInsideTemp('5s','3h','insideTempSpec');
+                                            }
+                                        }
                                     }, {
-                                        type: 'day',
-                                        count: 7,
-                                        text: '7d'
+                                        text: 'court moyen',
+                                        events: {
+                                            click: function () {
+                                                loadInsideTemp('1m','1d','insideTempSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'moyen',
+                                        events: {
+                                            click: function () {
+                                                loadInsideTemp('15m','7d','insideTempSpec');
+                                            }
+                                        }
+                                    }, {
+                                        text: 'long',
+                                        events: {
+                                            click: function () {
+                                                loadInsideTemp('1d','1y','insideTempSpecAll');
+                                            }
+                                        }
+                                    }],
+                                    buttonTheme:{
+                                        height:18,
+                                        padding:2,
+                                        width:20 + '%',
+                                        zIndex:7
                                     },
-                                        {
-                                            type: 'day',
-                                            count: 15,
-                                            text: '15d'
-                                        },
-                                        {
-                                            type: 'all',
-                                            text: 'All'
-                                        }],
                                     inputEnabled: false // it supports only days
                                 }
                             });
@@ -427,95 +693,24 @@
                             }
                         }
                     });
-
-
-                    $.ajax({
-                        type: "POST",
-                        url: "productionElectSpec",
-                        data: "idGateway=" + dataUser,
-                        timeout: 25000,
-                        success: function (data) {
-                            dataTime = [];
-                            for (var j in data) {
-                                d = new Date(data[j]["time"]);
-
-                                if(d.getTimezoneOffset() != 120)
-                                {
-                                    d.setHours(d.getHours() + 1)
-                                }
-
-                                newData = data[j]["sum_count"]/1000
-
-                                dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
-                            }
-                            Highcharts.StockChart('productionElect', {
-                                chart: {
-                                    events: {
-                                        load: function() { document.getElementById("loaderProductionElect").style.display = "none"; resizeFooter(); }
-                                    }
-                                },
-                                title: {
-                                    text: "<?= $l10n["chart"]["productionElect"] ?>"
-                                },
-                                xAxis: {
-                                    ordinal:false
-                                },
-                                yAxis: {
-                                    opposite: false,
-                                    title: {
-                                        text: "kW"
-                                    }
-                                },
-                                series: [{
-                                    data: dataTime,
-                                    tooltip: {
-                                        valueDecimals: 2
-                                    }
-                                }],
-                                navigator: {
-                                    margin: 60,
-                                    adaptToUpdatedData: false,
-                                },
-                                scrollbar: {
-                                    liveRedraw: false
-                                },
-                                rangeSelector: {
-                                    floating: true,
-                                    selected: 1,
-                                    buttons: [{
-                                        type: 'day',
-                                        count: 1,
-                                        text: '1d'
-                                    }, {
-                                        type: 'day',
-                                        count: 7,
-                                        text: '7d'
-                                    },
-                                        {
-                                            type: 'day',
-                                            count: 15,
-                                            text: '15d'
-                                        },
-                                        {
-                                            type: 'all',
-                                            text: 'All'
-                                        }],
-                                    inputEnabled: false // it supports only days
-                                }
-                            });
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            if (textStatus === "timeout") {
-                                document.getElementById("loaderProductionElect").style.display = "none";
-                                document.getElementById("productionElect").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
-                            }
-                        }
-                    });
-
-
                 }
             });
-            document.getElementById("loaderConsumptionElect").style.display = "block";
+    }
+    window.onload = function() {
+        selectGw = $('select[name="gwId"]');
+        loadConsumptionElect('15m','7d','consumptionElectSpec');
+        loadBoiler('15m','7d','hotwaterTemperatureSpec');
+        loadHeatPump('15m','7d','consumptionHeatPumpSpec');
+        loadProductionElect('15m','7d','productionElectSpec');
+
+        selectGw.on('change', function () {
+            loadConsumptionElect('15m','7d','consumptionElectSpec');
+            loadBoiler('15m','7d','hotwaterTemperatureSpec');
+            loadHeatPump('15m','7d','consumptionHeatPumpSpec');
+            loadInsideTemp('15m','7d','insideTempSpec');
+            loadProductionElect('15m','7d','productionElectSpec');
+        });
+        document.getElementById("loaderConsumptionElect").style.display = "block";
             document.getElementById("loaderHotwater").style.display = "block";
             document.getElementById("loaderHeatPump").style.display = "block";
             document.getElementById("loaderInsideTemp").style.display = "block";
@@ -525,11 +720,6 @@
             document.getElementById("consumptionHeatPump").innerHTML = "Loading";
             document.getElementById("insideTemp").innerHTML = "Loading";
             document.getElementById("productionElect").innerHTML = "Loading";
-
-        }).change();
-
-
-
     }
 </script>
 
