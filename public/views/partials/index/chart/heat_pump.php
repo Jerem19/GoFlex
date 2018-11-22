@@ -77,18 +77,23 @@
                             text: 'court',
                             events: {
                                 click: function () {
-                                    loadGraph('5s','3h','consumptionHeatPump');
+                                    loadGraph('1s','6h','consumptionHeatPump');
                                 }
                             }
-                        }, {
+                        }/*, {
                             text: 'court moyen',
+                            enabled:false,
                             events: {
                                 click: function () {
                                     loadGraph('1m','1d','consumptionHeatPump');
                                 }
                             }
+                            dataGrouping:{
+                                enabled:false
+                            }
                         }, {
                             text: 'moyen',
+                            enabled:false,
                             events: {
                                 click: function () {
                                     loadGraph('15m','7d','consumptionHeatPump');
@@ -96,12 +101,13 @@
                             }
                         }, {
                             text: 'long',
+                            enabled:false,
                             events: {
                                 click: function () {
                                     loadGraph('1d','1y','consumptionHeatPumpAll');
                                 }
                             }
-                        }],
+                        }*/],
                         buttonTheme:{
                             height:18,
                             padding:2,
@@ -122,7 +128,7 @@
     }
     window.onload = function() {
 
-        loadGraph('15m','7d','consumptionHeatPump');
+        loadGraph('1s','6h','consumptionHeatPump');
 
     }
 </script>

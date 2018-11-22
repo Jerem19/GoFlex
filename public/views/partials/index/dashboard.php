@@ -191,6 +191,21 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                             document.getElementById(i).innerHTML = data[0]['value']/1000 + urls[i] +
                                 "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
                         }
+                        else if(i== "consumptionHeatPumpSpeed")
+                        {
+                            document.getElementById(i).innerHTML = data[0]['value']/1000 + urls[i] +
+                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
+                        }
+                        else if(i== "hotwaterTemperatureSpeed")
+                        {
+                            document.getElementById(i).innerHTML = Math.round(data[0]['value']*10)/10 + urls[i] +
+                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
+                        }
+                        else if(i== "insideTempSpeed")
+                        {
+                            document.getElementById(i).innerHTML = Math.round(data[0]['value']*10)/10 + urls[i] +
+                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
+                        }
                         else
                         {
                             document.getElementById(i).innerHTML = data[0]['value'] + urls[i] +
