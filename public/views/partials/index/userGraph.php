@@ -150,7 +150,7 @@
                                         text: 'court',
                                         events: {
                                             click: function () {
-                                                loadProductionElect('5s','3h','productionElectSpec');
+                                                loadProductionElect('1s','3h','productionElectSpec');
                                             }
                                         }
                                     }, {
@@ -274,7 +274,7 @@
                                         text: 'court',
                                         events: {
                                             click: function () {
-                                                loadConsumptionElect('5s','3h','consumptionElectSpec');
+                                                loadConsumptionElect('1s','3h','consumptionElectSpec');
                                             }
                                         }
                                     }, {
@@ -397,7 +397,7 @@
                                         text: 'court',
                                         events: {
                                             click: function () {
-                                                loadBoiler('5s','3h','hotwaterTemperatureSpec');
+                                                loadBoiler('1s','3h','hotwaterTemperatureSpec');
                                             }
                                         }
                                     }, {
@@ -528,7 +528,7 @@
                                         text: 'court',
                                         events: {
                                             click: function () {
-                                                loadHeatPump('5s','3h','consumptionHeatPumpSpec');
+                                                loadHeatPump('1s','3h','consumptionHeatPumpSpec');
                                             }
                                         }
                                     }, {
@@ -651,7 +651,7 @@
                                         text: 'court',
                                         events: {
                                             click: function () {
-                                                loadInsideTemp('5s','3h','insideTempSpec');
+                                                loadInsideTemp('1s','3h','insideTempSpec');
                                             }
                                         }
                                     }, {
