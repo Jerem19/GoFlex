@@ -361,13 +361,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
                     document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
                         "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
-
-
-
-
-
-
-
                 }
                 else ajaxError('counterProduction');
             },
@@ -384,12 +377,9 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                 for(var index = 0;index< data.length;index++)
                 {
                     d = new Date(data[index]["time"]);
-                    if(d.getTimezoneOffset() == 120)
+                    if(d.getTimezoneOffset() != 120)
                     {
                         d.setHours(d.getHours() + 1)
-                    }
-                    else {
-                        d.setHours(d.getHours() + 2)
                     }
                     insideArray.unshift([new Date(d.toISOString()).getTime(), data[index]["distinct"]])
                 }
@@ -397,12 +387,9 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                 {
                     d = new Date(boiler[index]["time"]);
 
-                    if(d.getTimezoneOffset() == 120)
+                    if(d.getTimezoneOffset() != 120)
                     {
                         d.setHours(d.getHours() + 1)
-                    }
-                    else {
-                        d.setHours(d.getHours() + 2)
                     }
                     boilerArray.unshift([new Date(d.toISOString()).getTime(), boiler[index]["distinct"]])
                 }
@@ -411,12 +398,9 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                 {
                     d = new Date(electConsumption[index]["time"]);
 
-                    if(d.getTimezoneOffset() == 120)
+                    if(d.getTimezoneOffset() != 120)
                     {
                         d.setHours(d.getHours() + 1)
-                    }
-                    else {
-                        d.setHours(d.getHours() + 2)
                     }
                     electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]])
                 }
@@ -425,12 +409,9 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                 {
                     d = new Date(heatPumpConsumption[index]["time"]);
 
-                    if(d.getTimezoneOffset() == 120)
+                    if(d.getTimezoneOffset() != 120)
                     {
                         d.setHours(d.getHours() + 1)
-                    }
-                    else {
-                        d.setHours(d.getHours() + 2)
                     }
                     if(heatPumpConsumption[index]["distinct"] >= 0)
                     {
