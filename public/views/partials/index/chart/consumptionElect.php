@@ -28,9 +28,9 @@
                         d.setHours(d.getHours() + 1)
                     }
 
-                    if(data[j]["sum_count"] >= 0)
+                    if(data[j]["distinct"] >= 0)
                     {
-                        newData = data[j]["sum_count"] / 1000;
+                        newData = data[j]["distinct"] / 1000;
                         dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
                     }
                 }
@@ -73,7 +73,7 @@
                             text: 'court',
                             events: {
                                 click: function () {
-                                    loadGraph('5s','3h','consumptionElect');
+                                    loadGraph('5s','12h','consumptionElect');
                                 }
                             }
                         }, {

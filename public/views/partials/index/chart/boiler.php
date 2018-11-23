@@ -28,8 +28,8 @@
                         d.setHours(d.getHours() + 1)
                     }
 
-                    if(data[j]["sum_count"] >= 30 && data[j]["sum_count"] < 120) {
-                        dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
+                    if(data[j]["distinct"] >= 30 && data[j]["distinct"] < 120) {
+                        dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["distinct"]])
                     }
                 }
                 Highcharts.StockChart('hotwaterTemperature', {
@@ -71,7 +71,7 @@
                             text: 'court',
                             events: {
                                 click: function () {
-                                    loadGraph('5s','3h','hotwaterTemperature');
+                                    loadGraph('1s','12h','hotwaterTemperature');
                                 }
                             }
                         }, {

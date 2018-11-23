@@ -107,7 +107,7 @@
                                     d.setHours(d.getHours() + 1)
                                 }
 
-                                newData = data[j]["sum_count"]/1000
+                                newData = data[j]["distinct"]/1000
 
                                 dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
                             }
@@ -230,7 +230,7 @@
                                     d.setHours(d.getHours() + 1)
                                 }
 
-                                newData = data[j]["sum_count"]/1000
+                                newData = data[j]["distinct"]/1000
 
                                 dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
 
@@ -356,7 +356,7 @@
                                 {
                                     d.setHours(d.getHours() + 1)
                                 }
-                                dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
+                                dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["distinct"]])
                             }
                             Highcharts.StockChart('hotwaterTemperature', {
                                 chart: {
@@ -481,7 +481,7 @@
                                     d.setHours(d.getHours() + 1)
                                 }
 
-                                newdata = data[j]["sum_count"]/1000;
+                                newdata = data[j]["distinct"]/1000;
 
                                 dataTime.unshift([new Date(d.toISOString()).getTime(), newdata])
                             }
@@ -608,8 +608,8 @@
                                     d.setHours(d.getHours() + 1)
                                 }
 
-                                if(data[j]["sum_count"] >= 0 && data[j]["sum_count"] < 50) {
-                                    dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
+                                if(data[j]["distinct"] >= 0 && data[j]["distinct"] < 50) {
+                                    dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["distinct"]])
                                 }
                             }
                             Highcharts.StockChart('insideTemp', {

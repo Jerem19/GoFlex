@@ -28,9 +28,9 @@
                         d.setHours(d.getHours() + 1)
                     }
 
-                    if(data[j]["sum_count"] >= 0 && data[j]["sum_count"] < 50)
+                    if(data[j]["distinct"] >= 0 && data[j]["distinct"] < 50)
                     {
-                        dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["sum_count"]])
+                        dataTime.unshift([new Date(d.toISOString()).getTime(), data[j]["distinct"]])
                     }
                 }
                 Highcharts.StockChart('insideTemp', {
@@ -72,7 +72,7 @@
                             text: 'court',
                             events: {
                                 click: function () {
-                                    loadGraph('5s','3h','insideTemp');
+                                    loadGraph('1s','12h','insideTemp');
                                 }
                             }
                         }, {

@@ -191,7 +191,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     timeConsumptionElectSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
                     timeConsumptionElectSpeed = timeConsumptionElectSpeed.replace("T", " ");
 
-                    consumptionElectSpeed = data[0]['value']/1000;
+                    consumptionElectSpeed = data[0]['last']/1000;
 
                     //document.getElementById('consumptionElectSpeed').innerHTML = consumptionElectSpeed + kw +
                       //  "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
@@ -212,7 +212,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     timeConsumptionHeatPumpSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
                     timeConsumptionHeatPumpSpeed = timeConsumptionHeatPumpSpeed.replace("T", " ");
 
-                    consumptionHeatPumpSpeed =Math.round(data[0]['value'])/1000;
+                    consumptionHeatPumpSpeed =Math.round(data[0]['last'])/1000;
 
                    // document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw +
                      //   "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
@@ -233,7 +233,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     timeHotwaterTemperatureSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
                     timeHotwaterTemperatureSpeed = timeHotwaterTemperatureSpeed.replace("T", " ");
 
-                    hotwaterTemperatureSpeed = Math.round(data[0]['value']*10)/10;
+                    hotwaterTemperatureSpeed = Math.round(data[0]['last']*10)/10;
 
                     //document.getElementById('hotwaterTemperatureSpeed').innerHTML = hotwaterTemperatureSpeed + celsius +
                       //  "<br/><p style=\"font-size: 15px;\">" + timeHotwaterTemperatureSpeed + "</p>";
@@ -254,7 +254,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     timeInsideTempSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
                     timeInsideTempSpeed = timeInsideTempSpeed.replace("T", " ");
 
-                    insideTempSpeed = Math.round(data[0]['value']*10)/10;
+                    insideTempSpeed = Math.round(data[0]['last']*10)/10;
 
                     //document.getElementById('insideTempSpeed').innerHTML =  insideTempSpeed + celsius +
                       //  "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
@@ -275,7 +275,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     timeCounterConsumption = new Date(data[0]["time"]).toISOString().substr(0, 16);
                     timeCounterConsumption = timeCounterConsumption.replace("T", " ");
 
-                    counterConsumption = data[0]['value'];
+                    counterConsumption = data[0]['last'];
 
                     //document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
                       //  "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
@@ -339,7 +339,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     timeCounterProduction = new Date(data[0]["time"]).toISOString().substr(0, 16);
                     timeCounterProduction = timeCounterProduction.replace("T", " ");
 
-                    counterProduction = data[0]['value'];
+                    counterProduction = data[0]['last'];
 
                     document.getElementById('counterProduction').innerHTML = counterProduction + kwH +
                         "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction + "</p>";
@@ -391,7 +391,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     else {
                         d.setHours(d.getHours() + 2)
                     }
-                    insideArray.unshift([new Date(d.toISOString()).getTime(), data[index]["sum_count"]])
+                    insideArray.unshift([new Date(d.toISOString()).getTime(), data[index]["distinct"]])
                 }
                 for(var index = 0;index< boiler.length;index++)
                 {
@@ -404,7 +404,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     else {
                         d.setHours(d.getHours() + 2)
                     }
-                    boilerArray.unshift([new Date(d.toISOString()).getTime(), boiler[index]["sum_count"]])
+                    boilerArray.unshift([new Date(d.toISOString()).getTime(), boiler[index]["distinct"]])
                 }
 
                 for(var index = 0;index< electConsumption.length;index++)
@@ -418,7 +418,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     else {
                         d.setHours(d.getHours() + 2)
                     }
-                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["sum_count"]])
+                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]])
                 }
 
                 for(var index = 0;index< heatPumpConsumption.length;index++)
@@ -434,7 +434,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     }
                     if(heatPumpConsumption[index]["sum_count"] >= 0)
                     {
-                        heatPumpArray.unshift([new Date(d.toISOString()).getTime(), heatPumpConsumption[index]["sum_count"]])
+                        heatPumpArray.unshift([new Date(d.toISOString()).getTime(), heatPumpConsumption[index]["distinct"]])
                     }
 
                 }
