@@ -432,7 +432,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     else {
                         d.setHours(d.getHours() + 2)
                     }
-                    if(heatPumpConsumption[index]["sum_count"] >= 0)
+                    if(heatPumpConsumption[index]["distinct"] >= 0)
                     {
                         heatPumpArray.unshift([new Date(d.toISOString()).getTime(), heatPumpConsumption[index]["distinct"]])
                     }

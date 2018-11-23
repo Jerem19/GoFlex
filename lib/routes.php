@@ -205,7 +205,7 @@ $router
     ->post('/insideTempHistory', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time > now()-1d GROUP BY time(15m) fill(none) ORDER BY time DESC ;');
+        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time > now()-3h GROUP BY time(1s) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -259,7 +259,7 @@ $router
     ->post('/consumptionElectHistory', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time > now()-1d GROUP BY time(15m) fill(none) ORDER BY time DESC ;');
+        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time > now()-3h GROUP BY time(1s) fill(none) ORDER BY time DESC ;');
 
         $res->send($result->getPoints());
     })
@@ -360,7 +360,7 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $powerMeter = getHeatPowerMeter($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" where time > now()-1d GROUP BY time(15m) fill(none) ORDER BY time DESC ;');
+        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" where time > now()-3h GROUP BY time(1s) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
     })
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -411,7 +411,7 @@ $router
     ->post('/hotwaterTemperatureHistory', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time > now()-1d GROUP BY time(15m) fill(none) ORDER BY time DESC ;');
+        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time > now()-3h GROUP BY time(1s) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
     })
 
