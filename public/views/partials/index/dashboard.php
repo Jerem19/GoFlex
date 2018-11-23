@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="mt col-lg-12 col-xl-4 col-md-12 form-panel">
+    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
         <p class="dashboardTitleSize" style="text-align: center">Consommation en temps réel</p>
         <hr>
@@ -17,16 +17,12 @@
                 </div></a>
         </div>
 
-
-
-
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
                 <p><?= $l10n["chart"]["consumptionHeatPump"] ?></p>
             </div>
             <a href="consumptionHeatPump">
                 <span class="fa fa-fire dashboardFaSize"></span>
-
 
                 <!--<p class="dashboardTextSize"><?//= L10N['index']['dashboard']['textHeatPump']?></p>-->
 
@@ -35,14 +31,14 @@
                 </div></a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-7 col-md-12 form-panel">
+    <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> Données historiques</p>
         <hr>
         <div id="historicData"></div>
     </div>
 </div>
-<div class="row">
-    <div class="mt col-lg-12 col-xl-4 col-md-12 form-panel">
+<div class="row" style="height: 750px;">
+    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
         <p class="dashboardTitleSize" style="text-align: center"> Température en temps réel</p>
         <hr>
@@ -53,7 +49,6 @@
             </div>
             <a href="boiler">
                 <span class="fa fa-bath dashboardFaSize"></span>
-
 
                 <!--<p class="dashboardTextSize"><?//= L10N['index']['dashboard']['textHotwaterTemperature']?></p>-->
                 <div class="dashboardNumberSize" id="hotwaterTemperatureSpeed">
@@ -78,7 +73,7 @@
             </a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-4 col-md-12 form-panel">
+    <div class="mt col-lg-12 col-xl-5 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> Index de votre compteur</p>
         <hr>
         <div class="indexAlert alert-secondary">
@@ -128,7 +123,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 {
 
     ?>
-    <div class="row mt col-lg-5 form-panel">
+    <div class="row mt col-lg-8 form-panel">
         <div style="text-align: center;">
             <div class="dashboardTitleSize">
                 <p><?= $l10n["chart"]["productionElect"] ?></p>
@@ -405,6 +400,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]])
                 }
 
+                /*
                 for(var index = 0;index< heatPumpConsumption.length;index++)
                 {
                     d = new Date(heatPumpConsumption[index]["time"]);
@@ -413,12 +409,12 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     {
                         d.setHours(d.getHours() + 1)
                     }
-                    if(heatPumpConsumption[index]["distinct"] >= 0)
+                    if(heatPumpConsumption[index]["distinct"] >= -10)
                     {
                         heatPumpArray.unshift([new Date(d.toISOString()).getTime(), heatPumpConsumption[index]["distinct"]])
                     }
-
                 }
+                */
 
                 Highcharts.StockChart('historicData', {
                     chart: {
@@ -503,14 +499,14 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                             data: electArray,
                             index:1,
                             yAxis:1
-                        },
+                        },/*
                         {
                             name: 'Pompe à chaleur',
                             type: 'area',
                             data: heatPumpArray,
                             index:2,
                             yAxis:1
-                        },
+                        },*/
                         {
                             name: 'Intérieur',
                             type: 'line',
