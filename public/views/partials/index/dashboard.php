@@ -153,21 +153,23 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
     window.onload = function() {
 
-        function ajaxError (elementId) {
-            document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-        }
+        const kw = 'kW';
+        const celsius = '°C';
+        const kwH ='kWh';
 
-        var urls = {
-            "consumptionElectSpeed": ' kW',
-            "consumptionHeatPumpSpeed": ' kW',
-            "hotwaterTemperatureSpeed": ' °C',
-            "insideTempSpeed": ' °C',
-            "productionElectSpeed": ' kW',
-            "insideTemp": ' kW',
-            "counterConsumption": ' kWH',
-            "counterProduction": ' kWH'
+        var consumptionElectSpeed;
+        var timeConsumptionElectSpeed;
+        var consumptionHeatPumpSpeed;
+        var timeConsumptionHeatPumpSpeed;
+        var hotwaterTemperatureSpeed;
+        var timeHotwaterTemperatureSpeed;
+        var insideTempSpeed;
+        var timeInsideTempSpeed;
+        var counterConsumption;
+        var timeCounterConsumption;
+        var counterProduction;
+        var timeCounterProduction;
 
-        };
         var insideArray =[];
         var boilerArray = [];
         var electArray = [];
@@ -176,49 +178,116 @@ if($user->getInstallations()[0]->Solar()->isExistant())
         var electConsumption;
         var heatPumpConsumption;
 
-        for (const i in urls) {
-
-            $.ajax({
-                url : i,
-                type : 'POST',
-                success : function(data) {
-                    if (data && Array.isArray(data)) {
-                        d = new Date(data[0]["time"]).toISOString().substr(0,16);
-                        d = d.replace("T", " ");
-
-                        if(i == "consumptionElectSpeed")
-                        {
-                            document.getElementById(i).innerHTML = data[0]['value']/1000 + urls[i] +
-                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
-                        }
-                        else if(i== "consumptionHeatPumpSpeed")
-                        {
-                            document.getElementById(i).innerHTML = data[0]['value']/1000 + urls[i] +
-                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
-                        }
-                        else if(i== "hotwaterTemperatureSpeed")
-                        {
-                            document.getElementById(i).innerHTML = Math.round(data[0]['value']*10)/10 + urls[i] +
-                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
-                        }
-                        else if(i== "insideTempSpeed")
-                        {
-                            document.getElementById(i).innerHTML = Math.round(data[0]['value']*10)/10 + urls[i] +
-                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
-                        }
-                        else
-                        {
-                            document.getElementById(i).innerHTML = data[0]['value'] + urls[i] +
-                                "<br/><p style=\"font-size: 15px;\">" + d + "</p>";
-                        }
-                    }
-                    else ajaxError(i);
-                },
-                error: function () {
-                    ajaxError(i);
-                }
-            });
+        function ajaxError (elementId) {
+            document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
         }
+
+        $.ajax({
+            url: 'consumptionElectSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    timeConsumptionElectSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    timeConsumptionElectSpeed = timeConsumptionElectSpeed.replace("T", " ");
+
+                    consumptionElectSpeed = data[0]['value']/1000;
+
+                    //document.getElementById('consumptionElectSpeed').innerHTML = consumptionElectSpeed + kw +
+                      //  "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
+                }
+                else ajaxError('consumptionElectSpeed');
+            },
+            error: function () {
+                ajaxError('consumptionElectSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'consumptionHeatPumpSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    timeConsumptionHeatPumpSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    timeConsumptionHeatPumpSpeed = timeConsumptionHeatPumpSpeed.replace("T", " ");
+
+                    consumptionHeatPumpSpeed =Math.round(data[0]['value'])/1000;
+
+                   // document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw +
+                     //   "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
+                }
+                else ajaxError('consumptionHeatPumpSpeed');
+            },
+            error: function () {
+                ajaxError('consumptionHeatPumpSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'hotwaterTemperatureSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    timeHotwaterTemperatureSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    timeHotwaterTemperatureSpeed = timeHotwaterTemperatureSpeed.replace("T", " ");
+
+                    hotwaterTemperatureSpeed = Math.round(data[0]['value']*10)/10;
+
+                    //document.getElementById('hotwaterTemperatureSpeed').innerHTML = hotwaterTemperatureSpeed + celsius +
+                      //  "<br/><p style=\"font-size: 15px;\">" + timeHotwaterTemperatureSpeed + "</p>";
+                }
+                else ajaxError('hotwaterTemperatureSpeed');
+            },
+            error: function () {
+                ajaxError('hotwaterTemperatureSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'insideTempSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    timeInsideTempSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    timeInsideTempSpeed = timeInsideTempSpeed.replace("T", " ");
+
+                    insideTempSpeed = Math.round(data[0]['value']*10)/10;
+
+                    //document.getElementById('insideTempSpeed').innerHTML =  insideTempSpeed + celsius +
+                      //  "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
+                }
+                else ajaxError('insideTempSpeed');
+            },
+            error: function () {
+                ajaxError('insideTempSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'counterConsumption',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    timeCounterConsumption = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    timeCounterConsumption = timeCounterConsumption.replace("T", " ");
+
+                    counterConsumption = data[0]['value'];
+
+                    //document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
+                      //  "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
+                }
+                else ajaxError('counterConsumption');
+            },
+            error: function () {
+                ajaxError('counterConsumption');
+            }
+        });
+
+
 
         $.ajax({
             type: "POST",
@@ -237,7 +306,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             url: "consumptionElectHistory",
             success : function (data) {
                 electConsumption = data;
-                console.log(electConsumption);
             },
             error: function () {
                 ajaxError('TEST');
@@ -257,6 +325,56 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
         });
 
+
+        $.ajax({
+            url: 'counterProduction',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    <?php
+                        if($user->getInstallations()[0]->Solar()->isExistant())
+                        {
+                    ?>
+                    timeCounterProduction = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    timeCounterProduction = timeCounterProduction.replace("T", " ");
+
+                    counterProduction = data[0]['value'];
+
+                    document.getElementById('counterProduction').innerHTML = counterProduction + kwH +
+                        "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction + "</p>";
+
+                    <?php
+                        }
+                            ?>
+                    document.getElementById('consumptionElectSpeed').innerHTML = consumptionElectSpeed + kw +
+                        "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
+
+                    document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw +
+                        "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
+
+                    document.getElementById('hotwaterTemperatureSpeed').innerHTML = hotwaterTemperatureSpeed + celsius +
+                        "<br/><p style=\"font-size: 15px;\">" + timeHotwaterTemperatureSpeed + "</p>";
+
+                    document.getElementById('insideTempSpeed').innerHTML =  insideTempSpeed + celsius +
+                        "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
+
+                    document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
+                        "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
+
+
+
+
+
+
+
+                }
+                else ajaxError('counterProduction');
+            },
+            error: function () {
+                ajaxError('counterProduction');
+            }
+        });
 
         $.ajax({
             type: "POST",

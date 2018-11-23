@@ -19,7 +19,6 @@
             },
             timeout: 45000,
             success: function (data) {
-                console.log(data);
                 dataTime = [];
                 for (var j in data) {
                     d = new Date(data[j]["time"]);
