@@ -35,6 +35,7 @@
         <p class="dashboardTitleSize" style="text-align: center"> Données </br> historiques</p>
         <hr>
         <div id="historicData"></div>
+        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
     </div>
 </div>
 <div class="row">
@@ -262,6 +263,9 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
                 Highcharts.StockChart('historicData', {
                     chart: {
+                        events: {
+                            load: function() { document.getElementById("loader").style.display = "none"; resizeFooter(); }
+                        },
                         height:350+ 'px'
                     },
                     title: {
@@ -370,6 +374,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             },
             error: function () {
                 ajaxError('TEST');
+                document.getElementById("loader").style.display = "none";
             }
         });
 
@@ -444,7 +449,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
                     insideTempSpeed = Math.round(data[0]['last']*10)/10;
 
-                    document.getElementById('insideTempSpeed').innerHTML =  insideTempSpeed + celsius + "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
+                    document.getElementById('insideTempSpeed').innerHTML = insideTempSpeed + celsius + "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
                 }
                 else ajaxError('insideTempSpeed');
             },
