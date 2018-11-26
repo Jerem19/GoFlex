@@ -436,7 +436,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                         d.setHours(d.getHours() + 1)
                     }
 
-                    timeHotwaterTemperatureSpeed = d.substr(0, 16);
+                    timeHotwaterTemperatureSpeed = d.toISOString().substr(0, 16);
                     timeHotwaterTemperatureSpeed = timeHotwaterTemperatureSpeed.replace("T", " ");
 
                     hotwaterTemperatureSpeed = Math.round(data[0]['last']*10)/10;
