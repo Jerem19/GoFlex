@@ -242,7 +242,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     {
                         d.setHours(d.getHours() + 1)
                     }
-                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]])
+                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]/1000])
                 }
 
                 /*
@@ -310,7 +310,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                                 }
                             }
                         },
-
                         series: {
                             animation: false,
                             events: {
@@ -332,7 +331,8 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                         }
                     },
                     tooltip: {
-                        shared: false
+                        shared: false,
+                        valueDecimals: 2
                     },
                     scrollbar: {
                         enabled: false
@@ -347,6 +347,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                             data: electArray,
                             index:1,
                             yAxis:1
+
                         },/*
                          {
                          name: 'Pompe à chaleur',
