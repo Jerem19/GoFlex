@@ -120,7 +120,6 @@
 <?php
 if($user->getInstallations()[0]->Solar()->isExistant())
 {
-
     ?>
     <div class="row mt col-lg-8 form-panel">
         <div style="text-align: center;">
