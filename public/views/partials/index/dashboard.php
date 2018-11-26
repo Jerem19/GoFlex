@@ -379,7 +379,12 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             success: function(data){
                 if (data && Array.isArray(data))
                 {
-                    timeConsumptionElectSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+                    timeConsumptionElectSpeed = d.toISOString().substr(0, 16);
                     timeConsumptionElectSpeed = timeConsumptionElectSpeed.replace("T", " ");
 
                     consumptionElectSpeed = data[0]['last']/1000;
@@ -399,10 +404,16 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             success: function(data){
                 if (data && Array.isArray(data))
                 {
-                    timeConsumptionHeatPumpSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeConsumptionHeatPumpSpeed = d.toISOString().substr(0, 16);
                     timeConsumptionHeatPumpSpeed = timeConsumptionHeatPumpSpeed.replace("T", " ");
 
-                    consumptionHeatPumpSpeed =Math.round(data[0]['last'])/1000;
+                    consumptionHeatPumpSpeed = Math.round(data[0]['last'])/1000;
 
                     document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw + "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
                 }
@@ -419,7 +430,13 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             success: function(data){
                 if (data && Array.isArray(data))
                 {
-                    timeHotwaterTemperatureSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeHotwaterTemperatureSpeed = d.substr(0, 16);
                     timeHotwaterTemperatureSpeed = timeHotwaterTemperatureSpeed.replace("T", " ");
 
                     hotwaterTemperatureSpeed = Math.round(data[0]['last']*10)/10;
@@ -439,7 +456,13 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             success: function(data){
                 if (data && Array.isArray(data))
                 {
-                    timeInsideTempSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeInsideTempSpeed = d.toISOString().substr(0, 16);
                     timeInsideTempSpeed = timeInsideTempSpeed.replace("T", " ");
 
                     insideTempSpeed = Math.round(data[0]['last']*10)/10;
@@ -459,7 +482,13 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             success: function(data){
                 if (data && Array.isArray(data))
                 {
-                    timeCounterConsumption = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeCounterConsumption = d.toISOString().substr(0, 16);
                     timeCounterConsumption = timeCounterConsumption.replace("T", " ");
 
                     counterConsumption = data[0]['last'];
@@ -483,7 +512,13 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     if($user->getInstallations()[0]->Solar()->isExistant())
                     {
                     ?>
-                    timeCounterProduction = new Date(data[0]["time"]).toISOString().substr(0, 16);
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeCounterProduction = d.toISOString().substr(0, 16);
                     timeCounterProduction = timeCounterProduction.replace("T", " ");
 
                     counterProduction = data[0]['last'];
