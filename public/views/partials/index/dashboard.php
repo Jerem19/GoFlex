@@ -1,7 +1,7 @@
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center">Consommation dernières données</p>
+        <p class="dashboardTitleSize" style="text-align: center">Consommation </br> dernières données</p>
         <hr>
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
@@ -32,15 +32,15 @@
         </div>
     </div>
     <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
-        <p class="dashboardTitleSize" style="text-align: center"> Données historiques</p>
+        <p class="dashboardTitleSize" style="text-align: center"> Données </br> historiques</p>
         <hr>
         <div id="historicData"></div>
     </div>
 </div>
-<div class="row" style="height: 750px;">
+<div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center"> Température dernières données</p>
+        <p class="dashboardTitleSize" style="text-align: center"> Température </br> dernières données</p>
         <hr>
 
         <div style="text-align: center;" class="form-panel divSize">
@@ -82,7 +82,7 @@
         <div class="col col-md-7"><span class="fa fa-user"></span> Votre consommation</div>
         <div id="counterConsumption"  class="dashboardNumberSize" style="text-align: right;"></div>
         <div style="text-align: center;">
-            <img style="height: 122px;" src="<?= BASE_URL ?>/public/images/montage.png" />
+            <img style="max-width: 350px;" src="<?= BASE_URL ?>/public/images/montage.png" />
         </div>
         <div class="indexAlert alert-secondary">
             <strong><span class="fa fa-line-chart"></span> Production</strong>
@@ -101,17 +101,17 @@
             </div>
         <?php } ?>
     </div>
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+    <div class="mt w-100 col-lg-12 col-xl-3 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> Eco'gestes</p>
         <hr>
-        <h2 style="color: limegreen;"> Le petit geste malin </h2>
+        <h2 style="color: limegreen; text-align: center;"> Le petit geste malin </h2>
         <strong>
-            <div class="col col-md-6">
+            <div class="col col-md-12" style="text-align: center;">
                 Préférez l'achat d'un réfrigérateur et d'un congélateur séparés: le
                 congélateur coffre consomme 15% d'électricité en moins qu'un
                 congélateur armoire.
             </div>
-            <img src="<?= BASE_URL ?>/public/images/eco-reflexes.png" style=" height: 281px;" />
+            <img style="width: 225px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         </strong>
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success">Plus d'éco'gestes</a>
     </div>
@@ -144,7 +144,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
 <script>
 
-    window.onload = function() {
+     window.onload = function() {
 
         const kw = 'kW';
         const celsius = '°C';
@@ -262,7 +262,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
 
                 Highcharts.StockChart('historicData', {
                     chart: {
-                        height:350+ 'px',
+                        height:350+ 'px'
                     },
                     title: {
                         text: ''
