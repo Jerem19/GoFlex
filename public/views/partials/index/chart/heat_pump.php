@@ -64,7 +64,7 @@
                     }],
                     navigator: {
                         margin: 60,
-                        adaptToUpdatedData: false,
+                        adaptToUpdatedData: false
                     },
                     scrollbar: {
                         liveRedraw: false
@@ -80,7 +80,7 @@
                                     loadGraph('1s','6h','consumptionHeatPump');
                                 }
                             }
-                        }, {
+                        }/*, {
                             text: 'court moyen',
                             enabled:false,
                             events: {
@@ -107,7 +107,7 @@
                                     loadGraph('1d','1y','consumptionHeatPumpAll');
                                 }
                             }
-                        }],
+                        }*/],
                         buttonTheme:{
                             height:18,
                             padding:2,
