@@ -57,8 +57,6 @@
             </a>
         </div>
 
-
-
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
                 <p><?= $l10n["chart"]["insideTemperature"] ?></p>
@@ -66,7 +64,6 @@
 
             <a href="insideTemp">
                 <span class="fa fa-thermometer dashboardFaSize"></span>
-
 
                 <!--<p class="dashboardTextSize"><?//= L10N['index']['dashboard']['textInsideTemperature']?></p>-->
                 <div class="dashboardNumberSize" id="insideTempSpeed">
@@ -83,7 +80,7 @@
         <div class="col col-md-7"><span class="fa fa-user"></span> Votre consommation</div>
         <div id="counterConsumption"  class="dashboardNumberSize" style="text-align: right;"></div>
         <div style="text-align: center;">
-            <img style="max-width: 350px;" src="<?= BASE_URL ?>/public/images/montage.png" />
+            <img style="max-width: 365px;" src="<?= BASE_URL ?>/public/images/montage.png" />
         </div>
         <div class="indexAlert alert-secondary">
             <strong><span class="fa fa-line-chart"></span> Production</strong>
@@ -112,7 +109,7 @@
                 congélateur coffre consomme 15% d'électricité en moins qu'un
                 congélateur armoire.
             </div>
-            <img style="width: 225px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
+            <img style="width: 235px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         </strong>
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success">Plus d'éco'gestes</a>
     </div>
@@ -139,9 +136,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
         </div>
     </div>
 <?php } ?>
-
-
-
 
 <script>
 
@@ -510,5 +504,4 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             }
         });
     }
-
 </script>
