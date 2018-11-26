@@ -29,8 +29,8 @@
                     }
 
 
-                    if (data[j]["sum_count"] >= 0) {
-                        newData = data[j]["sum_count"] / 1000;
+                    if (data[j]["distinct"] >= 0) {
+                        newData = data[j]["distinct"] / 1000;
                         dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
                     }
                 }
@@ -80,7 +80,7 @@
                                     loadGraph('1s','6h','consumptionHeatPump');
                                 }
                             }
-                        }/*, {
+                        }, {
                             text: 'court moyen',
                             enabled:false,
                             events: {
@@ -107,7 +107,7 @@
                                     loadGraph('1d','1y','consumptionHeatPumpAll');
                                 }
                             }
-                        }*/],
+                        }],
                         buttonTheme:{
                             height:18,
                             padding:2,
