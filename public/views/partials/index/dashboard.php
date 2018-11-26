@@ -1,7 +1,7 @@
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center">Consommation </br> dernières données</p>
+        <p class="dashboardTitleSize" style="text-align: center">Consommation actuelle</p>
         <hr>
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
-        <p class="dashboardTitleSize" style="text-align: center"> Données </br> historiques</p>
+        <p class="dashboardTitleSize" style="text-align: center"> Données historiques</p>
         <hr>
         <div id="historicData"></div>
         <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
@@ -41,7 +41,7 @@
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center"> Température </br> dernières données</p>
+        <p class="dashboardTitleSize" style="text-align: center"> Température actuelle</p>
         <hr>
 
         <div style="text-align: center;" class="form-panel divSize">
@@ -80,7 +80,7 @@
         <div class="col col-md-7"><span class="fa fa-user"></span> Votre consommation</div>
         <div id="counterConsumption"  class="dashboardNumberSize" style="text-align: right;"></div>
         <div style="text-align: center;">
-            <img style="max-width: 365px;" src="<?= BASE_URL ?>/public/images/montage.png" />
+            <img style="width: 285px;" src="<?= BASE_URL ?>/public/images/montage.png" />
         </div>
         <div class="indexAlert alert-secondary">
             <strong><span class="fa fa-line-chart"></span> Production</strong>
@@ -109,7 +109,7 @@
                 congélateur coffre consomme 15% d'électricité en moins qu'un
                 congélateur armoire.
             </div>
-            <img style="width: 235px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
+            <img style="width: 202px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         </strong>
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success">Plus d'éco'gestes</a>
     </div>
