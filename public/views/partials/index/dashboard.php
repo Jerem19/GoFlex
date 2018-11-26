@@ -91,7 +91,6 @@
         <?php
         if($user->getInstallations()[0]->Solar()->isExistant())
         {
-
             ?>
             <div id="counterProduction"  class="dashboardNumberSize" style="text-align: right;"></div>
         <?php }
