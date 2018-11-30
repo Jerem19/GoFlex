@@ -74,7 +74,7 @@
                         floating: true,
                         selected: 3,
                         buttons: [{
-                            text: 'court',
+                            text: '6h',
                             events: {
                                 click: function () {
                                     loadGraph('1s','6h','consumptionHeatPump');

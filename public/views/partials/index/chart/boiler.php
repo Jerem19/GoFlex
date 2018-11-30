@@ -68,28 +68,28 @@
                         floating: true,
                         selected: 3,
                         buttons: [{
-                            text: 'court',
+                            text: '12h',
                             events: {
                                 click: function () {
                                     loadGraph('1s','12h','hotwaterTemperature');
                                 }
                             }
                         }, {
-                            text: 'court moyen',
+                            text: '1d',
                             events: {
                                 click: function () {
                                     loadGraph('1m','1d','hotwaterTemperature');
                                 }
                             }
                         }, {
-                            text: 'moyen',
+                            text: '7d',
                             events: {
                                 click: function () {
                                     loadGraph('15m','7d','hotwaterTemperature');
                                 }
                             }
                         }, {
-                            text: 'long',
+                            text: 'All',
                             events: {
                                 click: function () {
                                     loadGraph('1d','1y','hotwaterTemperatureAll');

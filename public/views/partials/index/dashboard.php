@@ -77,10 +77,11 @@
         <div class="indexAlert alert-secondary">
             <strong><span class="fa fa-lightbulb-o"></span> <?= L10N['index']['dashboard']['consumptionTitle']?></strong>
         </div>
-        <div class="col col-md-7"><span class="fa fa-user"></span> <?= L10N['index']['dashboard']['yourCoonsumption']?></div>
-        <div id="counterConsumption"  class="dashboardNumberSize" style="text-align: right;"></div>
+        <div class="col col-md-7"><span class="fa fa-user"></span> <?= L10N['index']['dashboard']['yourCoonsumption']?> </div>
+        <div id="counterConsumptionOne"  class="dashboardNumberSize" style="text-align: right; font-size: large;">Tarif 1 =</div>
+        <div id="counterConsumptionTwo"  class="dashboardNumberSize" style="text-align: right; font-size: large;">Tarif 2 =</div>
         <div style="text-align: center;">
-            <img style="width: 285px;" src="<?= BASE_URL ?>/public/images/montage.png" />
+
         </div>
         <div class="indexAlert alert-secondary">
             <strong><span class="fa fa-line-chart"></span> Production</strong>
@@ -90,25 +91,29 @@
         if($user->getInstallations()[0]->Solar()->isExistant())
         {
             ?>
-            <div id="counterProduction"  class="dashboardNumberSize" style="text-align: right;"></div>
+            <div id="counterProductionOne"  class="dashboardNumberSize" style="text-align: right;"></div>
+            <div id="counterProductionTwo"  class="dashboardNumberSize" style="text-align: right;"></div>
         <?php }
         else{
             ?>
-        <div class="dashboardNumberSize" style="text-align: right;">
-            <p><?= L10N['index']['dashboard']['noSolarPanel']?></p>
-        </div>
+            <div class="dashboardNumberSize" style="text-align: right; font-size: large;">
+                <p><?= L10N['index']['dashboard']['noSolarPanel']?></p>
+            </div>
         <?php } ?>
+        <div style="text-align: center;">
+            <img style="width: 220px;" src="<?= BASE_URL ?>/public/images/montage.png" />
+        </div>
     </div>
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction']?></p>
         <hr>
         <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction']?></h2>
         <strong>
-            <div class="col col-md-6">
+            <div class="col col-md-12 centered">
                 <?= L10N['index']['dashboard']['greenActionText']?>
             </div>
-            <img style="width: 202px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         </strong>
+        <img style="width: 202px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction']?></a>
     </div>
 </div>
@@ -204,7 +209,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
         $.ajax({
             type: "POST",
             url: "insideTempHistory",
-            timeout: 45000,
+            timeout: 75000,
             success : function (data) {
                 var index = 0;
                 for(index = 0;index< data.length;index++)
@@ -475,7 +480,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
         });
 
         $.ajax({
-            url: 'counterConsumption',
+            url: 'counterConsumption1',
             type: 'POST',
             success: function(data){
                 if (data && Array.isArray(data))
@@ -486,12 +491,12 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                         d.setHours(d.getHours() + 1)
                     }
 
-                    timeCounterConsumption = d.toISOString().substr(0, 16);
-                    timeCounterConsumption = timeCounterConsumption.replace("T", " ");
+                    timeCounterConsumption1 = d.toISOString().substr(0, 16);
+                    timeCounterConsumption1 = timeCounterConsumption1.replace("T", " ");
 
-                    counterConsumption = data[0]['last'];
+                    counterConsumption1 = data[0]['last']/1000;
 
-                    document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH + "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
+                    document.getElementById('counterConsumptionOne').innerHTML =  "Tarif 1 = " + counterConsumption1 + kwH + "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption1 + "</p>";
                 }
                 else ajaxError('counterConsumption');
             },
@@ -500,8 +505,34 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             }
         });
 
+         $.ajax({
+             url: 'counterConsumption2',
+             type: 'POST',
+             success: function(data){
+                 if (data && Array.isArray(data))
+                 {
+                     d = new Date(data[0]["time"]);
+                     if(d.getTimezoneOffset() != 120)
+                     {
+                         d.setHours(d.getHours() + 1)
+                     }
+
+                     timeCounterConsumption2 = d.toISOString().substr(0, 16);
+                     timeCounterConsumption2 = timeCounterConsumption2.replace("T", " ");
+
+                     counterConsumption2 = data[0]['last']/1000;
+
+                     document.getElementById('counterConsumptionTwo').innerHTML =  "Tarif 2 = " + counterConsumption2 + kwH + "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption2 + "</p>";
+                 }
+                 else ajaxError('counterConsumption');
+             },
+             error: function () {
+                 ajaxError('counterConsumption');
+             }
+         });
+
         $.ajax({
-            url: 'counterProduction',
+            url: 'counterProduction1',
             type: 'POST',
             success: function(data){
                 if (data && Array.isArray(data))
@@ -516,19 +547,17 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                         d.setHours(d.getHours() + 1)
                     }
 
-                    timeCounterProduction = d.toISOString().substr(0, 16);
-                    timeCounterProduction = timeCounterProduction.replace("T", " ");
+                    timeCounterProduction1 = d.toISOString().substr(0, 16);
+                    timeCounterProduction1 = timeCounterProduction1.replace("T", " ");
 
-                    counterProduction = data[0]['last'];
+                    counterProduction1 = data[0]['last']/1000;
 
-                    document.getElementById('counterProduction').innerHTML = counterProduction + kwH +
-                        "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction + "</p>";
+                    document.getElementById('counterProductionOne').innerHTML = counterProduction1 + kwH +
+                        "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction1 + "</p>";
 
                     <?php
                     }
                     ?>
-                    document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
-                        "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
                 }
                 else ajaxError('counterProduction');
             },
@@ -536,5 +565,40 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                 ajaxError('counterProduction');
             }
         });
+
+         $.ajax({
+             url: 'counterProduction2',
+             type: 'POST',
+             success: function(data){
+                 if (data && Array.isArray(data))
+                 {
+                     <?php
+                     if($user->getInstallations()[0]->Solar()->isExistant())
+                     {
+                     ?>
+                     d = new Date(data[0]["time"]);
+                     if(d.getTimezoneOffset() != 120)
+                     {
+                         d.setHours(d.getHours() + 1)
+                     }
+
+                     timeCounterProduction2 = d.toISOString().substr(0, 16);
+                     timeCounterProduction2 = timeCounterProduction2.replace("T", " ");
+
+                     counterProduction2 = data[0]['last']/1000;
+
+                     document.getElementById('counterProductionTwo').innerHTML = counterProduction2 + kwH +
+                         "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction2 + "</p>";
+
+                     <?php
+                     }
+                     ?>
+                 }
+                 else ajaxError('counterProduction');
+             },
+             error: function () {
+                 ajaxError('counterProduction');
+             }
+         });
     }
 </script>

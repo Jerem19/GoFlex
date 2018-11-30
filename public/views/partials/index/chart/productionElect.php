@@ -69,28 +69,28 @@
                         floating: true,
                         selected: 3,
                         buttons: [{
-                            text: 'court',
+                            text: '3h',
                             events: {
                                 click: function () {
                                     loadGraph('5s','3h','productionElectSpec');
                                 }
                             }
                         }, {
-                            text: 'court moyen',
+                            text: '1d',
                             events: {
                                 click: function () {
                                     loadGraph('1m','1d','productionElectSpec');
                                 }
                             }
                         }, {
-                            text: 'moyen',
+                            text: '7d',
                             events: {
                                 click: function () {
                                     loadGraph('15m','7d','productionElectSpec');
                                 }
                             }
                         }, {
-                            text: 'long',
+                            text: 'All',
                             events: {
                                 click: function () {
                                     loadGraph('1d','1y','productionElectSpecAll');

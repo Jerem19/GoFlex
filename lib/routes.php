@@ -419,14 +419,28 @@ $router
 
     /* Counter */
 
-    ->post('/counterConsumption', function (Response $res){
+    ->post('/counterConsumption1', function (Response $res){
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_1_8_1_255_2.attributes.datapoint";');
+        $res->send($result->getPoints());
+    })
+
+    ->post('/counterConsumption2', function (Response $res){
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_1_8_2_255_2.attributes.datapoint";');
         $res->send($result->getPoints());
     })
 
-    ->post('/counterProduction', function (Response $res){
+    ->post('/counterProduction1', function (Response $res){
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_2_8_1_255_2.attributes.datapoint";');
+        $res->send($result->getPoints());
+    })
+
+    ->post('/counterProduction2', function (Response $res){
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_2_8_2_255_2.attributes.datapoint";');

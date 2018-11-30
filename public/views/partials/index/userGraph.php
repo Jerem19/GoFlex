@@ -147,28 +147,28 @@
                                     floating: true,
                                     selected: 3,
                                     buttons: [{
-                                        text: 'court',
+                                        text: '3h',
                                         events: {
                                             click: function () {
                                                 loadProductionElect('1s','3h','productionElectSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'court moyen',
+                                        text: '1d',
                                         events: {
                                             click: function () {
                                                 loadProductionElect('1m','1d','productionElectSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'moyen',
+                                        text: '7d',
                                         events: {
                                             click: function () {
                                                 loadProductionElect('15m','7d','productionElectSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'long',
+                                        text: 'All',
                                         events: {
                                             click: function () {
                                                 loadProductionElect('1d','1y','productionElectSpecAll');
@@ -271,28 +271,28 @@
                                     floating: true,
                                     selected: 3,
                                     buttons: [{
-                                        text: 'court',
+                                        text: '3h',
                                         events: {
                                             click: function () {
                                                 loadConsumptionElect('1s','3h','consumptionElectSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'court moyen',
+                                        text: '1d',
                                         events: {
                                             click: function () {
                                                 loadConsumptionElect('1m','1d','consumptionElectSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'moyen',
+                                        text: '7d',
                                         events: {
                                             click: function () {
                                                 loadConsumptionElect('15m','7d','consumptionElectSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'long',
+                                        text: 'All',
                                         events: {
                                             click: function () {
                                                 loadConsumptionElect('1d','1y','consumptionElectSpecAll');
@@ -394,28 +394,28 @@
                                     floating: true,
                                     selected: 3,
                                     buttons: [{
-                                        text: 'court',
+                                        text: '3h',
                                         events: {
                                             click: function () {
                                                 loadBoiler('1s','3h','hotwaterTemperatureSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'court moyen',
+                                        text: '1d',
                                         events: {
                                             click: function () {
                                                 loadBoiler('1m','1d','hotwaterTemperatureSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'moyen',
+                                        text: '7d',
                                         events: {
                                             click: function () {
                                                 loadBoiler('15m','7d','hotwaterTemperatureSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'long',
+                                        text: 'All',
                                         events: {
                                             click: function () {
                                                 loadBoiler('1d','1y','hotwaterTemperatureSpecAll');
@@ -525,28 +525,28 @@
                                     floating: true,
                                     selected: 3,
                                     buttons: [{
-                                        text: 'court',
+                                        text: '3h',
                                         events: {
                                             click: function () {
                                                 loadHeatPump('1s','3h','consumptionHeatPumpSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'court moyen',
+                                        text: '1d',
                                         events: {
                                             click: function () {
                                                 loadHeatPump('1m','1d','consumptionHeatPumpSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'moyen',
+                                        text: '7d',
                                         events: {
                                             click: function () {
                                                 loadHeatPump('15m','7d','consumptionHeatPumpSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'long',
+                                        text: 'All',
                                         events: {
                                             click: function () {
                                                 loadHeatPump('1d','1y','consumptionHeatPumpSpecAll');
@@ -648,28 +648,28 @@
                                     floating: true,
                                     selected: 3,
                                     buttons: [{
-                                        text: 'court',
+                                        text: '3h',
                                         events: {
                                             click: function () {
                                                 loadInsideTemp('1s','3h','insideTempSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'court moyen',
+                                        text: '1d',
                                         events: {
                                             click: function () {
                                                 loadInsideTemp('1m','1d','insideTempSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'moyen',
+                                        text: '7d',
                                         events: {
                                             click: function () {
                                                 loadInsideTemp('15m','7d','insideTempSpec');
                                             }
                                         }
                                     }, {
-                                        text: 'long',
+                                        text: 'All',
                                         events: {
                                             click: function () {
                                                 loadInsideTemp('1d','1y','insideTempSpecAll');

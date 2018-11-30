@@ -1,0 +1,19 @@
+Liste des connaissances
+PHP
+InfluxDB Query (avec PHP)
+Highcharts/Stockcharts
+MySQL
+Ajax
+
+Le code fonctionne via un système de route implémenté sous /lib/Class/routes.php.
+Afin de récupérer les données de l'InfluxDB, il faut utiliser l'URL de la route dans l'ajax afin de récupérer les points.
+
+PHP sous index
+-> chart (boiler, consumptionElect, heat_pump, insideTemperature, productionElect) : Graphiques spécifiques aux 5 données récupérées.
+-> addUser : visible uniquement par l'admin. Permet d'ajouter un nouvel utilisateur.
+-> allUsers : visible uniquement par l'admin. Permet de voir tous les utilisateurs présents dans le système.
+-> dashboard : visible uniquement par le client final. Dashboard client.
+-> profile : visible par tous. Permet de voir et modifier le profil de l'utilisateur connecté.
+-> sidebar : il s'agit de la barre latéral qui permet de naviguer entre les menus.
+-> userData : visible par l'admin et le technicien. Permet d'ajouter et modifier les données du client.
+-> userGraph : visible par l'admin et le technicien. Permet de voir les 5 graphiques de chaque client.

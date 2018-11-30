@@ -70,34 +70,34 @@
                         floating: true,
                         selected: 3,
                         buttons: [{
-                            text: 'court',
+                            text: '12h',
                             events: {
                                 click: function () {
                                     loadGraph('5s','12h','consumptionElect');
                                 }
                             }
                         }, {
-                            text: 'court moyen',
+                            text: '1d',
                             events: {
                                 click: function () {
                                     loadGraph('1m','1d','consumptionElect');
                                 }
                             }
                         }, {
-                            text: 'moyen',
+                            text: '7d',
                             events: {
                                 click: function () {
                                     loadGraph('15m','7d','consumptionElect');
                                 }
                             }
-                        }, {
-                            text: 'long',
+                        }, /*{
+                            text: 'All',
                             events: {
                                 click: function () {
                                     loadGraph('1d','1y','consumptionElectAll');
                                 }
                             }
-                        }],
+                        }*/],
                         buttonTheme:{
                             height:18,
                             padding:2,
