@@ -29,8 +29,8 @@
                     }
 
 
-                    if (data[j]["sum_count"] >= 0) {
-                        newData = data[j]["sum_count"] / 1000;
+                    if (data[j]["distinct"] >= 0) {
+                        newData = data[j]["distinct"] / 1000;
                         dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
                     }
                 }
@@ -64,7 +64,7 @@
                     }],
                     navigator: {
                         margin: 60,
-                        adaptToUpdatedData: false,
+                        adaptToUpdatedData: false
                     },
                     scrollbar: {
                         liveRedraw: false

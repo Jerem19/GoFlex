@@ -1,7 +1,7 @@
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption']?></p>
+        <p class="dashboardTitleSize" style="text-align: center">Consommation en temps réel</p>
         <hr>
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
@@ -35,9 +35,10 @@
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData']?></p>
         <hr>
         <div id="historicData"></div>
+        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
     </div>
 </div>
-<div class="row" style="height: 750px;">
+<div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature']?></p>
@@ -56,8 +57,6 @@
             </a>
         </div>
 
-
-
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
                 <p><?= $l10n["chart"]["insideTemperature"] ?></p>
@@ -65,7 +64,6 @@
 
             <a href="insideTemp">
                 <span class="fa fa-thermometer dashboardFaSize"></span>
-
 
                 <!--<p class="dashboardTextSize"><?//= L10N['index']['dashboard']['textInsideTemperature']?></p>-->
                 <div class="dashboardNumberSize" id="insideTempSpeed">
@@ -82,7 +80,7 @@
         <div class="col col-md-7"><span class="fa fa-user"></span> <?= L10N['index']['dashboard']['yourCoonsumption']?></div>
         <div id="counterConsumption"  class="dashboardNumberSize" style="text-align: right;"></div>
         <div style="text-align: center;">
-            <img style="height: 122px;" src="<?= BASE_URL ?>/public/images/montage.png" />
+            <img style="width: 285px;" src="<?= BASE_URL ?>/public/images/montage.png" />
         </div>
         <div class="indexAlert alert-secondary">
             <strong><span class="fa fa-line-chart"></span> Production</strong>
@@ -91,9 +89,8 @@
         <?php
         if($user->getInstallations()[0]->Solar()->isExistant())
         {
-
-        ?>
-        <div id="counterProduction"  class="dashboardNumberSize" style="text-align: right;"></div>
+            ?>
+            <div id="counterProduction"  class="dashboardNumberSize" style="text-align: right;"></div>
         <?php }
         else{
             ?>
@@ -110,7 +107,7 @@
             <div class="col col-md-6">
                 <?= L10N['index']['dashboard']['greenActionText']?>
             </div>
-            <img src="<?= BASE_URL ?>/public/images/eco-reflexes.png" style=" height: 281px;" />
+            <img style="width: 202px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         </strong>
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction']?></a>
     </div>
@@ -119,7 +116,6 @@
 <?php
 if($user->getInstallations()[0]->Solar()->isExistant())
 {
-
     ?>
     <div class="row mt col-lg-8 form-panel">
         <div style="text-align: center;">
@@ -139,12 +135,9 @@ if($user->getInstallations()[0]->Solar()->isExistant())
     </div>
 <?php } ?>
 
-
-
-
 <script>
 
-    window.onload = function() {
+     window.onload = function() {
 
         const kw = 'kW';
         const celsius = '°C';
@@ -176,113 +169,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
         }
 
         $.ajax({
-            url: 'consumptionElectSpeed',
-            type: 'POST',
-            success: function(data){
-                if (data && Array.isArray(data))
-                {
-                    timeConsumptionElectSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
-                    timeConsumptionElectSpeed = timeConsumptionElectSpeed.replace("T", " ");
-
-                    consumptionElectSpeed = data[0]['last']/1000;
-
-                    //document.getElementById('consumptionElectSpeed').innerHTML = consumptionElectSpeed + kw +
-                      //  "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
-                }
-                else ajaxError('consumptionElectSpeed');
-            },
-            error: function () {
-                ajaxError('consumptionElectSpeed');
-            }
-        });
-
-        $.ajax({
-            url: 'consumptionHeatPumpSpeed',
-            type: 'POST',
-            success: function(data){
-                if (data && Array.isArray(data))
-                {
-                    timeConsumptionHeatPumpSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
-                    timeConsumptionHeatPumpSpeed = timeConsumptionHeatPumpSpeed.replace("T", " ");
-
-                    consumptionHeatPumpSpeed =Math.round(data[0]['last'])/1000;
-
-                   // document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw +
-                     //   "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
-                }
-                else ajaxError('consumptionHeatPumpSpeed');
-            },
-            error: function () {
-                ajaxError('consumptionHeatPumpSpeed');
-            }
-        });
-
-        $.ajax({
-            url: 'hotwaterTemperatureSpeed',
-            type: 'POST',
-            success: function(data){
-                if (data && Array.isArray(data))
-                {
-                    timeHotwaterTemperatureSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
-                    timeHotwaterTemperatureSpeed = timeHotwaterTemperatureSpeed.replace("T", " ");
-
-                    hotwaterTemperatureSpeed = Math.round(data[0]['last']*10)/10;
-
-                    //document.getElementById('hotwaterTemperatureSpeed').innerHTML = hotwaterTemperatureSpeed + celsius +
-                      //  "<br/><p style=\"font-size: 15px;\">" + timeHotwaterTemperatureSpeed + "</p>";
-                }
-                else ajaxError('hotwaterTemperatureSpeed');
-            },
-            error: function () {
-                ajaxError('hotwaterTemperatureSpeed');
-            }
-        });
-
-        $.ajax({
-            url: 'insideTempSpeed',
-            type: 'POST',
-            success: function(data){
-                if (data && Array.isArray(data))
-                {
-                    timeInsideTempSpeed = new Date(data[0]["time"]).toISOString().substr(0, 16);
-                    timeInsideTempSpeed = timeInsideTempSpeed.replace("T", " ");
-
-                    insideTempSpeed = Math.round(data[0]['last']*10)/10;
-
-                    //document.getElementById('insideTempSpeed').innerHTML =  insideTempSpeed + celsius +
-                      //  "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
-                }
-                else ajaxError('insideTempSpeed');
-            },
-            error: function () {
-                ajaxError('insideTempSpeed');
-            }
-        });
-
-        $.ajax({
-            url: 'counterConsumption',
-            type: 'POST',
-            success: function(data){
-                if (data && Array.isArray(data))
-                {
-                    timeCounterConsumption = new Date(data[0]["time"]).toISOString().substr(0, 16);
-                    timeCounterConsumption = timeCounterConsumption.replace("T", " ");
-
-                    counterConsumption = data[0]['last'];
-
-                    //document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
-                      //  "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
-                }
-                else ajaxError('counterConsumption');
-            },
-            error: function () {
-                ajaxError('counterConsumption');
-            }
-        });
-
-
-
-        $.ajax({
             type: "POST",
             url: "hotwaterTemperatureHistory",
             success : function (data) {
@@ -291,7 +177,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             error: function () {
                 ajaxError('TEST');
             }
-
         });
 
         $.ajax({
@@ -303,7 +188,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             error: function () {
                 ajaxError('TEST');
             }
-
         });
 
         $.ajax({
@@ -315,51 +199,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             error: function () {
                 ajaxError('TEST');
             }
-
-        });
-
-
-        $.ajax({
-            url: 'counterProduction',
-            type: 'POST',
-            success: function(data){
-                if (data && Array.isArray(data))
-                {
-                    <?php
-                        if($user->getInstallations()[0]->Solar()->isExistant())
-                        {
-                    ?>
-                    timeCounterProduction = new Date(data[0]["time"]).toISOString().substr(0, 16);
-                    timeCounterProduction = timeCounterProduction.replace("T", " ");
-
-                    counterProduction = data[0]['last'];
-
-                    document.getElementById('counterProduction').innerHTML = counterProduction + kwH +
-                        "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction + "</p>";
-
-                    <?php
-                        }
-                            ?>
-                    document.getElementById('consumptionElectSpeed').innerHTML = consumptionElectSpeed + kw +
-                        "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
-
-                    document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw +
-                        "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
-
-                    document.getElementById('hotwaterTemperatureSpeed').innerHTML = hotwaterTemperatureSpeed + celsius +
-                        "<br/><p style=\"font-size: 15px;\">" + timeHotwaterTemperatureSpeed + "</p>";
-
-                    document.getElementById('insideTempSpeed').innerHTML =  insideTempSpeed + celsius +
-                        "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
-
-                    document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
-                        "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
-                }
-                else ajaxError('counterProduction');
-            },
-            error: function () {
-                ajaxError('counterProduction');
-            }
         });
 
         $.ajax({
@@ -367,7 +206,8 @@ if($user->getInstallations()[0]->Solar()->isExistant())
             url: "insideTempHistory",
             timeout: 45000,
             success : function (data) {
-                for(var index = 0;index< data.length;index++)
+                var index = 0;
+                for(index = 0;index< data.length;index++)
                 {
                     d = new Date(data[index]["time"]);
                     if(d.getTimezoneOffset() != 120)
@@ -376,7 +216,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     }
                     insideArray.unshift([new Date(d.toISOString()).getTime(), data[index]["distinct"]])
                 }
-                for(var index = 0;index< boiler.length;index++)
+                for(index = 0;index< boiler.length;index++)
                 {
                     d = new Date(boiler[index]["time"]);
 
@@ -386,8 +226,7 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     }
                     boilerArray.unshift([new Date(d.toISOString()).getTime(), boiler[index]["distinct"]])
                 }
-
-                for(var index = 0;index< electConsumption.length;index++)
+                for(index = 0;index< electConsumption.length;index++)
                 {
                     d = new Date(electConsumption[index]["time"]);
 
@@ -395,28 +234,31 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                     {
                         d.setHours(d.getHours() + 1)
                     }
-                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]])
+                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]/1000])
                 }
 
                 /*
-                for(var index = 0;index< heatPumpConsumption.length;index++)
-                {
-                    d = new Date(heatPumpConsumption[index]["time"]);
+                 for(var index = 0;index< heatPumpConsumption.length;index++)
+                 {
+                 d = new Date(heatPumpConsumption[index]["time"]);
 
-                    if(d.getTimezoneOffset() != 120)
-                    {
-                        d.setHours(d.getHours() + 1)
-                    }
-                    if(heatPumpConsumption[index]["distinct"] >= -10)
-                    {
-                        heatPumpArray.unshift([new Date(d.toISOString()).getTime(), heatPumpConsumption[index]["distinct"]])
-                    }
-                }
-                */
+                 if(d.getTimezoneOffset() != 120)
+                 {
+                 d.setHours(d.getHours() + 1)
+                 }
+                 if(heatPumpConsumption[index]["distinct"] >= -10)
+                 {
+                 heatPumpArray.unshift([new Date(d.toISOString()).getTime(), heatPumpConsumption[index]["distinct"]])
+                 }
+                 }
+                 */
 
                 Highcharts.StockChart('historicData', {
                     chart: {
-                        height:350+ 'px',
+                        events: {
+                            load: function() { document.getElementById("loader").style.display = "none"; resizeFooter(); }
+                        },
+                        height:350+ 'px'
                     },
                     title: {
                         text: ''
@@ -431,11 +273,11 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                         }
                     },
                     yAxis: [{
-                            title: {
-                                text: "Température (°C)"
-                            },
-                            opposite:false
+                        title: {
+                            text: "Température (°C)"
                         },
+                        opposite:false
+                    },
                         {
                             title:{
                                 text: "Puissance (kW)"
@@ -460,7 +302,6 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                                 }
                             }
                         },
-
                         series: {
                             animation: false,
                             events: {
@@ -482,7 +323,8 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                         }
                     },
                     tooltip: {
-                        shared: false
+                        shared: false,
+                        valueDecimals: 2
                     },
                     scrollbar: {
                         enabled: false
@@ -497,14 +339,15 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                             data: electArray,
                             index:1,
                             yAxis:1
+
                         },/*
-                        {
-                            name: 'Pompe à chaleur',
-                            type: 'area',
-                            data: heatPumpArray,
-                            index:2,
-                            yAxis:1
-                        },*/
+                         {
+                         name: 'Pompe à chaleur',
+                         type: 'area',
+                         data: heatPumpArray,
+                         index:2,
+                         yAxis:1
+                         },*/
                         {
                             name: 'Intérieur',
                             type: 'line',
@@ -518,18 +361,180 @@ if($user->getInstallations()[0]->Solar()->isExistant())
                             data: boilerArray,
                             index:4,
                             yAxis:0
-                        },
+                        }
                     ]
-
-
                 });
-
             },
             error: function () {
                 ajaxError('TEST');
+                document.getElementById("loader").style.display = "none";
             }
         });
 
-    }
+        $.ajax({
+            url: 'consumptionElectSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+                    timeConsumptionElectSpeed = d.toISOString().substr(0, 16);
+                    timeConsumptionElectSpeed = timeConsumptionElectSpeed.replace("T", " ");
 
+                    consumptionElectSpeed = data[0]['last']/1000;
+
+                    document.getElementById('consumptionElectSpeed').innerHTML = consumptionElectSpeed + kw + "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
+                }
+                else ajaxError('consumptionElectSpeed');
+            },
+            error: function () {
+                ajaxError('consumptionElectSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'consumptionHeatPumpSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeConsumptionHeatPumpSpeed = d.toISOString().substr(0, 16);
+                    timeConsumptionHeatPumpSpeed = timeConsumptionHeatPumpSpeed.replace("T", " ");
+
+                    consumptionHeatPumpSpeed = Math.round(data[0]['last'])/1000;
+
+                    document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw + "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
+                }
+                else ajaxError('consumptionHeatPumpSpeed');
+            },
+            error: function () {
+                ajaxError('consumptionHeatPumpSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'hotwaterTemperatureSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeHotwaterTemperatureSpeed = d.toISOString().substr(0, 16);
+                    timeHotwaterTemperatureSpeed = timeHotwaterTemperatureSpeed.replace("T", " ");
+
+                    hotwaterTemperatureSpeed = Math.round(data[0]['last']*10)/10;
+
+                    document.getElementById('hotwaterTemperatureSpeed').innerHTML = hotwaterTemperatureSpeed + celsius + "<br/><p style=\"font-size: 15px;\">" + timeHotwaterTemperatureSpeed + "</p>";
+                }
+                else ajaxError('hotwaterTemperatureSpeed');
+            },
+            error: function () {
+                ajaxError('hotwaterTemperatureSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'insideTempSpeed',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeInsideTempSpeed = d.toISOString().substr(0, 16);
+                    timeInsideTempSpeed = timeInsideTempSpeed.replace("T", " ");
+
+                    insideTempSpeed = Math.round(data[0]['last']*10)/10;
+
+                    document.getElementById('insideTempSpeed').innerHTML = insideTempSpeed + celsius + "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
+                }
+                else ajaxError('insideTempSpeed');
+            },
+            error: function () {
+                ajaxError('insideTempSpeed');
+            }
+        });
+
+        $.ajax({
+            url: 'counterConsumption',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeCounterConsumption = d.toISOString().substr(0, 16);
+                    timeCounterConsumption = timeCounterConsumption.replace("T", " ");
+
+                    counterConsumption = data[0]['last'];
+
+                    document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH + "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
+                }
+                else ajaxError('counterConsumption');
+            },
+            error: function () {
+                ajaxError('counterConsumption');
+            }
+        });
+
+        $.ajax({
+            url: 'counterProduction',
+            type: 'POST',
+            success: function(data){
+                if (data && Array.isArray(data))
+                {
+                    <?php
+                    if($user->getInstallations()[0]->Solar()->isExistant())
+                    {
+                    ?>
+                    d = new Date(data[0]["time"]);
+                    if(d.getTimezoneOffset() != 120)
+                    {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    timeCounterProduction = d.toISOString().substr(0, 16);
+                    timeCounterProduction = timeCounterProduction.replace("T", " ");
+
+                    counterProduction = data[0]['last'];
+
+                    document.getElementById('counterProduction').innerHTML = counterProduction + kwH +
+                        "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction + "</p>";
+
+                    <?php
+                    }
+                    ?>
+                    document.getElementById('counterConsumption').innerHTML =  counterConsumption + kwH +
+                        "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption + "</p>";
+                }
+                else ajaxError('counterProduction');
+            },
+            error: function () {
+                ajaxError('counterProduction');
+            }
+        });
+    }
 </script>
