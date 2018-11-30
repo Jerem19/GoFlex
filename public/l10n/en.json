@@ -26,7 +26,6 @@
 	"index": {
 		"chart": {
 			"boiler_power": "Boiler power",
-			"consumptionHeatPump": "Consommation heat pump",
 			"degrees": "Degrees celsius",
 			"consumptionElect": "Consumption",
 			"insideTemperature": "Inside Temperature",
@@ -37,7 +36,20 @@
 			"power": "Power"
 		},
 		"dashboard": {
+			"currentConsumption": "Real Time Consumption",
+			"currentTemperature": "Real Time Temperature",
+			"historicData" : "Historic Data",
+			"meterIndex": "Index of your meter",
+			"greenAction": "Green Actions",
+			"moreGreenAction": "More Green Actions",
+			"greenActionText": "Prefer the purchase of a separate refrigerator and freezer: the chest freezer consumes 15% less electricity than a walk-in freezer.",
+			"cleverAction": "The little clever action",
+			"noSolarPanel": "No solar panel",
+			"overagePV":"Overage PV",
+			"consumptionTitle":"Consumption",
+			"yourCoonsumption":"Your consumption",
 			"electricalConsumption": "Electrical Consumption",
+			"heatPumpConsumption": "Heat pump Consumption",
 			"textConsumptionElec": "Your global instant electrcity consumption is ",
 			"textInsideTemperature": "The temperature inside the house is ",
 			"textHeatPump": "Your heat pumped use ",

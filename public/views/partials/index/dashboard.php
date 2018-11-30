@@ -1,7 +1,7 @@
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center">Consommation en temps réel</p>
+        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption']?></p>
         <hr>
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
@@ -19,7 +19,7 @@
 
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
-                <p><?= $l10n["chart"]["consumptionHeatPump"] ?></p>
+                <p><?= $l10n["dashboard"]["heatPumpConsumption"] ?></p>
             </div>
             <a href="consumptionHeatPump">
                 <span class="fa fa-fire dashboardFaSize"></span>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
-        <p class="dashboardTitleSize" style="text-align: center"> Données historiques</p>
+        <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData']?></p>
         <hr>
         <div id="historicData"></div>
     </div>
@@ -40,7 +40,7 @@
 <div class="row" style="height: 750px;">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center"> Température en temps réel</p>
+        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature']?></p>
         <hr>
 
         <div style="text-align: center;" class="form-panel divSize">
@@ -74,12 +74,12 @@
         </div>
     </div>
     <div class="mt col-lg-12 col-xl-5 col-md-12 form-panel">
-        <p class="dashboardTitleSize" style="text-align: center"> Index de votre compteur</p>
+        <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex']?></p>
         <hr>
         <div class="indexAlert alert-secondary">
-            <strong><span class="fa fa-lightbulb-o"></span> Consommation</strong>
+            <strong><span class="fa fa-lightbulb-o"></span> <?= L10N['index']['dashboard']['consumptionTitle']?></strong>
         </div>
-        <div class="col col-md-7"><span class="fa fa-user"></span> Votre consommation</div>
+        <div class="col col-md-7"><span class="fa fa-user"></span> <?= L10N['index']['dashboard']['yourCoonsumption']?></div>
         <div id="counterConsumption"  class="dashboardNumberSize" style="text-align: right;"></div>
         <div style="text-align: center;">
             <img style="height: 122px;" src="<?= BASE_URL ?>/public/images/montage.png" />
@@ -87,7 +87,7 @@
         <div class="indexAlert alert-secondary">
             <strong><span class="fa fa-line-chart"></span> Production</strong>
         </div>
-        <div class="col col-md-5"><span class="fa fa-battery-full"></span> Excédent PV</div>
+        <div class="col col-md-5"><span class="fa fa-battery-full"></span><?= L10N['index']['dashboard']['overagePV']?></div>
         <?php
         if($user->getInstallations()[0]->Solar()->isExistant())
         {
@@ -98,23 +98,21 @@
         else{
             ?>
         <div class="dashboardNumberSize" style="text-align: right;">
-            <p>Aucun panneau solaire</p>
+            <p><?= L10N['index']['dashboard']['noSolarPanel']?></p>
         </div>
         <?php } ?>
     </div>
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
-        <p class="dashboardTitleSize" style="text-align: center"> Eco'gestes</p>
+        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction']?></p>
         <hr>
-        <h2 style="color: limegreen;"> Le petit geste malin </h2>
+        <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction']?></h2>
         <strong>
             <div class="col col-md-6">
-                Préférez l'achat d'un réfrigérateur et d'un congélateur séparés: le
-                congélateur coffre consomme 15% d'électricité en moins qu'un
-                congélateur armoire.
+                <?= L10N['index']['dashboard']['greenActionText']?>
             </div>
             <img src="<?= BASE_URL ?>/public/images/eco-reflexes.png" style=" height: 281px;" />
         </strong>
-        <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success">Plus d'éco'gestes</a>
+        <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction']?></a>
     </div>
 </div>
 
