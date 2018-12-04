@@ -254,20 +254,23 @@
                     }
                     electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]/1000])
                 }
-                console.log(productionElect)
-                for(var index = 0;index< productionElect.length;index++)
+
+                <?php
+                if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+                    for (index = 0; index < productionElect.length; index++)
                 {
                     d = new Date(productionElect[index]["time"]);
 
-                    if(d.getTimezoneOffset() != 120)
-                    {
-                        d.setHours(d.getHours() + 1)
+                    if (d . getTimezoneOffset() != 120) {
+                        d . setHours(d . getHours() + 1)
                     }
-                    if(productionElect[index]["distinct"] >= 0)
-                    {
-                        productionElecArray.unshift([new Date(d.toISOString()).getTime(), productionElect[index]["distinct"]/1000])
+                    if (productionElect[index]["distinct"] >= 0) {
+                        productionElecArray . unshift([new Date(d . toISOString()) . getTime(), productionElect[index]["distinct"] / 1000])
                     }
                 }
+                    <?php
+                }
+                ?>
 
 
                 Highcharts.StockChart('historicData', {
@@ -357,7 +360,8 @@
                             index:1,
                             yAxis:1
 
-                        },
+                        },     <?php
+                        if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
                         {
                             name: 'Production',
                             type: 'area',
@@ -365,7 +369,7 @@
                             index:2,
                             yAxis:1,
                             color:"#f4e842"
-                        },
+                        }, <?php } ?>
                         {
                             name: 'Intérieur',
                             type: 'line',
@@ -418,6 +422,8 @@
             url: 'productionElectSpeed',
             type: 'POST',
             success: function(data){
+                <?php
+                if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
                 if (data && Array.isArray(data))
                 {
                     d = new Date(data[0]["time"]);
@@ -433,6 +439,7 @@
                     document.getElementById('productionElectSpeed').innerHTML = productionElectSpeed + kw + "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
                 }
                 else ajaxError('productionElectSpeed');
+                <?php } ?>
             },
             error: function () {
                 ajaxError('productionElectSpeed');

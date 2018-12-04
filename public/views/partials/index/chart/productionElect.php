@@ -28,8 +28,8 @@
                         d.setHours(d.getHours() + 1)
                     }
 
-                    if (data[j]["sum_count"] >= 0) {
-                        newData = data[j]["sum_count"] / 1000;
+                    if (data[j]["distinct"] >= 0) {
+                        newData = data[j]["distinct"] / 1000;
                         dataTime.unshift([new Date(d.toISOString()).getTime(), newData])
                     }
                 }
@@ -53,13 +53,15 @@
                     },
                     series: [{
                         data: dataTime,
+                        type:'area',
+                        color:"#f4e842",
                         tooltip: {
                             valueDecimals: 2
                         }
                     }],
                     navigator: {
                         margin: 60,
-                        adaptToUpdatedData: false,
+                        adaptToUpdatedData: false
                     },
                     scrollbar: {
                         liveRedraw: false
@@ -69,31 +71,31 @@
                         floating: true,
                         selected: 3,
                         buttons: [{
-                            text: '3h',
+                            text: '12h',
                             events: {
                                 click: function () {
-                                    loadGraph('5s','3h','productionElectSpec');
+                                    loadGraph('1s','12h','productionElect');
                                 }
                             }
                         }, {
                             text: '1d',
                             events: {
                                 click: function () {
-                                    loadGraph('1m','1d','productionElectSpec');
+                                    loadGraph('1s','1d','productionElect');
                                 }
                             }
                         }, {
                             text: '7d',
                             events: {
                                 click: function () {
-                                    loadGraph('15m','7d','productionElectSpec');
+                                    loadGraph('1s','7d','productionElect');
                                 }
                             }
                         }, {
                             text: 'All',
                             events: {
                                 click: function () {
-                                    loadGraph('1d','1y','productionElectSpecAll');
+                                    loadGraph('15m','30d','productionElect');
                                 }
                             }
                         }],
@@ -117,6 +119,6 @@
     }
     window.onload = function() {
 
-        loadGraph('15m','7d','productionElectSpec');
+        loadGraph('15m','7d','productionElect');
     }
 </script>
