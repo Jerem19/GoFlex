@@ -308,6 +308,13 @@ $router
 
     })
 
+    ->post('/productionElectHistory', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $powerMeter = getHeatPowerMeter($_SESSION["User"]);
+        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time > now()-12h GROUP BY time(1s) fill(none) ORDER BY time DESC ;');
+        $res->send($result->getPoints());
+    })
 
     /* CONSUMPTION HEAT PUMP */
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
