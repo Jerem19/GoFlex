@@ -146,28 +146,175 @@
 
 <script>
 
-    window.onload = function() {
+    var graph_buttons = [{
+        text: '6 dernieres heures',
+        events: {
+            click: function () {
+                loadGraphLine()
+            }
+        }
+    }, {
+        text: 'Daily',
+        events: {
+            click: function () {
+                loadGraphHist("1d")
+            }
+        }
+    }, {
+        text: 'Monthly',
+        events: {
+            click: function () {
+                loadGraphHist("30d")
+            }
+        }
+    }, {
+        text: 'Yearly',
+        events: {
+            click: function () {
+                loadGraphHist("365d")
+            }
+        }
+    }];
 
-        const kw = 'kW';
-        const celsius = '°C';
-        const kwH ='kWh';
-
-        var consumptionElectSpeed;
-        var timeConsumptionElectSpeed;
-        var consumptionHeatPumpSpeed;
-        var timeConsumptionHeatPumpSpeed;
-        var hotwaterTemperatureSpeed;
-        var timeHotwaterTemperatureSpeed;
-        var insideTempSpeed;
-        var timeInsideTempSpeed;
+    function loadGraphHist(range)
+    {
+        var insideArray =[];
+        var boilerArray = [];
+        var electArray = [];
+        var productionElecArray = [];
+        var boiler;
+        var insideTemp;
+        var electConsumption;
         var productionElect;
-        var counterConsumption;
-        var timeCounterConsumption1;
-        var timeCounterConsumption2;
-        var counterProduction;
-        var timeCounterProduction1;
-        var timeCounterProduction2;
+        var heatPumpConsumption;
 
+        $.when($.ajax({
+                type: "POST",
+                url: "hotwaterTemperatureHistoryHist",
+                data: {
+                    range: range
+                }
+            }),
+            $.ajax({
+                type: "POST",
+                url: "consumptionElectHistoryHist",
+                data : {
+                    range : range
+                }
+            }),
+            $.ajax({
+                type: "POST",
+                url: "insideTempHistoryHist",
+                data : {
+                    range: range
+                }
+            })
+            <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+            ,$.ajax({
+                type: "POST",
+                url: "productionElectHistoryHist",
+                data : {
+                    range : range
+                }
+            })
+            <?php } ?>
+        ).then(function (hotwater, consumption, inside, production) {
+
+            var boiler = !!hotwater[0] && !!hotwater[0][0] && !!hotwater[0][0]["mean"] ? Math.round(hotwater[0][0]["mean"]*10)/10 : 0;
+            var electConsumption = !!consumption[0] && !!consumption[0][0] && !!consumption[0][0]["sum"] ? consumption[0][0]["sum"] : 0;
+            var insideTemp = !!inside[0] && !!inside[0][0] && !!inside[0][0]["mean"] ? Math.round(inside[0][0]["mean"]*10)/10 : 0;
+
+            Highcharts.chart('historicData', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''//'Test bar chart'
+                },
+                xAxis: {
+                    categories: [
+                        'Value',
+                    ],
+                    crosshair: true
+                },
+                yAxis: [{
+                    title: {
+                        text: "Température (°C)"
+                    },
+                    opposite: false
+                }, {
+                    title:{
+                        text: "Puissance (kW)"
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                rangeSelector: {
+                    buttons: graph_buttons,
+                    buttonTheme:{
+                        height:18,
+                        padding:2,
+                        width:20 + '%',
+                        zIndex:7
+                    },
+                    inputEnabled: false,
+                    enabled: true
+                },
+                scrollbar: {
+                    enabled: false
+                },
+                navigator: {
+                    enabled: false
+                },
+                series: [
+                    <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+                    {
+                        name: 'Production',
+                        data: [!!production[0] && !!production[0][0] && !!production[0][0]["sum"] ? production[0][0]["sum"] : 0],
+                        yAxis:1,
+                        color:"#95ceff"
+
+                    },<?php } ?>
+                    {
+                        name: 'Consommation',
+                        data: [electConsumption],
+                        yAxis:1,
+                        color:"#f4e842"
+
+                    }, {
+                        name: 'Temperature intérieure',
+                        data: [insideTemp],
+                        yAxis:0,
+                        color:"#434348"
+
+                    }, {
+                        name: 'Temperature boiler',
+                        data: [boiler],
+                        yAxis:0,
+                        color:"#90ed7d"
+
+                    }]
+            });
+        }, function () {
+            ajaxError('TEST');
+        });
+    }
+
+    function loadGraphLine()
+    {
         var insideArray =[];
         var boilerArray = [];
         var electArray = [];
@@ -175,10 +322,7 @@
         var boiler;
         var electConsumption;
         var heatPumpConsumption;
-
-        function ajaxError (elementId) {
-            document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-        }
+        var productionElec;
 
         $.ajax({
             type: "POST",
@@ -209,7 +353,7 @@
                 <?php
                 if($user->getInstallations()[0]->Solar()->isExistant())
                 {
-                    ?>
+                ?>
 
                 productionElect = data;
                 <?php } ?>
@@ -257,7 +401,7 @@
 
                 <?php
                 if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-                    for (index = 0; index < productionElect.length; index++)
+                for (index = 0; index < productionElect.length; index++)
                 {
                     d = new Date(productionElect[index]["time"]);
 
@@ -268,7 +412,7 @@
                         productionElecArray . unshift([new Date(d . toISOString()) . getTime(), productionElect[index]["distinct"] / 1000])
                     }
                 }
-                    <?php
+                <?php
                 }
                 ?>
 
@@ -333,14 +477,14 @@
                         }
                     },
                     rangeSelector: {
-                        selected: 1,
-                        inputEnabled: false,
-                        buttonTheme: {
-                            visibility: 'hidden'
+                        buttons: graph_buttons,
+                        buttonTheme:{
+                            height:18,
+                            padding:2,
+                            width:20 + '%',
+                            zIndex:7
                         },
-                        labelStyle: {
-                            visibility: 'hidden'
-                        }
+                        inputEnabled: false
                     },
                     tooltip: {
                         shared: false,
@@ -358,7 +502,8 @@
                             type: 'area',
                             data: electArray,
                             index:1,
-                            yAxis:1
+                            yAxis:1,
+                            color:"#f4e842"
 
                         },     <?php
                         if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
@@ -368,30 +513,68 @@
                             data: productionElecArray,
                             index:2,
                             yAxis:1,
-                            color:"#f4e842"
+                            color:"#95ceff"
+
                         }, <?php } ?>
                         {
                             name: 'Intérieur',
                             type: 'line',
                             data: insideArray,
                             index:3,
-                            yAxis:0
+                            yAxis:0,
+                            color:"#434348"
                         },
                         {
                             name: 'Boiler',
                             type: 'line',
                             data: boilerArray,
                             index:4,
-                            yAxis:0
+                            yAxis:0,
+                            color:"#90ed7d"
                         }
                     ]
                 });
-            },
+
+                },
+
             error: function () {
                 ajaxError('TEST');
                 document.getElementById("loader").style.display = "none";
             }
         });
+    }
+
+    window.onload = function() {
+
+        const kw = 'kW';
+        const celsius = '°C';
+        const kwH ='kWh';
+
+        var consumptionElectSpeed;
+        var timeConsumptionElectSpeed;
+        var consumptionHeatPumpSpeed;
+        var timeConsumptionHeatPumpSpeed;
+        var hotwaterTemperatureSpeed;
+        var timeHotwaterTemperatureSpeed;
+        var insideTempSpeed;
+        var timeInsideTempSpeed;
+        var productionElect;
+        var counterConsumption1;
+        var counterConsumption2;
+        var timeCounterConsumption1;
+        var timeCounterConsumption2;
+        var counterProduction1;
+        var counterProduction2;
+        var timeCounterProduction1;
+        var timeCounterProduction2;
+
+
+
+        function ajaxError (elementId) {
+            document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
+        }
+
+        loadGraphLine();
 
         $.ajax({
             url: 'consumptionElectSpeed',
