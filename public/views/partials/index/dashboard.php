@@ -224,6 +224,8 @@
             var electConsumption = !!consumption[0] && !!consumption[0][0] && !!consumption[0][0]["sum"] ? consumption[0][0]["sum"] : 0;
             var insideTemp = !!inside[0] && !!inside[0][0] && !!inside[0][0]["mean"] ? Math.round(inside[0][0]["mean"]*10)/10 : 0;
 
+            electConsumption = electConsumption/1000;
+
             Highcharts.chart('historicData', {
                 chart: {
                     type: 'column'
@@ -233,7 +235,7 @@
                 },
                 xAxis: {
                     categories: [
-                        'Value',
+                        'Value'
                     ],
                     crosshair: true
                 },
@@ -249,12 +251,12 @@
                     opposite: true
                 }],
                 tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
+                    //headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    //pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    //'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                    //footerFormat: '</table>',
+                    //shared: true,
+                    //useHTML: true
                 },
                 plotOptions: {
                     column: {
@@ -285,14 +287,14 @@
                         name: 'Production',
                         data: [!!production[0] && !!production[0][0] && !!production[0][0]["sum"] ? production[0][0]["sum"] : 0],
                         yAxis:1,
-                        color:"#95ceff"
+                        color:"#f4e842"
 
                     },<?php } ?>
                     {
                         name: 'Consommation',
                         data: [electConsumption],
                         yAxis:1,
-                        color:"#f4e842"
+                        color:"#95ceff"
 
                     }, {
                         name: 'Temperature intérieure',
@@ -476,7 +478,7 @@
                         data: electArray,
                         index:1,
                         yAxis:1,
-                        color:"#f4e842"
+                        color:"#95ceff"
 
                     },
                     <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
@@ -486,7 +488,7 @@
                         data: productionElecArray,
                         index:2,
                         yAxis:1,
-                        color:"#95ceff"
+                        color:"#f4e842"
 
                     }, <?php } ?>
                     {
