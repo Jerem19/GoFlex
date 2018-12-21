@@ -315,232 +315,198 @@
 
     function loadGraphLine()
     {
-        var insideArray =[];
-        var boilerArray = [];
-        var electArray = [];
-        var productionElecArray = [];
-        var boiler;
-        var electConsumption;
-        var heatPumpConsumption;
-        var productionElec;
+        $.when(
+            $.ajax({
+                type: "POST",
+                url: "hotwaterTemperatureHistory",
+            }),
+            $.ajax({
+                type: "POST",
+                url: "consumptionElectHistory",
+            }),
+            $.ajax({
+                type: "POST",
+                url: "insideTempHistory",
+            })
+            <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+            ,$.ajax({
+                type: "POST",
+                url: "productionElectHistory",
+            })
+            <?php } ?>
+        ).then(function(hotwater, consumption, inside, production) {
+            var insideArray =[];
+            var boilerArray = [];
+            var electArray = [];
+            var productionElecArray = [];
+            var index = 0;
+            var d;
 
-        $.ajax({
-            type: "POST",
-            url: "hotwaterTemperatureHistory",
-            success : function (data) {
-                boiler = data;
-            },
-            error: function () {
-                ajaxError('TEST');
+            hotwater = hotwater[0];
+            consumption = consumption[0];
+            inside = inside[0];
+            production = production ? production[0] :  undefined;
+            for(index = 0;index< inside.length;index++)
+            {
+                d = new Date(inside[index]["time"]);
+                if(d.getTimezoneOffset() != 120)
+                {
+                    d.setHours(d.getHours() + 1)
+                }
+                insideArray.unshift([new Date(d.toISOString()).getTime(), inside[index]["distinct"]])
             }
-        });
+            for(index = 0;index< hotwater.length;index++)
+            {
+                d = new Date(hotwater[index]["time"]);
 
-        $.ajax({
-            type: "POST",
-            url: "consumptionElectHistory",
-            success : function (data) {
-                electConsumption = data;
-            },
-            error: function () {
-                ajaxError('TEST');
+                if(d.getTimezoneOffset() != 120)
+                {
+                    d.setHours(d.getHours() + 1)
+                }
+                boilerArray.unshift([new Date(d.toISOString()).getTime(), hotwater[index]["distinct"]])
             }
-        });
+            for(index = 0;index< consumption.length;index++)
+            {
+                d = new Date(consumption[index]["time"]);
 
-        $.ajax({
-            type: "POST",
-            url: "productionElectHistory",
-            success : function (data) {
-                <?php
-                if($user->getInstallations()[0]->Solar()->isExistant())
+                if(d.getTimezoneOffset() != 120)
                 {
-                ?>
-
-                productionElect = data;
-                <?php } ?>
-            },
-            error: function () {
-                ajaxError('TEST');
+                    d.setHours(d.getHours() + 1)
+                }
+                electArray.unshift([new Date(d.toISOString()).getTime(), consumption[index]["distinct"]/1000])
             }
-        });
 
-        $.ajax({
-            type: "POST",
-            url: "insideTempHistory",
-            timeout: 75000,
-            success : function (data) {
-                var index = 0;
-                for(index = 0;index< data.length;index++)
-                {
-                    d = new Date(data[index]["time"]);
-                    if(d.getTimezoneOffset() != 120)
-                    {
-                        d.setHours(d.getHours() + 1)
-                    }
-                    insideArray.unshift([new Date(d.toISOString()).getTime(), data[index]["distinct"]])
+            <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+            for (index = 0; index < production.length; index++)
+            {
+                d = new Date(production[index]["time"]);
+
+                if (d.getTimezoneOffset() != 120) {
+                    d.setHours(d.getHours() + 1)
                 }
-                for(index = 0;index< boiler.length;index++)
-                {
-                    d = new Date(boiler[index]["time"]);
-
-                    if(d.getTimezoneOffset() != 120)
-                    {
-                        d.setHours(d.getHours() + 1)
-                    }
-                    boilerArray.unshift([new Date(d.toISOString()).getTime(), boiler[index]["distinct"]])
+                if (production[index]["distinct"] >= 0) {
+                    productionElecArray.unshift([new Date(d.toISOString()).getTime(), production[index]["distinct"] / 1000])
                 }
-                for(index = 0;index< electConsumption.length;index++)
-                {
-                    d = new Date(electConsumption[index]["time"]);
+            }
+            <?php } ?>
 
-                    if(d.getTimezoneOffset() != 120)
-                    {
-                        d.setHours(d.getHours() + 1)
-                    }
-                    electArray.unshift([new Date(d.toISOString()).getTime(), electConsumption[index]["distinct"]/1000])
-                }
-
-                <?php
-                if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-                for (index = 0; index < productionElect.length; index++)
-                {
-                    d = new Date(productionElect[index]["time"]);
-
-                    if (d . getTimezoneOffset() != 120) {
-                        d . setHours(d . getHours() + 1)
-                    }
-                    if (productionElect[index]["distinct"] >= 0) {
-                        productionElecArray . unshift([new Date(d . toISOString()) . getTime(), productionElect[index]["distinct"] / 1000])
-                    }
-                }
-                <?php
-                }
-                ?>
-
-
-                Highcharts.StockChart('historicData', {
-                    chart: {
-                        events: {
-                            load: function() { document.getElementById("loader").style.display = "none"; resizeFooter(); }
-                        },
-                        height:350+ 'px'
+            Highcharts.StockChart('historicData', {
+                chart: {
+                    events: {
+                        load: function() { document.getElementById("loader").style.display = "none"; resizeFooter(); }
                     },
-                    title: {
-                        text: ''
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    xAxis: {
-                        type:'datetime',
-                        title:{
-                            text: 'Date'
-                        }
-                    },
-                    yAxis: [{
-                        title: {
-                            text: "Température (°C)"
-                        },
-                        opposite:false
-                    },
-                        {
-                            title:{
-                                text: "Puissance (kW)"
-                            },
-                            opposite:true
-                        }
-                    ],
-                    legend: {
-                        enabled: true
-                    },
-                    plotOptions: {
-                        area: {
-                            lineWidth: 0,
-                            marker: {
-                                enabled: true,
-                                symbol: 'circle',
-                                radius: 2,
-                                states: {
-                                    hover: {
-                                        enabled: true
-                                    }
-                                }
-                            }
-                        },
-                        series: {
-                            animation: false,
-                            events: {
-                                legendItemClick: function () {
-                                    var visibility = this.visible ? 'visible' : 'hidden';
-                                }
-
-                            }
-                        }
-                    },
-                    rangeSelector: {
-                        buttons: graph_buttons,
-                        buttonTheme:{
-                            height:18,
-                            padding:2,
-                            width:20 + '%',
-                            zIndex:7
-                        },
-                        inputEnabled: false
-                    },
-                    tooltip: {
-                        shared: false,
-                        valueDecimals: 2
-                    },
-                    scrollbar: {
-                        enabled: false
-                    },
-                    navigator: {
-                        enabled: false
-                    },
-                    series:[
-                        {
-                            name: 'Electrique',
-                            type: 'area',
-                            data: electArray,
-                            index:1,
-                            yAxis:1,
-                            color:"#f4e842"
-
-                        },     <?php
-                        if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-                        {
-                            name: 'Production',
-                            type: 'area',
-                            data: productionElecArray,
-                            index:2,
-                            yAxis:1,
-                            color:"#95ceff"
-
-                        }, <?php } ?>
-                        {
-                            name: 'Intérieur',
-                            type: 'line',
-                            data: insideArray,
-                            index:3,
-                            yAxis:0,
-                            color:"#434348"
-                        },
-                        {
-                            name: 'Boiler',
-                            type: 'line',
-                            data: boilerArray,
-                            index:4,
-                            yAxis:0,
-                            color:"#90ed7d"
-                        }
-                    ]
-                });
-
+                    height:350+ 'px'
                 },
+                title: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type:'datetime',
+                    title:{
+                        text: 'Date'
+                    }
+                },
+                yAxis: [{
+                    title: {
+                        text: "Température (°C)"
+                    },
+                    opposite:false
+                },
+                    {
+                        title:{
+                            text: "Puissance (kW)"
+                        },
+                        opposite:true
+                    }
+                ],
+                legend: {
+                    enabled: true
+                },
+                plotOptions: {
+                    area: {
+                        lineWidth: 0,
+                        marker: {
+                            enabled: true,
+                            symbol: 'circle',
+                            radius: 2,
+                            states: {
+                                hover: {
+                                    enabled: true
+                                }
+                            }
+                        }
+                    },
+                    series: {
+                        animation: false,
+                        events: {
+                            legendItemClick: function () {
+                                var visibility = this.visible ? 'visible' : 'hidden';
+                            }
 
-            error: function () {
-                ajaxError('TEST');
-                document.getElementById("loader").style.display = "none";
-            }
+                        }
+                    }
+                },
+                rangeSelector: {
+                    buttons: graph_buttons,
+                    buttonTheme:{
+                        height:18,
+                        padding:2,
+                        width:20 + '%',
+                        zIndex:7
+                    },
+                    inputEnabled: false
+                },
+                tooltip: {
+                    shared: false,
+                    valueDecimals: 2
+                },
+                scrollbar: {
+                    enabled: false
+                },
+                navigator: {
+                    enabled: false
+                },
+                series:[
+                    {
+                        name: 'Electrique',
+                        type: 'area',
+                        data: electArray,
+                        index:1,
+                        yAxis:1,
+                        color:"#f4e842"
+
+                    },
+                    <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+                    {
+                        name: 'Production',
+                        type: 'area',
+                        data: productionElecArray,
+                        index:2,
+                        yAxis:1,
+                        color:"#95ceff"
+
+                    }, <?php } ?>
+                    {
+                        name: 'Intérieur',
+                        type: 'line',
+                        data: insideArray,
+                        index:3,
+                        yAxis:0,
+                        color:"#434348"
+                    },
+                    {
+                        name: 'Boiler',
+                        type: 'line',
+                        data: boilerArray,
+                        index:4,
+                        yAxis:0,
+                        color:"#90ed7d"
+                    }
+                ]
+            });
         });
     }
 
