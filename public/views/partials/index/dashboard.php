@@ -98,8 +98,8 @@
         if($user->getInstallations()[0]->Solar()->isExistant())
         {
             ?>
-            <div id="counterProductionOne"  class="dashboardNumberSize" style="text-align: right;"></div>
-            <div id="counterProductionTwo"  class="dashboardNumberSize" style="text-align: right;"></div>
+            <div id="counterProductionOne"  class="dashboardNumberSize" style="text-align: right; font-size: large;">Tarif 1 =</div>
+            <div id="counterProductionTwo"  class="dashboardNumberSize" style="text-align: right; font-size: large;">Tarif 2 =</div>
         <?php }
         else{
             ?>
@@ -153,7 +153,7 @@
                 loadGraphLine()
             }
         }
-    }, {
+    }/*, {
         text: 'Daily',
         events: {
             click: function () {
@@ -174,7 +174,7 @@
                 loadGraphHist("365d")
             }
         }
-    }];
+    }*/];
 
     function loadGraphHist(range)
     {
@@ -748,7 +748,7 @@
 
                     counterProduction1 = data[0]['last']/1000;
 
-                    document.getElementById('counterProductionOne').innerHTML = counterProduction1 + kwH +
+                    document.getElementById('counterProductionOne').innerHTML = "Tarif 1 = " +counterProduction1 + kwH +
                         "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction1 + "</p>";
 
                     <?php
@@ -783,7 +783,7 @@
 
                     counterProduction2 = data[0]['last']/1000;
 
-                    document.getElementById('counterProductionTwo').innerHTML = counterProduction2 + kwH +
+                    document.getElementById('counterProductionTwo').innerHTML = "Tarif 2 = " +counterProduction2 + kwH +
                         "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction2 + "</p>";
 
                     <?php
