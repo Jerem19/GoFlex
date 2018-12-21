@@ -35,11 +35,11 @@ class Configuration {
 
     const pictures_path = PUBLIC_FOLDER . 'pics/';
 
-    private static $db_name = "goflex_clients";
+    private static $db_name = "goflex_clients2";
     private static $db_host = "localhost";
     private static $db_port = "3306";
-    private static $db_user = "goflex_clients";
-    private static $db_pass = "ooYai5vu";
+    private static $db_user = "root";
+    private static $db_pass = "";
 
     private static $DB = null;
 
