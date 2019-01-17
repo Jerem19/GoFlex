@@ -75,6 +75,7 @@
       "grafana" : "Grafana",
       "profil" : "Profil",
       "creationUser" : "Ajout utilisateur",
+      "editUser" : "Modifier utilisateur",
       "installationGateway" : "Ajout installation",
       "passwordModification" : "Gestion du mot de passe",
       "checkUserData" : "Visualisation client"
@@ -86,7 +87,7 @@
       "firstname" : "Prénom",
       "lastname": "Nom",
       "phone": "N° de tél.",
-      "email": "email",
+      "email": "Email",
       "username": "Nom d'utilisateur",
       "active": "Activé",
       "alertCreateUserFailed": "Une erreur a été détectée lors de l'ajout du nouvel utilisateur.",

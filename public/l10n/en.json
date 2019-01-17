@@ -73,6 +73,7 @@
 			"summary": "Summary",
 			"profil": "Profile",
 			"creationUser": "Add User",
+			"editUser": "Edit User",
 			"admin": "Admin",
 			"grafana" : "Grafana",
 			"installationGateway": "Add installation",

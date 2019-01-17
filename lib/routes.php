@@ -169,6 +169,16 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->post('/insideTempLimit', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $interval = $_POST["time"];
+        $range = $_POST["range"];
+        $offset = $_POST["offset"];
+        $result = $database->query('SELECT DISTINCT value FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY time DESC LIMIT 100000 OFFSET '.$offset.';');
+        $res->send($result->getPoints());
+    })
+
     ->post('/insideTempAll', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
@@ -222,7 +232,7 @@ $router
     /* CONSUMPTION ELECT */
 
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    ->post('/consumptionElect', function(Response $res) {
+    /*->post('/consumptionElect', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $interval = $_POST["time"];
@@ -230,12 +240,23 @@ $router
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
 
         $res->send($result->getPoints());
+    })*/
+
+    ->post('/consumptionElect', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $interval = $_POST["time"];
+        $range = $_POST["range"];
+        $offset = $_POST["offset"];
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC LIMIT 100000 OFFSET '.$offset.';');
+
+        $res->send($result->getPoints());
     })
 
     ->post('/consumptionElectAll', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
+        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(7d) fill(none) ORDER BY time DESC ;');
 
         $res->send($result->getPoints());
     })
@@ -292,7 +313,17 @@ $router
         $dbName = getUser($_SESSION["User"]);
         $interval = $_POST["time"];
         $range = $_POST["range"];
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+        $res->send($result->getPoints());
+    })
+
+    ->post('/productionElectLimit', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $interval = $_POST["time"];
+        $range = $_POST["range"];
+        $offset = $_POST["offset"];
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC LIMIT 100000 OFFSET '.$offset.';');
         $res->send($result->getPoints());
     })
 
@@ -349,13 +380,24 @@ $router
     /* CONSUMPTION HEAT PUMP */
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+    /*->post('/consumptionHeatPump', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $powerMeter = getHeatPowerMeter($_SESSION["User"]);
+        $interval = $_POST["time"];
+        $range = $_POST["range"];
+        $result = $database->query('SELECT DISTINCT("value")/1000 as "distinct" FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(0) ORDER BY time DESC ;');
+        $res->send($result->getPoints());
+    })*/
+
     ->post('/consumptionHeatPump', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $powerMeter = getHeatPowerMeter($_SESSION["User"]);
         $interval = $_POST["time"];
         $range = $_POST["range"];
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY time DESC ;');
+        $offset = $_POST["offset"];
+        $result = $database->query('SELECT DISTINCT("value")/1000 as "distinct" FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(0) ORDER BY time DESC LIMIT 100000 OFFSET '.$offset.';');
         $res->send($result->getPoints());
     })
 
@@ -409,7 +451,17 @@ $router
         $dbName = getUser($_SESSION["User"]);
         $interval = $_POST["time"];
         $range = $_POST["range"];
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY time DESC ;');
+        $result = $database->query('SELECT DISTINCT("value") as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY time DESC ;');
+        $res->send($result->getPoints());
+    })
+
+    ->post('/hotwaterTemperatureLimit', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $interval = $_POST["time"];
+        $range = $_POST["range"];
+        $offset = $_POST["offset"];
+        $result = $database->query('SELECT DISTINCT("value") as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY time DESC LIMIT 100000 OFFSET '.$offset.';');
         $res->send($result->getPoints());
     })
 
@@ -570,6 +622,25 @@ $router
         }
     })
 
+    ->post('/userInfo', function(Response $res) {
+        if ($_SESSION["User"]->getRole()->getId() != 4) {
+            if (isset($_POST["id"])) {
+                $user = User::getById($_POST["id"]);
+                if ($user != false) {
+                    $data = array(
+                        "username" => $user->getUsername(),
+                        "firstname" => $user->getFirstname(),
+                        "lastname" => $user->getLastname(),
+                        "phone" => $user->getPhone(),
+                        "email" => $user->getEMail()
+                    );
+                    $res->send($data);
+                }
+            }
+            $res->send(false);
+        }
+    })
+
     ->post('/installUser', function(Response $res) {
         if ($_SESSION["User"]->getRole()->getId() != 4) {
             if (isset($_POST["id"])) {
@@ -629,6 +700,30 @@ $router
                     ]));
                     Mail::activation($user);
                     $res->send(true);
+                }
+            }
+            $res->send(false);
+        }
+    })
+
+    ->post('/edit', function(Response $res) {
+        if ($_SESSION["User"]->getRole()->getId() == 1) {
+            $user = User::getById($_POST["id"]);
+            if ($user != false) {
+                if(!empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"]) && !empty($_POST["username"])) {
+                    if($_POST["username"] != $user->getUsername() && User::getByUsername($_POST["username"]) == false || $_POST["username"] == $user->getUsername()) {
+                        if($_POST["email"] != $user->getEMail() && User::getByEmail($_POST["email"]) == false || $_POST["email"] == $user->getEMail()) {
+
+                            $out = $user->update([
+                                "firstname" => $_POST["firstname"],
+                                "lastname" => $_POST["lastname"],
+                                "phone" => $_POST["phone"],
+                                "username" => $_POST["username"],
+                                "email" => $_POST["email"]
+                            ]);
+                            $res->send($out);
+                        }
+                    }
                 }
             }
             $res->send(false);

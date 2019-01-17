@@ -59,6 +59,10 @@
                     "_iClass" => "fa fa-user-plus"
                 ];
 
+                $menu["editUser"] = [
+                    "text" => $l10nNav["editUser"],
+                    "_iClass" => "fa fa-user"
+                ];
 
                 $menu["allUsers"] = [
                     "text" => $l10nNav["allUsers"],
