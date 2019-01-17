@@ -1,3 +1,4 @@
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" />
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
@@ -91,7 +92,7 @@
 
         </div>
         <div class="indexAlert alert-secondary">
-            <strong><span class="fa fa-line-chart"></span> Production</strong>
+            <strong><span class="fa fa-line-chart"></span> Excédent PV</strong>
         </div>
         <div class="col col-md-5"><span class="fa fa-battery-full"></span><?= L10N['index']['dashboard']['overagePV']?></div>
         <?php
@@ -153,7 +154,7 @@
                 loadGraphLine()
             }
         }
-    }/*, {
+    }, {
         text: 'Daily',
         events: {
             click: function () {
@@ -174,7 +175,14 @@
                 loadGraphHist("365d")
             }
         }
-    }*/];
+    }, {
+            text: 'Jour',
+            events: {
+                click: function () {
+                    loadGraphHist("365d")
+                }
+            }
+        }];
 
     function loadGraphHist(range)
     {
@@ -394,6 +402,7 @@
 
             Highcharts.StockChart('historicData', {
                 chart: {
+                    renderTo:'historicData',
                     events: {
                         load: function() { document.getElementById("loader").style.display = "none"; resizeFooter(); }
                     },
@@ -459,7 +468,7 @@
                         width:20 + '%',
                         zIndex:7
                     },
-                    inputEnabled: false
+                    inputEnabled: true
                 },
                 tooltip: {
                     shared: false,
@@ -508,6 +517,18 @@
                         color:"#90ed7d"
                     }
                 ]
+            },function (chart) {
+                setTimeout(function () {
+                    $('input.highcharts-range-selector', $('#'+chart.options.chart.renderTo))
+                        .datepicker()
+                },0)
+            });
+            $.datepicker.setDefaults({
+                dateFormat: 'yy-mm-dd',
+                onSelect: function(dateText) {
+                    this.onchange();
+                    this.onblur();
+                }
             });
         });
     }
