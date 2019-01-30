@@ -535,9 +535,9 @@
 
     window.onload = function() {
 
-        const kw = 'kW';
-        const celsius = '°C';
-        const kwH ='kWh';
+        var kw = 'kW';
+        var celsius = '°C';
+        var kwH ='kWh';
 
         var consumptionElectSpeed;
         var timeConsumptionElectSpeed;
