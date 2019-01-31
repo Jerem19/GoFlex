@@ -128,6 +128,7 @@
 </body>
 <?php loadScripts([
     "https://code.jquery.com/jquery-3.1.1.min.js",
+    "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js",
     "https://code.highcharts.com/stock/highstock.js",
     "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.js",

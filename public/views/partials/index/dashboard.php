@@ -1,4 +1,5 @@
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" />
+
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
@@ -35,6 +36,12 @@
     <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData']?></p>
         <hr>
+
+        <div id="dates" style="display:none">
+            <label>From</label><input type="text" id="from" /> <label>To</label><input type="text" id="to" />
+            <button id="applyDate">Apply</button>
+        </div>
+
         <div id="historicData"></div>
         <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
     </div>
@@ -146,8 +153,8 @@
 </div>
 
 <script>
-
-    var graph_buttons = [{
+    var dateFormat = "dd.mm.yy";
+    var graph_buttons = /*[{
         text: '6 dernieres heures',
         events: {
             click: function () {
@@ -176,13 +183,217 @@
             }
         }
     }, {
-            text: 'Jour',
-            events: {
-                click: function () {
-                    loadGraphHist("365d")
+        text: 'Jour',
+        events: {
+            click: function () {
+                loadGraphHist("365d")
+            }
+        }
+    }];*/
+    [{
+       text: '15 minutes',
+       events: {
+           click: function () {
+               loadGraphLine($.datepicker.parseDate(dateFormat, $("#from").val()).getTime()+"ms",$.datepicker.parseDate(dateFormat, $("#to").val()).getTime()+"ms", "15m")
+           }
+       }
+    }, {
+        text: 'Par jour',
+        events: {
+            click: function () {
+                loadGraphDate($.datepicker.parseDate(dateFormat, $("#from").val()).getTime()+"ms",$.datepicker.parseDate(dateFormat, $("#to").val()).getTime()+"ms", "1d")
+            }
+        }
+    }];
+
+    function loadGraphDate(start, end, interval) {
+        $.when($.ajax({
+                type: "POST",
+                url: "hotwaterTemperatureHistoryDate",
+                data: {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
+            }),
+            $.ajax({
+                type: "POST",
+                url: "consumptionElectHistoryDate",
+                data : {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
+            }),
+            $.ajax({
+                type: "POST",
+                url: "insideTempHistoryDate",
+                data : {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
+            })
+            <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+            ,$.ajax({
+                type: "POST",
+                url: "productionElectHistoryDate",
+                data : {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
+            })
+            <?php } ?>
+        ).then(function (hotwater, consumption, inside, production) {
+            var insideArray =[];
+            var boilerArray = [];
+            var electArray = [];
+            var productionElecArray = [];
+            var index = 0;
+            var d;
+
+            hotwater = hotwater[0];
+            consumption = consumption[0];
+            inside = inside[0];
+            production = production ? production[0] :  undefined;
+            for(index = 0;index< inside.length;index++)
+            {
+                d = new Date(inside[index]["time"]);
+                if(d.getTimezoneOffset() != 120)
+                {
+                    d.setHours(d.getHours() + 1)
+                }
+                insideArray.push([d.getTime(), inside[index]["distinct"]]);
+            }
+            insideArray = insideArray.reverse();
+            for(index = 0;index< hotwater.length;index++)
+            {
+                d = new Date(hotwater[index]["time"]);
+
+                if(d.getTimezoneOffset() != 120)
+                {
+                    d.setHours(d.getHours() + 1)
+                }
+                boilerArray.push([d.getTime(), hotwater[index]["distinct"]])
+            }
+            boilerArray = boilerArray.reverse();
+            for(index = 0;index< consumption.length;index++)
+            {
+                d = new Date(consumption[index]["time"]);
+
+                if(d.getTimezoneOffset() != 120)
+                {
+                    d.setHours(d.getHours() + 1)
+                }
+                electArray.push([d.getTime(), consumption[index]["distinct"]])
+            }
+            electArray = electArray.reverse();
+
+            <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+            for (index = 0; index < production.length; index++)
+            {
+                if (production[index]["distinct"] >= 0) {
+                    d = new Date(production[index]["time"]);
+
+                    if (d.getTimezoneOffset() != 120) {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    productionElecArray.push([d.getTime(), production[index]["distinct"]])
                 }
             }
-        }];
+            productionElecArray = productionElecArray.reverse();
+            <?php } ?>
+
+            window.historic = Highcharts.chart('historicData', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''//'Test bar chart'
+                },
+                xAxis: {
+                    type:'datetime',
+                    title:{
+                        text: 'Date'
+                    },
+                },
+                yAxis: [{
+                    title: {
+                        text: "Température (°C)"
+                    },
+                    opposite: false
+                }, {
+                    title:{
+                        text: "Puissance (kW)"
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    //headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    //pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    //'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                    //footerFormat: '</table>',
+                    //shared: true,
+                    //useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                rangeSelector: {
+                    buttons: graph_buttons,
+                    buttonTheme:{
+                        height:18,
+                        padding:2,
+                        width:20 + '%',
+                        zIndex:7
+                    },
+                    inputEnabled: false,
+                    enabled: true
+                },
+                scrollbar: {
+                    enabled: false
+                },
+                navigator: {
+                    enabled: false
+                },
+                series: [
+                    <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+                    {
+                        name: 'Production',
+                        data: productionElecArray,
+                        yAxis:1,
+                        color:"#f4e842"
+
+                    },<?php } ?>
+                    {
+                        name: 'Consommation',
+                        data: electArray,
+                        yAxis:1,
+                        color:"#95ceff"
+
+                    }, {
+                        name: 'Temperature intérieure',
+                        data: insideArray,
+                        yAxis:0,
+                        color:"#434348"
+
+                    }, {
+                        name: 'Temperature boiler',
+                        data: boilerArray,
+                        yAxis:0,
+                        color:"#90ed7d"
+
+                    }]
+            });
+        }, function () {
+            ajaxError('TEST');
+        });
+    }
 
     function loadGraphHist(range)
     {
@@ -234,7 +445,7 @@
 
             electConsumption = electConsumption/1000;
 
-            Highcharts.chart('historicData', {
+            window.historic = Highcharts.chart('historicData', {
                 chart: {
                     type: 'column'
                 },
@@ -323,25 +534,45 @@
         });
     }
 
-    function loadGraphLine()
+    function loadGraphLine(start, end, interval)
     {
         $.when(
             $.ajax({
                 type: "POST",
-                url: "hotwaterTemperatureHistory",
+                url: "hotwaterTemperatureDate",
+                data: {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
             }),
             $.ajax({
                 type: "POST",
-                url: "consumptionElectHistory",
+                url: "consumptionElectDate",
+                data : {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
             }),
             $.ajax({
                 type: "POST",
-                url: "insideTempHistory",
+                url: "insideTempDate",
+                data : {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
             })
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             ,$.ajax({
                 type: "POST",
-                url: "productionElectHistory",
+                url: "productionElectDate",
+                data : {
+                    time: interval,
+                    start: start,
+                    end: end
+                }
             })
             <?php } ?>
         ).then(function(hotwater, consumption, inside, production) {
@@ -363,8 +594,9 @@
                 {
                     d.setHours(d.getHours() + 1)
                 }
-                insideArray.unshift([new Date(d.toISOString()).getTime(), inside[index]["distinct"]])
+                insideArray.push([d.getTime(), inside[index]["distinct"]]);
             }
+            insideArray = insideArray.reverse();
             for(index = 0;index< hotwater.length;index++)
             {
                 d = new Date(hotwater[index]["time"]);
@@ -373,8 +605,9 @@
                 {
                     d.setHours(d.getHours() + 1)
                 }
-                boilerArray.unshift([new Date(d.toISOString()).getTime(), hotwater[index]["distinct"]])
+                boilerArray.push([d.getTime(), hotwater[index]["distinct"]])
             }
+            boilerArray = boilerArray.reverse();
             for(index = 0;index< consumption.length;index++)
             {
                 d = new Date(consumption[index]["time"]);
@@ -383,28 +616,34 @@
                 {
                     d.setHours(d.getHours() + 1)
                 }
-                electArray.unshift([new Date(d.toISOString()).getTime(), consumption[index]["distinct"]/1000])
+                electArray.push([d.getTime(), consumption[index]["distinct"]])
             }
+            electArray = electArray.reverse();
 
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             for (index = 0; index < production.length; index++)
             {
-                d = new Date(production[index]["time"]);
-
-                if (d.getTimezoneOffset() != 120) {
-                    d.setHours(d.getHours() + 1)
-                }
                 if (production[index]["distinct"] >= 0) {
-                    productionElecArray.unshift([new Date(d.toISOString()).getTime(), production[index]["distinct"] / 1000])
+                    d = new Date(production[index]["time"]);
+
+                    if (d.getTimezoneOffset() != 120) {
+                        d.setHours(d.getHours() + 1)
+                    }
+
+                    productionElecArray.push([d.getTime(), production[index]["distinct"]])
                 }
             }
+            productionElecArray = productionElecArray.reverse();
             <?php } ?>
 
-            Highcharts.StockChart('historicData', {
+            window.historic = Highcharts.StockChart('historicData', {
                 chart: {
                     renderTo:'historicData',
                     events: {
-                        load: function() { document.getElementById("loader").style.display = "none"; resizeFooter(); }
+                        load: function() {
+                            document.getElementById("dates").style.display = "block";
+                            document.getElementById("loader").style.display = "none"; resizeFooter();
+                        }
                     },
                     height:350+ 'px'
                 },
@@ -418,7 +657,7 @@
                     type:'datetime',
                     title:{
                         text: 'Date'
-                    }
+                    },
                 },
                 yAxis: [{
                     title: {
@@ -468,7 +707,7 @@
                         width:20 + '%',
                         zIndex:7
                     },
-                    inputEnabled: true
+                    inputEnabled: false
                 },
                 tooltip: {
                     shared: false,
@@ -487,7 +726,8 @@
                         data: electArray,
                         index:1,
                         yAxis:1,
-                        color:"#95ceff"
+                        color:"#95ceff",
+                        enabled: false
 
                     },
                     <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
@@ -506,31 +746,36 @@
                         data: insideArray,
                         index:3,
                         yAxis:0,
-                        color:"#434348"
+                        color:"#434348",
+                        enabled: false
                     },
                     {
                         name: 'Boiler',
                         type: 'line',
                         data: boilerArray,
-                        index:4,
+                        //index:4,
                         yAxis:0,
                         color:"#90ed7d"
                     }
                 ]
             },function (chart) {
                 setTimeout(function () {
-                    $('input.highcharts-range-selector', $('#'+chart.options.chart.renderTo))
-                        .datepicker()
+                    //$('input.highcharts-range-selector',$(chart.container).parent()) //$('#'+chart.options.chart.renderTo))
+                        //.datepicker()
                 },0)
             });
-            $.datepicker.setDefaults({
+            /*$.datepicker.setDefaults({
                 dateFormat: 'yy-mm-dd',
                 onSelect: function(dateText) {
                     this.onchange();
                     this.onblur();
                 }
-            });
+            });*/
         });
+    }
+
+    function ajaxError (elementId) {
+        document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
     }
 
     window.onload = function() {
@@ -559,11 +804,11 @@
 
 
 
-        function ajaxError (elementId) {
-            document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-        }
 
-        loadGraphLine();
+        var d = new Date();
+        var e = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+        var s = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()-1);
+        loadGraphLine(s+"ms",e+"ms","15m");
 
         $.ajax({
             url: 'consumptionElectSpeed',
@@ -817,5 +1062,51 @@
                 ajaxError('counterProduction');
             }
         });
+
+        var from = $("#from").datepicker({
+                changeMonth: true
+            }).on("change", function() {
+                to.datepicker("option", "minDate", getDate(this));
+            }),
+            to = $("#to").datepicker({
+                changeMonth: true,
+                maxDate: new Date()
+            }).on("change", function() {
+                from.datepicker("option", "maxDate", getDate(this));
+            }),
+            apply = $("#applyDate").on("click", function () {
+                //console.log($.datepicker.parseDate(dateFormat, from.val()).getTime(), $.datepicker.parseDate(dateFormat, to.val()).getTime());
+                while(historic.series.length > 0)
+                    historic.series[0].remove(true);
+
+                var args = [$.datepicker.parseDate(dateFormat, from.val()).getTime()+"ms",$.datepicker.parseDate(dateFormat, to.val()).getTime()+"ms", "1d"];
+
+                if(historic.options.chart.type == "column") {
+                    loadGraphDate(...args);
+                } else {
+                    loadGraphLine(...args);
+                }
+
+            });
+
+
+        $.datepicker.setDefaults({
+            dateFormat: dateFormat
+        });
+
+        from.datepicker("setDate", -1);
+        to.datepicker("setDate", new Date());
+
+        function getDate(element) {
+            var date;
+            try {
+                date = $.datepicker.parseDate(dateFormat, element.value);
+            } catch(error) {
+                date = null;
+                console.log(error);
+            }
+
+            return date;
+        }
     }
 </script>
