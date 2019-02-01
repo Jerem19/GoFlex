@@ -1,5 +1,3 @@
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" />
-
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
