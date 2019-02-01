@@ -192,14 +192,26 @@
        text: '15 minutes',
        events: {
            click: function () {
-               loadGraphLine($.datepicker.parseDate(dateFormat, $("#from").val()).getTime()+"ms",$.datepicker.parseDate(dateFormat, $("#to").val()).getTime()+"ms", "15m")
+               var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
+               var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
+               start.setHours(0,0,0);
+               end.setHours(23,59,59);
+               start = start.getTime()+"ms";
+               end = end.getTime()+"ms";
+               loadGraphLine(start, end, "15m")
            }
        }
     }, {
         text: 'Par jour',
         events: {
             click: function () {
-                loadGraphDate($.datepicker.parseDate(dateFormat, $("#from").val()).getTime()+"ms",$.datepicker.parseDate(dateFormat, $("#to").val()).getTime()+"ms", "1d")
+                var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
+                var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
+                start.setHours(0,0,1);
+                end.setHours(23,59,59);
+                start = start.getTime()+"ms";
+                end = end.getTime()+"ms";
+                loadGraphDate(start, end, "1d")
             }
         }
     }];
@@ -252,8 +264,11 @@
             var d;
 
             hotwater = hotwater[0];
+            hotwater.pop();
             consumption = consumption[0];
+            consumption.pop();
             inside = inside[0];
+            inside.pop();
             production = production ? production[0] :  undefined;
             for(index = 0;index< inside.length;index++)
             {
@@ -289,6 +304,7 @@
             electArray = electArray.reverse();
 
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
+            production.pop();
             for (index = 0; index < production.length; index++)
             {
                 if (production[index]["distinct"] >= 0) {
@@ -1082,9 +1098,12 @@
                 while(historic.series.length > 0)
                     historic.series[0].remove(true);
 
-                var start = $.datepicker.parseDate(dateFormat, from.val()).getTime()+"ms";
-                var end = $.datepicker.parseDate(dateFormat, to.val()).getTime()+"ms";
-
+                var start = $.datepicker.parseDate(dateFormat, from.val());//.getTime()+"ms";
+                var end = $.datepicker.parseDate(dateFormat, to.val());//.getTime()+"ms";
+                start.setHours(0,0,0);
+                end.setHours(23,59,59);
+                start = start.getTime()+"ms";
+                end = end.getTime()+"ms";
                 if(historic.options.chart.type == "column") {
                     loadGraphDate(start, end, "1d");
                 } else {
