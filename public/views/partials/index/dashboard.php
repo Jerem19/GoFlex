@@ -587,34 +587,38 @@
             production = production ? production[0] :  undefined;
             for(index = 0;index< inside.length;index++)
             {
+                var val = inside[index]["distinct"];
+                if(val < 0 || val > 50) continue;
                 d = new Date(inside[index]["time"]);
                 if(d.getTimezoneOffset() != 120)
                 {
                     d.setHours(d.getHours() + 1)
                 }
-                insideArray.push([d.getTime(), inside[index]["distinct"]]);
+                insideArray.push([d.getTime(), val]);
             }
             insideArray = insideArray.reverse();
             for(index = 0;index< hotwater.length;index++)
             {
+                var val = hotwater[index]["distinct"];
+                if(val < 30 || val > 120) continue;
                 d = new Date(hotwater[index]["time"]);
-
                 if(d.getTimezoneOffset() != 120)
                 {
                     d.setHours(d.getHours() + 1)
                 }
-                boilerArray.push([d.getTime(), hotwater[index]["distinct"]])
+                boilerArray.push([d.getTime(), val])
             }
             boilerArray = boilerArray.reverse();
             for(index = 0;index< consumption.length;index++)
             {
+                var val = consumption[index]["distinct"];
+                if(val < 0) continue;
                 d = new Date(consumption[index]["time"]);
-
                 if(d.getTimezoneOffset() != 120)
                 {
                     d.setHours(d.getHours() + 1)
                 }
-                electArray.push([d.getTime(), consumption[index]["distinct"]])
+                electArray.push([d.getTime(), val])
             }
             electArray = electArray.reverse();
 
@@ -1062,7 +1066,8 @@
         });
 
         var from = $("#from").datepicker({
-                changeMonth: true
+                changeMonth: true,
+                maxDate: new Date()
             }).on("change", function() {
                 to.datepicker("option", "minDate", getDate(this));
             }),
