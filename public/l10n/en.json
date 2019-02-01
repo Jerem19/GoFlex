@@ -54,7 +54,9 @@
 			"textInsideTemperature": "The temperature inside the house is ",
 			"textHeatPump": "Your heat pumped use ",
 			"productionElect": "Solar panel production",
-			"textHotwaterTemperature": "The temperature of your boiler is "
+			"textHotwaterTemperature": "The temperature of your boiler is ",
+			"from" : "From",
+			"to" : "to"
 		},
 		"sidebar": {
 			"profile": "My profile",

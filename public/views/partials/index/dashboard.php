@@ -35,8 +35,8 @@
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData']?></p>
         <hr>
 
-        <div id="dates" style="display:none">
-            <label>From</label><input type="text" id="from" /> <label>To</label><input type="text" id="to" />
+        <div id="dates" style="display:none; text-align:center;">
+            <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
             <button id="applyDate">Apply</button>
         </div>
 
@@ -820,12 +820,10 @@
         var timeCounterProduction1;
         var timeCounterProduction2;
 
-
-
-
         var d = new Date();
-        var e = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
-        var s = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()-1);
+        var e = Date.now();
+        var s = new Date(d.getFullYear(), d.getMonth(), d.getDate()-1).getTime();
+
         loadGraphLine(s+"ms",e+"ms","15m");
 
         $.ajax({

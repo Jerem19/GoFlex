@@ -55,7 +55,9 @@
       "textInsideTemperature" : "La température intérieure est à ",
       "textHeatPump" : "Votre pompe à chaleur consomme ",
       "productionElect": "La production des panneaux solaires est de ",
-      "textHotwaterTemperature" : "La température de votre boiler est à "
+      "textHotwaterTemperature" : "La température de votre boiler est à ",
+      "from" : "De",
+      "to" : "à"
     },
     "sidebar": {
       "profile": "Mon profile",
