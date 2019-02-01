@@ -1077,12 +1077,13 @@
                 while(historic.series.length > 0)
                     historic.series[0].remove(true);
 
-                var args = [$.datepicker.parseDate(dateFormat, from.val()).getTime()+"ms",$.datepicker.parseDate(dateFormat, to.val()).getTime()+"ms", "1d"];
+                var start = $.datepicker.parseDate(dateFormat, from.val()).getTime()+"ms";
+                var end = $.datepicker.parseDate(dateFormat, to.val()).getTime()+"ms";
 
                 if(historic.options.chart.type == "column") {
-                    loadGraphDate(...args);
+                    loadGraphDate(start, end, "1d");
                 } else {
-                    loadGraphLine(...args);
+                    loadGraphLine(start, end, "15m");
                 }
 
             });
