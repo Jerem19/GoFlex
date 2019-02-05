@@ -31,7 +31,7 @@
 			"insideTemperature": "Inside Temperature",
 			"hotwaterTemperature": "Hot water temperature",
 			"noData": "No data available",
-			"productionElect": "Solar panel production",
+			"productionElect": "Overage PV",
 			"graphics": "Graphics",
 			"power": "Power"
 		},
@@ -53,7 +53,7 @@
 			"textConsumptionElec": "Your global instant electrcity consumption is ",
 			"textInsideTemperature": "The temperature inside the house is ",
 			"textHeatPump": "Your heat pumped use ",
-			"productionElect": "Solar panel production",
+			"productionElect": "Overage PV",
 			"textHotwaterTemperature": "The temperature of your boiler is ",
 			"from" : "From",
 			"to" : "to"
@@ -68,7 +68,7 @@
 			"analyse": "Graphics",
 			"boiler": "Hot water",
 			"allUsers" : "All users",
-			"productionElect" : "Production",
+			"productionElect" : "Overage PV",
 			"heater": "Heating",
 			"userGraph" : "View graph [Beta]",
 			"user": "User",

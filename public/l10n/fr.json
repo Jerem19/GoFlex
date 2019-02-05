@@ -31,7 +31,7 @@
       "consumptionElect" : "Consommation",
       "insideTemperature" : "Température intérieure",
       "hotwaterTemperature": "Température eau chaude",
-      "productionElect": "Production des panneaux solaires",
+      "productionElect": "Excédent de production",
       "noData" : "Aucune donnée disponible",
       "graphics": "Graphics",
       "power": "Puissance"
@@ -54,7 +54,7 @@
       "textConsumptionElec" : "Votre consommation électrique globale instantanée est de ",
       "textInsideTemperature" : "La température intérieure est à ",
       "textHeatPump" : "Votre pompe à chaleur consomme ",
-      "productionElect": "La production des panneaux solaires est de ",
+      "productionElect": "L'excédent de production est de ",
       "textHotwaterTemperature" : "La température de votre boiler est à ",
       "from" : "De",
       "to" : "à"
@@ -70,7 +70,7 @@
       "boiler" : "Eau Chaude",
       "heater" : "Chauffage",
       "userGraph" : "Vue utilisateur [Beta]",
-      "productionElect" : "Production",
+      "productionElect" : "Excédent de production",
       "allUsers" : "Voir utilisateurs",
       "user" : "Utilisateur",
       "summary" : "Résumé",
