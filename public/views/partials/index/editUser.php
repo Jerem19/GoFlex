@@ -7,13 +7,13 @@
     <label class="control-label"><?= L10N['index']['checkUserData']['chooseUser'] ?></label>
 
     <select name="userUsername" class="form-control">
-        <?php foreach (User::getAll() as $user) {
-            if($user->getRole() == "client") { ?>
-                <option value="<?= $user->getId() ?>">
-                    <?= $user->getUsername() ?>
-                </option>
-            <?php }
-        } ?>
+        <?php
+        $gws = $isInstall ? Gateway::getAllReady() : Gateway::getAllInstalled();
+        foreach ($gws as $gw) { ?>
+            <option value="<?= $gw->getInstallation()->getUser()->getId() ?>"><?= $gw->getName() ?>
+                [<?= $gw->getInstallation()->getUser()->getUsername() ?>]
+            </option>
+        <?php } ?>
     </select>
 </div>
 
@@ -79,6 +79,7 @@
             $.post("edit", data, function (data) {
                 if (JSON.parse(data)) {
                     alert("<?= L10N['index']['profile']['alertUpdateUserSuccess']?>");
+                    window.location.reload();
                 }
                 else alert("<?= L10N['index']['profile']['alertUpdateUserFailed']?>");
             });
