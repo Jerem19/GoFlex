@@ -134,6 +134,7 @@
     "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.js",
     "https://code.highcharts.com/modules/exporting.js",
+    "https://code.highcharts.com/modules/export-data.js",
     "https://blacktie.co/demo/dashgum/assets/js/jquery.dcjqaccordion.2.7.js",
     "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/js/jquery.gritter.min.js",
     "3rdparty/common-scripts.js",
