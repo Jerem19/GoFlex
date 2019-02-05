@@ -36,8 +36,8 @@
 			"power": "Power"
 		},
 		"dashboard": {
-			"currentConsumption": "Real Time Consumption",
-			"currentTemperature": "Real Time Temperature",
+			"currentConsumption": "Last measures of consumption",
+			"currentTemperature": "Last measures of temperature",
 			"historicData" : "Historic Data",
 			"meterIndex": "Index of your meter",
 			"greenAction": "Green Actions",

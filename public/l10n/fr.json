@@ -37,8 +37,8 @@
       "power": "Puissance"
     },
     "dashboard":{
-      "currentConsumption": "Consommation en temps réel",
-      "currentTemperature": "Température en temps réel",
+      "currentConsumption": "Dernières mesures de consommation",
+      "currentTemperature": "Dernières mesures de température",
       "historicData" : "Données historiques",
       "meterIndex": "Index de votre compteur",
       "noSolarPanel": "Aucun panneau solaire",
