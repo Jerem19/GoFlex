@@ -388,19 +388,19 @@
                         name: 'Consommation',
                         data: electArray,
                         yAxis:1,
-                        color:"#95ceff"
+                        color:"#A9A9A9"
 
                     }, {
                         name: 'Temperature intérieure',
                         data: insideArray,
                         yAxis:0,
-                        color:"#434348"
+                        color:"#90ed7d"
 
                     }, {
                         name: 'Temperature boiler',
                         data: boilerArray,
                         yAxis:0,
-                        color:"#90ed7d"
+                        color:"#95ceff"
 
                     }]
             });
@@ -527,19 +527,19 @@
                         name: 'Consommation',
                         data: [electConsumption],
                         yAxis:1,
-                        color:"#95ceff"
+                        color:"#A9A9A9"
 
                     }, {
                         name: 'Temperature intérieure',
                         data: [insideTemp],
                         yAxis:0,
-                        color:"#434348"
+                        color:"#90ed7d"
 
                     }, {
                         name: 'Temperature boiler',
                         data: [boiler],
                         yAxis:0,
-                        color:"#90ed7d"
+                        color:"#95ceff"
 
                     }]
             });
@@ -744,7 +744,7 @@
                         data: electArray,
                         index:1,
                         yAxis:1,
-                        color:"#95ceff",
+                        color:"#A9A9A9",
                         enabled: false
 
                     },
@@ -764,7 +764,7 @@
                         data: insideArray,
                         index:3,
                         yAxis:0,
-                        color:"#434348",
+                        color:"#90ed7d",
                         enabled: false
                     },
                     {
@@ -773,7 +773,7 @@
                         data: boilerArray,
                         //index:4,
                         yAxis:0,
-                        color:"#90ed7d"
+                        color:"#95ceff"
                     }
                 ]
             },function (chart) {
