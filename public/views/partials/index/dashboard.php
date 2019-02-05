@@ -1,7 +1,7 @@
 <div class="row">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
-        <p class="dashboardTitleSize" style="text-align: center">Consommation en temps réel</p>
+        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption']?></p>
         <hr>
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
