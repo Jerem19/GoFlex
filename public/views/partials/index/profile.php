@@ -8,7 +8,7 @@
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['lastname']?></label><input class="col-sm-8 form-control" disabled="disabled" value="<?= $user->getLastname() ?>" name="lastname" />
 
-        <label class="control-label col-sm-4"><?= L10N['index']['profile']['phone']?></label><input class="col-sm-8 form-control" type="number" value="<?= $user->getPhone() ?>" name="phone"/>
+        <label class="control-label col-sm-4"><?= L10N['index']['profile']['phone']?></label><input class="col-sm-8 form-control" type="phone" value="<?= $user->getPhone() ?>" name="phone"/>
 
         <label class="control-label col-sm-4"><?= L10N['index']['profile']['email']?></label><input disabled="disabled" class="col-sm-8 form-control" value="<?= $user->getEmail() ?>" name="email" />
 
