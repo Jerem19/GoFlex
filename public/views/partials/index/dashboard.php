@@ -207,7 +207,7 @@
             click: function () {
                 var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
                 var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
-                start.setHours(0,0,1);
+                start.setHours(0,0,0);
                 end.setHours(23,59,59);
                 start = start.getTime()+"ms";
                 end = end.getTime()+"ms";
@@ -217,7 +217,9 @@
     }];
 
     function loadGraphDate(start, end, interval) {
-        $.when($.ajax({
+
+        if(window.ajaxReq) ajaxReq.abort();
+        window.ajaxReq = when($.ajax({
                 type: "POST",
                 url: "hotwaterTemperatureHistoryDate",
                 data: {
@@ -228,7 +230,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "consumptionElectHistoryDate",
+                url: "consumptionHistoryDiff",
                 data : {
                     time: interval,
                     start: start,
@@ -247,7 +249,7 @@
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             ,$.ajax({
                 type: "POST",
-                url: "productionElectHistoryDate",
+                url: "productionHistoryDiff",
                 data : {
                     time: interval,
                     start: start,
@@ -255,7 +257,8 @@
                 }
             })
             <?php } ?>
-        ).then(function (hotwater, consumption, inside, production) {
+        );
+        ajaxReq.promise.then(function (hotwater, consumption, inside, production) {
             var insideArray =[];
             var boilerArray = [];
             var electArray = [];
@@ -264,55 +267,40 @@
             var d;
 
             hotwater = hotwater[0];
-            hotwater.pop();
             consumption = consumption[0];
-            consumption.pop();
             inside = inside[0];
-            inside.pop();
             production = production ? production[0] :  undefined;
             for(index = 0;index< inside.length;index++)
             {
                 d = new Date(inside[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
+
                 insideArray.push([d.getTime(), inside[index]["distinct"]]);
             }
             insideArray = insideArray.reverse();
             for(index = 0;index< hotwater.length;index++)
             {
                 d = new Date(hotwater[index]["time"]);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
 
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
                 boilerArray.push([d.getTime(), hotwater[index]["distinct"]])
             }
             boilerArray = boilerArray.reverse();
             for(index = 0;index< consumption.length;index++)
             {
                 d = new Date(consumption[index]["time"]);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
 
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
                 electArray.push([d.getTime(), consumption[index]["distinct"]])
             }
             electArray = electArray.reverse();
 
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-            production.pop();
             for (index = 0; index < production.length; index++)
             {
                 if (production[index]["distinct"] >= 0) {
                     d = new Date(production[index]["time"]);
-
-                    if (d.getTimezoneOffset() != 120) {
-                        d.setHours(d.getHours() + 1)
-                    }
+                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
 
                     productionElecArray.push([d.getTime(), production[index]["distinct"]])
                 }
@@ -340,7 +328,7 @@
                     opposite: false
                 }, {
                     title:{
-                        text: "Puissance (kW)"
+                        text: "Puissance (kWh)"
                     },
                     opposite: true
                 }],
@@ -404,8 +392,6 @@
 
                     }]
             });
-        }, function () {
-            ajaxError('TEST');
         });
     }
 
@@ -550,7 +536,8 @@
 
     function loadGraphLine(start, end, interval)
     {
-        $.when(
+        if(window.ajaxReq) ajaxReq.abort();
+        window.ajaxReq = when(
             $.ajax({
                 type: "POST",
                 url: "hotwaterTemperatureDate",
@@ -589,7 +576,8 @@
                 }
             })
             <?php } ?>
-        ).then(function(hotwater, consumption, inside, production) {
+        );
+        ajaxReq.promise.then(function(hotwater, consumption, inside, production) {
             var insideArray =[];
             var boilerArray = [];
             var electArray = [];
@@ -597,61 +585,13 @@
             var index = 0;
             var d;
 
-            hotwater = hotwater[0];
-            consumption = consumption[0];
-            inside = inside[0];
-            production = production ? production[0] :  undefined;
-            for(index = 0;index< inside.length;index++)
-            {
-                var val = inside[index]["distinct"];
-                if(val < 0 || val > 50) continue;
-                d = new Date(inside[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
-                insideArray.push([d.getTime(), val]);
-            }
-            insideArray = insideArray.reverse();
-            for(index = 0;index< hotwater.length;index++)
-            {
-                var val = hotwater[index]["distinct"];
-                if(val < 30 || val > 120) continue;
-                d = new Date(hotwater[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
-                boilerArray.push([d.getTime(), val])
-            }
-            boilerArray = boilerArray.reverse();
-            for(index = 0;index< consumption.length;index++)
-            {
-                var val = consumption[index]["distinct"];
-                if(val < 0) continue;
-                d = new Date(consumption[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
-                electArray.push([d.getTime(), val])
-            }
-            electArray = electArray.reverse();
+            boilerArray = parse(hotwater[0],30, 120);
+            electArray = parse(consumption[0]);
+            insideArray = parse(inside[0],0,50);
+
 
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-            for (index = 0; index < production.length; index++)
-            {
-                if (production[index]["distinct"] >= 0) {
-                    d = new Date(production[index]["time"]);
-
-                    if (d.getTimezoneOffset() != 120) {
-                        d.setHours(d.getHours() + 1)
-                    }
-
-                    productionElecArray.push([d.getTime(), production[index]["distinct"]])
-                }
-            }
-            productionElecArray = productionElecArray.reverse();
+            productionElecArray = parse(production[0])
             <?php } ?>
 
             window.historic = Highcharts.StockChart('historicData', {
@@ -794,6 +734,29 @@
 
     function ajaxError (elementId) {
         document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
+    }
+
+    function when(...xhrs) {
+        return {
+            abort() {
+                xhrs.forEach(xhr => {
+                    xhr.abort();
+                });
+            },
+            promise: $.when(...xhrs)
+        };
+    }
+
+    function parse(data, min=0, max=Infinity) {
+        var dataTime = data.map(data => {
+            if(data["distinct"] >= min && data["distinct"] < max)
+            {
+                var d = new Date(data["time"]);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                return [d.getTime(), data["distinct"]];
+            }
+        }).filter(v => v);
+        return dataTime.reverse();
     }
 
     window.onload = function() {
