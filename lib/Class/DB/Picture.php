@@ -65,7 +65,9 @@ class Picture {
 
         if ($pic instanceof Picture) {
             if (is_array(Configuration::DB()->execute("DELETE FROM tblPicture WHERE _id = :id", ["id" => $pic->getId()]))) {
-                unlink($pic->getPath()); // can remove from db
+                try {
+                    unlink($pic->getPath());
+                } catch (Exception $e) {} // directory not found: already delete
                 return true;
             }
         }

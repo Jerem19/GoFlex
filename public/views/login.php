@@ -70,12 +70,10 @@
                 </form>
             </div>
         </div>
-        <div class="backstretch"></div>
     </body>
     <?php include 'partials/footer.php';
     loadScripts([
         "https://code.jquery.com/jquery-3.1.1.min.js",
-        "https://blacktie.co/demo/dashgum/assets/js/jquery.backstretch.min.js",
         $isPwdRecup ? "https://www.google.com/recaptcha/api.js" : "",
         "/script.js",
         "/login.js"

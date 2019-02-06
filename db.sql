@@ -59,6 +59,11 @@ CREATE TABLE tblTechnology (
     name VARCHAR(45)
 );
 
+CREATE TABLE tblDelegatedControl (
+	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45)
+);
+
 CREATE TABLE tblPicture (
 	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name VARCHAR(50)
@@ -68,6 +73,8 @@ CREATE TABLE tblInstallation (
 	_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	inst_userId INT,
     inst_gwId INT UNIQUE,
+    
+	inst_dcId INT DEFAULT 0,
     
     facturation BOOLEAN NOT NULL DEFAULT TRUE, # true < 100MWh
     businessSector INT DEFAULT 1,
@@ -97,6 +104,32 @@ CREATE TABLE tblInstallation (
     noteAdmin TEXT DEFAULT NULL,
     note TEXT DEFAULT NULL,
     picture INT,
+  
+
+	heatRelay TINYINT(1) DEFAULT 0,
+	hotwaterRelay INT(11) DEFAULT 1,
+	egidNumber VARCHAR(10) DEFAULT NULL,
+	constructionYear VARCHAR(10) DEFAULT NULL,
+	renovationYear VARCHAR(10) DEFAULT NULL,
+	sreArea VARCHAR(10) DEFAULT NULL,
+	inhabitants VARCHAR(10) DEFAULT NULL,
+	housingType TINYINT(1) DEFAULT 0,
+	delegatedControl TINYINT(1) DEFAULT 0,
+	heatProduction TINYINT(2) NOT NULL DEFAULT 0,
+	heatDistribution TINYINT(1) DEFAULT 0,
+	heatServiceYear VARCHAR(11) DEFAULT 0,
+	heatPowerMeter TINYINT(1) DEFAULT 0,
+	ambiantTemperature TINYINT(1) DEFAULT 0,
+	watterHeatProduction TINYINT(1) DEFAULT 0,
+	watterServiceYear VARCHAR(11) DEFAULT 0,
+	boilerVolume VARCHAR(11) DEFAULT NULL,
+	watterPowerMeter TINYINT(1) DEFAULT 0,
+	boilerTemperature TINYINT(1) DEFAULT 0,
+	watterRelay TINYINT(1) DEFAULT 0,
+	photovoltaic TINYINT(1) DEFAULT 0,
+	thermal TINYINT(1) DEFAULT 0,
+	solarPowerMeter TINYINT(1) DEFAULT 0,
+
 
 	CONSTRAINT FK_UserSet
 	FOREIGN KEY (inst_userId)
@@ -143,3 +176,4 @@ INSERT INTO tblUser (user_role, username, password, token, email, active) VALUES
 INSERT INTO tblBuisSector (name) VALUES ('residential'), ('industrial'), ('tertiary');
 INSERT INTO tblEnergy (name) VALUES ('electricity'), ('wood'), ('gaz');
 INSERT INTO tblTechnology (name) VALUES ('heat_pump'), ('boiler'), ('wood_burner');
+INSERT INTO tblDelegatedControl (name) VALUES ('none'), ('aau'), ('inea');

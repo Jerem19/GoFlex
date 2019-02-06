@@ -24,5 +24,3 @@ $('form.form-login').submit(function() {
     });
     return false;
 });
-
-$.backstretch("login-bg.jpg", {speed: 150});

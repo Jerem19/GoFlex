@@ -169,18 +169,31 @@ class Installation {
         return $this->_solar;
     }
 
+    /**
+     * @return string
+     */
     public function getCity() {
         return $this->city;
     }
 
+    /**
+     * @return string
+     */
     public function getNPA() {
         return $this->npa;
     }
 
+    /**
+     * @return string
+     */
     public function getAddress() {
         return $this->address;
     }
 
+    /**
+     * Return the general note
+     * @return string
+     */
     public function getNote() {
         return $this->note;
     }
@@ -205,194 +218,169 @@ class Installation {
     /**
      * @return string
      */
-    public function getEgidNumber()
-    {
+    public function getEgidNumber() {
         return $this->egidNumber;
     }
+
     /**
      * @return
      */
-    public function getConstructionYear()
-    {
+    public function getConstructionYear() {
         return $this->constructionYear;
     }
 
     /**
      * @return string
      */
-    public function getRenovationYear()
-    {
+    public function getRenovationYear() {
         return $this->renovationYear;
     }
 
     /**
      * @return string
      */
-    public function getSreArea()
-    {
+    public function getSreArea() {
         return $this->sreArea;
     }
 
     /**
      * @return string
      */
-    public function getInhabitants()
-    {
+    public function getInhabitants() {
         return $this->inhabitants;
     }
 
     /**
      * @return null
      */
-    public function getHousingType()
-    {
+    public function getHousingType() {
         return $this->housingType;
     }
 
     /**
      * @return DelegatedControl
      * */
-
     public function getDelegatedControl() {
-    if (!$this->_control instanceof DelegatedControl)
-    $this->_control = new DelegatedControl($this->_control);
-    return $this->_control;
-    }
-
-    /**
-     * @return int
-     */
-    public function getControl()
-    {
+        if (!$this->_control instanceof DelegatedControl)
+            $this->_control = new DelegatedControl($this->_control);
         return $this->_control;
     }
 
     /**
      * @return int
      */
-    public function getHeatProduction()
-    {
+    public function getControl() {
+        return $this->_control;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeatProduction() {
         return $this->heatProduction;
     }
 
     /**
      * @return int
      */
-    public function getHeatDistribution()
-    {
+    public function getHeatDistribution() {
         return $this->heatDistribution;
     }
 
     /**
      * @return string
      */
-    public function getHeatServiceYear()
-    {
+    public function getHeatServiceYear() {
         return $this->heatServiceYear;
     }
 
     /**
      * @return int
      */
-    public function getHeatPowerMeter()
-    {
+    public function getHeatPowerMeter() {
         return $this->heatPowerMeter;
     }
 
     /**
      * @return int
      */
-    public function getAmbiantTemperature()
-    {
+    public function getAmbiantTemperature() {
         return $this->ambiantTemperature;
     }
 
     /**
      * @return int
      */
-    public function getHeatRelay()
-    {
+    public function getHeatRelay() {
         return $this->heatRelay;
     }
 
-    public function getHotwaterRelay()
-    {
+    public function getHotwaterRelay() {
         return $this->hotwaterRelay;
     }
 
     /**
      * @return int
      */
-    public function getWatterHeatProduction()
-    {
+    public function getWatterHeatProduction() {
         return $this->watterHeatProduction;
     }
 
     /**
      * @return string
      */
-    public function getWatterServiceYear()
-    {
+    public function getWatterServiceYear() {
         return $this->watterServiceYear;
     }
 
     /**
      * @return string
      */
-    public function getBoilerVolume()
-    {
+    public function getBoilerVolume() {
         return $this->boilerVolume;
     }
 
     /**
      * @return int
      */
-    public function getWatterPowerMeter()
-    {
+    public function getWatterPowerMeter() {
         return $this->watterPowerMeter;
     }
 
     /**
      * @return int
      */
-    public function getBoilerTemperature()
-    {
+    public function getBoilerTemperature() {
         return $this->boilerTemperature;
     }
 
     /**
      * @return int
      */
-    public function getWatterRelay()
-    {
+    public function getWatterRelay() {
         return $this->watterRelay;
     }
 
     /**
      * @return int
      */
-    public function getPhotovoltaic()
-    {
+    public function getPhotovoltaic() {
         return $this->photovoltaic;
     }
 
     /**
      * @return int
      */
-    public function getThermal()
-    {
+    public function getThermal() {
         return $this->thermal;
     }
 
     /**
      * @return int
      */
-    public function getSolarPowerMeter()
-    {
+    public function getSolarPowerMeter() {
         return $this->solarPowerMeter;
     }
-
-
 
 
     /**
@@ -654,23 +642,8 @@ class Installation {
     }
 
 
-    public function updateCreation(array $params = [])
-    {
-
-
-        if (!isset($params["city"]))
-            $params["city"] = $this->getCity();
-        if (!isset($params["npa"]))
-            $params["npa"] = $this->getNPA();
-        if (!isset($params["address"]))
-            $params["address"] = $this->getAddress();
-        if (!isset($params["noteAdmin"]))
-            $params["noteAdmin"] = $this->getAdminNote();
-
-        $params["id"] = $this->getId();
-
-        return is_array(Configuration::DB()->execute("UPDATE tblInstallation SET
-          city = :city, npa = :npa, address = :address, noteAdmin = :noteAdmin WHERE _id = :id;", $params));
+    public function updateCreation(array $params = []) {
+        return $this->update($params); // To remove
     }
 
 }

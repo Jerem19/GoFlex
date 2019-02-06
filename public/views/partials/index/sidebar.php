@@ -11,7 +11,7 @@
             function doLink ($href, $attr, $isActive = false) {
                 if (!isset($attr["_iClass"])) $attr["_iClass"] = "";
                 printf("<li %s>" , $isActive ? 'class="active"': ''); ?>
-                    <a href="<?= BASE_URL . $href ?>" >
+                    <a href="<?= isset($attr["href"]) ? $attr["href"] : BASE_URL . $href ?>" target="<?= isset($attr["target"]) ? $attr["target"] : "" ?>">
                         <i class="<?= $attr["_iClass"] ?>"></i><span><?= $attr["text"] ?></span>
                     </a>
                 </li> <?php
@@ -21,8 +21,8 @@
                 if (!isset($menu["_iClass"])) $menu["_iClass"] = ""; ?>
                 <li class="sub-menu">
                     <a href="javascript:;" <?= $isActive ? 'class="active"': '' ?> >
-                        <i class="<?= $menu["_iClass"] ?>"></i>
-                        <span><?= $menu["text"] ?></span>
+                        <i class="<?= isset($menu["_iClass"]) ?  $menu["_iClass"] : ""?>"></i>
+                        <span><?= isset($menu["text"]) ? $menu["text"] : ""?></span>
                     </a>
                     <ul class="sub">
                         <?php doMenu($menu, $pathMenu); ?>
@@ -81,7 +81,9 @@
 
                 $menu["grafana"] = [
                     "text" => $l10nNav["grafana"],
-                    "_iClass" => "fa fa-wrench"
+                    "_iClass" => "fa fa-wrench",
+                    "href" => "https://cloudio-data.esr.ch/grafana/",
+                    "target" => "_blanck"
                 ];
             }
 

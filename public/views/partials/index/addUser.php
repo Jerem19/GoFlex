@@ -72,10 +72,10 @@
     var gwId = document.getElementById('gatewayname');
     window.onload = function () {
         function testGateway(callback = new Function()) {
-            $.post('gw_exist', "gw=" + gwId.value, function (response) {
+            $.post('gw_exist', "gw=goflex-dc-" + gwId.value, function (response) {
                 if (JSON.parse(response))
                     $.gritter.add({
-                        text: "error: already exist"
+                        text: "error: Gateway already exist"
                     });
                 else callback();
             });
@@ -86,14 +86,19 @@
         };
 
         $("#formAddUser").submit(function () {
-            var data = $(this).serialize();
+            var form = $(this);
+            var data = form.serialize();
             testGateway(function () {
                 $.post("create", data, function (data) {
+                    var msg = "";
                     if (JSON.parse(data)) {
-                        alert("<?= L10N['index']['profile']['alertCreateUserSuccess']?>");
-                        window.location.reload();
+                        msg = "<?= L10N['index']['profile']['alertCreateUserSuccess']?>";
+                        form.trigger("reset");
                     }
-                    else alert("<?= L10N['index']['profile']['alertCreateUserFailed']?>");
+                    else msg = "<?= L10N['index']['profile']['alertCreateUserFailed']?>";
+                    $.gritter.add({
+                        text: msg
+                    });
                 });
             });
             return false;

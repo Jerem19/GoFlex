@@ -20,20 +20,12 @@
                 <td><?= $user->getEMail()?></td>
                 <td><?= $user->getUsername()?></td>
                 <td><?= $user->getRole()?></td>
-                <?php
-                    if($user->getRole() == "client") {
-                        ?>
-                        <td><?= $user->getInstallations()[0]->getGateway()->getName() ?></td>
+                <?php if(count($user->getInstallations()) > 0 ) { ?>
+                    <td><?= $user->getInstallations()[0]->getGateway()->getName() ?></td>
+                <?php } else echo "<td>No Gateway</td>"; ?>
 
-                        <?php
-                    } else {
-                        echo "<td>No Gateway</td>";
-                    }
-                ?>
-
-                <td><?php if($user->isActive()) { echo L10N['index']['installation']['yes']; } else { echo L10N['index']['installation']['no']; } ?></td>
+                <td><?= L10N['index']['installation'][$user->isActive() ? 'yes' : 'no'] ?></td>
             </tr>
-
-        <?php }?>
+        <?php } ?>
     </table>
 </div>
