@@ -198,14 +198,14 @@
         if(range == '15m'){
             $("#i-1d").css('display','none');
             $("#i-15m").css('display','inline-block');
-            $("#btn15m").css('background-color','#6d8e3f');
+            $("#btn15m").css('background-color','#007cbc');
             $("#btn1d").css('background-color','#75b31e');
             this.loadGraphLine(start, end, "15m");
         }
         else if(range == '1d'){
             $("#i-1d").css('display','inline-block');
             $("#i-15m").css('display','none');
-            $("#btn1d").css('background-color','#6d8e3f');
+            $("#btn1d").css('background-color','#007cbc');
             $("#btn15m").css('background-color','#75b31e');
             this.loadGraphDate(start, end, "1d");
         }
