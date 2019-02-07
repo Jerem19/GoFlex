@@ -34,17 +34,19 @@
     <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData']?></p>
         <hr>
+        <div class="mb-10">
+            <div id="dates" style="display:none; float:left;">
+                <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
+                <button id="applyDate" class="btn btn-theme02">Apply</button>
+            </div>
+            <div class="btn-group" style="float:right;">
+                <button id="btn15m" class="btn btn-theme02" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true" style="display:none;"></i> 15 minutes </button>
+                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour </button>
+            </div>
+        </div>
+            <div id="historicData"></div>
+            <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
 
-        <div id="dates" style="display:none; text-align:center;">
-            <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
-            <button id="applyDate" class="btn btn-theme02">Apply</button>
-        </div>
-        <div class="btn-group">
-            <button id="btn15m" class="btn btn-theme02" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par 15 min</button>
-            <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour</button>
-        </div>
-        <div id="historicData"></div>
-        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
     </div>
 </div>
 
