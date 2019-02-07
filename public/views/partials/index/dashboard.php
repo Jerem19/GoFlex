@@ -1,9 +1,9 @@
-<div class="row">
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+<div class="row is-flex">
+    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel flex-fill">
 
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption']?></p>
         <hr>
-        <div style="text-align: center;" class="form-panel divSize">
+        <div style="text-align: center;" class="form-panel divSize flex-fill">
             <div class="dashboardTextSize">
                 <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
             </div>
@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row is-flex">
     <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
 
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature']?></p>
@@ -118,7 +118,7 @@
         <?php } ?>
 
     </div>
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel" style="text-align: center">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction']?></p>
         <hr>
         <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction']?></h2>
@@ -127,7 +127,7 @@
                 <?= L10N['index']['dashboard']['greenActionText']?>
             </div>
         </strong>
-        <img style="width: 202px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
+        <img style="width: 202px; margin: 0 auto;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction']?></a>
     </div>
 </div>
@@ -198,14 +198,14 @@
         if(range == '15m'){
             $("#i-1d").css('display','none');
             $("#i-15m").css('display','inline-block');
-            $("#btn15m").css('background-color','#424a5d');
+            $("#btn15m").css('background-color','#6d8e3f');
             $("#btn1d").css('background-color','#75b31e');
             this.loadGraphLine(start, end, "15m");
         }
         else if(range == '1d'){
             $("#i-1d").css('display','inline-block');
             $("#i-15m").css('display','none');
-            $("#btn1d").css('background-color','#424a5d');
+            $("#btn1d").css('background-color','#6d8e3f');
             $("#btn15m").css('background-color','#75b31e');
             this.loadGraphDate(start, end, "1d");
         }
