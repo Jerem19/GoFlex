@@ -37,9 +37,12 @@
 
         <div id="dates" style="display:none; text-align:center;">
             <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
-            <button id="applyDate">Apply</button>
+            <button id="applyDate" class="btn btn-theme02">Apply</button>
         </div>
-
+        <div class="btn-group">
+            <button id="btn15m" class="btn btn-theme02" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par 15 min</button>
+            <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour</button>
+        </div>
         <div id="historicData"></div>
         <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
     </div>
@@ -151,56 +154,23 @@
 </div>
 
 <script>
+    var selected = 0;
     var dateFormat = "dd.mm.yy";
-    var graph_buttons = /*[{
-        text: '6 dernieres heures',
+
+    //to delete soon, not used anymore
+    var graph_buttons = [{
+        text: '15 minutes',
         events: {
             click: function () {
-                loadGraphLine()
+                var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
+                var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
+                start.setHours(0,0,0);
+                end.setHours(23,59,59);
+                start = start.getTime()+"ms";
+                end = end.getTime()+"ms";
+                loadGraphLine(start, end, "15m")
             }
         }
-    }, {
-        text: 'Daily',
-        events: {
-            click: function () {
-                loadGraphHist("1d")
-            }
-        }
-    }, {
-        text: 'Monthly',
-        events: {
-            click: function () {
-                loadGraphHist("30d")
-            }
-        }
-    }, {
-        text: 'Yearly',
-        events: {
-            click: function () {
-                loadGraphHist("365d")
-            }
-        }
-    }, {
-        text: 'Jour',
-        events: {
-            click: function () {
-                loadGraphHist("365d")
-            }
-        }
-    }];*/
-    [{
-       text: '15 minutes',
-       events: {
-           click: function () {
-               var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
-               var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
-               start.setHours(0,0,0);
-               end.setHours(23,59,59);
-               start = start.getTime()+"ms";
-               end = end.getTime()+"ms";
-               loadGraphLine(start, end, "15m")
-           }
-       }
     }, {
         text: 'Par jour',
         events: {
@@ -211,13 +181,69 @@
                 end.setHours(23,59,59);
                 start = start.getTime()+"ms";
                 end = end.getTime()+"ms";
+                selected = 1;
                 loadGraphDate(start, end, "1d")
             }
         }
     }];
 
-    function loadGraphDate(start, end, interval) {
+    function byTime(range){
+        console.log(range =='15m');
+        var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
+        var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
+        start.setHours(0,0,0);
+        end.setHours(23,59,59);
+        start = start.getTime()+"ms";
+        end = end.getTime()+"ms";
+        if(range == '15m'){
+            $("#i-1d").css('display','none');
+            $("#i-15m").css('display','inline-block');
+            $("#btn15m").css('background-color','#424a5d');
+            $("#btn1d").css('background-color','#75b31e');
+            this.loadGraphLine(start, end, "15m");
+        }
+        else if(range == '1d'){
+            $("#i-1d").css('display','inline-block');
+            $("#i-15m").css('display','none');
+            $("#btn1d").css('background-color','#424a5d');
+            $("#btn15m").css('background-color','#75b31e');
+            this.loadGraphDate(start, end, "1d");
+        }
+    }
+    //style of buttons - to delete soon
+    const buttonTheme = {
+        width: 20 + '%',
+        padding: 10,
+        r: 0,
+        fill: '#75b31e',
+        style: {
+            color: 'white',
+        },
+        states: {
+            hover: {
+                fill: '#486c15',
+            },
+            select: {
+                fill: '#486c15',
+            }
+        }
+    };
 
+    //range selector options - TO USE : set enable to true - to delete soon if not needed anymore
+    const rangeSelector = {
+        selected: 0,
+        buttons: graph_buttons,
+        buttonTheme: buttonTheme,
+        buttonSpacing: 0,
+        labelStyle: {
+            color: 'silver',
+            fontWeight: 'bold'
+        },
+        inputEnabled: false,
+        enabled: false
+    }
+
+    function loadGraphDate(start, end, interval) {
         if(window.ajaxReq) ajaxReq.abort();
         window.ajaxReq = when($.ajax({
                 type: "POST",
@@ -346,17 +372,7 @@
                         borderWidth: 0
                     }
                 },
-                rangeSelector: {
-                    buttons: graph_buttons,
-                    buttonTheme:{
-                        height:18,
-                        padding:2,
-                        width:20 + '%',
-                        zIndex:7
-                    },
-                    inputEnabled: false,
-                    enabled: true
-                },
+                rangeSelector: rangeSelector,
                 scrollbar: {
                     enabled: false
                 },
@@ -483,17 +499,7 @@
                         borderWidth: 0
                     }
                 },
-                rangeSelector: {
-                    buttons: graph_buttons,
-                    buttonTheme:{
-                        height:18,
-                        padding:2,
-                        width:20 + '%',
-                        zIndex:7
-                    },
-                    inputEnabled: false,
-                    enabled: true
-                },
+                rangeSelector: rangeSelector,
                 scrollbar: {
                     enabled: false
                 },
@@ -657,16 +663,7 @@
                         }
                     }
                 },
-                rangeSelector: {
-                    buttons: graph_buttons,
-                    buttonTheme:{
-                        height:18,
-                        padding:2,
-                        width:20 + '%',
-                        zIndex:7
-                    },
-                    inputEnabled: false
-                },
+                rangeSelector: rangeSelector,
                 tooltip: {
                     shared: false,
                     valueDecimals: 2
@@ -719,7 +716,7 @@
             },function (chart) {
                 setTimeout(function () {
                     //$('input.highcharts-range-selector',$(chart.container).parent()) //$('#'+chart.options.chart.renderTo))
-                        //.datepicker()
+                    //.datepicker()
                 },0)
             });
             /*$.datepicker.setDefaults({
