@@ -156,38 +156,7 @@
 </div>
 
 <script>
-    var selected = 0;
     var dateFormat = "dd.mm.yy";
-
-    //to delete soon, not used anymore
-    var graph_buttons = [{
-        text: '15 minutes',
-        events: {
-            click: function () {
-                var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
-                var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
-                start.setHours(0,0,0);
-                end.setHours(23,59,59);
-                start = start.getTime()+"ms";
-                end = end.getTime()+"ms";
-                loadGraphLine(start, end, "15m")
-            }
-        }
-    }, {
-        text: 'Par jour',
-        events: {
-            click: function () {
-                var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
-                var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
-                start.setHours(0,0,0);
-                end.setHours(23,59,59);
-                start = start.getTime()+"ms";
-                end = end.getTime()+"ms";
-                selected = 1;
-                loadGraphDate(start, end, "1d")
-            }
-        }
-    }];
 
     function byTime(range){
         var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
@@ -211,35 +180,9 @@
             this.loadGraphDate(start, end, "1d");
         }
     }
-    //style of buttons - to delete soon
-    const buttonTheme = {
-        width: 20 + '%',
-        padding: 10,
-        r: 0,
-        fill: '#75b31e',
-        style: {
-            color: 'white',
-        },
-        states: {
-            hover: {
-                fill: '#486c15',
-            },
-            select: {
-                fill: '#486c15',
-            }
-        }
-    };
 
     //range selector options - TO USE : set enable to true - to delete soon if not needed anymore
     const rangeSelector = {
-        selected: 0,
-        buttons: graph_buttons,
-        buttonTheme: buttonTheme,
-        buttonSpacing: 0,
-        labelStyle: {
-            color: 'silver',
-            fontWeight: 'bold'
-        },
         inputEnabled: false,
         enabled: false
     }
