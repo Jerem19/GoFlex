@@ -40,12 +40,12 @@
                 <button id="applyDate" class="btn btn-theme02">Apply</button>
             </div>
             <div class="btn-group" style="float:right;">
-                <button id="btn15m" class="btn btn-theme02" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true" style="display:none;"></i> 15 minutes </button>
+                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i> 15 minutes </button>
                 <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour </button>
             </div>
         </div>
-            <div id="historicData"></div>
-            <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
+        <div id="historicData"></div>
+        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
 
     </div>
 </div>
@@ -190,7 +190,6 @@
     }];
 
     function byTime(range){
-        console.log(range =='15m');
         var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
         var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
         start.setHours(0,0,0);
@@ -200,15 +199,15 @@
         if(range == '15m'){
             $("#i-1d").css('display','none');
             $("#i-15m").css('display','inline-block');
-            $("#btn15m").css('background-color','#007cbc');
-            $("#btn1d").css('background-color','#75b31e');
+            $("#btn15m").addClass('active');
+            $("#btn1d").removeClass('active');
             this.loadGraphLine(start, end, "15m");
         }
         else if(range == '1d'){
             $("#i-1d").css('display','inline-block');
             $("#i-15m").css('display','none');
-            $("#btn1d").css('background-color','#007cbc');
-            $("#btn15m").css('background-color','#75b31e');
+            $("#btn15m").removeClass('active');
+            $("#btn1d").addClass('active');
             this.loadGraphDate(start, end, "1d");
         }
     }
