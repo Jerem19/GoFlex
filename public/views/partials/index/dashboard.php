@@ -1,9 +1,9 @@
 <div class="row is-flex">
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel flex-fill">
+    <div class="col-xs-12 col-xl-3 form-panel flex-fill ml">
 
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption']?></p>
         <hr>
-        <div style="text-align: center;" class="form-panel divSize flex-fill">
+        <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
                 <p><?= L10N['index']['dashboard']['electricalConsumption']?></p>
             </div>
@@ -31,7 +31,7 @@
                 </div></a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
+    <div class="col-xs-12 col-xl-8 form-panel flex-fill adjusted">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData']?></p>
         <hr>
         <div class="mb-10">
@@ -51,7 +51,7 @@
 </div>
 
 <div class="row is-flex">
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+    <div class="col-xs-12 col-xl-3 form-panel ml">
 
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature']?></p>
         <hr>
@@ -83,7 +83,7 @@
             </a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-5 col-md-12 form-panel">
+    <div class="col-xl-5 col-xs-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex']?></p>
         <hr>
 
@@ -120,7 +120,7 @@
         <?php } ?>
 
     </div>
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel" style="text-align: center">
+    <div class="col-xs-12 col-xl-3 form-panel" style="text-align: center">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction']?></p>
         <hr>
         <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction']?></h2>
@@ -138,7 +138,7 @@
     if($user->getInstallations()[0]->Solar()->isExistant())
     {
         ?>
-        <div style="width: 94%;" class="mt col-lg-12 col-xl-11 col-md-12 form-panel">
+        <div style="width: 94%;" class="col-xs-12 col-xl-11 form-panel">
             <div style="text-align: center;">
                 <div class="dashboardTitleSize">
                     <p><?= $l10n["chart"]["productionElect"] ?></p>
@@ -181,7 +181,7 @@
         }
     }
 
-    //range selector options - TO USE : set enable to true - to delete soon if not needed anymore
+    //range selector options - TO USE : set enable to true & prepare buttons with function above for on click
     const rangeSelector = {
         inputEnabled: false,
         enabled: false
