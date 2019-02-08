@@ -244,7 +244,7 @@ $router
         $interval = $_POST["time"];
         $start = $_POST["start"];
         $end = $_POST["end"];
-        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value < 50 AND value >= 0 GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 
@@ -343,6 +343,17 @@ $router
         $result = $database->query('SELECT sum("value")/1000 as "distinct" FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC ;');
         $res->send($result->getPoints());
     })
+
+    ->post('/consumptionHistoryDiff', function (Response $res){
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $interval = $_POST["time"];
+        $start = $_POST["start"];
+        $end = $_POST["end"];
+        //$result = $database->query('SELECT (max("value") - min("value"))/1000 as "distinct" FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT (max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear)) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $res->send($result->getPoints());
+    })
     
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -436,6 +447,16 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->post('/productionHistoryDiff', function (Response $res){
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $interval = $_POST["time"];
+        $start = $_POST["start"];
+        $end = $_POST["end"];
+        //$result = $database->query('SELECT (max("value") - min("value"))/1000 as "distinct" FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_2_8_0_255_2.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT (max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_2_8_0_255_2.attributes.datapoint" WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear)) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $res->send($result->getPoints());
+    })
 
     /* CONSUMPTION HEAT PUMP */
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -589,7 +610,7 @@ $router
         $interval = $_POST["time"];
         $start = $_POST["start"];
         $end = $_POST["end"];
-        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value <120 AND value >= 30 GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 
@@ -622,26 +643,6 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_2_8_2_255_2.attributes.datapoint";');
-        $res->send($result->getPoints());
-    })
-
-    ->post('/consumptionHistoryDiff', function (Response $res){
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $interval = $_POST["time"];
-        $start = $_POST["start"];
-        $end = $_POST["end"];
-        $result = $database->query('SELECT (max("value") - min("value"))/1000 as "distinct" FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
-        $res->send($result->getPoints());
-    })
-
-    ->post('/productionHistoryDiff', function (Response $res){
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $interval = $_POST["time"];
-        $start = $_POST["start"];
-        $end = $_POST["end"];
-        $result = $database->query('SELECT (max("value") - min("value"))/1000 as "distinct" FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_2_8_0_255_2.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 
