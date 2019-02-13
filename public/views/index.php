@@ -36,6 +36,8 @@
     <section id="main-content" style="position: relative;">
         <section class="wrapper">
             <?php $roleId = $user->getRole()->getId();
+
+            $includedFiles = count(get_included_files());
             if (isset($path)) {
                 if ($roleId == 1) {
                     switch ($path) {
@@ -103,6 +105,9 @@
                 }
             } else if ($roleId == 4)
                 include 'partials/index/dashboard.php';
+
+            if ($includedFiles === count(get_included_files()))
+                include 'partials/index/404.php';
             ?>
 
         </section>
