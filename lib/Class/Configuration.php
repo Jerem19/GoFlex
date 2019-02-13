@@ -21,7 +21,7 @@ class DB extends PDO {
      * @param array $attributes
      * @return array|bool
      */
-    public function execute(string $query, array $attributes = []){
+    public function execute(string $query, array $attributes = []) {
         $stmt = $this->prepare($query);
         $stmt->execute($attributes);
         $code = $stmt->errorCode();
@@ -35,17 +35,41 @@ class Configuration {
 
     const pictures_path = PUBLIC_FOLDER . 'pics/';
 
-    private static $db_name = "goflex_clients2";
+    private static $db_name = "goflex_clients";
     private static $db_host = "localhost";
     private static $db_port = "3306";
     private static $db_user = "root";
     private static $db_pass = "";
 
-    private static $DB = null;
+    private static $influx_name = "influxname";
+    private static $influx_host = "127.0.0.0";
+    private static $influx_port = 8086;
+    private static $influx_user = "root";
+    private static $influx_pass = "";
 
+    private static $DB = null;
+    private static $Influx_DB = null;
+
+    /**
+     * @return DB
+     */
     public static function DB() {
         if (self::$DB == null)
             self::$DB = new DB(self::$db_user, self::$db_pass, self::$db_name, self::$db_host, self::$db_port);
         return self::$DB;
+    }
+
+    /**
+     * @return \InfluxDB\Database
+     */
+    public static function InfluxDB() {
+        if (self::$Influx_DB == null) {
+            require_once PRIVATE_FOLDER . 'influxdb/autoload.php';
+            self::$Influx_DB = (new InfluxDB\Client(
+                self::$influx_host, self::$influx_port,
+                self::$influx_user, self::$influx_pass
+            ))->selectDB(self::$influx_name);
+        }
+        return self::$Influx_DB;
     }
 }

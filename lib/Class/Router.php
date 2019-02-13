@@ -61,7 +61,7 @@ class Router {
      */
     public function __construct() {
         $this->_baseUrl = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
-        $this->_url = $this->removeSlash(str_replace($this->_baseUrl, "" , $_SERVER["REQUEST_URI"]));        
+        $this->_url = $this->removeSlash(str_replace($this->_baseUrl, "" , $_SERVER["REQUEST_URI"]));
         $this->_method = $_SERVER["REQUEST_METHOD"]; //GET || POST
     }
 
@@ -81,12 +81,17 @@ class Router {
     }
 
     private function removeSlash(string $string) {
-        if(substr($string, -1) === '/') {
+        if (substr($string, -1) === '/') {
             return substr($string, 0, -1);
         }
         return $string;
     }
 
+    /**
+     * Search for parameters in the uri (':param' || '*')
+     * @param string $string
+     * @return string
+     */
     private function doPattern(string $string) {
         preg_match('/([\w\/]*)(\:[a-zA-Z]+|\*)([\w\/\:\.\*]*)/', $string, $matches);
 
@@ -103,8 +108,9 @@ class Router {
     }
 
     /**
+     * Read uri to find parameters
      * @param string $uri
-     * @param callable $callback
+     * @param callable(Response?, Array?) $callback
      */
     private function testUrl(string $uri, callable $callback) {
         // To Do (improve)
@@ -112,7 +118,7 @@ class Router {
 
         $url = $this->_url;
 
-        {
+        { // Remove GET parameters
             $pos = strpos($url, "?");
             if ($pos !== false)
                 $url = substr($url, 0, $pos);

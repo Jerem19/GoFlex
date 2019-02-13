@@ -3,6 +3,11 @@
 class Picture {
 
     private static $all = null;
+
+    /**
+     * Return Pictures Users
+     * @return Picture[]
+     */
     public static function getAll() {
         if (self::$all == null) {
             $sth = Configuration::DB()->query("SELECT _id FROM tblPicture;");
@@ -11,7 +16,6 @@ class Picture {
         }
         return self::$all;
     }
-
 
     /**
      * Test if the image is a real image
@@ -46,13 +50,9 @@ class Picture {
             $move = move_uploaded_file($tmp_name, Configuration::pictures_path . Configuration::DB()->lastInsertId());
             if ($ok && $move)
                 return intval(Configuration::DB()->lastInsertId());
-
-
         }
-
         return false;
     }
-
 
     /**
      * Remove a picture (Warning to foreign keys)
@@ -67,7 +67,7 @@ class Picture {
             if (is_array(Configuration::DB()->execute("DELETE FROM tblPicture WHERE _id = :id", ["id" => $pic->getId()]))) {
                 try {
                     unlink($pic->getPath());
-                } catch (Exception $e) {} // directory not found: already delete
+                } catch (Exception $e) {} // directory not found: already deleted ?
                 return true;
             }
         }
@@ -78,14 +78,26 @@ class Picture {
     private $_id = -1;
     private $name = "no_" . __CLASS__;
 
+    /**
+     * Return the Id
+     * @return int
+     */
     public function getId() {
         return $this->_id;
     }
 
+    /**
+     * Return the name
+     * @return string
+     */
     public function getName() {
         return $this->name;
     }
 
+    /**
+     * Return the path
+     * @return string|false false => no path
+     */
     public function getPath() {
         return $this->getId() > 0 ? Configuration::pictures_path . $this->getId() : false;
     }

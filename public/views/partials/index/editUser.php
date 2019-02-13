@@ -6,12 +6,12 @@
 <div class="row mt form-panel">
     <label class="control-label"><?= L10N['index']['checkUserData']['chooseUser'] ?></label>
 
-    <select name="userUsername" class="form-control">
+    <select name="userId" class="form-control">
         <?php
         $gws = $isInstall ? Gateway::getAllReady() : Gateway::getAllInstalled();
         foreach ($gws as $gw) { ?>
-            <option value="<?= $gw->getInstallation()->getUser()->getId() ?>"><?= $gw->getName() ?>
-                [<?= $gw->getInstallation()->getUser()->getUsername() ?>]
+            <option value="<?= $gw->getInstallation()->getUser()->getId() ?>">
+                <?= $gw->getName() ?> [<?= $gw->getInstallation()->getUser()->getUsername() ?>]
             </option>
         <?php } ?>
     </select>
@@ -22,27 +22,27 @@
 
         <div class="col-sm-12">
             <label class="control-label"><?= L10N['index']['profile']['username'] ?></label>
-            <input required class=" form-control" name="username"/>
+            <input required class="form-control" name="username" />
         </div>
 
         <div class="col-sm-12">
             <label class="control-label"><?= L10N['index']['profile']['firstname'] ?></label>
-            <input required class=" form-control" name="firstname"/>
+            <input class="form-control" name="firstname" />
         </div>
 
         <div class="col-sm-12">
             <label class="control-label"><?= L10N['index']['profile']['lastname'] ?></label>
-            <input required class=" form-control" name="lastname"/>
+            <input class="form-control" name="lastname" />
         </div>
 
         <div class="col-sm-12">
             <label class="control-label"><?= L10N['index']['profile']['phone'] ?></label>
-            <input type="number" class=" form-control" name="phone"/>
+            <input type="number" class="form-control" name="phone" />
         </div>
 
         <div class="col-sm-12">
             <label class="control-label"><?= L10N['index']['profile']['email'] ?></label>
-            <input type="email" required class=" form-control" name="email"/>
+            <input required type="email" class="form-control" name="email" />
         </div>
 
         <input class="btn btn-theme02 btn-block" type="submit" value="<?= L10N['index']['profile']['update'] ?>">
@@ -51,8 +51,23 @@
 
 <script>
     window.onload = function () {
-        var selectUser = $('select[name="userUsername"]');
+        var selectUser = $('select[name="userId"]'),
+            txtUsername = $('input[name="username"]');
         var loadingDiv = document.getElementById('loading');
+
+        function testUsername(callback = new Function()) {
+            $.post('user_exist', "user=" + txtUsername.val(), function (response) {
+                if (JSON.parse(response))
+                    $.gritter.add({
+                        text: "error: Username already exist"
+                    });
+                else callback();
+            });
+        }
+
+        txtUsername.on('change', function () {
+            testUsername();
+        });
 
         selectUser.on("change",function () {
             $.ajax({
@@ -74,16 +89,16 @@
         }).change();
 
         $("#formEditUser").submit(function () {
-            var data = $(this).serialize() + `&id=${selectUser.val()}`;
-            console.log(data);
-            $.post("edit", data, function (data) {
-                if (JSON.parse(data)) {
-                    alert("<?= L10N['index']['profile']['alertUpdateUserSuccess']?>");
-                    window.location.reload();
-                }
-                else alert("<?= L10N['index']['profile']['alertUpdateUserFailed']?>");
+            var postData = $(this).serialize() + `&id=${selectUser.val()}`;
+            testUsername(function() {
+                $.post("edit", postData, function (data) {
+                    if (JSON.parse(data)) {
+                        alert("<?= L10N['index']['profile']['alertUpdateUserSuccess']?>");
+                        window.location.reload();
+                    }
+                    else alert("<?= L10N['index']['profile']['alertUpdateUserFailed']?>");
+                });
             });
-
             return false;
         });
     }

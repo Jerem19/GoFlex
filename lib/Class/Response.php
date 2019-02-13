@@ -5,6 +5,11 @@ class Response {
     private $_baseUrl;
     private $_viewsPath = null;
 
+    /**
+     * Response constructor.
+     * @param string $baseUrl http url
+     * @param string|null $viewsPath views folder
+     */
     public function __construct(string $baseUrl, string $viewsPath = null) {
         $this->_baseUrl = $baseUrl;
         $this->_viewsPath = $viewsPath;
@@ -17,6 +22,11 @@ class Response {
         exit();
     }
 
+    /**
+     * Render a view
+     * @param string $viewPath path to the view
+     * @param array $params sended to the view
+     */
     public function render(string $viewPath, array $params = []) {
 
         /**
@@ -76,7 +86,7 @@ class Response {
     }
 
     /**
-     * Send some data (without json encode)
+     * Send data
      * @param int|string|array $data
      * @param boolean $jsonEncode default encode in JSON
      * @param string $contentType
@@ -86,12 +96,9 @@ class Response {
         if ($contentType == null)
             $contentType = is_array($data) ? "application/json" : (new finfo(FILEINFO_MIME))->buffer((string)$data);
         $this->setContentType($contentType);
-        if (!$jsonEncode) // if is null => encode
-            echo $data;
-        else
-            echo json_encode($data);
-        if($stopScript)
-            $this->stopExec();
+        echo !$jsonEncode ? $data : json_encode($data);
+
+        if ($stopScript) $this->stopExec();
     }
 
     /**
@@ -109,7 +116,7 @@ class Response {
                 }
             }
             $this->setContentType($contentType);
-            require_once $file;
+            readfile($file);
         } else
             echo json_encode("Error: no file at " . $file);
         $this->stopExec();

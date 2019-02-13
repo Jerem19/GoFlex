@@ -85,13 +85,6 @@ class User {
         return false;
     }
 
-    public static function getById($id) {
-        foreach (self::getAll() as $user)
-            if ($user->getId() == $id)
-                return $user;
-        return false;
-    }
-
     /**
      * Test login username and password
      * @param string $user
@@ -137,7 +130,7 @@ class User {
 
     /**
      * Return the Id
-     * @return int
+     * @return int (-1 dont exist)
      */
     public function getId() {
         return $this->_id;
@@ -151,6 +144,10 @@ class User {
         return $this->username;
     }
 
+    /**
+     * @param string $password
+     * @return bool if successed
+     */
     public function setPassword(string $password) {
         return is_array(Configuration::DB()->execute("UPDATE tblUser SET password = :password WHERE _id = :id", [
             "password" => password_hash("Go" . $password . "Flex", PASSWORD_DEFAULT, [ "cost" => rand(8,15)]),
@@ -208,20 +205,15 @@ class User {
         return $this->email;
     }
 
-    public function update(array $params) {
-        $params["id"] = $this->getId();
-        return is_array(Configuration::DB()->execute("UPDATE tblUser SET firstname = :firstname, lastname = :lastname, phone = :phone, username = :username,  email = :email WHERE _id = :id;", $params));
-    }
-
     /**
      * Return or set if the user is Activate
      * @param null|bool active
      * @return bool
      */
     public function isActive($active = null) {
-        return $active != null ?
+        return $active !== null ?
             is_array(Configuration::DB()->execute("UPDATE tblUser SET active = :active WHERE _id = :id;)", [
-                ":active" => $active, ":id" => $this->getId()])) :
+                "active" => $active ? 1 : 0, "id" => $this->getId()])) :
             $this->active;
     }
 
@@ -238,7 +230,7 @@ class User {
      * @return bool
      */
     public function setInactive() {
-        is_array(Configuration::DB()->execute("UPDATE tblUser SET active = 0 WHERE _id = :id;)", [":id" => $this->getId()]));
+        return $this->isActive(false);
     }
 
     /**
@@ -286,6 +278,27 @@ class User {
             $this->role = $data['user_role'];
             $this->active = (bool) $data['active'];
         }
+    }
+
+    /**
+     * Update user's info
+     * @param array $params
+     * @return bool if successed
+     */
+    public function update(array $params) {
+        if (!isset($params["username"]))
+            $params["username"] = $this->getUsername();
+        if (!isset($params["firstname"]))
+            $params["firstname"] = $this->getFirstname();
+        if (!isset($params["lastname"]))
+            $params["lastname"] = $this->getLastname();
+        if (!isset($params["phone"]))
+            $params["phone"] = $this->getPhone();
+        if (!isset($params["email"]))
+            $params["email"] = $this->getEMail();
+
+        $params["id"] = $this->getId();
+        return is_array(Configuration::DB()->execute("UPDATE tblUser SET firstname = :firstname, lastname = :lastname, phone = :phone, username = :username,  email = :email WHERE _id = :id;", $params));
     }
 
     /**

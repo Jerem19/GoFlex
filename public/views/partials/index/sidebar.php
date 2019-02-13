@@ -50,25 +50,31 @@
                 }
             }
 
+            $roleId = $user->getRole()->getId();
 
-            if ($user->getRole()->getId() == 1) {
-
-
-                $menu["creationUser"] = [
-                    "text" => $l10nNav["creationUser"],
-                    "_iClass" => "fa fa-user-plus"
+            if ($roleId == 1) {
+                $menu = [
+                    "creationUser" => [
+                        "text" => $l10nNav["creationUser"],
+                        "_iClass" => "fa fa-user-plus"
+                    ], "editUser" => [
+                        "text" => $l10nNav["editUser"],
+                        "_iClass" => "fa fa-user"
+                    ], "allUsers" => [
+                        "text" => $l10nNav["allUsers"],
+                        "_iClass" => "fa fa-users"
+                    ]
                 ];
+            }
 
-                $menu["editUser"] = [
-                    "text" => $l10nNav["editUser"],
-                    "_iClass" => "fa fa-user"
+            if ($roleId == 2) {
+                $menu["installationGateway"] = [
+                    "text" => $l10nNav["installationGateway"],
+                    "_iClass" => "fa fa-wrench"
                 ];
+            }
 
-                $menu["allUsers"] = [
-                    "text" => $l10nNav["allUsers"],
-                    "_iClass" => "fa fa-users"
-                ];
-
+            if ($roleId == 1 || $roleId == 2) {
                 $menu["checkUserData"] = [
                     "text" => $l10nNav["checkUserData"],
                     "_iClass" => "fa fa-odnoklassniki"
@@ -78,7 +84,6 @@
                     "text" => $l10nNav["userGraph"],
                     "_iClass" => "fa fa-odnoklassniki"
                 ];
-
                 $menu["grafana"] = [
                     "text" => $l10nNav["grafana"],
                     "_iClass" => "fa fa-wrench",
@@ -87,78 +92,44 @@
                 ];
             }
 
-            if ($user->getRole()->getId() == 2) {
-                $menu["installationGateway"] = [
-                    "text" => $l10nNav["installationGateway"],
-                    "_iClass" => "fa fa-wrench"
-                ];
-
-                $menu["checkUserData"] = [
-                    "text" => $l10nNav["checkUserData"],
-                    "_iClass" => "fa fa-odnoklassniki"
-                ];
-
-                $menu["userGraph"] = [
-                    "text" => $l10nNav["userGraph"],
-                    "_iClass" => "fa fa-odnoklassniki"
-                ];
-
-                $menu["grafana"] = [
-                    "text" => $l10nNav["grafana"],
-                    "_iClass" => "fa fa-wrench"
-                ];
-            }
-
-            if ($user->getRole()->getId() == 3) {
+            if ($roleId == 3) {
                 $menu["checkUserData"] = [
                     "text" => $l10nNav["checkUserData"],
                     "_iClass" => "fa fa-odnoklassniki"
                 ];
             }
 
-            if ($user->getRole()->getId() == 4) {
-
-                $menu[""] = [
-                    "text" => $l10nNav["dashboard"],
-                    "_iClass" => "fa fa-dashboard"
-                ];
-
-                $menu["consumptionElect"] = [
-                    "text" => $l10nNav["consumptionElec"],
-                    "_iClass" => "fa fa-bolt"
-                ];
-
-                $menu["boiler"] = [
-                    "text" => $l10nNav["boiler"],
-                    "_iClass" => "fa fa-bath"
-                ];
-
-                $menu["consumptionHeatPump"] = [
-                    "text" => $l10nNav["heat_pump"],
-                    "_iClass" => "fa fa-fire"
-                ];
-
-                $menu["insideTemp"] = [
-                    "text" => $l10nNav["insideTemp"],
-                    "_iClass" => "fa fa-thermometer"
+            if ($roleId == 4) {
+                $menu = [
+                    "" => [
+                        "text" => $l10nNav["dashboard"],
+                        "_iClass" => "fa fa-dashboard"
+                    ], "consumptionElect" => [
+                        "text" => $l10nNav["consumptionElec"],
+                        "_iClass" => "fa fa-bolt"
+                    ], "boiler" => [
+                        "text" => $l10nNav["boiler"],
+                        "_iClass" => "fa fa-bath"
+                    ], "consumptionHeatPump" => [
+                        "text" => $l10nNav["heat_pump"],
+                        "_iClass" => "fa fa-fire"
+                    ], "insideTemp" => [
+                        "text" => $l10nNav["insideTemp"],
+                        "_iClass" => "fa fa-thermometer"
+                    ]
                 ];
 
                 if($user->getInstallations()[0]->Solar()->isExistant()) {
-
                     $menu["productionElect"] = [
                         "text" => $l10nNav["productionElect"],
                         "_iClass" => "fa fa-certificate"
                     ];
                 }
 
-
-
                 /*
                  * :TODO Put a submenu Graphics
-                if($user->getInstallations()[0]->Solar()->isExistant())
-                {
+                if($user->getInstallations()[0]->Solar()->isExistant()) {
                     $menu[] = [
-
                         "_iClass" => "fa fa-desktop",
                         "text" => $l10nNav["analyse"],
 
@@ -178,14 +149,10 @@
                             "text" => $l10nNav["productionElect"]
                         ],
                     ];
-                }
-                else
-                {
+                } else {
                     $menu[] = [
-
                         "_iClass" => "fa fa-desktop",
                         "text" => $l10nNav["analyse"],
-
                         "consumptionElect" => [
                             "text" => $l10nNav["consumptionElec"]
                         ],

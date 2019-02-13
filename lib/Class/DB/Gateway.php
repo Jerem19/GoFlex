@@ -57,13 +57,6 @@ class Gateway {
         return false;
     }
 
-    public static function getById(int $id) {
-        foreach (self::getAll() as $gateway)
-            if ($gateway->getId() == $id)
-                return $gateway->getName();
-        return false;
-    }
-
     /**
      * @param array["name", ?"status"] $params
      * @return int|false

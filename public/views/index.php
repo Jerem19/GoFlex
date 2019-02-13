@@ -35,11 +35,9 @@
     include 'partials/index/sidebar.php'; ?>
     <section id="main-content" style="position: relative;">
         <section class="wrapper">
-
-            <?php
-
+            <?php $roleId = $user->getRole()->getId();
             if (isset($path)) {
-                if ($user->getRole()->getId() == 1) {
+                if ($roleId == 1) {
                     switch ($path) {
                         case "creationUser":
                             include 'partials/index/addUser.php';
@@ -49,7 +47,7 @@
                             include 'partials/index/editUser.php';
                             break;
 
-                        case "checkUserData": $isInstall = false;
+                        case "checkUserData":
                             include 'partials/index/userData.php';
                             break;
 
@@ -61,28 +59,40 @@
                             include 'partials/index/userGraph.php';
                             break;
                     }
-                } else if ($user->getRole()->getId() == 2) {
-                    if (isset($path)) {
-                        switch ($path) {
-                            case "checkUserData": $isInstall = false;
-                            case "installationGateway":
-                                $isInstall = !isset($isInstall) || $isInstall && true;
-                                include 'partials/index/userData.php';
-                                break;
-                            case "userGraph":
-                                include 'partials/index/userGraph.php';
-                                break;
-                        }
+                } else if ($roleId == 2) {
+                    switch ($path) {
+                        case "checkUserData": $isInstall = false;
+                        case "installationGateway":
+                            $isInstall = !isset($isInstall);
+                            include 'partials/index/userData.php';
+                            break;
+                        case "userGraph":
+                            include 'partials/index/userGraph.php';
+                            break;
                     }
-                }
-
-                else if ($user->getRole()->getId() == 3) {
-                    if (isset($path)) {
-                        switch ($path) {
-                            case "checkUserData":
-                                include 'partials/index/checkUserData.php';
-                                break;
-                        }
+                } else if ($roleId == 3) {
+                    switch ($path) {
+                        case "checkUserData":
+                            include 'partials/index/userData.php';
+                            break;
+                    }
+                } else if ($roleId == 4) {
+                    switch ($path) {
+                        case "consumptionElect":
+                            include 'partials/index/chart/consumptionElect.php';
+                            break;
+                        case "boiler":
+                            include 'partials/index/chart/boiler.php';
+                            break;
+                        case "consumptionHeatPump":
+                            include 'partials/index/chart/heat_pump.php';
+                            break;
+                        case "insideTemp":
+                            include 'partials/index/chart/insideTemperature.php';
+                            break;
+                        case "productionElect":
+                            include 'partials/index/chart/productionElect.php';
+                            break;
                     }
                 }
 
@@ -90,28 +100,10 @@
                     case "profile":
                         include 'partials/index/profile.php';
                         break;
-                    case "consumptionElect":
-                        include 'partials/index/chart/consumptionElect.php';
-                        break;
-                    case "boiler":
-                        include 'partials/index/chart/boiler.php';
-                        break;
-                    case "consumptionHeatPump":
-                        include 'partials/index/chart/heat_pump.php';
-                        break;
-                    case "insideTemp":
-                        include 'partials/index/chart/insideTemperature.php';
-                        break;
-                    case "productionElect":
-                        include 'partials/index/chart/productionElect.php';
-                        break;
                 }
-            } else {
-                if ($user->getRole()->getId() < 4)
-                    $this->redirect('/checkUserData');
-                else include 'partials/index/dashboard.php';
-
-            }?>
+            } else if ($roleId == 4)
+                include 'partials/index/dashboard.php';
+            ?>
 
         </section>
 

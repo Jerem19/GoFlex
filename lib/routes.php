@@ -38,7 +38,7 @@ $router
     ->use('/lang', [
         "" => [
             "method" => Router::POST,
-            "callback" => function($res) {
+            "callback" => function(Response $res) {
                 if (isset($_REQUEST["lang"])) {
                     $lang = $_REQUEST["lang"];
                     foreach (L10NAvail as $langAv)
@@ -53,7 +53,7 @@ $router
         ],
         ":lang" => [
             "method" => Router::POST,
-            "callback" => function($res, $args) {
+            "callback" => function(Response $res, $args) {
                 $res->sendFile(sprintf("%sl10n/%s.json",PUBLIC_FOLDER, $args["lang"]));
             }
         ]
@@ -197,7 +197,7 @@ $router
 
     ->post('/insideTempSpec', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $interval = $_POST["time"];
         $range = $_POST["range"];
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
@@ -207,7 +207,7 @@ $router
 
     ->post('/insideTempSpecAll', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
 
@@ -291,7 +291,7 @@ $router
 
     ->post('/consumptionElectSpec', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $interval = $_POST["time"];
         $range = $_POST["range"];
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
@@ -301,7 +301,7 @@ $router
 
     ->post('/consumptionElectSpecAll', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
 
         $res->send($result->getPoints());
@@ -375,7 +375,7 @@ $router
         $res->send($result->getPoints());
     })
 
-    ->post('/productionElectSpeed', function(Response $res) {
+    ->post('/production:NAME', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint";');
@@ -384,7 +384,7 @@ $router
 
     ->post('/productionElectSpec', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $interval = $_POST["time"];
         $range = $_POST["range"];
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
@@ -393,7 +393,7 @@ $router
 
     ->post('/productionElectSpecAll', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
 
@@ -480,7 +480,7 @@ $router
 
     ->post('/consumptionHeatPumpSpec', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $powerMeter = Installation::getByGateway($_POST['idGateway'])->getHeatPowerMeter();
         $interval = $_POST["time"];
         $range = $_POST["range"];
@@ -490,7 +490,7 @@ $router
 
     ->post('/consumptionHeatPumpSpecAll', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $powerMeter = Installation::getByGateway($_POST['idGateway'])->getHeatPowerMeter();
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
@@ -542,7 +542,7 @@ $router
 
     ->post('/hotwaterTemperatureSpec', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $interval = $_POST["time"];
         $range = $_POST["range"];
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
@@ -551,7 +551,7 @@ $router
 
     ->post('/hotwaterTemperatureSpecAll', function(Response $res) {
         $database = getInfluxDb();
-        $dbName = Gateway::getById($_POST['idGateway']);
+        $dbName = (new Gateway($_POST['idGateway']))->getName();
         $interval = $_POST["time"];
         $range = $_POST["range"];
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
@@ -726,16 +726,15 @@ $router
     ->post('/userInfo', function(Response $res) {
         if ($_SESSION["User"]->getRole()->getId() != 4) {
             if (isset($_POST["id"])) {
-                $user = User::getById($_POST["id"]);
-                if ($user != false) {
-                    $data = array(
+                $user = new User($_POST["id"]);
+                if ($user->getId() > 0) {
+                    $res->send(array(
                         "username" => $user->getUsername(),
                         "firstname" => $user->getFirstname(),
                         "lastname" => $user->getLastname(),
                         "phone" => $user->getPhone(),
                         "email" => $user->getEMail()
-                    );
-                    $res->send($data);
+                    ));
                 }
             }
             $res->send(false);
@@ -756,6 +755,11 @@ $router
             }
             $res->send(false);
         }
+    })
+
+    ->post('/user_exist', function (Response $res) {
+        if ($_SESSION["User"]->getRole()->getId() != 4)
+            $res->send(isset($_POST["user"]) ? User::exists($_POST["user"]) : false);
     })
 
     ->post('/gw_exist', function (Response $res) {
@@ -809,24 +813,9 @@ $router
 
     ->post('/edit', function(Response $res) {
         if ($_SESSION["User"]->getRole()->getId() == 1) {
-            $user = User::getById($_POST["id"]);
-            if ($user != false) {
-                if(!empty($_POST["firstname"]) && !empty($_POST["lastname"]) && !empty($_POST["email"]) && !empty($_POST["username"])) {
-                    if($_POST["username"] != $user->getUsername() && User::getByUsername($_POST["username"]) == false || $_POST["username"] == $user->getUsername()) {
-                        if($_POST["email"] != $user->getEMail() && User::getByEmail($_POST["email"]) == false || $_POST["email"] == $user->getEMail()) {
-
-                            $out = $user->update([
-                                "firstname" => $_POST["firstname"],
-                                "lastname" => $_POST["lastname"],
-                                "phone" => $_POST["phone"],
-                                "username" => $_POST["username"],
-                                "email" => $_POST["email"]
-                            ]);
-                            $res->send($out);
-                        }
-                    }
-                }
-            }
+            $user = new User($_POST["id"]);
+            if ($user->getId() > 0)
+                $res->send($user->update($_POST));
             $res->send(false);
         }
     })
@@ -904,6 +893,8 @@ $router
     })
 
     ->get('/', function(Response $res) {
+        if ($_SESSION["User"]->getRole()->getId() < 4)
+            $res->redirect('/checkUserData');
         $res->render("index.php", ["user" => $_SESSION["User"]]);
     })
     ->get('/*', function(Response $res, $uriParams) {

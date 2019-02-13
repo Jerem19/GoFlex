@@ -1,3 +1,4 @@
+<?php if (!isset($isInstall)) $isInstall = false; ?>
 <div id="loading" style="display: none;"></div>
 <div class="row mt form-panel" style="text-align: center; font-size: xx-large;">
     <h2 class="head-title"><?= $isInstall ? L10N['index']['sidebar']['installationGateway'] : L10N['index']['sidebar']['checkUserData'] ?></h2>
@@ -11,7 +12,7 @@
         $gws = $isInstall ? Gateway::getAllReady() : Gateway::getAllInstalled();
         foreach ($gws as $gw) {
             if ($gw->getInstallation() != false) { ?>
-            <option value="<?= $gw->getId() ?>"><?= $gw->getName() ?>[<?= $gw->getInstallation()->getUser()->getUsername() ?>]</option>
+            <option value="<?= $gw->getId() ?>"><?= $gw->getName() ?> [<?= $gw->getInstallation()->getUser()->getUsername() ?>]</option>
         <?php }} ?>
     </select>
 </div>
