@@ -31,3 +31,25 @@ document.getElementById('languages').onchange = function() {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send('lang='+this.value);
 };
+
+function when(...xhrs) {
+    return {
+        abort() {
+            xhrs.forEach(xhr => {
+                xhr.abort();
+            });
+        },
+        promise: $.when(...xhrs)
+    };
+}
+
+function parse(data, min = 0, max = Infinity, field = "distinct") {
+    var dataTime = data.map(data => {
+        if (data[field] >= min && data[field] < max) {
+            var d = new Date(data["time"]);
+            if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+            return [d.getTime(), data[field]];
+        }
+    }).filter(v => v);
+    return dataTime.reverse();
+}

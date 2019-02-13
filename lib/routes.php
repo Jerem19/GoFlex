@@ -201,7 +201,6 @@ $router
         $range = $_POST["range"];
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
-
     })
 
     ->post('/insideTempSpecAll', function(Response $res) {
@@ -209,7 +208,6 @@ $router
         $dbName = Gateway::getById($_POST['idGateway']);
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
-
     })
 
     ->post('/insideTempHistory', function(Response $res) {
@@ -269,7 +267,6 @@ $router
         $range = $_POST["range"];
         $offset = $_POST["offset"];
         $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC LIMIT 100000 OFFSET '.$offset.';');
-
         $res->send($result->getPoints());
     })
 
@@ -277,7 +274,6 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(7d) fill(none) ORDER BY time DESC ;');
-
         $res->send($result->getPoints());
     })
 
@@ -293,34 +289,14 @@ $router
         $dbName = Gateway::getById($_POST['idGateway']);
         $interval = $_POST["time"];
         $range = $_POST["range"];
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
-
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
     ->post('/consumptionElectSpecAll', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
-
-        $res->send($result->getPoints());
-    })
-
-    ->post('/consumptionElectHistory', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time > now()-12h GROUP BY time(1s) fill(none) ORDER BY time DESC ;');
-
-        $res->send($result->getPoints());
-    })
-
-    ->post('/consumptionElectHistoryHist', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        //$interval = $_POST["time"];
-        $range = $_POST["range"];
-        $result = $database->query('SELECT sum("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" where time > now()-'.$range.' /*GROUP BY time(15m) fill(none) ORDER BY time DESC */;');
-
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -397,33 +373,14 @@ $router
         $dbName = Gateway::getById($_POST['idGateway']);
         $interval = $_POST["time"];
         $range = $_POST["range"];
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
     ->post('/productionElectSpecAll', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
-        $res->send($result->getPoints());
-
-    })
-
-    ->post('/productionElectHistory', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $powerMeter = getHeatPowerMeter($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time > now()-12h GROUP BY time(1s) fill(none) ORDER BY time DESC ;');
-        $res->send($result->getPoints());
-    })
-
-    ->post('/productionElectHistoryHist', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $powerMeter = getHeatPowerMeter($_SESSION["User"]);
-        //$interval = $_POST["time"];
-        $range = $_POST["range"];
-        $result = $database->query('SELECT sum("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" where time > now()-'.$range.' /*GROUP BY time(15m) fill(none) ORDER BY time DESC*/ ;');
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -504,7 +461,7 @@ $router
         $powerMeter = Installation::getByGateway($_POST['idGateway'])->getHeatPowerMeter();
         $interval = $_POST["time"];
         $range = $_POST["range"];
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -512,7 +469,7 @@ $router
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
         $powerMeter = Installation::getByGateway($_POST['idGateway'])->getHeatPowerMeter();
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
+        $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.'.nodes.powerMeter-'.$powerMeter.'.objects.wattsTotal.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
         $res->send($result->getPoints());
     })
 
@@ -572,25 +529,7 @@ $router
     ->post('/hotwaterTemperatureSpecAll', function(Response $res) {
         $database = getInfluxDb();
         $dbName = Gateway::getById($_POST['idGateway']);
-        $interval = $_POST["time"];
-        $range = $_POST["range"];
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
-        $res->send($result->getPoints());
-    })
-
-    ->post('/hotwaterTemperatureHistory', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time > now()-12h GROUP BY time(1s) fill(none) ORDER BY time DESC;');
-        $res->send($result->getPoints());
-    })
-
-    ->post('/hotwaterTemperatureHistoryHist', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        //$interval = $_POST["time"];
-        $range = $_POST["range"];
-        $result = $database->query('SELECT mean("value") FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time > now()-'.$range.' /*GROUP BY time(15m) fill(none) ORDER BY time DESC */;');
         $res->send($result->getPoints());
     })
 
@@ -610,7 +549,7 @@ $router
         $interval = $_POST["time"];
         $start = $_POST["start"];
         $end = $_POST["end"];
-        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value <120 AND value >= 30 GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value <120 AND value >= 30 GROUP BY time('.$interval.') fill(null) ORDER BY time tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 

@@ -33,8 +33,8 @@
     <div class="col-xs-12 col-xl-8 form-panel flex-fill adjusted">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData'] ?></p>
         <hr>
-        <div class="mb-10">
-            <div id="dates" style="display:none; float:left;">
+        <div id="inputs" class="mb-10" style="display:none;">
+            <div id="dates" style="float:left;">
                 <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
                 <button id="applyDate" class="btn btn-theme02">Apply</button>
             </div>
@@ -147,33 +147,6 @@
 
 <script>
     var dateFormat = "dd.mm.yy";
-    var graph_buttons = [{
-        text: '15 minutes',
-        events: {
-            click: function () {
-                var start = $.datepicker.parseDate(dateFormat, $("#from").val());
-                var end = $.datepicker.parseDate(dateFormat, $("#to").val());
-                start.setHours(0, 0, 0);
-                end.setHours(23, 59, 59);
-                start = start.getTime() + "ms";
-                end = end.getTime() + "ms";
-                loadGraphLine(start, end, "15m")
-            }
-        }
-    }, {
-        text: 'Par jour',
-        events: {
-            click: function () {
-                var start = $.datepicker.parseDate(dateFormat, $("#from").val());
-                var end = $.datepicker.parseDate(dateFormat, $("#to").val());
-                start.setHours(0, 0, 0);
-                end.setHours(23, 59, 59);
-                start = start.getTime() + "ms";
-                end = end.getTime() + "ms";
-                loadGraphDate(start, end, "1d")
-            }
-        }
-    }];
 
     function byTime(range){
         var start = $.datepicker.parseDate(dateFormat, $("#from").val());
@@ -186,52 +159,26 @@
         while (historic.series.length > 0) historic.series[0].remove(true);
 
         if(range == '15m'){
-            $("#i-1d").css('display','none');
-            $("#i-15m").css('display','inline-block');
+            $("#i-1d").hide();
+            $("#i-15m").show();
             $("#btn15m").addClass('active');
             $("#btn1d").removeClass('active');
             this.loadGraphLine(start, end, "15m");
         }
         else if(range == '1d'){
-            $("#i-1d").css('display','inline-block');
-            $("#i-15m").css('display','none');
+            $("#i-1d").show();
+            $("#i-15m").hide();
             $("#btn15m").removeClass('active');
             $("#btn1d").addClass('active');
             this.loadGraphDate(start, end, "1d");
         }
     }
-    //style of buttons - to delete soon
-    const buttonTheme = {
-        width: 20 + '%',
-        padding: 10,
-        r: 0,
-        fill: '#75b31e',
-        style: {
-            color: 'white',
-        },
-        states: {
-            hover: {
-                fill: '#486c15',
-            },
-            select: {
-                fill: '#486c15',
-            }
-        }
-    };
 
     //range selector options - TO USE : set enable to true - to delete soon if not needed anymore
     const rangeSelector = {
-        selected: 0,
-        buttons: graph_buttons,
-        buttonTheme: buttonTheme,
-        buttonSpacing: 0,
-        labelStyle: {
-            color: 'silver',
-            fontWeight: 'bold'
-        },
         inputEnabled: false,
         enabled: false
-    }
+    };
 
     function loadGraphDate(start, end, interval) {
         if (window.ajaxReq) ajaxReq.abort();
@@ -448,7 +395,7 @@
                     renderTo: 'historicData',
                     events: {
                         load: function () {
-                            document.getElementById("dates").style.display = "block";
+                            document.getElementById("inputs").style.display = "block";
                             document.getElementById("loader").style.display = "none";
                             resizeFooter();
                         }
@@ -557,28 +504,6 @@
 
     function ajaxError(elementId) {
         document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
-    }
-
-    function when(...xhrs) {
-        return {
-            abort() {
-                xhrs.forEach(xhr => {
-                    xhr.abort();
-                });
-            },
-            promise: $.when(...xhrs)
-        };
-    }
-
-    function parse(data, min = 0, max = Infinity) {
-        var dataTime = data.map(data => {
-            if (data["distinct"] >= min && data["distinct"] < max) {
-                var d = new Date(data["time"]);
-                if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
-                return [d.getTime(), data["distinct"]];
-            }
-        }).filter(v => v);
-        return dataTime.reverse();
     }
 
     window.onload = function () {
