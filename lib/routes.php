@@ -20,8 +20,9 @@ $router
     });
 
 require_once 'Class/DB/User.php';
-session_start();
 session_set_cookie_params(30*30*60);
+session_start();
+
 
 // Define lang and verify if connected
 if (!isset($_SESSION["lang"]))
@@ -330,7 +331,7 @@ $router
         $result = $database->query('SELECT (max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear)) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
-    
+
     /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     /* PRODUCTION ELECT */
@@ -623,7 +624,7 @@ $router
                                     "heatPictures" => json_encode($picsHeat),
                                     "hotwaterPictures" => json_encode($picsHot)
                                 ]));
-                        } else { } // House Pic (! foreign key !)
+                        }
                     } $res->send(false);
                 }
             }
@@ -820,7 +821,6 @@ $router
                         $inst->getPicture()->change($_FILES["picture"]);
                     } else $picId = Picture::create($_FILES["picture"]);
                 }
-
 
                 $_POST["picture"] = $picId;
                 $_POST["heatPictures"] = json_encode(array_merge(getPicsIds($_FILES["heatPictures"]), $inst->Heat()->getPicturesId()));
