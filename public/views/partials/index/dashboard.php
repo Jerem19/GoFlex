@@ -1,10 +1,10 @@
 <div class="row is-flex">
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel flex-fill">
+    <div class="col-xs-12 col-xl-3 form-panel flex-fill ml">
 
         <p class="dashboardTitleSize"
            style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption'] ?></p>
         <hr>
-        <div style="text-align: center;" class="form-panel divSize flex-fill">
+        <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
                 <p><?= L10N['index']['dashboard']['electricalConsumption'] ?></p>
             </div>
@@ -30,7 +30,7 @@
             </a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
+    <div class="col-xs-12 col-xl-8 form-panel flex-fill adjusted">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData'] ?></p>
         <hr>
         <div class="mb-10">
@@ -39,18 +39,18 @@
                 <button id="applyDate" class="btn btn-theme02">Apply</button>
             </div>
             <div class="btn-group" style="float:right;">
-                <button id="btn15m" class="btn btn-theme02" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true" style="display:none;"></i> 15 minutes </button>
+                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i> 15 minutes </button>
                 <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour </button>
             </div>
         </div>
-            <div id="historicData"></div>
-            <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
+        <div id="historicData"></div>
+        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
 
     </div>
 </div>
 
 <div class="row is-flex">
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+    <div class="col-xs-12 col-xl-3 form-panel ml">
 
         <p class="dashboardTitleSize"
            style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature'] ?></p>
@@ -81,8 +81,8 @@
             </a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-5 col-md-12 form-panel">
-        <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex'] ?></p>
+    <div class="col-xl-5 col-xs-12 form-panel">
+        <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex']?></p>
         <hr>
 
         <div style="text-align: center;">
@@ -90,7 +90,7 @@
         </div>
 
         <div class="indexAlert alert-secondary">
-            <strong><span class="fa fa-lightbulb-o"></span> <?= L10N['index']['dashboard']['consumptionTitle'] ?></strong>
+            <strong><span class="fa fa-lightbulb-o"></span> <?= L10N['index']['dashboard']['consumptionTitle']?></strong>
         </div>
 
         <div class="col col-md-7"><span class="fa fa-user"></span> <?= L10N['index']['dashboard']['yourCoonsumption'] ?></div>
@@ -114,7 +114,7 @@
         <?php } ?>
 
     </div>
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel" style="text-align: center">
+    <div class="col-xs-12 col-xl-3 form-panel" style="text-align: center">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction']?></p>
         <hr>
         <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction'] ?></h2>
@@ -186,17 +186,18 @@
         while (historic.series.length > 0) historic.series[0].remove(true);
 
         if(range == '15m'){
-            $("#i-1d").hide();
-            $("#i-15m").show();
-            $("#btn15m").css('background-color','#007cbc');
-            $("#btn1d").css('background-color','#75b31e');
-            loadGraphLine(start, end, range);
-        } else if(range == '1d'){
-            $("#i-1d").show();
-            $("#i-15m").hide();
-            $("#btn1d").css('background-color','#007cbc');
-            $("#btn15m").css('background-color','#75b31e');
-            loadGraphDate(start, end, range);
+            $("#i-1d").css('display','none');
+            $("#i-15m").css('display','inline-block');
+            $("#btn15m").addClass('active');
+            $("#btn1d").removeClass('active');
+            this.loadGraphLine(start, end, "15m");
+        }
+        else if(range == '1d'){
+            $("#i-1d").css('display','inline-block');
+            $("#i-15m").css('display','none');
+            $("#btn15m").removeClass('active');
+            $("#btn1d").addClass('active');
+            this.loadGraphDate(start, end, "1d");
         }
     }
     //style of buttons - to delete soon
