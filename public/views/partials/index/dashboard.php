@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+<div class="row is-flex">
+    <div class="col-xs-12 col-xl-3 form-panel flex-fill ml">
 
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption']?></p>
         <hr>
@@ -31,22 +31,27 @@
                 </div></a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-8 col-md-12 form-panel">
+    <div class="col-xs-12 col-xl-8 form-panel flex-fill adjusted">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData']?></p>
         <hr>
-
-        <div id="dates" style="display:none; text-align:center;">
-            <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
-            <button id="applyDate">Apply</button>
+        <div class="mb-10">
+            <div id="dates" style="display:none; float:left;">
+                <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
+                <button id="applyDate" class="btn btn-theme02">Apply</button>
+            </div>
+            <div class="btn-group" style="float:right;">
+                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i> 15 minutes </button>
+                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour </button>
+            </div>
         </div>
-
         <div id="historicData"></div>
         <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
+
     </div>
 </div>
 
-<div class="row">
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+<div class="row is-flex">
+    <div class="col-xs-12 col-xl-3 form-panel ml">
 
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature']?></p>
         <hr>
@@ -78,7 +83,7 @@
             </a>
         </div>
     </div>
-    <div class="mt col-lg-12 col-xl-5 col-md-12 form-panel">
+    <div class="col-xl-5 col-xs-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex']?></p>
         <hr>
 
@@ -115,7 +120,7 @@
         <?php } ?>
 
     </div>
-    <div class="mt col-lg-12 col-xl-3 col-md-12 form-panel">
+    <div class="col-xs-12 col-xl-3 form-panel" style="text-align: center">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction']?></p>
         <hr>
         <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction']?></h2>
@@ -124,7 +129,7 @@
                 <?= L10N['index']['dashboard']['greenActionText']?>
             </div>
         </strong>
-        <img style="width: 202px;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
+        <img style="width: 202px; margin: 0 auto;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction']?></a>
     </div>
 </div>
@@ -133,7 +138,7 @@
     if($user->getInstallations()[0]->Solar()->isExistant())
     {
         ?>
-        <div style="width: 94%;" class="mt col-lg-12 col-xl-11 col-md-12 form-panel">
+        <div style="width: 94%;" class="col-xs-12 col-xl-11 form-panel">
             <div style="text-align: center;">
                 <div class="dashboardTitleSize">
                     <p><?= $l10n["chart"]["productionElect"] ?></p>
@@ -152,72 +157,39 @@
 
 <script>
     var dateFormat = "dd.mm.yy";
-    var graph_buttons = /*[{
-        text: '6 dernieres heures',
-        events: {
-            click: function () {
-                loadGraphLine()
-            }
+
+    function byTime(range){
+        var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
+        var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
+        start.setHours(0,0,0);
+        end.setHours(23,59,59);
+        start = start.getTime()+"ms";
+        end = end.getTime()+"ms";
+        if(range == '15m'){
+            $("#i-1d").css('display','none');
+            $("#i-15m").css('display','inline-block');
+            $("#btn15m").addClass('active');
+            $("#btn1d").removeClass('active');
+            this.loadGraphLine(start, end, "15m");
         }
-    }, {
-        text: 'Daily',
-        events: {
-            click: function () {
-                loadGraphHist("1d")
-            }
+        else if(range == '1d'){
+            $("#i-1d").css('display','inline-block');
+            $("#i-15m").css('display','none');
+            $("#btn15m").removeClass('active');
+            $("#btn1d").addClass('active');
+            this.loadGraphDate(start, end, "1d");
         }
-    }, {
-        text: 'Monthly',
-        events: {
-            click: function () {
-                loadGraphHist("30d")
-            }
-        }
-    }, {
-        text: 'Yearly',
-        events: {
-            click: function () {
-                loadGraphHist("365d")
-            }
-        }
-    }, {
-        text: 'Jour',
-        events: {
-            click: function () {
-                loadGraphHist("365d")
-            }
-        }
-    }];*/
-    [{
-       text: '15 minutes',
-       events: {
-           click: function () {
-               var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
-               var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
-               start.setHours(0,0,0);
-               end.setHours(23,59,59);
-               start = start.getTime()+"ms";
-               end = end.getTime()+"ms";
-               loadGraphLine(start, end, "15m")
-           }
-       }
-    }, {
-        text: 'Par jour',
-        events: {
-            click: function () {
-                var start = $.datepicker.parseDate(dateFormat, $("#from").val());//.getTime()+"ms";
-                var end = $.datepicker.parseDate(dateFormat, $("#to").val());//.getTime()+"ms";
-                start.setHours(0,0,1);
-                end.setHours(23,59,59);
-                start = start.getTime()+"ms";
-                end = end.getTime()+"ms";
-                loadGraphDate(start, end, "1d")
-            }
-        }
-    }];
+    }
+
+    //range selector options - TO USE : set enable to true & prepare buttons with function above for on click
+    const rangeSelector = {
+        inputEnabled: false,
+        enabled: false
+    }
 
     function loadGraphDate(start, end, interval) {
-        $.when($.ajax({
+        if(window.ajaxReq) ajaxReq.abort();
+        window.ajaxReq = when($.ajax({
                 type: "POST",
                 url: "hotwaterTemperatureHistoryDate",
                 data: {
@@ -228,7 +200,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "consumptionElectHistoryDate",
+                url: "consumptionHistoryDiff",
                 data : {
                     time: interval,
                     start: start,
@@ -247,7 +219,7 @@
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             ,$.ajax({
                 type: "POST",
-                url: "productionElectHistoryDate",
+                url: "productionHistoryDiff",
                 data : {
                     time: interval,
                     start: start,
@@ -255,7 +227,8 @@
                 }
             })
             <?php } ?>
-        ).then(function (hotwater, consumption, inside, production) {
+        );
+        ajaxReq.promise.then(function (hotwater, consumption, inside, production) {
             var insideArray =[];
             var boilerArray = [];
             var electArray = [];
@@ -264,55 +237,40 @@
             var d;
 
             hotwater = hotwater[0];
-            hotwater.pop();
             consumption = consumption[0];
-            consumption.pop();
             inside = inside[0];
-            inside.pop();
             production = production ? production[0] :  undefined;
             for(index = 0;index< inside.length;index++)
             {
                 d = new Date(inside[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
+
                 insideArray.push([d.getTime(), inside[index]["distinct"]]);
             }
             insideArray = insideArray.reverse();
             for(index = 0;index< hotwater.length;index++)
             {
                 d = new Date(hotwater[index]["time"]);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
 
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
                 boilerArray.push([d.getTime(), hotwater[index]["distinct"]])
             }
             boilerArray = boilerArray.reverse();
             for(index = 0;index< consumption.length;index++)
             {
                 d = new Date(consumption[index]["time"]);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
 
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
                 electArray.push([d.getTime(), consumption[index]["distinct"]])
             }
             electArray = electArray.reverse();
 
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-            production.pop();
             for (index = 0; index < production.length; index++)
             {
                 if (production[index]["distinct"] >= 0) {
                     d = new Date(production[index]["time"]);
-
-                    if (d.getTimezoneOffset() != 120) {
-                        d.setHours(d.getHours() + 1)
-                    }
+                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1)
 
                     productionElecArray.push([d.getTime(), production[index]["distinct"]])
                 }
@@ -340,7 +298,7 @@
                     opposite: false
                 }, {
                     title:{
-                        text: "Puissance (kW)"
+                        text: "Puissance (kWh)"
                     },
                     opposite: true
                 }],
@@ -358,17 +316,7 @@
                         borderWidth: 0
                     }
                 },
-                rangeSelector: {
-                    buttons: graph_buttons,
-                    buttonTheme:{
-                        height:18,
-                        padding:2,
-                        width:20 + '%',
-                        zIndex:7
-                    },
-                    inputEnabled: false,
-                    enabled: true
-                },
+                rangeSelector: rangeSelector,
                 scrollbar: {
                     enabled: false
                 },
@@ -404,8 +352,6 @@
 
                     }]
             });
-        }, function () {
-            ajaxError('TEST');
         });
     }
 
@@ -497,17 +443,7 @@
                         borderWidth: 0
                     }
                 },
-                rangeSelector: {
-                    buttons: graph_buttons,
-                    buttonTheme:{
-                        height:18,
-                        padding:2,
-                        width:20 + '%',
-                        zIndex:7
-                    },
-                    inputEnabled: false,
-                    enabled: true
-                },
+                rangeSelector: rangeSelector,
                 scrollbar: {
                     enabled: false
                 },
@@ -550,7 +486,8 @@
 
     function loadGraphLine(start, end, interval)
     {
-        $.when(
+        if(window.ajaxReq) ajaxReq.abort();
+        window.ajaxReq = when(
             $.ajax({
                 type: "POST",
                 url: "hotwaterTemperatureDate",
@@ -589,7 +526,8 @@
                 }
             })
             <?php } ?>
-        ).then(function(hotwater, consumption, inside, production) {
+        );
+        ajaxReq.promise.then(function(hotwater, consumption, inside, production) {
             var insideArray =[];
             var boilerArray = [];
             var electArray = [];
@@ -597,61 +535,13 @@
             var index = 0;
             var d;
 
-            hotwater = hotwater[0];
-            consumption = consumption[0];
-            inside = inside[0];
-            production = production ? production[0] :  undefined;
-            for(index = 0;index< inside.length;index++)
-            {
-                var val = inside[index]["distinct"];
-                if(val < 0 || val > 50) continue;
-                d = new Date(inside[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
-                insideArray.push([d.getTime(), val]);
-            }
-            insideArray = insideArray.reverse();
-            for(index = 0;index< hotwater.length;index++)
-            {
-                var val = hotwater[index]["distinct"];
-                if(val < 30 || val > 120) continue;
-                d = new Date(hotwater[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
-                boilerArray.push([d.getTime(), val])
-            }
-            boilerArray = boilerArray.reverse();
-            for(index = 0;index< consumption.length;index++)
-            {
-                var val = consumption[index]["distinct"];
-                if(val < 0) continue;
-                d = new Date(consumption[index]["time"]);
-                if(d.getTimezoneOffset() != 120)
-                {
-                    d.setHours(d.getHours() + 1)
-                }
-                electArray.push([d.getTime(), val])
-            }
-            electArray = electArray.reverse();
+            boilerArray = parse(hotwater[0],30, 120);
+            electArray = parse(consumption[0]);
+            insideArray = parse(inside[0],0,50);
+
 
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-            for (index = 0; index < production.length; index++)
-            {
-                if (production[index]["distinct"] >= 0) {
-                    d = new Date(production[index]["time"]);
-
-                    if (d.getTimezoneOffset() != 120) {
-                        d.setHours(d.getHours() + 1)
-                    }
-
-                    productionElecArray.push([d.getTime(), production[index]["distinct"]])
-                }
-            }
-            productionElecArray = productionElecArray.reverse();
+            productionElecArray = parse(production[0])
             <?php } ?>
 
             window.historic = Highcharts.StockChart('historicData', {
@@ -717,16 +607,7 @@
                         }
                     }
                 },
-                rangeSelector: {
-                    buttons: graph_buttons,
-                    buttonTheme:{
-                        height:18,
-                        padding:2,
-                        width:20 + '%',
-                        zIndex:7
-                    },
-                    inputEnabled: false
-                },
+                rangeSelector: rangeSelector,
                 tooltip: {
                     shared: false,
                     valueDecimals: 2
@@ -779,7 +660,7 @@
             },function (chart) {
                 setTimeout(function () {
                     //$('input.highcharts-range-selector',$(chart.container).parent()) //$('#'+chart.options.chart.renderTo))
-                        //.datepicker()
+                    //.datepicker()
                 },0)
             });
             /*$.datepicker.setDefaults({
@@ -794,6 +675,29 @@
 
     function ajaxError (elementId) {
         document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
+    }
+
+    function when(...xhrs) {
+        return {
+            abort() {
+                xhrs.forEach(xhr => {
+                    xhr.abort();
+                });
+            },
+            promise: $.when(...xhrs)
+        };
+    }
+
+    function parse(data, min=0, max=Infinity) {
+        var dataTime = data.map(data => {
+            if(data["distinct"] >= min && data["distinct"] < max)
+            {
+                var d = new Date(data["time"]);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                return [d.getTime(), data["distinct"]];
+            }
+        }).filter(v => v);
+        return dataTime.reverse();
     }
 
     window.onload = function() {
