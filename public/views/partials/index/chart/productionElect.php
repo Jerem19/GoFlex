@@ -1,29 +1,30 @@
 <div class="row mt col-lg-12 form-panel">
-    <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif"
-         style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
+    <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
 
     <div id="productionElect" style="width: calc(100% - 15px);"></div>
     <div id="graphLoading">Vos données sont en cours de chargement...</div>
 </div>
 
 <script>
-    function loadGraph(interval, range, url) {
+    window.onload = function() {
+        //loadGraph('1s', '24h', 'productionElect');
+
         $.ajax({
             type: "POST",
-            url: url,
+            url: "productionElect",
             data: {
-                'range': range,
-                'time': interval,
+                'range': "24h",
+                'time': "1s",
                 'offset': 0
             },
             timeout: 45000,
-            success: function (data) {
+            success: function(data) {
                 var dataTime = parse(data);
 
                 window.productionElect = Highcharts.StockChart('productionElect', {
                     chart: {
                         events: {
-                            load: function () {
+                            load: function() {
                                 document.getElementById("loader").style.display = "none";
                                 resizeFooter();
                             }
@@ -35,8 +36,8 @@
                     xAxis: {
                         ordinal: false,
                         events: {
-                            setExtremes: function (e) {
-                                if (e.trigger === "rangeSelectorButton" && this.chart.rangeSelector.buttonOptions[this.chart.rangeSelector.selected].type === "all") {
+                            setExtremes: function(e) {
+                                if(e.trigger === "rangeSelectorButton" && this.chart.rangeSelector.buttonOptions[this.chart.rangeSelector.selected].type === "all") {
                                     var ex = this.chart.xAxis[0].getExtremes();
                                     this.chart.xAxis[0].setExtremes(ex.dataMax, ex.dataMax);
                                 }
@@ -59,7 +60,7 @@
                     }],
                     navigator: {
                         margin: 60,
-                        adaptToUpdatedData: false,
+                        adaptToUpdatedData: false
                     },
                     scrollbar: {
                         liveRedraw: false
@@ -113,16 +114,12 @@
 
                 loadData("productionElectLimit", productionElect);
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (textStatus === "timeout") {
+            error: function(jqXHR, textStatus) {
+                if(textStatus === "timeout") {
                     document.getElementById("loader").style.display = "none";
-                    document.getElementById("productionElect").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+                    document.getElementById("productionElect").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
                 }
             }
         });
-    }
-
-    window.onload = function () {
-        loadGraph('1s', '24h', 'productionElect');
-    }
+    };
 </script>

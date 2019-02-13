@@ -1,29 +1,30 @@
 <div class="row mt col-lg-12 form-panel">
-    <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif"
-         style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
+    <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
 
     <div id="consumptionHeatPump" style="width: calc(100% - 15px);"></div>
     <div id="graphLoading">Vos données sont en cours de chargement...</div>
 </div>
 
 <script>
-    function loadGraph(interval, range, url) {
+    window.onload = function() {
+        //loadGraph('1s', '24h', 'consumptionHeatPump');
+
         $.ajax({
             type: "POST",
-            url: url,
+            url: "consumptionHeatPump",
             data: {
-                'range': range,
-                'time': interval,
+                'range': "24h",
+                'time': "1s",
                 'offset': 0
             },
             timeout: 45000,
-            success: function (data) {
+            success: function(data) {
                 var dataTime = parse(data);
 
                 window.heatPump = Highcharts.StockChart('consumptionHeatPump', {
                     chart: {
                         events: {
-                            load: function () {
+                            load: function() {
                                 document.getElementById("loader").style.display = "none";
                                 resizeFooter();
                             }
@@ -33,7 +34,7 @@
                         text: "<?= $l10n["chart"]["consumptionHeatPump"] ?>"
                     },
                     xAxis: {
-                        ordinal: false,
+                        ordinal: false
                     },
                     yAxis: {
                         opposite: false,
@@ -119,16 +120,12 @@
 
                 loadData("consumptionHeatPump", heatPump);
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (textStatus === "timeout") {
+            error: function(jqXHR, textStatus) {
+                if(textStatus === "timeout") {
                     document.getElementById("loader").style.display = "none";
-                    document.getElementById("consumptionHeatPump").innerHTML = "<?= $l10n["chart"]["noData"] ?>"
+                    document.getElementById("consumptionHeatPump").innerHTML = "<?= $l10n["chart"]["noData"] ?>";
                 }
             }
         });
-    }
-
-    window.onload = function () {
-        loadGraph('1s', '24h', 'consumptionHeatPump');
-    }
+    };
 </script>

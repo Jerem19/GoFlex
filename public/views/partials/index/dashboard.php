@@ -1,8 +1,6 @@
 <div class="row is-flex">
     <div class="col-xs-12 col-xl-3 form-panel flex-fill ml">
-
-        <p class="dashboardTitleSize"
-           style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption'] ?></p>
+        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption'] ?></p>
         <hr>
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
@@ -35,25 +33,24 @@
         <hr>
         <div id="inputs" class="mb-10" style="display:none;">
             <div id="dates" style="float:left;">
-                <label><?= L10N['index']['dashboard']['from']?></label><input style="margin-left:5px;" type="text" id="from" /> <label><?= L10N['index']['dashboard']['to']?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
+                <label><?= L10N['index']['dashboard']['from'] ?></label><input style="margin-left:5px;" type="text" id="from" />
+                <label><?= L10N['index']['dashboard']['to'] ?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
                 <button id="applyDate" class="btn btn-theme02">Apply</button>
             </div>
             <div class="btn-group" style="float:right;">
-                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i> 15 minutes </button>
-                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour </button>
+                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i>15 minutes</button>
+                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour</button>
             </div>
         </div>
         <div id="historicData"></div>
-        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;"/>
-
+        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
     </div>
 </div>
 
 <div class="row is-flex">
     <div class="col-xs-12 col-xl-3 form-panel ml">
 
-        <p class="dashboardTitleSize"
-           style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature'] ?></p>
+        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature'] ?></p>
         <hr>
 
         <div style="text-align: center;" class="form-panel divSize">
@@ -82,15 +79,15 @@
         </div>
     </div>
     <div class="col-xl-5 col-xs-12 form-panel">
-        <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex']?></p>
+        <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex'] ?></p>
         <hr>
 
         <div style="text-align: center;">
-            <img style="width: 220px;" src="<?= BASE_URL ?>/public/images/montage.png"/>
+            <img style="width: 220px;" src="<?= BASE_URL ?>/public/images/montage.png" />
         </div>
 
         <div class="indexAlert alert-secondary">
-            <strong><span class="fa fa-lightbulb-o"></span> <?= L10N['index']['dashboard']['consumptionTitle']?></strong>
+            <strong><span class="fa fa-lightbulb-o"></span> <?= L10N['index']['dashboard']['consumptionTitle'] ?></strong>
         </div>
 
         <div class="col col-md-7"><span class="fa fa-user"></span> <?= L10N['index']['dashboard']['yourCoonsumption'] ?></div>
@@ -102,9 +99,7 @@
             <strong><span class="fa fa-line-chart"></span> Excédent PV</strong>
         </div>
         <div class="col col-md-5"><span class="fa fa-battery-full"></span><?= L10N['index']['dashboard']['overagePV'] ?></div>
-        <?php
-        if ($user->getInstallations()[0]->Solar()->isExistant()) {
-            ?>
+        <?php if ($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             <div id="counterProductionOne" class="dashboardNumberSize" style="text-align: right; font-size: large;">Tarif 1 =</div>
             <div id="counterProductionTwo" class="dashboardNumberSize" style="text-align: right; font-size: large;">Tarif 2 =</div>
         <?php } else { ?>
@@ -115,7 +110,7 @@
 
     </div>
     <div class="col-xs-12 col-xl-3 form-panel" style="text-align: center">
-        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction']?></p>
+        <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction'] ?></p>
         <hr>
         <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction'] ?></h2>
         <strong>
@@ -123,8 +118,8 @@
                 <?= L10N['index']['dashboard']['greenActionText'] ?>
             </div>
         </strong>
-        <img style="width: 202px; margin: 0 auto;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png"/>
-        <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction']?></a>
+        <img style="width: 202px; margin: 0 auto;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png" />
+        <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction'] ?></a>
     </div>
 </div>
 <?php if ($user->getInstallations()[0]->Solar()->isExistant()) { ?>
@@ -148,29 +143,28 @@
 <script>
     var dateFormat = "dd.mm.yy";
 
-    function byTime(range){
+    function byTime(range) {
         var start = $.datepicker.parseDate(dateFormat, $("#from").val());
         var end = $.datepicker.parseDate(dateFormat, $("#to").val());
-        start.setHours(0,0,0);
-        end.setHours(23,59,59);
-        start = start.getTime()+"ms";
-        end = end.getTime()+"ms";
+        start.setHours(0, 0, 0);
+        end.setHours(23, 59, 59);
+        start = start.getTime() + "ms";
+        end = end.getTime() + "ms";
 
-        while (historic.series.length > 0) historic.series[0].remove(true);
+        while(historic.series.length > 0) historic.series[0].remove(true);
 
-        if(range == '15m'){
+        if(range == '15m') {
             $("#i-1d").hide();
             $("#i-15m").show();
             $("#btn15m").addClass('active');
             $("#btn1d").removeClass('active');
-            this.loadGraphLine(start, end, "15m");
-        }
-        else if(range == '1d'){
+            loadGraphLine(start, end, "15m");
+        } else if(range == '1d') {
             $("#i-1d").show();
             $("#i-15m").hide();
             $("#btn15m").removeClass('active');
             $("#btn1d").addClass('active');
-            this.loadGraphDate(start, end, "1d");
+            loadGraphDate(start, end, "1d");
         }
     }
 
@@ -181,7 +175,7 @@
     };
 
     function loadGraphDate(start, end, interval) {
-        if (window.ajaxReq) ajaxReq.abort();
+        if(window.ajaxReq) ajaxReq.abort();
         window.ajaxReq = when($.ajax({
                 type: "POST",
                 url: "hotwaterTemperatureHistoryDate",
@@ -220,46 +214,46 @@
                 }
             }) <?php } ?>
         );
-        ajaxReq.promise.then(function (hotwater, consumption, inside, production) {
+        ajaxReq.promise.then(function(hotwater, consumption, inside, production) {
             var insideArray = [];
             var boilerArray = [];
             var electArray = [];
             var productionElecArray = [];
-            var index = 0;
+            var index;
             var d;
 
             hotwater = hotwater[0];
             consumption = consumption[0];
             inside = inside[0];
             production = production ? production[0] : undefined;
-            for (index = 0; index < inside.length; index++) {
+            for(index = 0; index < inside.length; index++) {
                 d = new Date(inside[index]["time"]);
-                if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                 insideArray.push([d.getTime(), inside[index]["distinct"]]);
             }
             insideArray = insideArray.reverse();
-            for (index = 0; index < hotwater.length; index++) {
+            for(index = 0; index < hotwater.length; index++) {
                 d = new Date(hotwater[index]["time"]);
-                if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
-                boilerArray.push([d.getTime(), hotwater[index]["distinct"]])
+                boilerArray.push([d.getTime(), hotwater[index]["distinct"]]);
             }
             boilerArray = boilerArray.reverse();
-            for (index = 0; index < consumption.length; index++) {
+            for(index = 0; index < consumption.length; index++) {
                 d = new Date(consumption[index]["time"]);
-                if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
-                electArray.push([d.getTime(), consumption[index]["distinct"]])
+                electArray.push([d.getTime(), consumption[index]["distinct"]]);
             }
             electArray = electArray.reverse();
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-            for (index = 0; index < production.length; index++) {
-                if (production[index]["distinct"] >= 0) {
+            for(index = 0; index < production.length; index++) {
+                if(production[index]["distinct"] >= 0) {
                     d = new Date(production[index]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
-                    productionElecArray.push([d.getTime(), production[index]["distinct"]])
+                    productionElecArray.push([d.getTime(), production[index]["distinct"]]);
                 }
             }
             productionElecArray = productionElecArray.reverse();
@@ -276,7 +270,7 @@
                     type: 'datetime',
                     title: {
                         text: 'Date'
-                    },
+                    }
                 },
                 yAxis: [{
                     title: {
@@ -341,7 +335,7 @@
     }
 
     function loadGraphLine(start, end, interval) {
-        if (window.ajaxReq) ajaxReq.abort();
+        if(window.ajaxReq) ajaxReq.abort();
         window.ajaxReq = when(
             $.ajax({
                 type: "POST",
@@ -381,7 +375,7 @@
                 }
             }) <?php } ?>
         );
-        ajaxReq.promise.then(function (hotwater, consumption, inside, production) {
+        ajaxReq.promise.then(function(hotwater, consumption, inside, production) {
             var boilerArray = parse(hotwater[0], 30, 120);
             var electArray = parse(consumption[0]);
             var insideArray = parse(inside[0], 0, 50);
@@ -394,7 +388,7 @@
                 chart: {
                     renderTo: 'historicData',
                     events: {
-                        load: function () {
+                        load: function() {
                             document.getElementById("inputs").style.display = "block";
                             document.getElementById("loader").style.display = "none";
                             resizeFooter();
@@ -412,7 +406,7 @@
                     type: 'datetime',
                     title: {
                         text: 'Date'
-                    },
+                    }
                 },
                 yAxis: [{
                     title: {
@@ -445,7 +439,7 @@
                         }
                     },
                     series: {
-                        animation: false,
+                        animation: false
                     }
                 },
                 rangeSelector: rangeSelector,
@@ -498,7 +492,7 @@
                         color: "#95ceff"
                     }
                 ]
-            })
+            });
         });
     }
 
@@ -506,7 +500,7 @@
         document.getElementById(elementId).innerHTML = "<?= $l10n["chart"]["noData"] ?>";
     }
 
-    window.onload = function () {
+    window.onload = function() {
         var kw = 'kW';
         var celsius = '°C';
         var kwH = 'kWh';
@@ -520,10 +514,10 @@
         $.ajax({
             url: 'consumptionElectSpeed',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeConsumptionElectSpeed = d.toISOString().substr(0, 16).replace("T", " "),
                         consumptionElectSpeed = data[0]['last'] / 1000;
@@ -531,7 +525,7 @@
                     document.getElementById('consumptionElectSpeed').innerHTML = consumptionElectSpeed + kw + "<br/><p style=\"font-size: 15px;\">" + timeConsumptionElectSpeed + "</p>";
                 } else ajaxError('consumptionElectSpeed');
             },
-            error: function () {
+            error: function() {
                 ajaxError('consumptionElectSpeed');
             }
         });
@@ -540,10 +534,10 @@
         $.ajax({
             url: 'productionElectSpeed',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeProductionElectSpeed = d.toISOString().substr(0, 16).replace("T", " "),
                         productionElectSpeed = data[0]['last'] / 1000;
@@ -551,7 +545,7 @@
                     document.getElementById('productionElectSpeed').innerHTML = productionElectSpeed + kw + "<br/><p style=\"font-size: 15px;\">" + timeProductionElectSpeed + "</p>";
                 } else ajaxError('productionElectSpeed');
             },
-            error: function () {
+            error: function() {
                 ajaxError('productionElectSpeed');
             }
         });
@@ -560,10 +554,10 @@
         $.ajax({
             url: 'consumptionHeatPumpSpeed',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeConsumptionHeatPumpSpeed = d.toISOString().substr(0, 16).replace("T", " "),
                         consumptionHeatPumpSpeed = Math.round(data[0]['last']) / 1000;
@@ -571,7 +565,7 @@
                     document.getElementById('consumptionHeatPumpSpeed').innerHTML = consumptionHeatPumpSpeed + kw + "<br/><p style=\"font-size: 15px;\">" + timeConsumptionHeatPumpSpeed + "</p>";
                 } else ajaxError('consumptionHeatPumpSpeed');
             },
-            error: function () {
+            error: function() {
                 ajaxError('consumptionHeatPumpSpeed');
             }
         });
@@ -579,10 +573,10 @@
         $.ajax({
             url: 'hotwaterTemperatureSpeed',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeHotwaterTemperatureSpeed = d.toISOString().substr(0, 16).replace("T", " "),
                         hotwaterTemperatureSpeed = Math.round(data[0]['last'] * 10) / 10;
@@ -590,7 +584,7 @@
                     document.getElementById('hotwaterTemperatureSpeed').innerHTML = hotwaterTemperatureSpeed + celsius + "<br/><p style=\"font-size: 15px;\">" + timeHotwaterTemperatureSpeed + "</p>";
                 } else ajaxError('hotwaterTemperatureSpeed');
             },
-            error: function () {
+            error: function() {
                 ajaxError('hotwaterTemperatureSpeed');
             }
         });
@@ -598,10 +592,10 @@
         $.ajax({
             url: 'insideTempSpeed',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeInsideTempSpeed = d.toISOString().substr(0, 16).replace("T", " "),
                         insideTempSpeed = Math.round(data[0]['last'] * 10) / 10;
@@ -609,7 +603,7 @@
                     document.getElementById('insideTempSpeed').innerHTML = insideTempSpeed + celsius + "<br/><p style=\"font-size: 15px;\">" + timeInsideTempSpeed + "</p>";
                 } else ajaxError('insideTempSpeed');
             },
-            error: function () {
+            error: function() {
                 ajaxError('insideTempSpeed');
             }
         });
@@ -617,10 +611,10 @@
         $.ajax({
             url: 'counterConsumption1',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeCounterConsumption1 = d.toISOString().substr(0, 16).replace("T", " "),
                         counterConsumption1 = data[0]['last'] / 1000;
@@ -628,7 +622,7 @@
                     document.getElementById('counterConsumptionOne').innerHTML = "Tarif 1 = " + counterConsumption1 + kwH + "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption1 + "</p>";
                 } else ajaxError('counterConsumption');
             },
-            error: function () {
+            error: function() {
                 ajaxError('counterConsumption');
             }
         });
@@ -636,10 +630,10 @@
         $.ajax({
             url: 'counterConsumption2',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeCounterConsumption2 = d.toISOString().substr(0, 16).replace("T", " "),
                         counterConsumption2 = data[0]['last'] / 1000;
@@ -647,7 +641,7 @@
                     document.getElementById('counterConsumptionTwo').innerHTML = "Tarif 2 = " + counterConsumption2 + kwH + "<br/><p style=\"font-size: 15px;\">" + timeCounterConsumption2 + "</p>";
                 } else ajaxError('counterConsumption');
             },
-            error: function () {
+            error: function() {
                 ajaxError('counterConsumption');
             }
         });
@@ -656,10 +650,10 @@
         $.ajax({
             url: 'counterProduction1',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeCounterProduction1 = d.toISOString().substr(0, 16).replace("T", " "),
                         counterProduction1 = data[0]['last'] / 1000;
@@ -668,7 +662,7 @@
                         "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction1 + "</p>";
                 } else ajaxError('counterProduction');
             },
-            error: function () {
+            error: function() {
                 ajaxError('counterProduction');
             }
         });
@@ -676,10 +670,10 @@
         $.ajax({
             url: 'counterProduction2',
             type: 'POST',
-            success: function (data) {
-                if (data && Array.isArray(data)) {
+            success: function(data) {
+                if(data && Array.isArray(data)) {
                     d = new Date(data[0]["time"]);
-                    if (d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
+                    if(d.getTimezoneOffset() != 120) d.setHours(d.getHours() + 1);
 
                     var timeCounterProduction2 = d.toISOString().substr(0, 16).replace("T", " "),
                         counterProduction2 = data[0]['last'] / 1000;
@@ -688,7 +682,7 @@
                         "<br/><p style=\"font-size: 15px;\">" + timeCounterProduction2 + "</p>";
                 } else ajaxError('counterProduction');
             },
-            error: function () {
+            error: function() {
                 ajaxError('counterProduction');
             }
         });
@@ -697,19 +691,18 @@
         var from = $("#from").datepicker({
                 changeMonth: true,
                 maxDate: new Date()
-            }).on("change", function () {
+            }).on("change", function() {
                 to.datepicker("option", "minDate", getDate(this));
             }),
             to = $("#to").datepicker({
                 changeMonth: true,
                 maxDate: new Date()
-            }).on("change", function () {
+            }).on("change", function() {
                 from.datepicker("option", "maxDate", getDate(this));
             });
 
-
-        $("#applyDate").on("click", function () {
-            while (historic.series.length > 0) historic.series[0].remove(true);
+        $("#applyDate").on("click", function() {
+            while(historic.series.length > 0) historic.series[0].remove(true);
 
             var start = $.datepicker.parseDate(dateFormat, from.val());
             var end = $.datepicker.parseDate(dateFormat, to.val());
@@ -717,11 +710,9 @@
             end.setHours(23, 59, 59);
             start = start.getTime() + "ms";
             end = end.getTime() + "ms";
-            if (historic.options.chart.type == "column") {
-                loadGraphDate(start, end, "1d");
-            } else {
-                loadGraphLine(start, end, "15m");
-            }
+
+            if(historic.options.chart.type == "column") loadGraphDate(start, end, "1d");
+            else loadGraphLine(start, end, "15m");
         });
 
         $.datepicker.setDefaults({
@@ -735,11 +726,11 @@
             var date;
             try {
                 date = $.datepicker.parseDate(dateFormat, element.value);
-            } catch (error) {
+            } catch(error) {
                 date = null;
                 console.log(error);
             }
             return date;
         }
-    }
+    };
 </script>
