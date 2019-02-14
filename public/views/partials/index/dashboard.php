@@ -350,7 +350,7 @@
                 type: "POST",
                 url: "consumptionElectDate",
                 data: {
-                    time: interval,
+                    time: "1h",
                     start: start,
                     end: end
                 }
