@@ -138,12 +138,37 @@ div.img-galery {
 .dashboardFaSize {
     font-size: 350%
 }
+
+.dashboardFaSize.big{
+    font-size: 650%
+}
+
+.dashboardNumberSize.big {
+    font-size: 400%;
+}
+
+.vert-align{
+    vertical-align: middle;
+}
+
+.horizontal-rule {
+    border-top: 1px solid grey;
+}
+
 @media (min-width: 1600px) {
     .adjusted{
             width: 66.66666667 + 1%;
     }
     .ml{
         margin-left: 1%;
+    }
+
+    .adjusted2{
+        width: 91.66666667% + 2%;
+    }
+
+    .pt10p{
+        padding-top: 20%;
     }
 }
 
@@ -165,6 +190,7 @@ div.img-galery {
     .dashboardFaSize {
         font-size: 250%
     }
+
 }
 
 .row.is-flex {
@@ -197,10 +223,11 @@ div.img-galery {
     flex-direction: column;
 }
 
-hr {
-    color: #ACACAC !important;
+ hr.custom {
     margin-left: 0;
     margin-right: 0;
+    clear: left;
+    border-color: #d6d8db;
 }
 
 .mb-10{

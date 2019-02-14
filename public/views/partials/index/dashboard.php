@@ -1,7 +1,7 @@
 <div class="row is-flex">
     <div class="col-xs-12 col-xl-3 form-panel flex-fill ml">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentConsumption'] ?></p>
-        <hr>
+        <hr class="custom">
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
                 <p><?= L10N['index']['dashboard']['electricalConsumption'] ?></p>
@@ -30,7 +30,7 @@
     </div>
     <div class="col-xs-12 col-xl-8 form-panel flex-fill adjusted">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData'] ?></p>
-        <hr>
+        <hr class="custom">
         <div id="inputs" class="mb-10" style="display:none;">
             <div id="dates" style="float:left;">
                 <label><?= L10N['index']['dashboard']['from'] ?></label><input style="margin-left:5px;" type="text" id="from" />
@@ -48,11 +48,32 @@
 </div>
 
 <div class="row is-flex">
-    <div class="col-xs-12 col-xl-3 form-panel ml">
-
+    <?php
+    $ml ='';
+    $noMlSolar = 'ml';
+    $hasSolar = $user->getInstallations()[0]->Solar()->isExistant();
+    if ($hasSolar) {
+        $ml = 'ml';
+        $noMlSolar = '';
+        ?>
+        <div class="col-xs-12 col-xl-3 form-panel ml">
+            <div style="text-align: center;">
+                <div class="dashboardTitleSize">
+                    <p><?= $l10n["chart"]["productionElect"] ?></p>
+                </div>
+                <hr class="custom">
+                <div class="pt10p">
+                    <a href="productionElect">
+                        <span class="fa fa-certificate dashboardFaSize big"></span>
+                        <div class="dashboardNumberSize big" id="productionElectSpeed"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    <div class="col-xs-12 col-xl-3 form-panel <?= $noMlSolar ?>">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature'] ?></p>
-        <hr>
-
+        <hr class="custom">
         <div style="text-align: center;" class="form-panel divSize">
             <div class="dashboardTextSize">
                 <p><?= $l10n["chart"]["hotwaterTemperature"] ?></p>
@@ -80,7 +101,7 @@
     </div>
     <div class="col-xl-5 col-xs-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex'] ?></p>
-        <hr>
+        <hr class="custom">
 
         <div style="text-align: center;">
             <img style="width: 220px;" src="<?= BASE_URL ?>/public/images/montage.png" />
@@ -109,9 +130,9 @@
         <?php } ?>
 
     </div>
-    <div class="col-xs-12 col-xl-3 form-panel" style="text-align: center">
+    <div class="col-xs-12 col-xl-3 form-panel <?= $ml ?>" style="text-align: center">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['greenAction'] ?></p>
-        <hr>
+        <hr class="custom">
         <h2 style="color: limegreen;"> <?= L10N['index']['dashboard']['cleverAction'] ?></h2>
         <strong>
             <div class="col col-md-12 centered">
@@ -122,23 +143,6 @@
         <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction'] ?></a>
     </div>
 </div>
-<?php if ($user->getInstallations()[0]->Solar()->isExistant()) { ?>
-    <div class="row">
-        <div style="width: 94%;" class="mt col-lg-12 col-xl-11 col-md-12 form-panel">
-            <div style="text-align: center;">
-                <div class="dashboardTitleSize">
-                    <p><?= $l10n["chart"]["productionElect"] ?></p>
-                </div>
-
-                <a href="productionElect">
-                    <span class="fa fa-certificate dashboardFaSize"></span>
-
-                    <div class="dashboardNumberSize" id="productionElectSpeed"></div>
-                </a>
-            </div>
-        </div>
-    </div>
-<?php } ?>
 
 <script>
     var dateFormat = "dd.mm.yy";
