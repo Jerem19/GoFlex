@@ -32,6 +32,7 @@
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData'] ?></p>
         <hr class="custom">
         <div id="inputs" class="mb-10" style="display:none;">
+            <input type="text" id="datepicker"/>
             <div id="dates" style="float:left;">
                 <label><?= L10N['index']['dashboard']['from'] ?></label><input style="margin-left:5px;" type="text" id="from" />
                 <label><?= L10N['index']['dashboard']['to'] ?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
@@ -145,6 +146,7 @@
 </div>
 
 <script>
+
     var dateFormat = "dd.mm.yy";
 
     function byTime(range) {
@@ -736,5 +738,16 @@
             }
             return date;
         }
+
+        var picker = new Lightpick({
+            field: document.getElementById('datepicker'),
+            singleDate: false,
+            onSelect: function(start, end){
+                var str = '';
+                str += start ? start.format('Do MMMM YYYY') + ' to ' : '';
+                str += end ? end.format('Do MMMM YYYY') : '...';
+                //document.getElementById('result-2').innerHTML = str;
+            }
+        });
     };
 </script>

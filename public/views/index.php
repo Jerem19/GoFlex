@@ -19,11 +19,13 @@
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css",
         "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/css/jquery.gritter.css",
         "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css",
+        "https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css",
         "3rdparty/style.css",
         "3rdparty/BootstrapXL.css",
         "3rdparty/style-responsive.css",
         "/footer.css",
-        "/index.css"
+        "/index.css",
+        "/node_modules/lightpick/css/lightpick.css"
     ]);
     ?>
 
@@ -113,7 +115,8 @@
 
 </body>
 <?php loadScripts([
-    "https://code.jquery.com/jquery-3.1.1.min.js",
+    /*"https://code.jquery.com/jquery-3.1.1.min.js",*/
+    "https://cdn.jsdelivr.net/jquery/latest/jquery.min.js",
     "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js",
     "https://code.highcharts.com/stock/highstock.js",
     "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
@@ -122,9 +125,11 @@
     "https://code.highcharts.com/modules/export-data.js",
     "https://templatemag.com/demo/templates/Dashio/lib/jquery.dcjqaccordion.2.7.js",
     "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/js/jquery.gritter.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js",
     "3rdparty/common-scripts.js",
     "3rdparty/lightbox.js",
     "/script.js",
-    "/index.js"
+    "/index.js",
+    "/node_modules/lightpick/lightpick.js",
 ]); ?>
 </html>
