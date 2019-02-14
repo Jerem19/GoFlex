@@ -24,6 +24,9 @@
     "return_login": "Se connecter ?"
   },
   "index": {
+    "404" : {
+      "main_text": "Que faites-vous ici?! Il n'y a rien d'intéressant a voir!"
+    },
     "chart" : {
       "boiler_power": "Puissance du boiler",
       "consumptionHeatPump" : "Consommation pompe à chaleur",

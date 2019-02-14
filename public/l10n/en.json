@@ -24,6 +24,9 @@
         "return_login": "Return to login ?"
 	},
 	"index": {
+		"404" : {
+			"main_text": "Where are you going?! There is nothing here!"
+		},
 		"chart": {
 			"boiler_power": "Boiler power",
 			"degrees": "Degrees celsius",
