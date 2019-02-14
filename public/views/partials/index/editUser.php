@@ -55,14 +55,18 @@
             txtUsername = $('input[name="username"]');
         var loadingDiv = document.getElementById('loading');
 
+        var currentUsername = "";
+
         function testUsername(callback = new Function()) {
-            $.post('user_exist', "user=" + txtUsername.val(), function (response) {
-                if (JSON.parse(response))
-                    $.gritter.add({
-                        text: "error: Username already exist"
-                    });
-                else callback();
-            });
+            if (txtUsername.val() == currentUsername) callback(); // dont check if the username dont change
+            else
+                $.post('user_exist', "user=" + txtUsername.val(), function (response) {
+                    if (JSON.parse(response))
+                        $.gritter.add({
+                            text: "error: Username already exist"
+                        });
+                    else callback();
+                });
         }
 
         txtUsername.on('change', function () {
@@ -82,6 +86,8 @@
                     if (data) for (var d in data) $(`[name="${d}"]`).val(data[d]);
                     else console.error("No data");
 
+                    currentUsername = txtUsername.val();
+
                     loadingDiv.style.display = 'none';
                     $('input').prop('disabled', false);
                 }
@@ -92,11 +98,15 @@
             var postData = $(this).serialize() + `&id=${selectUser.val()}`;
             testUsername(function() {
                 $.post("edit", postData, function (data) {
+                    var msg = "";
                     if (JSON.parse(data)) {
-                        alert("<?= L10N['index']['profile']['alertUpdateUserSuccess']?>");
-                        window.location.reload();
+                        msg = "<?= L10N['index']['profile']['alertUpdateUserSuccess']?>";
+                        selectUser.trigger("change");
                     }
-                    else alert("<?= L10N['index']['profile']['alertUpdateUserFailed']?>");
+                    else msg = "<?= L10N['index']['profile']['alertUpdateUserFailed']?>";
+                    $.gritter.add({
+                        text: msg
+                    });
                 });
             });
             return false;

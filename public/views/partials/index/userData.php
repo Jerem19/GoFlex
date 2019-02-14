@@ -339,14 +339,21 @@
                     processData: false,
                     data: form_data,
                     success: function (response) {
-                        var msg = "";
-                        if (JSON.parse(response)) {
-                            msg = "<?= $l10n['installation']['alertLinUserGatewaySuccess']?>";
-                            selectGw.trigger('change');
-                        } else msg = "<?= $l10n['installation']['alertLinUserGatewayFailed']?>";
-                        $.gritter.add({
-                            text: msg
-                        });
+                        <?php if ($isInstall) { ?>
+                            if (JSON.parse(response)) {
+                                alert("<?= $l10n['installation']['alertLinUserGatewaySuccess']?>");
+                                window.location.reload();
+                            } else alert("<?= $l10n['installation']['alertLinUserGatewayFailed']?>");
+                        <?php } else { ?>
+                            var msg = "";
+                            if (JSON.parse(response)) {
+                                msg = "<?= $l10n['installation']['alertLinUserGatewaySuccess']?>";
+                                selectGw.trigger('change');
+                            } else msg = "<?= $l10n['installation']['alertLinUserGatewayFailed']?>";
+                            $.gritter.add({
+                                text: msg
+                            });
+                        <?php } ?>
                     }
                 });
                 return false;
