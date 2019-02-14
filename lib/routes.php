@@ -243,7 +243,7 @@ $router
         $interval = $_POST["time"];
         $start = $_POST["start"];
         $end = $_POST["end"];
-        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value < 50 AND value >= 0 GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.ambientSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value < 50 AND value >= 0 GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 
@@ -550,7 +550,7 @@ $router
         $interval = $_POST["time"];
         $start = $_POST["start"];
         $end = $_POST["end"];
-        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value <120 AND value >= 30 GROUP BY time('.$interval.') fill(null) ORDER BY time tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT round(mean("value")) as "distinct" FROM "'.$dbName.'.nodes.boilerSensor-1.objects.temperature.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' AND value <120 AND value >= 30 GROUP BY time('.$interval.') fill(none) ORDER BY time desc tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 
