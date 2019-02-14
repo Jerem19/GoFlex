@@ -58,9 +58,10 @@ class Router {
 
     /**
      * Create the router
+     * @param string|null $baseUrl usefull if it's a router in 'on' function
      */
-    public function __construct() {
-        $this->_baseUrl = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
+    public function __construct(string $baseUrl = null) {
+        $this->_baseUrl = $baseUrl !== null ? $baseUrl : pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
         $this->_url = $this->removeSlash(str_replace($this->_baseUrl, "" , $_SERVER["REQUEST_URI"]));
         $this->_method = $_SERVER["REQUEST_METHOD"]; //GET || POST
     }
@@ -192,7 +193,7 @@ class Router {
                     $route["method"] = "";
 
                 $callback = $route['callback'];
-                if($route['method'] === self::POST)
+                if ($route['method'] === self::POST)
                     $this->post($uri, $callback);
                 else if($route['method'] === self::GET)
                     $this->get($uri, $callback);

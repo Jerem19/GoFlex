@@ -69,8 +69,12 @@
 </div>
 
 <script>
-    var gwId = document.getElementById('gatewayname');
+
+
     window.onload = function () {
+        var gwId = document.getElementById('gatewayname'),
+            txtUsername = $('input[name="username"]');
+
         function testGateway(callback = new Function()) {
             $.post('gw_exist', "gw=goflex-dc-" + gwId.value, function (response) {
                 if (JSON.parse(response))
@@ -81,6 +85,20 @@
             });
         }
 
+        function testUsername(callback = new Function()) {
+            $.post('user_exist', "user=" + txtUsername.val(), function (response) {
+                if (JSON.parse(response))
+                    $.gritter.add({
+                        text: "error: Username already exist"
+                    });
+                else callback();
+            });
+        }
+
+        txtUsername.on('change', function () {
+            testUsername();
+        });
+
         gwId.onchange = function () {
             testGateway();
         };
@@ -88,16 +106,18 @@
         $("#formAddUser").submit(function () {
             var form = $(this);
             var data = form.serialize();
-            testGateway(function () {
-                $.post("create", data, function (data) {
-                    var msg = "";
-                    if (JSON.parse(data)) {
-                        msg = "<?= L10N['index']['profile']['alertCreateUserSuccess']?>";
-                        form.trigger("reset");
-                    }
-                    else msg = "<?= L10N['index']['profile']['alertCreateUserFailed']?>";
-                    $.gritter.add({
-                        text: msg
+            testUsername(function() {
+                testGateway(function () {
+                    $.post("create", data, function (data) {
+                        var msg = "";
+                        if (JSON.parse(data)) {
+                            msg = "<?= L10N['index']['profile']['alertCreateUserSuccess']?>";
+                            form.trigger("reset");
+                        }
+                        else msg = "<?= L10N['index']['profile']['alertCreateUserFailed']?>";
+                        $.gritter.add({
+                            text: msg
+                        });
                     });
                 });
             });

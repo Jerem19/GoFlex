@@ -1,4 +1,11 @@
-// Parse the data from the DB to a highchart readable format
+/**
+ * Parse the data from the DB to a highchart readable format
+ * @param {Array} data
+ * @param {number} min
+ * @param {number} max
+ * @param {string} field
+ * @returns {Array}
+ */
 function parse(data, min = 0, max = Infinity, field = "distinct") {
     var dataTime = data.map(data => {
         if (data[field] >= min && data[field] < max) {
@@ -10,7 +17,13 @@ function parse(data, min = 0, max = Infinity, field = "distinct") {
     return dataTime.reverse();
 }
 
-// Load chart data by chunks of 100000
+/**
+ * Load chart data by chunks of 100000
+ * @param {string} url
+ * @param {Object} chart
+ * @param {number} parseMin
+ * @param {number} parseMax
+ */
 function loadData(url, chart, parseMin = 0, parseMax = Infinity) {
     var rdata = [];
     var l = 100000;
