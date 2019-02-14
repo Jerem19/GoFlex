@@ -328,7 +328,7 @@ $router
         $start = $_POST["start"];
         $end = $_POST["end"];
         //$result = $database->query('SELECT (max("value") - min("value"))/1000 as "distinct" FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
-        $result = $database->query('SELECT (max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear)) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT round(max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_1_8_0_255_2.attributes.datapoint" WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear)) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 
@@ -359,13 +359,6 @@ $router
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
         $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
-        $res->send($result->getPoints());
-    })
-
-    ->post('/production:NAME', function(Response $res) {
-        $database = getInfluxDb();
-        $dbName = getUser($_SESSION["User"]);
-        $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint";');
         $res->send($result->getPoints());
     })
 
@@ -412,7 +405,7 @@ $router
         $start = $_POST["start"];
         $end = $_POST["end"];
         //$result = $database->query('SELECT (max("value") - min("value"))/1000 as "distinct" FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_2_8_0_255_2.attributes.datapoint" where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC tz(\'Europe/Zurich\');');
-        $result = $database->query('SELECT (max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_2_8_0_255_2.attributes.datapoint" WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear)) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
+        $result = $database->query('SELECT round(max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM "'.$dbName.'.nodes.SmartMeterEnergy.objects.obis_1_1_2_8_0_255_2.attributes.datapoint" WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear)) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
         $res->send($result->getPoints());
     })
 
