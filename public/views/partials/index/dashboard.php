@@ -146,7 +146,7 @@
     function byTime(range) {
         var start = $.datepicker.parseDate(dateFormat, $("#from").val());
         var end = $.datepicker.parseDate(dateFormat, $("#to").val());
-        start.setHours(0, 0, 0);
+        start.setHours(0, 0, -32);
         end.setHours(23, 59, 59);
         start = start.getTime() + "ms";
         end = end.getTime() + "ms";
@@ -706,7 +706,7 @@
 
             var start = $.datepicker.parseDate(dateFormat, from.val());
             var end = $.datepicker.parseDate(dateFormat, to.val());
-            start.setHours(0, 0, 0);
+            start.setHours(0, 0, -32);
             end.setHours(23, 59, 59);
             start = start.getTime() + "ms";
             end = end.getTime() + "ms";
