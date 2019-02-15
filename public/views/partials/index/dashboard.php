@@ -142,7 +142,6 @@
 
 <script>
     var dateFormat = "dd.mm.yy";
-
     function byTime(range) {
         var start = $.datepicker.parseDate(dateFormat, $("#from").val());
         var end = $.datepicker.parseDate(dateFormat, $("#to").val());
@@ -178,7 +177,7 @@
         if(window.ajaxReq) ajaxReq.abort();
         window.ajaxReq = when($.ajax({
                 type: "POST",
-                url: "hotwaterTemperatureHistoryDate",
+                url: DATA_URL+"hotwaterTemperatureHistoryDate",
                 data: {
                     time: interval,
                     start: start,
@@ -187,7 +186,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "consumptionHistoryDiff",
+                url: DATA_URL+"consumptionHistoryDiff",
                 data: {
                     time: interval,
                     start: start,
@@ -196,7 +195,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "insideTempHistoryDate",
+                url: DATA_URL+"insideTempHistoryDate",
                 data: {
                     time: interval,
                     start: start,
@@ -206,7 +205,7 @@
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             , $.ajax({
                 type: "POST",
-                url: "productionHistoryDiff",
+                url: DATA_URL+"productionHistoryDiff",
                 data: {
                     time: interval,
                     start: start,
@@ -339,7 +338,7 @@
         window.ajaxReq = when(
             $.ajax({
                 type: "POST",
-                url: "hotwaterTemperatureDate",
+                url: DATA_URL+"hotwaterTemperatureDate",
                 data: {
                     time: interval,
                     start: start,
@@ -348,7 +347,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "consumptionElectDate",
+                url: DATA_URL+"consumptionElectDate",
                 data: {
                     time: interval,
                     start: start,
@@ -357,7 +356,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "insideTempDate",
+                url: DATA_URL+"insideTempDate",
                 data: {
                     time: interval,
                     start: start,
@@ -367,7 +366,7 @@
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             , $.ajax({
                 type: "POST",
-                url: "productionElectDate",
+                url: DATA_URL+"productionElectDate",
                 data: {
                     time: interval,
                     start: start,
@@ -512,7 +511,7 @@
         loadGraphLine(s + "ms", e + "ms", "15m");
 
         $.ajax({
-            url: 'consumptionElectSpeed',
+            url: DATA_URL+'consumptionElectSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -532,7 +531,7 @@
 
         <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
         $.ajax({
-            url: 'productionElectSpeed',
+            url: DATA_URL+'productionElectSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -552,7 +551,7 @@
         <?php } ?>
 
         $.ajax({
-            url: 'consumptionHeatPumpSpeed',
+            url: DATA_URL+'consumptionHeatPumpSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -571,7 +570,7 @@
         });
 
         $.ajax({
-            url: 'hotwaterTemperatureSpeed',
+            url: DATA_URL+'hotwaterTemperatureSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -590,7 +589,7 @@
         });
 
         $.ajax({
-            url: 'insideTempSpeed',
+            url: DATA_URL+'insideTempSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -609,7 +608,7 @@
         });
 
         $.ajax({
-            url: 'counterConsumption1',
+            url: DATA_URL+'counterConsumption1',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -628,7 +627,7 @@
         });
 
         $.ajax({
-            url: 'counterConsumption2',
+            url: DATA_URL+'counterConsumption2',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -648,7 +647,7 @@
 
         <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
         $.ajax({
-            url: 'counterProduction1',
+            url: DATA_URL+'counterProduction1',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -668,7 +667,7 @@
         });
 
         $.ajax({
-            url: 'counterProduction2',
+            url: DATA_URL+'counterProduction2',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {

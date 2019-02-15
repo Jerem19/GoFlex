@@ -11,7 +11,7 @@
 
         $.ajax({
             type: "POST",
-            url: "consumptionElect",
+            url: DATA_URL+"consumptionElect",
             data: {
                 'range': "24h",
                 'time': "5s",

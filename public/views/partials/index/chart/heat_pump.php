@@ -11,7 +11,7 @@
 
         $.ajax({
             type: "POST",
-            url: "consumptionHeatPump",
+            url: DATA_URL+"consumptionHeatPump",
             data: {
                 'range': "24h",
                 'time': "1s",

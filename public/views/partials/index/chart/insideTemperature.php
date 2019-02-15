@@ -11,7 +11,7 @@
 
         $.ajax({
             type: "POST",
-            url: "insideTemp",
+            url: DATA_URL+"insideTemp",
             data: {
                 'range': "24h",
                 'time': "1s",

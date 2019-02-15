@@ -11,7 +11,7 @@
 
         $.ajax({
             type: "POST",
-            url: "hotwaterTemperature",
+            url: DATA_URL+"hotwaterTemperature",
             data: {
                 'range': "24h",
                 'time': "1s",
