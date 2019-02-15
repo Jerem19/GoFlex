@@ -355,6 +355,13 @@ $router
         $res->send($result->getPoints());
     })
 
+    ->post('/productionElectSpeed', function(Response $res) {
+        $database = getInfluxDb();
+        $dbName = getUser($_SESSION["User"]);
+        $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint";');
+        $res->send($result->getPoints());
+    })
+
     ->post('/productionElectAll', function(Response $res) {
         $database = getInfluxDb();
         $dbName = getUser($_SESSION["User"]);
