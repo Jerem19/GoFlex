@@ -32,12 +32,17 @@
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData'] ?></p>
         <hr class="custom">
         <div id="inputs" class="mb-10" style="display:none;">
-            <input type="text" id="datepicker"/>
-            <div id="dates" style="float:left;">
+            <div class="one-input">
+                <i id="i-oneinput" class="fa fa-calendar" aria-hidden="true"></i>
+                <input type="text" id="datepicker" class="form-control"/>
+            </div>
+
+            <!-- <div id="dates" style="float:left;">
                 <label><?= L10N['index']['dashboard']['from'] ?></label><input style="margin-left:5px;" type="text" id="from" />
                 <label><?= L10N['index']['dashboard']['to'] ?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
                 <button id="applyDate" class="btn btn-theme02">Apply</button>
             </div>
+            -->
             <div class="btn-group" style="float:right;">
                 <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i>15 minutes</button>
                 <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour</button>
@@ -146,33 +151,7 @@
 </div>
 
 <script>
-
-    var dateFormat = "dd.mm.yy";
-
-    function byTime(range) {
-        var start = $.datepicker.parseDate(dateFormat, $("#from").val());
-        var end = $.datepicker.parseDate(dateFormat, $("#to").val());
-        start.setHours(0, 0, 0);
-        end.setHours(23, 59, 59);
-        start = start.getTime() + "ms";
-        end = end.getTime() + "ms";
-
-        while(historic.series.length > 0) historic.series[0].remove(true);
-
-        if(range == '15m') {
-            $("#i-1d").hide();
-            $("#i-15m").show();
-            $("#btn15m").addClass('active');
-            $("#btn1d").removeClass('active');
-            loadGraphLine(start, end, "15m");
-        } else if(range == '1d') {
-            $("#i-1d").show();
-            $("#i-15m").hide();
-            $("#btn15m").removeClass('active');
-            $("#btn1d").addClass('active');
-            loadGraphDate(start, end, "1d");
-        }
-    }
+    var picker;
 
     //range selector options - TO USE : set enable to true - to delete soon if not needed anymore
     const rangeSelector = {
@@ -694,60 +673,52 @@
         });
         <?php } ?>
 
-        var from = $("#from").datepicker({
-                changeMonth: true,
-                maxDate: new Date()
-            }).on("change", function() {
-                to.datepicker("option", "minDate", getDate(this));
-            }),
-            to = $("#to").datepicker({
-                changeMonth: true,
-                maxDate: new Date()
-            }).on("change", function() {
-                from.datepicker("option", "maxDate", getDate(this));
-            });
-
-        $("#applyDate").on("click", function() {
-            while(historic.series.length > 0) historic.series[0].remove(true);
-
-            var start = $.datepicker.parseDate(dateFormat, from.val());
-            var end = $.datepicker.parseDate(dateFormat, to.val());
-            start.setHours(0, 0, 0);
-            end.setHours(23, 59, 59);
-            start = start.getTime() + "ms";
-            end = end.getTime() + "ms";
-
-            if(historic.options.chart.type == "column") loadGraphDate(start, end, "1d");
-            else loadGraphLine(start, end, "15m");
-        });
-
-        $.datepicker.setDefaults({
-            dateFormat: dateFormat
-        });
-
-        from.datepicker("setDate", -1);
-        to.datepicker("setDate", new Date());
-
-        function getDate(element) {
-            var date;
-            try {
-                date = $.datepicker.parseDate(dateFormat, element.value);
-            } catch(error) {
-                date = null;
-                console.log(error);
-            }
-            return date;
-        }
-
-        var picker = new Lightpick({
+        picker = new Lightpick({
             field: document.getElementById('datepicker'),
             singleDate: false,
             onSelect: function(start, end){
-                var str = '';
-                str += start ? start.format('Do MMMM YYYY') + ' to ' : '';
-                str += end ? end.format('Do MMMM YYYY') : '...';
-                //document.getElementById('result-2').innerHTML = str;
+                while(historic.series.length > 0) historic.series[0].remove(true);
+                var start = new Date(start.get('year'), start.get('month'), start.get('date'));
+                var end = new Date(end.get('year'), end.get('month'), end.get('date'));
+                start.setHours(0);
+                end.setHours(23);
+                start = start.getTime() + "ms";
+                end = end.getTime() + "ms";
+
+                if(historic.options.chart.type == "column")
+                    loadGraphDate(start, end, "1d");
+                else loadGraphLine(start, end, "15m");
             }
         });
+        var today = new Date();
+        picker.setDateRange(today.getDate()-1, today.getDate())
     };
+
+    function byTime(range) {
+        var start = picker.getStartDate();
+        var end = picker.getEndDate();
+        start = new Date(start.get('year'), start.get('month'), start.get('date'));
+        end = new Date(end.get('year'), end.get('month'), end.get('date'));
+        start.setHours(0, 0, 0);
+        end.setHours(23, 59, 59);
+        start = start.getTime() + "ms";
+        end = end.getTime() + "ms";
+
+        while(historic.series.length > 0) historic.series[0].remove(true);
+
+        if(range == '15m') {
+            $("#i-1d").hide();
+            $("#i-15m").show();
+            $("#btn15m").addClass('active');
+            $("#btn1d").removeClass('active');
+            loadGraphLine(start, end, "15m");
+        } else if(range == '1d') {
+            $("#i-1d").show();
+            $("#i-15m").hide();
+            $("#btn15m").removeClass('active');
+            $("#btn1d").addClass('active');
+            loadGraphDate(start, end, "1d");
+        }
+    }
+
 </script>
