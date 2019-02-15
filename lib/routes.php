@@ -8,8 +8,11 @@ $router
         $file = PUBLIC_FOLDER . 'css-less/' . $args[0] . '.less';
         if (file_exists($file)) {
             require_once 'less.inc.php';
-            $css = (new lessc($file))->parse();
-            $res->send($css, false, "text/css");
+            $css = new lessc;
+            $css->setVariables([
+                "base_url" => '"' . BASE_URL .  '"'
+            ]);
+            $res->send($css->compileFile($file), false, "text/css");
         }
     })
     ->byExt('css', PUBLIC_FOLDER . 'css')
