@@ -174,6 +174,11 @@
                 "_iClass" => "fa fa-book"
             ];
 
+            $menu["partners"] = [
+                "text" => "Partenaires",
+                "_iClass" => "fa fa-handshake-o"
+            ];
+
             doMenu($menu, isset($path) ? $path : ""); ?>
             <li style="text-align: center"><?php include __DIR__ . '/../sltLang.php'; ?></li>
         </ul>

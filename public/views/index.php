@@ -102,6 +102,9 @@
                     case "profile":
                         include 'partials/index/profile.php';
                         break;
+                    case "partners":
+                        include 'partials/index/partners.php';
+                        break;
                 }
             } else if ($roleId == 4)
                 include 'partials/index/dashboard.php';
