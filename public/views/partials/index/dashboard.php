@@ -186,7 +186,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: DATA_URL+"consumptionHistoryDiff",
+                url: DATA_URL+"consumptionElectHistoryDiff",
                 data: {
                     time: interval,
                     start: start,
@@ -205,7 +205,7 @@
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             , $.ajax({
                 type: "POST",
-                url: DATA_URL+"productionHistoryDiff",
+                url: DATA_URL+"productionElectHistoryDiff",
                 data: {
                     time: interval,
                     start: start,
