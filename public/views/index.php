@@ -20,12 +20,12 @@
         "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/css/jquery.gritter.css",
         "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css",
         "https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css",
-        "3rdparty/style.css",
-        "3rdparty/BootstrapXL.css",
-        "3rdparty/style-responsive.css",
+        "/3rdparty/style.css",
+        "/3rdparty/BootstrapXL.css",
+        "/3rdparty/style-responsive.css",
+        "/3rdparty/lightpick.css",
         "/footer.css",
         "/index.css",
-        "/node_modules/lightpick/css/lightpick.css"
     ]);
     ?>
 
@@ -126,10 +126,10 @@
     "https://templatemag.com/demo/templates/Dashio/lib/jquery.dcjqaccordion.2.7.js",
     "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/js/jquery.gritter.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js",
-    "3rdparty/common-scripts.js",
-    "3rdparty/lightbox.js",
+    "/3rdparty/common-scripts.js",
+    "/3rdparty/lightbox.js",
+    "/3rdparty/lightpick.js",
     "/script.js",
     "/index.js",
-    "/node_modules/lightpick/lightpick.js",
 ]); ?>
 </html>
