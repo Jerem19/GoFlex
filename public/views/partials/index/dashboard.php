@@ -28,7 +28,7 @@
             </a>
         </div>
     </div>
-    <div class="col-xs-12 col-xl-8 form-panel flex-fill adjusted">
+    <div class="col-xs-12 col-xl-8 form-panel flex-fill adjusted" style="min-height: 250px;">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['historicData'] ?></p>
         <hr class="custom">
         <div id="inputs" class="mb-10" style="display:none;">
@@ -43,35 +43,12 @@
             </div>
         </div>
         <div id="historicData"></div>
-        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
+        <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; width: 200px; position: absolute; margin:0 auto; left:0; right:0; top: 40%;" />
     </div>
 </div>
 
 <div class="row is-flex">
-    <?php
-    $ml ='';
-    $noMlSolar = 'ml';
-    $hasSolar = $user->getInstallations()[0]->Solar()->isExistant();
-    if ($hasSolar) {
-        $ml = 'ml';
-        $noMlSolar = '';
-        ?>
-        <div class="col-xs-12 col-xl-3 form-panel ml">
-            <div style="text-align: center;">
-                <div class="dashboardTitleSize">
-                    <p><?= $l10n["chart"]["productionElect"] ?></p>
-                </div>
-                <hr class="custom">
-                <div class="pt10p">
-                    <a href="productionElect">
-                        <span class="fa fa-certificate dashboardFaSize big"></span>
-                        <div class="dashboardNumberSize big" id="productionElectSpeed"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    <?php } ?>
-    <div class="col-xs-12 col-xl-3 form-panel <?= $noMlSolar ?>">
+    <div class="col-xs-12 col-xl-3 form-panel ml">
         <p class="dashboardTitleSize" style="text-align: center"><?= L10N['index']['dashboard']['currentTemperature'] ?></p>
         <hr class="custom">
         <div style="text-align: center;" class="form-panel divSize">
@@ -99,6 +76,29 @@
             </a>
         </div>
     </div>
+
+    <?php
+    $ml = '';
+    $hasSolar = $user->getInstallations()[0]->Solar()->isExistant();
+    if ($hasSolar) {
+        $ml = 'ml';
+        ?>
+        <div class="col-xs-12 col-xl-3 form-panel">
+            <div style="text-align: center;">
+                <div class="dashboardTitleSize">
+                    <p><?= $l10n["chart"]["productionElect"] ?></p>
+                </div>
+                <hr class="custom">
+                <div class="pt10p">
+                    <a href="productionElect">
+                        <span class="fa fa-certificate dashboardFaSize big"></span>
+                        <div class="dashboardNumberSize big" id="productionElectSpeed"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
     <div class="col-xl-5 col-xs-12 form-panel">
         <p class="dashboardTitleSize" style="text-align: center"> <?= L10N['index']['dashboard']['meterIndex'] ?></p>
         <hr class="custom">
@@ -154,6 +154,7 @@
     };
 
     function loadGraphDate(start, end, interval) {
+        document.getElementById("loader").style.display = "block";
         if(window.ajaxReq) ajaxReq.abort();
         window.ajaxReq = when($.ajax({
                 type: "POST",
@@ -240,7 +241,12 @@
 
             window.historic = Highcharts.chart('historicData', {
                 chart: {
-                    type: 'column'
+                    type: 'column',
+                    events: {
+                        load: function () {
+                            document.getElementById("loader").style.display = "none";
+                        }
+                    },
                 },
                 title: {
                     text: ''//'Test bar chart'
@@ -314,6 +320,7 @@
     }
 
     function loadGraphLine(start, end, interval) {
+        document.getElementById("loader").style.display = "block";
         if(window.ajaxReq) ajaxReq.abort();
         window.ajaxReq = when(
             $.ajax({
@@ -671,7 +678,7 @@
             field: document.getElementById('datepicker'),
             singleDate: false,
             onSelect: function(start, end){
-                while(historic.series.length > 0) historic.series[0].remove(true);
+                while(window.historic.series.length > 0) window.historic.series[0].remove(true);
                 var start = new Date(start.get('year'), start.get('month'), start.get('date'));
                 var end = new Date(end.get('year'), end.get('month'), end.get('date'));
                 start.setHours(0);
@@ -679,7 +686,7 @@
                 start = start.getTime() + "ms";
                 end = end.getTime() + "ms";
 
-                if(historic.options.chart.type == "column")
+                if(window.historic.options.chart.type == "column")
                     loadGraphDate(start, end, "1d");
                 else loadGraphLine(start, end, "15m");
             }
@@ -698,7 +705,7 @@
         start = start.getTime() + "ms";
         end = end.getTime() + "ms";
 
-        while(historic.series.length > 0) historic.series[0].remove(true);
+        while(window.historic.series.length > 0) window.historic.series[0].remove(true);
 
         if(range == '15m') {
             $("#i-1d").hide();
