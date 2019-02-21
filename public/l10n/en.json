@@ -83,7 +83,8 @@
 			"grafana" : "Grafana",
 			"installationGateway": "Add installation",
 			"passwordModification": "Password management",
-			"checkUserData": "Client visualisation"
+			"checkUserData": "Client visualisation",
+			"partners": "Partners"
 		},
 		"header": {
 			"nav-text": "Toggle Navigation"

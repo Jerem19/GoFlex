@@ -83,7 +83,8 @@
       "editUser" : "Modifier utilisateur",
       "installationGateway" : "Ajout installation",
       "passwordModification" : "Gestion du mot de passe",
-      "checkUserData" : "Visualisation client"
+      "checkUserData" : "Visualisation client",
+      "partners": "Partenaires"
     },
     "header": {
       "nav-text": "Inverser la navigation"

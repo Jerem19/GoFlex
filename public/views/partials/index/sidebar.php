@@ -168,15 +168,14 @@
                     ];
                 }*/
             }
+            $menu["partners"] = [
+                "text" => $l10nNav["partners"],
+                "_iClass" => "fa fa-handshake-o"
+            ];
 
             $menu["profile"] = [
                 "text" => $l10nNav["profile"],
                 "_iClass" => "fa fa-book"
-            ];
-
-            $menu["partners"] = [
-                "text" => "Partenaires",
-                "_iClass" => "fa fa-handshake-o"
             ];
 
             doMenu($menu, isset($path) ? $path : ""); ?>
