@@ -37,13 +37,7 @@
                 <input type="text" id="datepicker" class="form-control"/>
             </div>
 
-            <!-- <div id="dates" style="float:left;">
-                <label><?= L10N['index']['dashboard']['from'] ?></label><input style="margin-left:5px;" type="text" id="from" />
-                <label><?= L10N['index']['dashboard']['to'] ?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
-                <button id="applyDate" class="btn btn-theme02">Apply</button>
-            </div>
-            -->
-            <div class="btn-group" style="float:right;">
+            <div class="btn-group mob-left mob-mt-15">
                 <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i>15 minutes</button>
                 <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour</button>
             </div>
