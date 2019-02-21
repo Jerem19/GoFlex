@@ -2,17 +2,17 @@
     <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
 
     <div id="consumptionHeatPump" style="width: calc(100% - 15px);"></div>
-    <div id="graphLoading">Vos données sont en cours de chargement...</div>
+    <div id="graphLoading"><?= $l10n["chart"]["loadingData"] ?></div>
 </div>
 <div class="row mt col-lg-12 form-panel">
     <div style="width:75%;font-size:15px;margin:auto;text-align:center;">
-        <p style="width:75%;margin:auto;text-align:left;">Cette mesure est  prise sur l’alimentation de la pompe à chaleur (PAC) au moyen d’un capteur et l’information est envoyée au boitier GOFLEX par radio.</p>
+        <p style="width:75%;margin:auto;text-align:left;"><?= $l10n["chart"]["consumptionHeatPumpInfo"] ?></p>
 
         <img style="margin:20px 0px;max-width:100%;" src="<?= BASE_URL ?>/public/images/info/heat_pump.png"/>
 
         <p style="width:75%;margin:auto;text-align:left;display:flex;align-items:center;">
             <img style="height:100px;float:left;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png" />
-            TIP: Une pompe à chaleur est économe car elle tire une partie de son énergie de l’environnement. Le coefficient de performance (COP) est un indicateur permettant  de savoir comment fonctionne la PAC: un COP de 3 veut dire que pour 1kWh d’électricité utilisé pour faire fonctionner la PAC, il y a 3kWh d’énergie thermique utile.
+            <?= $l10n["chart"]["consumptionHeatPumpTip"] ?>
         </p>
     </div>
 </div>

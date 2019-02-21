@@ -2,20 +2,19 @@
     <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
 
     <div id="consumptionElect" style="width: calc(100% - 15px);"></div>
-    <div id="graphLoading">Vos données sont en cours de chargement...</div>
+    <div id="graphLoading"><?= $l10n["chart"]["loadingData"] ?></div>
 </div>
 <div class="row mt col-lg-12 form-panel">
     <div style="width:75%;font-size:15px;margin:auto;text-align:center;">
-        <p style="width:75%;margin:auto;text-align:left;">Cette mesure nommée «Consommation globale »est fournie directement par le compteur d’électricité officiel à l’entrée de la maison.  C’est tout ce qui entre dans la maison depuis le réseau électrique et qui vous sera facturé*. Vous pouvez y distinguer les moments où vous consommez. </p>
+        <p style="width:75%;margin:auto;text-align:left;"><?= $l10n["chart"]["consumptionElectInfo"] ?></p>
 
         <img style="margin:20px 0px;max-width:100%;" src="<?= BASE_URL ?>/public/images/info/consumption.png"/>
 
         <p style="width:75%;margin:auto;text-align:left;display:flex;align-items:center;">
             <img style="max-height:100px;max-width:25%;float:left;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png" />
-            TIP: Il est intéressant de surveiller les consommations ‘de fond’, c’est-à-dire la bande présente en permanence,  y compris la nuit. Quelques dizaines de watt mais 24h/24 peuvent représenter une part significative d’énergie au final.
-            Mettre ses appareils sur interrupteurs pour éviter les veilles
+            <?= $l10n["chart"]["consumptionElectTip"] ?>
         </p><br style="clear: both" /><br />
-        <p style="width:75%;margin:auto;text-align:left;">*NOTE: le compteur enregistre localement dans sa mémoire interne la consommation; le relevé de votre énergie ne dépend pas du bon fonctionnement du système GOFLEX. En cas de problème le compteur peut être relevé de manière traditionnelle.</p>
+        <p style="width:75%;margin:auto;text-align:left;"><?= $l10n["chart"]["consumptionElectNote"] ?></p>
     </div>
 </div>
 

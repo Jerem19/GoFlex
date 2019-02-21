@@ -8,7 +8,7 @@ $router
 
     ->post('/insideTemp:request', function(Response $res, $args) {
         $database = Configuration::InfluxDB();
-        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : "";
+        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : (new Gateway($_POST['idGateway']))->getName();
         $table = '.nodes.ambientSensor-1.objects.temperature.attributes.datapoint';
         $sqlFrom = "\"$dbName$table\"";
 
@@ -36,12 +36,10 @@ $router
                 $result = $database->query('SELECT round(mean("value")) as "distinct" FROM '.$sqlFrom.' where time >= '.$start.' AND time <= '.$end.' AND value < 50 AND value >= 0 GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
                 break;
             case "Spec" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.$table.'" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+                $result = $database->query('SELECT DISTINCT("value") FROM '.$sqlFrom.' where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
                 break;
             case "SpecAll" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.$table.'" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
+                $result = $database->query('SELECT DISTINCT("value") FROM '.$sqlFrom.' GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
                 break;
         }
         $res->send($result->getPoints());
@@ -62,7 +60,7 @@ $router
 
     ->post('/consumptionElect:request', function(Response $res, $args) {
         $database = Configuration::InfluxDB();
-        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : "";
+        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : (new Gateway($_POST['idGateway']))->getName();
         $table = '.nodes.SmartMeterTechnical.objects.obis_1_0_1_7_0_255_2.attributes.datapoint';
         $sqlFrom = "\"$dbName$table\"";
 
@@ -87,12 +85,10 @@ $router
                 $result = $database->query('SELECT round(max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM '.$sqlFrom.' WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear) tz(\'Europe/Zurich\')) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
                 break;
             case "Spec" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.$table.'" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+                $result = $database->query('SELECT DISTINCT("value")/1000 FROM '.$sqlFrom.' where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
                 break;
             case "SpecAll" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.$table.'" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
+                $result = $database->query('SELECT DISTINCT("value")/1000 FROM '.$sqlFrom.' GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
                 break;
         }
         $res->send($result->getPoints());
@@ -114,7 +110,7 @@ $router
 
     ->post('/productionElect:request', function(Response $res, $args) {
         $database = Configuration::InfluxDB();
-        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : "";
+        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : (new Gateway($_POST['idGateway']))->getName();
         $table = '.nodes.SmartMeterTechnical.objects.obis_1_0_2_7_0_255_2.attributes.datapoint';
         $sqlFrom = "\"$dbName$table\"";
 
@@ -142,12 +138,10 @@ $router
                 $result = $database->query('SELECT round(max(value)-min(value))/1000 as "distinct" FROM (SELECT last(value) as value FROM '.$sqlFrom.' WHERE time >= '.$start.' AND time <= '.$end.' GROUP BY time(1m) fill(linear) tz(\'Europe/Zurich\')) GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
                 break;
             case "Spec" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.$table.'" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+                $result = $database->query('SELECT DISTINCT("value")/1000 FROM '.$sqlFrom.' where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
                 break;
             case "SpecAll" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.$table.'" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
+                $result = $database->query('SELECT DISTINCT("value")/1000 FROM '.$sqlFrom.' GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
                 break;
         }
         $res->send($result->getPoints());
@@ -168,7 +162,7 @@ $router
 
     ->post('/consumptionHeatPump:request', function(Response $res, $args) {
         $database = Configuration::InfluxDB();
-        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : "";
+        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : (new Gateway($_POST['idGateway']))->getName();
         $powerMeter = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getHeatPowerMeter() : Installation::getByGateway($_POST['idGateway'])->getHeatPowerMeter();
         $table = ".nodes.powerMeter-$powerMeter.objects.wattsTotal.attributes.datapoint";
         $sqlFrom = "\"$dbName$table\"";
@@ -191,12 +185,10 @@ $router
                 $result = $database->query('SELECT DISTINCT("value")/1000 FROM '.$sqlFrom.' where time >= '.$start.' AND time <= '.$end.' GROUP BY time('.$interval.') fill(null) ORDER BY time DESC ;');
                 break;
             case "Spec" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.$table.'" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+                $result = $database->query('SELECT DISTINCT("value")/1000 FROM '.$sqlFrom.' where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
                 break;
             case "SpecAll" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value")/1000 FROM "'.$dbName.$table.'" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
+                $result = $database->query('SELECT DISTINCT("value")/1000 FROM '.$sqlFrom.' GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
                 break;
         }
         $res->send($result->getPoints());
@@ -219,7 +211,7 @@ $router
 
     ->post('/hotwaterTemperature:request', function(Response $res, $args) {
         $database = Configuration::InfluxDB();
-        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : "";
+        $dbName = $_SESSION["User"]->getRole()->getId() == 4 ? $_SESSION["User"]->getInstallations()[0]->getGateway()->getName() : (new Gateway($_POST['idGateway']))->getName();
         $table = '.nodes.boilerSensor-1.objects.temperature.attributes.datapoint';
         $sqlFrom = "\"$dbName$table\"";
 
@@ -247,12 +239,10 @@ $router
                 $result = $database->query('SELECT round(mean("value")) as "distinct" FROM '.$sqlFrom.' where time >= '.$start.' AND time <= '.$end.' AND value < 120 AND value >= 30 GROUP BY time('.$interval.') fill(none) ORDER BY time DESC tz(\'Europe/Zurich\');');
                 break;
             case "Spec" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.$table.'" where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
+                $result = $database->query('SELECT DISTINCT("value") FROM '.$sqlFrom.' where time >= now()-'.$range.' GROUP BY time('.$interval.') fill(none) ORDER BY "time" DESC ;');
                 break;
             case "SpecAll" :
-                $dbName = (new Gateway($_POST['idGateway']))->getName();
-                $result = $database->query('SELECT DISTINCT("value") FROM "'.$dbName.$table.'" GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
+                $result = $database->query('SELECT DISTINCT("value") FROM '.$sqlFrom.' GROUP BY time(1d) fill(none) ORDER BY time DESC ;');
                 break;
         }
         $res->send($result->getPoints());
@@ -270,8 +260,23 @@ $router
     })
 
     /* Counter */
+    ->post('/counter:request', function (Response $res, $args){
+        $database = Configuration::InfluxDB();
+        $dbName = $_SESSION["User"]->getInstallations()[0]->getGateway()->getName();
 
-    ->post('/counterConsumption1', function (Response $res){
+        $type = substr($args["request"], 0,strlen($args["request"]) - 1) == "Consumption" ? "1" : "2";
+        $number = $args["request"][strlen($args["request"]) - 1];
+
+        //$sqlFrom = "\"$dbName.nodes.SmartMeterBilling.objects.obis_1_1_".$type."_8_$number_255_2.attributes.datapoint\";";
+
+        $sqlFrom = sprintf('"%s.nodes.SmartMeterBilling.objects.obis_1_1_%s_8_%s_255_2.attributes.datapoint";',$dbName, $type, $number);
+
+        $result = $database->query('SELECT LAST("value") FROM '.$sqlFrom);
+        $res->send($result->getPoints());
+        //$res->send($sqlFrom);
+    })
+
+    /*->post('/counterConsumption1', function (Response $res){
         $database = Configuration::InfluxDB();
         $dbName = $_SESSION["User"]->getInstallations()[0]->getGateway()->getName();
         $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_1_8_1_255_2.attributes.datapoint";');
@@ -297,4 +302,4 @@ $router
         $dbName = $_SESSION["User"]->getInstallations()[0]->getGateway()->getName();
         $result = $database->query('SELECT LAST("value") FROM "'.$dbName.'.nodes.SmartMeterBilling.objects.obis_1_1_2_8_2_255_2.attributes.datapoint";');
         $res->send($result->getPoints());
-    });
+    })*/;

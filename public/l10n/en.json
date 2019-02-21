@@ -27,17 +27,36 @@
 		"404" : {
 			"main_text": "Where are you going?! There is nothing here!"
 		},
+		"partners" : {
+			"main_text" : "Thank you for being a pioneer and for your voluntary participation in the GOFLEX project! Together we will improve energy management, such a valuable asset. This page will evolve as this research project develops. Feel free to give us your opinion and suggestions by writing to us: ",
+			"goflex" : "The GOFLEX project is a European-level research project involving several electricity distributors and several universities. Our goal is to achieve better energy management, particularly renewable energy on the electricity grids. As the proportion of the latter increases, it is necessary to adapt with flexibility.",
+			"ch" : "The project Generalized Operational Flexibility for Integrating Renewables in the Distribution Grid (GOFLEX) has received funding from the Secrétariat d’Etat à la formation, à la recherche et à l’innovation (SEFRI) under contract No 16.0156.",
+			"eu" : "The project Generalized Operational Flexibility for Integrating Renewables in the Distribution Grid (GOFLEX) has received funding from the European Union's Horizon 2020 research and innovation program under grant agreement No 731232.",
+			"theark" : "The Ark, the foundation for innovation in Valais, supports the development of this energy visualization interface through the eVIP 717-01 project."
+		},
 		"chart": {
 			"boiler_power": "Boiler power",
 			"degrees": "Degrees celsius",
 			"consumptionElect": "Consumption",
+			"consumptionElectInfo" : "This measure called « Global Consumption » is provided directly by the official electricity meter at the entrance of your house. It’s all that enters in the house from the power grid and will be charged to you*. You can distinguish the times where you consume.",
+			"consumptionElectTip" : "TIP: It’s interesting to monitor the ‘bottom’ consumption, that is, the band present at all times, including at night. A few tens of watt but 24h/24 can represent a significant part of energy in the end. Put your devices on switches to avoid stand-by.",
+			"consumptionElectNote" : "*Note: the meter records locally in its internal memory the consumption; Your energy reading doesn’t depend on the good functioning of the GOFLEX system. In case of problem, the counter can be raised in a traditional way.",
 			"consumptionHeatPump" : "Heat pump consumption",
+			"consumptionHeatPumpInfo" : "The measurement is taken on the heat pump supply by means of a sensor and the information is sent to the GOFLEX box by radio.",
+			"consumptionHeatPumpTip" : "TIP: A heat pump is economical because it draws part of its energy from environment. The coefficient of performance (COP) is an indicator of how the heat pump works: a COP of 3 means that for every 1kWh of electricity used to operate the heat pump, there is 3kWh of useful thermal energy.",
 			"insideTemperature": "Inside Temperature",
+			"insideTemperatureInfo": "This measurement is taken on a small battery-powered box and placed in your housing. You can move it but keep it in a room called a living room. Avoid placing it in the sun as the measurement will be distorted.",
+			"insideTemperatureTip": "TIP: On average, one extra degree on your heating setpoint represents an additional 7% energy consumption. Check the temperatures of the living rooms: 23°C in the bathroom, 20°C in the living room, 17°C in the bedrooms and hallway.",
 			"hotwaterTemperature": "Hot water temperature",
-			"noData": "No data available",
+			"hotwaterTemperatureInfo": "This measurement is taken on the hotwater tank. In normal operation, you should distinguish between heating cycles.",
+			"hotwaterTemperatureTip": "TIP: To avoid the risk of legionellosis, the hotwater tank for domestic hotwater should be regularly installed above 50° or even 55°. This doesn’t apply to balloons used only as a reserve for heating and whose water isn’t brought into contact with people.",
 			"productionElect": "Overage PV",
+			"productionElectInfo": "This measurement is provided directly by the official electricity meter at the entrance of the house.  The photovoltaic surplus is everything that is fed back into the electricity grid and will be paid to you by the ESR.  The part of solar production directly consumed in the house (self-consumption) does not appear on this measure.",
+			"productionElectTip": "TIP: The ESR takes back energy at its official price. This does not include taxes (municipal and federal), nor the routing used to pay for the network. Therefore, a kWh purchased from the grid is more expensive than the kWh paid for the injection. It is therefore worthwhile to self-consume as much of it as possible.",
+			"noData": "No data available",
 			"graphics": "Graphics",
-			"power": "Power"
+			"power": "Power",
+			"loadingData": "Loading data..."
 		},
 		"dashboard": {
 			"currentConsumption": "Last measures of consumption",
@@ -59,8 +78,15 @@
 			"textHeatPump": "Your heat pumped use ",
 			"productionElect": "Overage PV",
 			"textHotwaterTemperature": "The temperature of your boiler is ",
+			"apply" : "Apply",
 			"from" : "From",
-			"to" : "to"
+			"to" : "to",
+			"perDay" : "Per day",
+			"minutes" : "minutes",
+			"power" : "Power",
+			"energy" : "Energy",
+			"temperature" : "Temperature",
+			"temperatureAvg" : "Average temperature"
 		},
 		"sidebar": {
 			"profile": "My profile",
@@ -178,14 +204,14 @@
 			"collective": "Collective",
 			"individual": "Individual",
 
-			"egidNumber": "Numéro EGID",
-			"heatingSurface": "Surface chauffée",
+			"egidNumber": "EGID number",
+			"heatingSurface": "Heating surface",
 			"distribution": "Distribution",
-			"boilerVolume": "Volume du boiler",
+			"boilerVolume": "Boiler volume",
 			"boilerYear": "Année de création du boiler",
 			"heatingYear": "Année de création du chauffage",
-			"ground": "Sol",
-			"hydraulic": "Hydraulique",
+			"ground": "Ground",
+			"hydraulic": "Hydraulic",
 			"direct": "Direct",
 
 			"idemHeating": "Idem heating",
@@ -195,7 +221,7 @@
 			"ecs": "ECS",
 			"ecsHeat": "ECS + heating",
 
-			"boilerTemperatureSensor": "boiler temperature sensor",
+			"boilerTemperatureSensor": "Boiler temperature sensor",
 			"productionSensor": "Production sensor",
 			"technoHeat": "Technology Heating",
 			"technoHotWater": "Technology hot water",

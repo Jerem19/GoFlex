@@ -2,17 +2,17 @@
     <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
 
     <div id="insideTemp" style="width: calc(100% - 15px);"></div>
-    <div id="graphLoading">Vos données sont en cours de chargement...</div>
+    <div id="graphLoading"><?= $l10n["chart"]["loadingData"] ?></div>
 </div>
 <div class="row mt col-lg-12 form-panel">
     <div style="width:75%;font-size:15px;margin:auto;text-align:center;">
-        <p style="width:75%;margin:auto;text-align:left;">Cette mesure est  prise sur par un petit boîtier  fonctionnant sur pile et posé dans votre logement. Vous pouvez le déplacer mais gardez le dans une pièce dite à vivre. Evitez de le placer au soleil car la mesure sera faussée.</p>
+        <p style="width:75%;margin:auto;text-align:left;"><?= $l10n["chart"]["insideTemperatureInfo"] ?></p>
 
         <img style="margin:20px 0px;max-width:100%;" src="<?= BASE_URL ?>/public/images/info/thermometer.png"/>
 
         <p style="width:75%;margin:auto;text-align:left;display:flex;align-items:center;">
             <img style="height:100px;float:left;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png" />
-            TIP: En moyenne, un degré supplémentaire sur votre consigne de chauffage représente une consommation d'énergie supplémentaire de 7%. Contrôlez les températures des pièces à vivre : 23°C dans la salle de bain, 20°C dans la salle de séjour, 17°C dans les chambres à coucher et le couloir.
+            <?= $l10n["chart"]["insideTemperatureTip"] ?>
         </p>
     </div>
 </div>

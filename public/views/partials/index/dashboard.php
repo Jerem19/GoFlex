@@ -35,11 +35,11 @@
             <div id="dates" style="float:left;">
                 <label><?= L10N['index']['dashboard']['from'] ?></label><input style="margin-left:5px;" type="text" id="from" />
                 <label><?= L10N['index']['dashboard']['to'] ?></label><input style="margin-left:5px; margin-right: 5px;" type="text" id="to" />
-                <button id="applyDate" class="btn btn-theme02">Apply</button>
+                <button id="applyDate" class="btn btn-theme02"><?= L10N['index']['dashboard']['apply'] ?></button>
             </div>
             <div class="btn-group" style="float:right;">
-                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i>15 minutes</button>
-                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour</button>
+                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i>15 <?= L10N["index"]["dashboard"]["minutes"]?></button>
+                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i><?= L10N["index"]["dashboard"]["perDay"]?></button>
             </div>
         </div>
         <div id="historicData"></div>
@@ -96,7 +96,7 @@
         <div style="text-align: center;"></div>
 
         <div class="indexAlert alert-secondary">
-            <strong><span class="fa fa-line-chart"></span> Excédent PV</strong>
+            <strong><span class="fa fa-line-chart"></span> <?= L10N['index']['dashboard']['overagePV'] ?></strong>
         </div>
         <div class="col col-md-5"><span class="fa fa-battery-full"></span><?= L10N['index']['dashboard']['overagePV'] ?></div>
         <?php if ($user->getInstallations()[0]->Solar()->isExistant()) { ?>
@@ -145,7 +145,7 @@
     function byTime(range) {
         var start = $.datepicker.parseDate(dateFormat, $("#from").val());
         var end = $.datepicker.parseDate(dateFormat, $("#to").val());
-        start.setHours(0, 0, -32);
+        start.setHours(0, 0, 0);
         end.setHours(23, 59, 59);
         start = start.getTime() + "ms";
         end = end.getTime() + "ms";
@@ -273,12 +273,12 @@
                 },
                 yAxis: [{
                     title: {
-                        text: "Température moyenne(°C)"
+                        text: "<?= $l10n["dashboard"]["temperatureAvg"] ?> (°C)"
                     },
                     opposite: false
                 }, {
                     title: {
-                        text: "Energie (kWh)"
+                        text: "<?= $l10n["dashboard"]["energy"] ?> (kWh)"
                     },
                     opposite: true
                 }],
@@ -306,25 +306,25 @@
                 series: [
                     <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
                     {
-                        name: 'Production',
+                        name: '<?= $l10n["chart"]["productionElect"] ?>',
                         data: productionElecArray,
                         yAxis: 1,
                         color: "#f4e842"
                     },<?php } ?>
                     {
-                        name: 'Consommation',
+                        name: '<?= $l10n["chart"]["consumptionElect"] ?>',
                         data: electArray,
                         yAxis: 1,
                         color: "#A9A9A9"
 
                     }, {
-                        name: 'Temperature intérieure',
+                        name: '<?= $l10n["chart"]["insideTemperature"] ?>',
                         data: insideArray,
                         yAxis: 0,
                         color: "#90ed7d"
 
                     }, {
-                        name: 'Temperature boiler',
+                        name: '<?= $l10n["chart"]["hotwaterTemperature"] ?>',
                         data: boilerArray,
                         yAxis: 0,
                         color: "#95ceff"
@@ -409,13 +409,13 @@
                 },
                 yAxis: [{
                     title: {
-                        text: "Température (°C)"
+                        text: "<?= $l10n["dashboard"]["temperature"] ?> (°C)"
                     },
                     opposite: false
                 },
                     {
                         title: {
-                            text: "Puissance (kW)"
+                            text: "<?= $l10n["dashboard"]["power"] ?> (kW)"
                         },
                         opposite: true
                     }
@@ -454,7 +454,7 @@
                 },
                 series: [
                     {
-                        name: 'Electrique',
+                        name: '<?= $l10n["chart"]["consumptionElect"] ?>',
                         type: 'area',
                         data: electArray,
                         index: 1,
@@ -465,7 +465,7 @@
                     },
                     <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
                     {
-                        name: 'Production',
+                        name: '<?= $l10n["chart"]["productionElect"] ?>',
                         type: 'area',
                         data: productionElecArray,
                         index: 2,
@@ -474,7 +474,7 @@
 
                     }, <?php } ?>
                     {
-                        name: 'Intérieur',
+                        name: '<?= $l10n["chart"]["insideTemperature"] ?>',
                         type: 'line',
                         data: insideArray,
                         index: 3,
@@ -483,7 +483,7 @@
                         enabled: false
                     },
                     {
-                        name: 'Boiler',
+                        name: '<?= $l10n["chart"]["hotwaterTemperature"] ?>',
                         type: 'line',
                         data: boilerArray,
                         //index:4,
@@ -705,7 +705,7 @@
 
             var start = $.datepicker.parseDate(dateFormat, from.val());
             var end = $.datepicker.parseDate(dateFormat, to.val());
-            start.setHours(0, 0, -32);
+            start.setHours(0, 0, 0);
             end.setHours(23, 59, 59);
             start = start.getTime() + "ms";
             end = end.getTime() + "ms";
