@@ -79,7 +79,7 @@
 			"productionElect": "Overage PV",
 			"textHotwaterTemperature": "The temperature of your boiler is ",
 			"perDay" : "Per day",
-			"minutes" : "minutes",
+			"minutes" : "min",
 			"power" : "Power",
 			"energy" : "Energy",
 			"temperature" : "Temperature",
