@@ -120,30 +120,47 @@ div.img-galery {
         max-height: @imgHeight;
     }
 }
-
-
 .dashboardTitleSize {
     font-size: 200%;
 }
-
 .dashboardTextSize {
     margin-top: 20px;
     font-size: 130%;
 }
-
 .dashboardNumberSize {
     font-size: 200%;
 }
-
 .dashboardFaSize {
     font-size: 350%
 }
+.dashboardFaSize.big{
+    font-size: 650%
+}
+.dashboardNumberSize.big {
+    font-size: 400%;
+}
+.vert-align{
+    vertical-align: middle;
+}
+.mob-left{
+    float:right;
+}
+.mt-15{
+    margin-top: 15px;
+}
+
 @media (min-width: 1600px) {
     .adjusted{
             width: 66.66666667 + 1%;
     }
     .ml{
         margin-left: 1%;
+    }
+    .adjusted2{
+        width: 91.66666667% + 2%;
+    }
+    .pt10p{
+        padding-top: 20%;
     }
 }
 
@@ -152,19 +169,24 @@ div.img-galery {
     .dashboardTitleSize {
         font-size: 150%;
     }
-
     .dashboardTextSize {
         font-size: 100%;
     }
-
     .dashboardNumberSize {
         margin-top: 20px;
         font-size: 120%;
     }
-
     .dashboardFaSize {
         font-size: 250%
     }
+    .mob-left{
+        clear: both;
+        float: left;
+    }
+    .mob-mt-15{
+        margin-top: 15px;
+    }
+
 }
 
 .row.is-flex {
@@ -184,7 +206,6 @@ div.img-galery {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
-
 .row.is-flex > [class*='col-'] {
     display: -webkit-box;
     display: -webkit-flex;
@@ -196,20 +217,42 @@ div.img-galery {
     -ms-flex-direction: column;
     flex-direction: column;
 }
-
-hr {
-    color: #ACACAC !important;
+ hr.custom {
     margin-left: 0;
     margin-right: 0;
+    clear: left;
+    border-color: #d6d8db;
 }
-
 .mb-10{
     margin-bottom: 10px;
 }
-
 .mb-15{
     margin-bottom: 15px;
 }
 .mb-20{
     margin-bottom: 20px;
+}
+#datepicker{
+    width: 200px;
+    border: none;
+    background-color: #75b31e;
+    color: white;
+    padding-left: 30px;
+}
+.one-input{
+    background-color: #75b31e;
+    color: white;
+    text-align: center;
+    width: fit-content;
+    float: left;
+    position: relative;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+#i-oneinput {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    vertical-align: middle;
+    padding: 5px 15px;
 }

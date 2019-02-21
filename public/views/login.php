@@ -55,14 +55,14 @@
                                        placeholder="<?= $l10n['password'] ?>">
                             <?php } ?>
                             <label class="checkbox">
-                            <span class="pull-right">
-                                <a data-toggle="modal" href="<?= BASE_URL . ($isPwdRecup || $isSignup ? '' : 'getpassword') ?>">
-                                    <?= $l10n[$isPwdRecup || $isSignup ? 'return_login' : 'forgot_pwd'] ?>
-                                </a>
-                            </span>
+                                <span class="pull-right">
+                                    <a data-toggle="modal" href="<?= BASE_URL . ($isPwdRecup || $isSignup ? '' : 'getpassword') ?>">
+                                        <?= $l10n[$isPwdRecup || $isSignup ? 'return_login' : 'forgot_pwd'] ?>
+                                    </a>
+                                </span>
                             </label>
                             <button class="btn btn-theme btn-block" name="submit" type="submit"><?= $l10nSpec['button'] ?></button>
-                            <a href="https://goflex-community.eu/">
+                            <a href="https://goflex-community.eu/" target="_blank">
                                 <img src="<?= BASE_URL ?>goflex-logo.png" style="margin-top: 10px; width: 100%;">
                             </a>
                         </div>
