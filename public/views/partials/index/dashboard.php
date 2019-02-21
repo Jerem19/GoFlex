@@ -36,10 +36,9 @@
                 <i id="i-oneinput" class="fa fa-calendar" aria-hidden="true"></i>
                 <input type="text" id="datepicker" class="form-control"/>
             </div>
-
-            <div class="btn-group mob-left mob-mt-15">
-                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i>15 minutes</button>
-                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i> Par jour</button>
+            <div class="btn-group" style="float:right;">
+                <button id="btn15m" class="btn btn-theme02 active" onclick="byTime('15m');"><i id="i-15m" class="fa fa-check" aria-hidden="true"></i>15 <?= L10N["index"]["dashboard"]["minutes"]?></button>
+                <button id="btn1d" class="btn btn-theme02" onclick="byTime('1d');"><i id="i-1d" class="fa fa-check" aria-hidden="true" style="display:none;"></i><?= L10N["index"]["dashboard"]["perDay"]?></button>
             </div>
         </div>
         <div id="historicData"></div>
@@ -117,7 +116,7 @@
         <div style="text-align: center;"></div>
 
         <div class="indexAlert alert-secondary">
-            <strong><span class="fa fa-line-chart"></span> Excédent PV</strong>
+            <strong><span class="fa fa-line-chart"></span> <?= L10N['index']['dashboard']['overagePV'] ?></strong>
         </div>
         <div class="col col-md-5"><span class="fa fa-battery-full"></span><?= L10N['index']['dashboard']['overagePV'] ?></div>
         <?php if ($user->getInstallations()[0]->Solar()->isExistant()) { ?>
@@ -158,7 +157,7 @@
         if(window.ajaxReq) ajaxReq.abort();
         window.ajaxReq = when($.ajax({
                 type: "POST",
-                url: "hotwaterTemperatureHistoryDate",
+                url: DATA_URL+"hotwaterTemperatureHistoryDate",
                 data: {
                     time: interval,
                     start: start,
@@ -167,7 +166,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "consumptionHistoryDiff",
+                url: DATA_URL+"consumptionElectHistoryDiff",
                 data: {
                     time: interval,
                     start: start,
@@ -176,7 +175,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "insideTempHistoryDate",
+                url: DATA_URL+"insideTempHistoryDate",
                 data: {
                     time: interval,
                     start: start,
@@ -186,7 +185,7 @@
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             , $.ajax({
                 type: "POST",
-                url: "productionHistoryDiff",
+                url: DATA_URL+"productionElectHistoryDiff",
                 data: {
                     time: interval,
                     start: start,
@@ -259,12 +258,12 @@
                 },
                 yAxis: [{
                     title: {
-                        text: "Température moyenne(°C)"
+                        text: "<?= $l10n["dashboard"]["temperatureAvg"] ?> (°C)"
                     },
                     opposite: false
                 }, {
                     title: {
-                        text: "Energie (kWh)"
+                        text: "<?= $l10n["dashboard"]["energy"] ?> (kWh)"
                     },
                     opposite: true
                 }],
@@ -292,25 +291,25 @@
                 series: [
                     <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
                     {
-                        name: 'Production',
+                        name: '<?= $l10n["chart"]["productionElect"] ?>',
                         data: productionElecArray,
                         yAxis: 1,
                         color: "#f4e842"
                     },<?php } ?>
                     {
-                        name: 'Consommation',
+                        name: '<?= $l10n["chart"]["consumptionElect"] ?>',
                         data: electArray,
                         yAxis: 1,
                         color: "#A9A9A9"
 
                     }, {
-                        name: 'Temperature intérieure',
+                        name: '<?= $l10n["chart"]["insideTemperature"] ?>',
                         data: insideArray,
                         yAxis: 0,
                         color: "#90ed7d"
 
                     }, {
-                        name: 'Temperature boiler',
+                        name: '<?= $l10n["chart"]["hotwaterTemperature"] ?>',
                         data: boilerArray,
                         yAxis: 0,
                         color: "#95ceff"
@@ -325,7 +324,7 @@
         window.ajaxReq = when(
             $.ajax({
                 type: "POST",
-                url: "hotwaterTemperatureDate",
+                url: DATA_URL+"hotwaterTemperatureDate",
                 data: {
                     time: interval,
                     start: start,
@@ -334,7 +333,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "consumptionElectDate",
+                url: DATA_URL+"consumptionElectDate",
                 data: {
                     time: interval,
                     start: start,
@@ -343,7 +342,7 @@
             }),
             $.ajax({
                 type: "POST",
-                url: "insideTempDate",
+                url: DATA_URL+"insideTempDate",
                 data: {
                     time: interval,
                     start: start,
@@ -353,7 +352,7 @@
             <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
             , $.ajax({
                 type: "POST",
-                url: "productionElectDate",
+                url: DATA_URL+"productionElectDate",
                 data: {
                     time: interval,
                     start: start,
@@ -396,13 +395,13 @@
                 },
                 yAxis: [{
                     title: {
-                        text: "Température (°C)"
+                        text: "<?= $l10n["dashboard"]["temperature"] ?> (°C)"
                     },
                     opposite: false
                 },
                     {
                         title: {
-                            text: "Puissance (kW)"
+                            text: "<?= $l10n["dashboard"]["power"] ?> (kW)"
                         },
                         opposite: true
                     }
@@ -441,7 +440,7 @@
                 },
                 series: [
                     {
-                        name: 'Electrique',
+                        name: '<?= $l10n["chart"]["consumptionElect"] ?>',
                         type: 'area',
                         data: electArray,
                         index: 1,
@@ -452,7 +451,7 @@
                     },
                     <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
                     {
-                        name: 'Production',
+                        name: '<?= $l10n["chart"]["productionElect"] ?>',
                         type: 'area',
                         data: productionElecArray,
                         index: 2,
@@ -461,7 +460,7 @@
 
                     }, <?php } ?>
                     {
-                        name: 'Intérieur',
+                        name: '<?= $l10n["chart"]["insideTemperature"] ?>',
                         type: 'line',
                         data: insideArray,
                         index: 3,
@@ -470,7 +469,7 @@
                         enabled: false
                     },
                     {
-                        name: 'Boiler',
+                        name: '<?= $l10n["chart"]["hotwaterTemperature"] ?>',
                         type: 'line',
                         data: boilerArray,
                         //index:4,
@@ -498,7 +497,7 @@
         loadGraphLine(s + "ms", e + "ms", "15m");
 
         $.ajax({
-            url: 'consumptionElectSpeed',
+            url: DATA_URL+'consumptionElectSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -518,7 +517,7 @@
 
         <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
         $.ajax({
-            url: 'productionElectSpeed',
+            url: DATA_URL+'productionElectSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -538,7 +537,7 @@
         <?php } ?>
 
         $.ajax({
-            url: 'consumptionHeatPumpSpeed',
+            url: DATA_URL+'consumptionHeatPumpSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -557,7 +556,7 @@
         });
 
         $.ajax({
-            url: 'hotwaterTemperatureSpeed',
+            url: DATA_URL+'hotwaterTemperatureSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -576,7 +575,7 @@
         });
 
         $.ajax({
-            url: 'insideTempSpeed',
+            url: DATA_URL+'insideTempSpeed',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -595,7 +594,7 @@
         });
 
         $.ajax({
-            url: 'counterConsumption1',
+            url: DATA_URL+'counterConsumption1',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -614,7 +613,7 @@
         });
 
         $.ajax({
-            url: 'counterConsumption2',
+            url: DATA_URL+'counterConsumption2',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -634,7 +633,7 @@
 
         <?php if($user->getInstallations()[0]->Solar()->isExistant()) { ?>
         $.ajax({
-            url: 'counterProduction1',
+            url: DATA_URL+'counterProduction1',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {
@@ -654,7 +653,7 @@
         });
 
         $.ajax({
-            url: 'counterProduction2',
+            url: DATA_URL+'counterProduction2',
             type: 'POST',
             success: function(data) {
                 if(data && Array.isArray(data)) {

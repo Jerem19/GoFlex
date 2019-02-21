@@ -1,3 +1,5 @@
+const DATA_URL = "data/";
+
 /**
  * Parse the data from the DB to a highchart readable format
  * @param {Array} data
@@ -32,7 +34,7 @@ function loadData(url, chart, parseMin = 0, parseMax = Infinity) {
     function loadPart(offset = 0) {
         $.ajax({
             type: "POST",
-            url: url,
+            url: DATA_URL+url,
             data: {
                 'range': "365d",
                 'time': "1s",

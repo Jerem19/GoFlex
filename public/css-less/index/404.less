@@ -1,0 +1,40 @@
+body {
+    background-image: url("@{base_url}404/background.jpg");
+    background-size: cover;
+    background-position-x: right;
+    background-position-y: bottom;
+}
+
+.tumbleweed{
+    position: absolute;
+    bottom: 0;
+    left: -70px;
+    width: 70px;
+    height: 70px;
+    background: url('@{base_url}404/tumbleweed.png') no-repeat;
+    background-size: 100%;
+    animation: tumbleweed 5s linear infinite;
+    z-index: 0;
+}
+
+.key-loop (@index) when (@index > 0){
+    @keyframeSel: percentage(@index/20);
+
+    @{keyframeSel}{
+        transform: translateY(round(sqrt(pow(sin(20deg / @index * 10) * 45,2)) * -1px)) rotate(60deg * @index);
+    }
+
+    .key-loop(@index - 1);
+}
+.key-loop (0) {}
+
+@keyframes tumbleweed {
+    100% {
+        left: 100%;
+    }
+    0% {
+        left: -10%;
+    }
+
+    .key-loop(20)
+}

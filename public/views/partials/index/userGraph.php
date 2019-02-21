@@ -73,7 +73,7 @@
     function loadProductionElect(interval, range, url) {
         $.ajax({
             type: "POST",
-            url: url,
+            url: DATA_URL+url,
             data: {
                 'range': range,
                 'time': interval,
@@ -171,7 +171,7 @@
     function loadConsumptionElect(interval, range, url) {
         $.ajax({
             type: "POST",
-            url: url,
+            url: DATA_URL+url,
             data: {
                 'range': range,
                 'time': interval,
@@ -269,7 +269,7 @@
     function loadBoiler(interval, range, url) {
         $.ajax({
             type: "POST",
-            url: url,
+            url: DATA_URL+url,
             data: {
                 'range': range,
                 'time': interval,
@@ -367,7 +367,7 @@
     function loadHeatPump(interval, range, url) {
         $.ajax({
             type: "POST",
-            url: url,
+            url: DATA_URL+url,
             data: {
                 'range': range,
                 'time': interval,
@@ -469,7 +469,7 @@
     function loadInsideTemp(interval, range, url) {
         $.ajax({
             type: "POST",
-            url: url,
+            url: DATA_URL+url,
             data: {
                 'range': range,
                 'time': interval,

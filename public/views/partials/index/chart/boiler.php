@@ -2,17 +2,17 @@
     <img id="loader" src="<?= BASE_URL ?>/public/images/loader.gif" style="display: block; margin-left: auto; margin-right: auto; width: 200px;" />
 
     <div id="hotwaterTemperature" style="width: calc(100% - 15px);"></div>
-    <div id="graphLoading">Vos données sont en cours de chargement...</div>
+    <div id="graphLoading"><?= $l10n["chart"]["loadingData"] ?></div>
 </div>
 <div class="row mt col-lg-12 form-panel">
     <div style="width:75%;font-size:15px;margin:auto;text-align:center;">
-        <p style="width:75%;margin:auto;text-align:left;">Cette mesure est prise sur le ballon d’eau chaude . En fonctionnement normal vous devriez y distinguer les cycles de chauffage.</p>
+        <p style="width:75%;margin:auto;text-align:left;"><?= $l10n["chart"]["hotwaterTemperatureInfo"] ?></p>
 
         <img style="margin:20px 0px;max-width:100%;" src="<?= BASE_URL ?>/public/images/info/boiler.png"/>
 
         <p style="width:75%;margin:auto;text-align:left;display:flex;align-items:center;">
             <img style="height:100px;float:left;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png" />
-            TIP: Pour éviter des risques de légionelloses, le ballon d’eau pour l’eau chaude sanitaire devrait être régulièrement montée au-dessus de 50° voire 55°. Cela ne concerne par les ballons utilisé uniquement comme réserve pour le chauffage et dont l’eau n’est pas mise en contact avec les personnes.
+            <?= $l10n["chart"]["hotwaterTemperatureTip"] ?>
         </p>
     </div>
 </div>
@@ -23,7 +23,7 @@
 
         $.ajax({
             type: "POST",
-            url: "hotwaterTemperature",
+            url: DATA_URL+"hotwaterTemperature",
             data: {
                 'range': "24h",
                 'time': "1s",
