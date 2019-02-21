@@ -18,6 +18,7 @@
         "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css",
         "https://cdn.jsdelivr.net/gh/jboesch/Gritter@1.7.4/css/jquery.gritter.css",
+        "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css",
         "3rdparty/style.css",
         "3rdparty/BootstrapXL.css",
         "3rdparty/style-responsive.css",
@@ -101,6 +102,9 @@
                     case "profile":
                         include 'partials/index/profile.php';
                         break;
+                    case "partners":
+                        include 'partials/index/partners.php';
+                        break;
                 }
             } else if ($roleId == 4)
                 include 'partials/index/dashboard.php';
@@ -118,6 +122,7 @@
 </body>
 <?php loadScripts([
     "https://code.jquery.com/jquery-3.1.1.min.js",
+    "https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js",
     "https://code.highcharts.com/stock/highstock.js",
     "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.js",

@@ -168,6 +168,10 @@
                     ];
                 }*/
             }
+            $menu["partners"] = [
+                "text" => $l10nNav["partners"],
+                "_iClass" => "fa fa-handshake-o"
+            ];
 
             $menu["profile"] = [
                 "text" => $l10nNav["profile"],

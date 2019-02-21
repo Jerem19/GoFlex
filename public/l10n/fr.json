@@ -34,7 +34,7 @@
       "consumptionElect" : "Consommation",
       "insideTemperature" : "Température intérieure",
       "hotwaterTemperature": "Température eau chaude",
-      "productionElect": "Excédent de production",
+      "productionElect": "Excédent PV",
       "noData" : "Aucune donnée disponible",
       "graphics": "Graphics",
       "power": "Puissance"
@@ -73,7 +73,7 @@
       "boiler" : "Eau Chaude",
       "heater" : "Chauffage",
       "userGraph" : "Vue utilisateur [Beta]",
-      "productionElect" : "Excédent de production",
+      "productionElect" : "Excédent PV",
       "allUsers" : "Voir utilisateurs",
       "user" : "Utilisateur",
       "summary" : "Résumé",
@@ -83,7 +83,8 @@
       "editUser" : "Modifier utilisateur",
       "installationGateway" : "Ajout installation",
       "passwordModification" : "Gestion du mot de passe",
-      "checkUserData" : "Visualisation client"
+      "checkUserData" : "Visualisation client",
+      "partners": "Partenaires"
     },
     "header": {
       "nav-text": "Inverser la navigation"
