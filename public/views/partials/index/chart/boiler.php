@@ -5,16 +5,10 @@
     <div id="graphLoading"><?= $l10n["chart"]["loadingData"] ?></div>
 </div>
 <div class="row mt col-lg-12 form-panel">
-    <div style="width:75%;font-size:15px;margin:auto;text-align:center;">
-        <p style="width:75%;margin:auto;text-align:left;"><?= $l10n["chart"]["hotwaterTemperatureInfo"] ?></p>
-
-        <img style="margin:20px 0px;max-width:100%;" src="<?= BASE_URL ?>/public/images/info/boiler.png"/>
-
-        <p style="width:75%;margin:auto;text-align:left;display:flex;align-items:center;">
-            <img style="height:100px;float:left;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png" />
-            <?= $l10n["chart"]["hotwaterTemperatureTip"] ?>
-        </p>
-    </div>
+<?php
+    include PUBLIC_FOLDER.'views/partials/index/info.php';
+    chart_info("hotwaterTemperature");
+?>
 </div>
 
 <script>

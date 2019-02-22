@@ -139,7 +139,7 @@
             </div>
         </strong>
         <img style="width: 202px; margin: 0 auto;" src="<?= BASE_URL ?>/public/images/eco-reflexes.png" />
-        <a href="https://www.esr.ch/fr/ecogestes/index" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction'] ?></a>
+        <a href="https://www.esr.ch/fr/ecogestes/index" target="_blank" class="btn btn-success"><?= L10N['index']['dashboard']['moreGreenAction'] ?></a>
     </div>
 </div>
 

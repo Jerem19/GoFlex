@@ -38,25 +38,42 @@
       "boiler_power": "Puissance du boiler",
       "degrees": "Degrés celsius",
       "consumptionElect": "Consommation",
-      "consumptionElectInfo" : "Cette mesure nommée « Consommation globale » est fournie directement par le compteur d'électricité officiel à l'entrée de la maison. C'est tout ce qui entre dans la maison depuis le réseau électrique et qui vous sera facturé*. Vous pouvez y distinguer les moments où vous consommez.",
-      "consumptionElectTip" : "TIP : Il est intéressant de surveiller les consommations ‘de fond’, c’est-à-dire la bande présente en permanence, y compris la nuit. Quelques dizaines de watt mais 24h/24 peuvent représenter une part significative d’énergie au final. Mettre ses appareils sur interrupteurs pour éviter les veilles.",
-      "consumptionElectNote" : "*Note: le compteur enregistre localement dans sa mémoire interne la consommation ; le relevé de votre énergie ne dépend pas du bon fonctionnement du système GOFLEX. En cas de problème le compteur peut être relevé de manière traditionnelle.",
       "consumptionHeatPump" : "Consommation pompe à chaleur",
-      "consumptionHeatPumpInfo" : "Cette mesure est prise sur l’alimentation de la pompe à chaleur (PAC) au moyen d’un capteur et l’information est envoyée au boitier GOFLEX par radio.",
-      "consumptionHeatPumpTip" : "TIP : Une pompe à chaleur est économe car elle tire une partie de son énergie de l’environnement. Le coefficient de performance (COP) est un indicateur permettant de savoir comment fonctionne la PAC : un COP de 3 veut dire que pour 1kWh d’électricité utilisé pour faire fonctionner la PAC, il y a 3kWh d’énergie thermique utile.",
       "insideTemperature": "Température intérieure",
-      "insideTemperatureInfo": "Cette mesure est prise sur par un petit boîtier fonctionnant sur pile et posé dans votre logement. Vous pouvez le déplacer mais gardez le dans une pièce dite à vivre. Evitez de le placer au soleil car la mesure sera faussée.",
-      "insideTemperatureTip": "TIP : En moyenne, un degré supplémentaire sur votre consigne de chauffage représente une consommation d'énergie supplémentaire de 7%. Contrôlez les températures des pièces à vivre : 23°C dans la salle de bain, 20°C dans la salle de séjour, 17°C dans les chambres à coucher et le couloir. ",
       "hotwaterTemperature": "Température eau chaude",
-      "hotwaterTemperatureInfo": "Cette mesure est prise sur le ballon d’eau chaude. En fonctionnement normal vous devriez y distinguer les cycles de chauffage.",
-      "hotwaterTemperatureTip": "TIP : Pour éviter des risques de légionelloses, le ballon d’eau pour l’eau chaude sanitaire devrait être régulièrement montée au-dessus de 50° voire 55°. Cela ne concerne par les ballons utilisé uniquement comme réserve pour le chauffage et dont l’eau n’est pas mise en contact avec les personnes.",
       "productionElect": "Excédent PV",
-      "productionElectInfo": "Cette mesure est fournie directement par le compteur d’électricité officiel à l’entrée de la maison.  L’excédent photovoltaïque est tout ce qui est refoulé vers le réseau électrique et qui vous sera payé par l’ESR.  La partie de la production solaire directement consommée dans la maison (autoconsommation) n’apparait pas sur cette mesure.",
-      "productionElectTip": "TIP : L’ESR reprend l’énergie à son prix officiel. Cela ne comporte pas les taxes (communales et fédérales), ni l’acheminement qui sert à payer le réseau. C’est pour cela qu’un kWh acheté au réseau est plus cher que celui payé pour l’injection. Il est donc intéressant d’autoconsommer au maximum.",
       "noData": "Aucune donnée disponible",
       "graphics": "Graphics",
       "power": "Puissance",
       "loadingData": "Vos données sont en cours de chargement..."
+    },
+    "info" : {
+      "consumptionElect" : {
+        "title" : "Comsommation",
+        "info" : "Cette mesure nommée « Consommation globale » est fournie directement par le compteur d'électricité officiel à l'entrée de la maison. C'est tout ce qui entre dans la maison depuis le réseau électrique et qui vous sera facturé*. Vous pouvez y distinguer les moments où vous consommez.",
+        "tip" : "TIP : Il est intéressant de surveiller les consommations ‘de fond’, c’est-à-dire la bande présente en permanence, y compris la nuit. Quelques dizaines de watt mais 24h/24 peuvent représenter une part significative d’énergie au final. Mettre ses appareils sur interrupteurs pour éviter les veilles.",
+        "note" : "*Note: le compteur enregistre localement dans sa mémoire interne la consommation ; le relevé de votre énergie ne dépend pas du bon fonctionnement du système GOFLEX. En cas de problème le compteur peut être relevé de manière traditionnelle."
+      },
+      "consumptionHeatPump" : {
+        "title" : "Consommation pompe à chaleur",
+        "info" : "Cette mesure est prise sur l’alimentation de la pompe à chaleur (PAC) au moyen d’un capteur et l’information est envoyée au boitier GOFLEX par radio.",
+        "tip" : "TIP : Une pompe à chaleur est économe car elle tire une partie de son énergie de l’environnement. Le coefficient de performance (COP) est un indicateur permettant de savoir comment fonctionne la PAC : un COP de 3 veut dire que pour 1kWh d’électricité utilisé pour faire fonctionner la PAC, il y a 3kWh d’énergie thermique utile."
+      },
+      "insideTemperature" : {
+        "title" : "Température intérieure",
+        "info" : "Cette mesure est prise sur par un petit boîtier fonctionnant sur pile et posé dans votre logement. Vous pouvez le déplacer mais gardez le dans une pièce dite à vivre. Evitez de le placer au soleil car la mesure sera faussée.",
+        "tip" : "TIP : En moyenne, un degré supplémentaire sur votre consigne de chauffage représente une consommation d'énergie supplémentaire de 7%. Contrôlez les températures des pièces à vivre : 23°C dans la salle de bain, 20°C dans la salle de séjour, 17°C dans les chambres à coucher et le couloir. "
+      },
+      "hotwaterTemperature" : {
+        "title" : "Température eau chaude",
+        "info" : "Cette mesure est prise sur le ballon d’eau chaude. En fonctionnement normal vous devriez y distinguer les cycles de chauffage.",
+        "tip" : "TIP : Pour éviter des risques de légionelloses, le ballon d’eau pour l’eau chaude sanitaire devrait être régulièrement montée au-dessus de 50° voire 55°. Cela ne concerne par les ballons utilisé uniquement comme réserve pour le chauffage et dont l’eau n’est pas mise en contact avec les personnes."
+      },
+      "productionElect" : {
+        "title" : "Excédent PV",
+        "info" : "Cette mesure est fournie directement par le compteur d’électricité officiel à l’entrée de la maison.  L’excédent photovoltaïque est tout ce qui est refoulé vers le réseau électrique et qui vous sera payé par l’ESR.  La partie de la production solaire directement consommée dans la maison (autoconsommation) n’apparait pas sur cette mesure.",
+        "tip" : "TIP : L’ESR reprend l’énergie à son prix officiel. Cela ne comporte pas les taxes (communales et fédérales), ni l’acheminement qui sert à payer le réseau. C’est pour cela qu’un kWh acheté au réseau est plus cher que celui payé pour l’injection. Il est donc intéressant d’autoconsommer au maximum."
+      }
     },
     "dashboard":{
       "currentConsumption": "Dernières mesures de consommation",
